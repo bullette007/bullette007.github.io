@@ -33,11 +33,11 @@ plugins:
   - jekyll-feed
 
 include:
-  book/
-  book/_images
-  book/_sources
-  book/_sphinx_design_static
-  book/_static
+  - book/
+  - book/_images
+  - book/_sources
+  - book/_sphinx_design_static
+  - book/_static
 
 
 # Exclude from processing.
