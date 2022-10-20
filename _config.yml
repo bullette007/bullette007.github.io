@@ -32,6 +32,14 @@ theme: minima
 plugins:
   - jekyll-feed
 
+include:
+  book/
+  book/_images
+  book/_sources
+  book/_sphinx_design_static
+  book/_static
+
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
@@ -54,7 +62,7 @@ plugins:
 #   - vendor/ruby/
 
 # Markdown Settings
-markdown: CommonMark
-commonmark:
-  options: ["SMART", "FOOTNOTES", "UNSAFE"]
-  extensions: ["strikethrough", "autolink", "table"]
+#markdown: CommonMark
+#commonmark:
+#  options: ["SMART", "FOOTNOTES", "UNSAFE"]
+#  extensions: ["strikethrough", "autolink", "table"]
