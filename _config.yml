@@ -34,10 +34,10 @@ plugins:
 
 include:
   - book/
-  - book/_images
-  - book/_sources
-  - book/_sphinx_design_static
-  - book/_static
+  - _images
+  - _sources
+  - _sphinx_design_static
+  - _static
 
 
 # Exclude from processing.
