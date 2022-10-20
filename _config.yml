@@ -38,6 +38,7 @@ include:
   - _sources
   - _sphinx_design_static
   - _static
+  - vendor
 
 
 # Exclude from processing.
