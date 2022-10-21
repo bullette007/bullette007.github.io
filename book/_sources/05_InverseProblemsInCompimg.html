@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Computational Imaging | Course website for lecture Computational Imaging at KIT.</title>
+<meta name="generator" content="Jekyll v3.9.2" />
+<meta property="og:title" content="Computational Imaging" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Course website for lecture Computational Imaging at KIT." />
+<meta property="og:description" content="Course website for lecture Computational Imaging at KIT." />
+<link rel="canonical" href="https://computational-imaging.de/book/_sources/05_InverseProblemsInCompimg.html" />
+<meta property="og:url" content="https://computational-imaging.de/book/_sources/05_InverseProblemsInCompimg.html" />
+<meta property="og:site_name" content="Computational Imaging" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Computational Imaging" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Course website for lecture Computational Imaging at KIT.","headline":"Computational Imaging","url":"https://computational-imaging.de/book/_sources/05_InverseProblemsInCompimg.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://computational-imaging.de/feed.xml" title="Computational Imaging" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Computational Imaging</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/book/_sources/markdown-notebooks.html">Notebooks with MyST Markdown</a><a class="page-link" href="/book/_sources/intro.html">Computational Imaging - Course Notes for Winter Term 2022 / 2023</a><a class="page-link" href="/book/_sources/markdown.html">Markdown Files</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <p>```{code-cell} ipython3
+:tags: [remove-cell]</p>
+
+<p>%%js
+var cells = Jupyter.notebook.get_cells();
+           for (var i = 0; i &lt; cells.length; i++) {
+               var cur_cell = cells[i];
+               var tags = cur_cell._metadata.tags;
+               console.log(i);
+               console.log(tags == undefined);
+               console.log(tags);
+               if (tags != undefined) {
+               for (var j = 0; j &lt; tags.length; j++) {
+                  if (tags[j]==”book_only” | tags[j]==”remove-cell”) {cur_cell.element.hide();
+                  if (tags[j]==”presentation_only”) {cur_cell.element.show();}
+            }}}</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+%%js
+Jupyter.notebook.get_cell(0).element.hide()
+</code></pre></div></div>
+
+<h2 id="code-cell-ipython3">```{code-cell} ipython3</h2>
+<p>slideshow:
+  slide_type: notes
+—
+from <strong>future</strong> import print_function
+from ipywidgets import interact, interactive, fixed, interact_manual
+import ipywidgets as widgets
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+import scipy.signal as sig
+from scipy.integrate import simpson
+from IPython.display import SVG, display, IFrame, HTML
+%matplotlib notebook</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+LaTeX-macros:
+$\begin{align}
+  \newcommand{transp}{^\intercal}
+  \newcommand{F}{\mathcal{F}}
+  \newcommand{Fi}{\mathcal{F}^{-1}}
+  \newcommand{inv}{^{-1}}
+  \newcommand{stochvec}[1]{\mathbf{\tilde{#1}}}
+  \newcommand{argmax}{\mathrm{arg\, max}}
+\end{align}$
+
++++
+
+LaTeX command stochvec:
+$\newcommand{stochvec}[1]{\mathbf{\tilde{#1}}}$
+&lt;br&gt;
+LaTeX command transp:
+$\newcommand{transp}{^\intercal}$
+LaTeX command argmax:
+$\newcommand{argmax}[1]{\underset{#1}{\mathrm{arg\, max}}}$
+LaTeX command argmin:
+$\newcommand{argmin}[1]{\underset{#1}{\mathrm{arg\, min}}}$
+
+```{code-cell} ipython3
+%%javascript
+MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</code></pre></div></div>
+
+<p>```{code-cell} ipython3
+%%javascript</p>
+
+<p>MathJax.Hub.Queue(
+  [“resetEquationNumbers”, MathJax.InputJax.TeX],
+  [“PreProcess”, MathJax.Hub],
+  [“Reprocess”, MathJax.Hub]
+);</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+---
+slideshow:
+  slide_type: notes
+---
+def showFig(path,i,ending, width, height):
+    return IFrame("./" + path+str(i)+ending, width, height)
+</code></pre></div></div>
+
+<h2 id="code-cell-ipython3-1">```{code-cell} ipython3</h2>
+<p>slideshow:
+  slide_type: notes
+—
+def showFig2(path,i,ending, width, height):
+    imgToShow = plt.imread(f”{path}{i}{ending}”)
+    plt.imshow(imgToShow)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+---
+slideshow:
+  slide_type: notes
+---
+def showFig(path,i,ending, width, height):
+    #return SVG(filename = "./" + path+str(i)+ending)
+    display(SVG(filename = "./" + path+str(i)+ending))
+</code></pre></div></div>
+
+<h2 id="code-cell-ipython3-2">```{code-cell} ipython3</h2>
+<p>slideshow:
+  slide_type: notes
+—
+def showFig(path,i,ending, width, height):
+    filename = path+str(i)+ending
+    return HTML(“&lt;img src="” + filename +  “"/&gt;”)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+---
+slideshow:
+  slide_type: notes
+---
+def imshow(img, cmap=None):
+    plt.close('all')
+    plt.figure()
+    plt.imshow(img, cmap=cmap)
+    plt.show()
+</code></pre></div></div>
+
+<h2 id="code-cell-ipython3-3">```{code-cell} ipython3</h2>
+<p>slideshow:
+  slide_type: notes
+—
+def imshow2(img, cmap=None):
+    #plt.close(‘all’)
+    #plt.figure()
+    plt.clf()
+    plt.imshow(img, cmap=cmap)
+    #plt.show()</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+#interact(lambda i: showFig('figures/2/dftSpectrum_',i,'.svg',800,700), i=widgets.IntSlider(min=1,max=3, step=1, value=1))
+</code></pre></div></div>
+
+<p>```{code-cell} ipython3
+#<img src="figures/2/pinholePrinciple.svg" style="width:40vw" /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+---
+slideshow:
+  slide_type: fragment
+---
+interact(lambda i: showFig2('figures/3/lfSAIs/out_09_',i,'.png',800,1100), i=widgets.IntSlider(min=0,max=16, step=1, value=1))
+</code></pre></div></div>
+
+<p>+++ {“slideshow”: {“slide_type”: “fragment”}}</p>
+
+<p><img src="figures/3/SchlierenDeflectometer.svg" style="max-height:40vh" /></p>
+
+<p>+++ {“slideshow”: {“slide_type”: “notes”}}</p>
+
+<h1 id="inverse-problems-in-computational-imaging">Inverse Problems in Computational Imaging</h1>
+
+<p>+++ {“slideshow”: {“slide_type”: “slide”}}</p>
+
+<font size="7"> Computational Imaging </font>
+<p><br /><br /><br /></p>
+<font size="5"> Chapter 5: Inverse Problems in Computational Imaging </font>
+
+<p>+++ {“slideshow”: {“slide_type”: “subslide”}, “tags”: [“book_only”]}</p>
+
+<h5 id="content">Content</h5>
+<ul>
+  <li>Introduction into inverse problems
+    <ul>
+      <li>What are inverse problems?</li>
+      <li>Approaches for solving inverse problems</li>
+    </ul>
+  </li>
+  <li>Image deconvolution
+    <ul>
+      <li>Inverse filter</li>
+      <li>Wiener filter (classical) and its problems</li>
+      <li>Richardson-Lucy</li>
+      <li>Optimization-based
+        <ul>
+          <li>Half-quadratic Splitting</li>
+        </ul>
+      </li>
+      <li>Deep SNR-estimation for Wiener filter</li>
+      <li>ADMM</li>
+    </ul>
+  </li>
+</ul>
+
+<p>+++</p>
+
+<h2 id="introduction-into-inverse-problems">Introduction into inverse problems</h2>
+
+<p>+++</p>
+
+<h2 id="image-deconvolution">Image deconvolution</h2>
+
+<p>+++</p>
+
+<p>Image deconvolution deals with the problem of recovering an original image $x$ after it has been convolved with a kernel $c$ and has been affected by some additive noise $n$.<br /> Hence, the image formation model can be expressed via:
+$\begin{align}\label{eq:img_formation}
+    b=c*x + n\,,
+\end{align}$
+with $b$ denoting the observed image.</p>
+
+<p><br /> Note: The dependence on a spatial variable (e.g., like $\mathbf{x}$ for $g(\mathbf{x})$) is omitted for this chapter for the sake of clarity.</p>
+
+<p>+++</p>
+
+<p>The task is to find an $\hat{x}$ that is as close to the original $x$ as possible.</p>
+
+<p>+++</p>
+
+<p>Methods and approaches dealing with deconvolution can be divided into two groups:</p>
+<ol>
+  <li><em>Blind</em> deconvolution: The kernel $c$ is assumed to be unknown and also has to be recovered / estimated.</li>
+  <li><em>Non-blind</em> deconvolution: The kernel $c$ is assumed to be known.</li>
+</ol>
+
+<p><br />Note that there is some research which focuses on estimating the kernel $c$ and then employs non-blind deconvolution methods to perform the deconvolution.</p>
+
+<p>+++</p>
+
+<p>According to the convolution theorem of the Fourier transform, equation $\eqref{eq:img_formation}$ can be expressed as:
+$\begin{align}\label{eq:img_formation_fourier}
+    b = \mathcal{F}^{-1}\lbrace \mathcal{F} \lbrace c \rbrace \cdot \mathcal{F} \lbrace x \rbrace \rbrace + n
+\end{align}$</p>
+
+<p>+++</p>
+
+<p><strong>Important note:</strong> Equations $\eqref{eq:img_formation}$ and $\eqref{eq:img_formation_fourier}$ only result in the same numbers, if the convolution is performed with ciruclar boundary conditions, i.e., when the convolution kernel wraps around the image borders.</p>
+
+<p>+++</p>
+
+<h5 id="duality-between-signal-processing-perspective-and-algebraic-perspective">Duality between signal processing perspective and algebraic perspective</h5>
+
+<p>+++</p>
+
+<p>Since the convolution is a linear operator, it can also be expressed in terms of a matrix vector multiplication:
+$\begin{align}\label{eq:duality}
+    b = c*x \Leftrightarrow \mathbf{b} = \mathbf{C}\mathbf{x}\,,
+\end{align}$
+with a square circulant Toeplitz matrix $\mathbf{C}\in \mathbb{R}^{N\times N}$ implementing the convolution and $\mathbf{x,b} \in \mathbb{R}^N$ representing the vectorized forms of the corresponding images $x$ and $b$.</p>
+
+<p>+++</p>
+
+<h3 id="inverse-filter">Inverse filter</h3>
+
+<p>+++</p>
+
+<p>The inverse filter represents the straightforward approach of solving equation $\eqref{eq:img_formation_fourier}$ for $x$ while neglecting the noise $n$:
+$\begin{align}\label{eq:inv_filter}
+        \hat{x}_{\mathrm{inv}}=\Fi\left\lbrace \frac{\F\lbrace b \rbrace}{\F\lbrace c \rbrace } \right\rbrace \,.
+\end{align}$</p>
+
+<p>+++</p>
+
+<p>Properties of the inverse filter:</p>
+<ul>
+  <li>computationally efficient,</li>
+  <li>problematic for small values of $\F \lbrace c \rbrace$, (amplifies noise).</li>
+</ul>
+
+<p>Unfortunately, the second point is true for most practically relevant point spread functions.</p>
+
+<p>+++</p>
+
+<p>TODO: Example images.</p>
+
+<p>+++</p>
+
+<p>EXERCISE: Implement inverse filter and do some tests for varying noise levels.</p>
+
+<p>+++</p>
+
+<h3 id="wiener-filter">Wiener filter</h3>
+
+<p>+++</p>
+
+<p>TBD</p>
+
+<p>+++</p>
+
+<h3 id="richardson-lucy">Richardson-Lucy</h3>
+
+<p>+++</p>
+
+<p>TBD</p>
+
+<p>+++</p>
+
+<h3 id="optimization-based-methods">Optimization-based methods</h3>
+
+<p>+++</p>
+
+<p>As stated before, deconvolution is an ill-posed problems, i.e., usually there are infinitely many solutions which satisfy the measurements.</p>
+
+<p>$\Rightarrow$ One needs an instrument to determine how desirable a given solution is.</p>
+
+<p>+++</p>
+
+<h4 id="bayesian-perspective-of-inverse-problems">Bayesian perspective of inverse problems</h4>
+
+<p>+++</p>
+
+<p>General formulation of an inverse problem:
+$\begin{align}
+    \mathbf{b}=\mathbf{A}\mathbf{x} + \mathbf{n}\,,
+\end{align}$
+with $\mathbf{x}\in \mathbb{R}^N, \mathbf{b,n}\in \mathbb{R}^M, \mathbf{A}\in \mathbb{R}^{M\times N}$.</p>
+
+<p>+++</p>
+
+<p>Interpret as random vectors:</p>
+<ul>
+  <li>$\stochvec{x}\sim \mathcal{N}(\mathbf{x},0)$,</li>
+  <li>$\stochvec{n}\sim \mathcal{N}(0,\sigma^2)$,</li>
+  <li>$ \stochvec{b}\sim \mathcal{N}((\mathbf{Ax}),\sigma^2)$</li>
+</ul>
+
+<p>+++</p>
+
+<p>For probability of observation $ \mathbf{b}$ it holds:
+$\begin{align}
+    p( \mathbf{b}\vert \mathbf{x}, \sigma) \propto \exp \left( - \frac{\Vert \mathbf{b} - \mathbf{Ax} \Vert^2_2}{2\sigma^2} \right)
+\end{align}
+$</p>
+
+<p>+++</p>
+
+<p>According to Bayes’ rule:
+$\begin{align}
+    \underbrace{p(\mathbf{x}\vert \mathbf{b},\sigma)}<em>{\mathrm{posterior}} = \frac{p( \mathbf{b}\vert \mathbf{x}, \sigma)\cdot p( \mathbf{x})}{p( \mathbf{b})} \propto \underbrace{p( \mathbf{b} \vert \mathbf{x}, \sigma)}</em>{\mathrm{image\ formation\ model}} \cdot \underbrace{p( \mathbf{x})}_{prior}\,.
+\end{align}
+$</p>
+
+<p>+++</p>
+
+<p>Maximum-a-posteriori (MAP) solution:
+$\begin{align}
+  \hat{x}<em>\mathrm{MAP} &amp;= \argmax{\mathbf{x}}\, p(\mathbf{x}\vert \mathbf{b},\sigma) <br />
+                         &amp;= \argmax{\mathbf{x}}\, \log p(\mathbf{x}\vert \mathbf{b},\sigma) <br />
+                         &amp;= \argmin{ \mathbf{x}}\, - \log p(\mathbf{x}\vert \mathbf{b},\sigma) <br />
+                         &amp;= \argmin{ \mathbf{x}}\, - \log p( \mathbf{b} \vert \mathbf{x}, \sigma) - \log p( \mathbf{x}) <br />
+                         \label{eq:map_solution}&amp;= \argmin{ \mathbf{x}}\, \underbrace{\frac{\Vert \mathbf{b} - \mathbf{Ax} \Vert^2_2}{2\sigma^2}}</em>{\mathrm{data\, fidelity\, term}} + \underbrace{\Psi(\mathbf{x})}_{ \mathrm{regularizer}}\,.                       <br />
+\end{align}
+$</p>
+
+<p>+++</p>
+
+<p>The choice of image priors / regularizers depends on the imaging task, i.e., the nature of the images that are to be recovered. Examples are:</p>
+<ul>
+  <li>Blurry imges $\rightarrow$ promote smoothness $\Psi (\mathbf{x}) = \left| \underbrace{\Delta}_{\text{Laplace operator}} \mathbf{x} \right|_2 $</li>
+  <li>Sparse images (e.g., stars) $\rightarrow$ promote sparsity $\Psi (\mathbf{x}) = \left| \mathbf{x} \right|_1$</li>
+  <li>Natural images $\rightarrow$ promote spares gradients $\Psi \mathrm{TV}(\mathbf{x})$</li>
+</ul>
+
+<p>+++</p>
+
+<h5 id="total-variation">Total Variation</h5>
+
+<p>The intuition behind total variation is that in natural images, regions of almost constant intensities are separated by sharp edges. Hence, the gradient of such images can be assumed to be sparse.</p>
+
+<p>The gradient is calculated by means of convolutions with the finite difference operators in $x$- and $y$-direction:</p>
+
+<ul>
+  <li>Finite difference in $x$-direction: $d_x * x = \begin{pmatrix} 0 &amp; 0 &amp; 0 \ 0 &amp; -1 &amp; 1 \ 0 &amp; 0 &amp; 0  \end{pmatrix} * x = \mathbf{D}_x \mathbf{x}$</li>
+  <li>Finite difference in $y$-direction: $d_y * x = \begin{pmatrix} 0 &amp; 0 &amp; 0 \ 0 &amp; -1 &amp; 0 \ 0 &amp; 1 &amp; 0  \end{pmatrix} * x = \mathbf{D}_y \mathbf{x}$</li>
+</ul>
+
+<p>+++</p>
+
+<ul>
+  <li>
+    <p>Anisotropic: 
+$\begin{align} 
+\mathrm{TV}(\mathbf{x}) &amp;= \left| \mathbf{D}<em>x \mathbf{x} \right|_1 + \left| \mathbf{D}_y \mathbf{x} \right|_1 \ 
+&amp;=  \sum\limits^N</em>{i=1}  \left| (\mathbf{D}<em>x \mathbf{x})_i \right| + \left| (\mathbf{D}_y \mathbf{x})_i \right| = \sum\limits^N</em>{i=1} \sqrt[]{(\mathbf{D}<em>x \mathbf{x})^2_i} + \sum\limits^N</em>{i=1} \sqrt[]{(\mathbf{D}_y \mathbf{x})^2_i} 
+\end{align}$</p>
+  </li>
+  <li>
+    <p>Isotropic:
+$\begin{align} 
+\mathrm{TV}(\mathbf{x}) = \left| \begin{pmatrix} (\mathbf{D}<em>x \mathbf{x})_i \ (\mathbf{D}_y \mathbf{x})_i \end{pmatrix} \right|_2 = \sum\limits^N</em>{i=1}  \sqrt[]{(\mathbf{D}_x \mathbf{x})^2_i + (\mathbf{D}_y \mathbf{x})^2_i}
+\end{align}$</p>
+  </li>
+</ul>
+
+<p><strong>TODO: Add images!</strong></p>
+
+<p>+++</p>
+
+<h4 id="half-quadratic-splitting-hqs-method">Half-quadratic splitting (HQS) method</h4>
+
+<p>+++</p>
+
+<p>This section introduces a flexible, powerful and intuitive iterative approach, the half-quadratic splitting (HQS) method, for solving regularized inverse problems formulated like \eqref{eq:map_solution}.</p>
+
+<p>We start with some general considerations and then apply HQS to the inverse problem of deconvolution.</p>
+
+<p>+++</p>
+
+<p>We assuem the following imge formation model:</p>
+
+<p>$\begin{align} 
+  \mathbf{b} = \mathbf{Ax} + \mathbf{\eta},
+\end{align}$</p>
+
+<p>with $\mathbf{x}\in \mathbb{R}^{N}$ denoting the unknown vector, $\mathbf{b}\in \mathbb{R}^{M}$ representing the observations, the additive noise $\mathbf{\eta}\in \mathbb{R}^{M}$ and the matrix $\mathbf{A}\in \mathbb{R}^{M\times N}$ encoding the linear image formation model.</p>
+
+<p>+++</p>
+
+<p>Equation \eqref{eq:map_solution} leads us to the general formulation of regularized inverse problems in the field of computational imaging:</p>
+
+<p>\begin{align}\label{eq:general_inverse_problem} 
+  \hat{\mathbf{x}} = \argmin{\mathbf{x}} \, \underbrace{\frac{1}{2} \left| \mathbf{Ax-b} \right|^2<em>2}</em>{\text{data fidelity term}} + \underbrace{\lambda \Psi (\mathbf{x}) }_{\text{regularizer}}\,.
+  \end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>The data fidelity term ensures that the sought solution $\mathbf{\hat{x}}$ matches the observed data $\mathbf{b}$ when fed through the image formation process (modelled by $\mathbf{A}$). The regularization operator $\Psi : \mathbb{R}^{N} \rightarrow \mathbb{R}^M$ models prior knowledge about the unknown original data $\mathbf{x}$. The scalar parameter $\lambda $ balances between the data fidelity term and the regularization term and hence $\lambda \in [ 0,1 ]$.</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>Trying to directly solve \eqref{eq:general_inverse_problem}, e.g., via gradient descent, often does not work well. Reasons are poor convergence or difficulties in finding an efficient way to calculate the gradient. Even worse, whenever we change the regularizer, we will have to re-write the optimization program again.</p>
+
+<p>+++ {“tags”: [“presentation_only”, “remove-cell”]}</p>
+
+<p>Disadvantages of directly solving \eqref{eq:general_inverse_problem} with, e.g.,  gradient descent:</p>
+<ul>
+  <li>Bad / no convergence,</li>
+  <li>calculation of gradient only in a computationally inefficient way,</li>
+  <li>change of regularizer requires a lot of reprogramming.</li>
+</ul>
+
+<p>+++</p>
+
+<p>Hence, rewrite \eqref{eq:general_inverse_problem} to:</p>
+
+<p>\begin{align} \label{eq:hqs_1}
+  \argmin{\mathbf{x}}\quad &amp;\underbrace{\frac{1}{2}\left| \mathbf{Ax-b} \right|^2<em>2 }</em>{=:f(\mathbf{x})} + \underbrace{\lambda \Psi (\mathbf{z})}_{=:g(\mathbf{z})} <br />
+  \text{subject to}\quad &amp;\mathbf{Dx-z} = \mathbf{0} \,.
+  \end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>We introduced a so-called <em>slack variable</em> $\mathbf{z}\in \mathbb{R}^O$ which allows us to separate the data fidelity term and the regularization term so that they do not depend on the same variable anymore. Obviously, $\mathbf{x}$ and $\mathbf{z}$ are still linked by the constraint $\mathbf{Dx-z=0}$.</p>
+
+<p>For now, we assume $\mathbf{D}\in \mathbb{R}^{N\times O}$ to represent the identity matrix (i.e., it does not introduce any changes and can be ignored for now) - it will come back into play later on.</p>
+
+<p>+++ {“tags”: [“presentation_only”, “remove-cell”]}</p>
+
+<p>With so-called <em>slack variable</em> $\mathbf{z}\in \mathbb{R}^O$.</p>
+
+<p>For now, assume $\mathbf{D}\in \mathbb{R}^{N\times O}$ to represent the identity matrix (will change later).</p>
+
+<p>+++</p>
+
+<p>We now include the constraint of \eqref{eq:hqs_1} directly in the main optimization objective term via a penalty term:</p>
+
+<p>\begin{align}\label{eq:hqs_2}
+ L_\rho (\mathbf{x}, \mathbf{z}) = f(\mathbf{x}) + g(\mathbf{z}) + \frac{\rho}{2} \left| \mathbf{Dx-z} \right|^2_2\,, \qquad \text{with }\rho &gt; 0\,.
+  \end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>Intuitively, setting $\rho$ to a large value leads to the same results for minimizing \eqref{eq:hqs_1} and \eqref{eq:hqs_2}. The benefit of this reformulation is that we can perform gradient descent for $\mathbf{x}$ and $\mathbf{z}$ in an alternating fashion.</p>
+
+<p>+++ {“tags”: [“presentation_only”, “remove-cell”]}</p>
+
+<p>$\Rightarrow$ Variables $\mathbf{x}$ and $\mathbf{z}$ can now be iteratively optimized via gradient descent in an alternating fashion:</p>
+
+<p>+++</p>
+
+<p>\begin{align} 
+   &amp;\mathbf{x} \leftarrow \mathrm{prox}<em>{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}} L</em>\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{x}} f(\mathbf{x}) + \frac{\rho}{2} \left| \mathbf{Dx-z} \right|^2<em>2\,, <br />
+   &amp;\mathbf{z} \leftarrow \mathrm{prox}</em>{g,\rho} (\mathbf{Dx}) = \argmin{\mathbf{z}} L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{z}} g(\mathbf{z}) + \frac{\rho}{2} \left| \mathbf{Dx-z} \right|^2_2\,.
+\end{align}</p>
+
+<p>TODO: Explain proximal operators.</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>Again, the important benefit of this formulation is that we can update $\mathbf{x}$ and $\mathbf{z}$ separately. We will see that this approach allows us to easily experiment with different regularizers (this is sometimes also referred to as a <em>plug-and-play</em> formulation).</p>
+
+<p>+++ {“tags”: [“presentation_only”, “remove-cell”]}</p>
+
+<p>Advantages of this formulation:</p>
+
+<ul>
+  <li>Separate updates of $\mathbf{x}$ and $\mathbf{z}$,</li>
+  <li>allows to easily experiment with different regularizers,</li>
+  <li>many proximal operators can be implemented efficiently, often in closed form.</li>
+</ul>
+
+<p>+++</p>
+
+<h5 id="hqs-for-deconvolution">HQS for deconvolution</h5>
+
+<p>We now again consider the inverse problem of deconvolution with circual boundary conditions. Here, the matrix $\mathbf{A}$ is the square circulant Toeplitz matrix $\mathbf{C} \in \mathbb{R}^{N\times N}$ representing a 2D-convolution of the input image $x$ with the convolution kernel $c$.</p>
+
+<p>+++</p>
+
+<p>Revise the duality between the signal processing formulation and the algebraic formulation:</p>
+
+<p>\begin{align} 
+   c<em>x = \Fi \left{ \F \left{ c \right} \cdot \F \left{ x \right}  \right} &amp;\Leftrightarrow \mathbf{Cx} \,, <br />
+   \Fi \left{ \F \left{ c \right}^</em> \cdot \F \left{ x \right}   \right} &amp;\Leftrightarrow \mathbf{C}\transp \mathbf{x}\,, <br />
+   \Fi \left{ \frac{\F \left{ b \right} }{\F \left{ c \right} } \right} &amp;\Leftrightarrow \mathbf{C}^{-1} \mathbf{b}\,.
+\end{align}</p>
+
+<p>+++</p>
+
+<h6 id="hqs-with-total-variation-and-denoising-regularizers">HQS with total variation and denoising regularizers</h6>
+
+<p>The initial formulation \eqref{eq:hqs_1} of HQS depends on which regularizer we employ.</p>
+
+<p>For total variation this is:
+\begin{align} 
+  \argmin{\mathbf{x}}\quad &amp;\underbrace{\frac{1}{2}\left| \mathbf{Dx-b} \right|^2<em>2 }</em>{=:f(\mathbf{x})} + \underbrace{\lambda \left| \mathbf{z} \right|<em>1 }</em>{=:g(\mathbf{z})} <br />
+  \text{subject to}\quad &amp;\mathbf{Dx-z} = \mathbf{0} \,,
+\end{align}</p>
+
+<p>with $\mathbf{D} = \left( \mathbf{D}\transp_x \mathbf{D}\transp_y \right)\transp \in \mathbb{R}^{2N \times N}$ representing the finite difference operator for calculating the gradients of $\mathbf{x}$ in $x$- and $y$-direction.</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<pre><code class="language-{note}">  The vector $\mathbf{z}\in \mathbb{R}^{2N}$ has to be twice as large as $\mathbf{x}\in \mathbb{R}^{N} $ in order to store the two gradient values in $x$- and $y$-direction for every input pixel.
+</code></pre>
+
+<p>+++</p>
+
+<p>In the more general case, we use a regularizer $\Psi $ projecting an image onto the set of feasible natural images (more on that later):</p>
+
+<p>\begin{align} 
+  \argmin{\mathbf{x}}\quad &amp;\underbrace{\frac{1}{2}\left| \mathbf{Dx-b} \right|^2<em>2 }</em>{=:f(\mathbf{x})} + \underbrace{\lambda  \Psi (\mathbf{z})}_{=:g(\mathbf{z})} <br />
+  \text{subject to}\quad &amp;\mathbf{x-z} = \mathbf{0} \,.
+\end{align}</p>
+
+<p>Here the matrix $D$ represents the identity matrix which is why it can be omitted.</p>
+
+<p>+++</p>
+
+<h6 id="efficient-implementation-of-x-update">Efficient implementation of $x$-update</h6>
+
+<p>For obtaining the $x$-update, we have to derive the proximal operator $\mathrm{prox}<em>{f,\rho}$:
+\begin{align} 
+  \mathrm{prox}</em>{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}} f(\mathbf{x}) + \frac{\rho}{2} \left| \mathbf{Dx-z} \right|^2_2 = \argmin{\mathbf{x}} \frac{1}{2} \left| \mathbf{Cx-b} \right|^2_2 + \frac{\rho}{2} \left| \mathbf{Dx-z} \right|^2_2 \,.
+\end{align}
+Hence, we have to derive the gradient of that equation with respect to $\mathbf{x}$.</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>We iteratively expand that equation as follows:
+\begin{align} 
+  &amp;\frac{1}{2} \left| \mathbf{Cx-b} \right|^2_2 + \frac{\rho}{2} \left| \mathbf{Dx-z} \right|^2_2 <br />
+  =&amp;\frac{1}{2} (\mathbf{Cx-b})\transp (\mathbf{Cx-b}) + \frac{\rho}{2} (\mathbf{Dx-z})\transp (\mathbf{Dx-z}) <br />
+  =&amp;\frac{1}{2} (\mathbf{x}\transp \mathbf{C}\transp \mathbf{Cx} - 2\mathbf{x}\transp \mathbf{C}\transp \mathbf{b} + \mathbf{b}\transp \mathbf{b}) + \frac{\rho}{2} (\mathbf{x}\transp \mathbf{D}\transp \mathbf{D} \mathbf{x} - 2 \mathbf{x}\transp \mathbf{D}\transp \mathbf{z} + \mathbf{z}\transp\mathbf{z}) \,.
+\end{align}</p>
+
+<p>+++</p>
+
+<p>The sought gradient is
+\begin{align} 
+   \mathbf{C}\transp \mathbf{Cx} - \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{Dx} - \rho \mathbf{D}\transp \mathbf{z} \,.
+\end{align}</p>
+
+<p>This expression can now be equated to zero and solved for $\mathbf{x}$.</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>The single steps are:
+\begin{align} 
+  \mathbf{C}\transp \mathbf{Cx} - \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{Dx} - \rho \mathbf{D}\transp \mathbf{z}\quad &amp;\overset{!}{=} \quad \mathbf{0} <br />
+  \mathbf{C}\transp \mathbf{Cx} + \rho \mathbf{D}\transp \mathbf{Dx}
+  &amp;\overset{!}{=} \quad \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z} <br />
+  (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D})\mathbf{x}
+  &amp;\overset{!}{=} \quad \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z} <br />
+  \mathbf{x} &amp;\overset{!}{=} (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D})^{-1}(\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) \,.
+\end{align}</p>
+
+<p>+++</p>
+
+<p>This yields a first formulation for the sought proximal operator:
+\begin{align}\label{eq:hqs_tv_1} 
+  \mathrm{prox}_{f,\rho} (\mathbf{z}) = (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D})^{-1}(\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) \,.
+\end{align}</p>
+
+<p>+++</p>
+
+<h6 id="special-case-of-total-variation-regularizer">Special case of total variation regularizer</h6>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>For the TV regularizer, the matrix $\mathbf{D}$ represents the finite difference operator.  The matrix-vector multiplications involved in the proximal operator, i.e., $\mathbf{Cx}$ and $\mathbf{Dx} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right]\transp \mathbf{x}$ (and also their adjoint correspondencies $\mathbf{C}\transp \mathbf{b}$ and $\mathbf{D}\transp \mathbf{z} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right] \mathbf{z} =  \mathbf{D}\transp_x \mathbf{z} + \mathbf{D}\transp_y \mathbf{z}   $ ) all encode 2D-convolutions with circular boundary conditions.</p>
+
+<p>+++</p>
+
+<p>Exploiting the duality of the signal-processing perspective and the algebraic perspective yields the following reforumlations of the denominator, respectively, of the nominator of \eqref{eq:hqs_tv_1}:
+\begin{align} 
+  (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D}) &amp;\Leftrightarrow \Fi \left{ \F \left{ c \right}^* \cdot \F \left{ c \right} + \rho \left( \F \left{ d_x \right}^* \cdot \F \left{ d_x \right} + \F \left{ d_y \right}^* \cdot \F \left{  d_y \right}     \right)   \right} \, , <br />
+  (\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) &amp;\Leftrightarrow \Fi \left{ \F \left{ c \right}^* \cdot \F \left{ b \right} + \rho \left( \F \left{ d_x \right}^* \cdot \F \left{ z \right} + \F \left{ d_y \right}^* \cdot \F \left{  z \right}  	  \right)   \right} \,,
+\end{align}
+with $(\cdot)^*$ denoting the element-wise complex conjugate.</p>
+
+<p>+++</p>
+
+<p>Combining both terms in the original fraction yields the sought proximal operator:</p>
+
+<p>\begin{align} 
+  \mathrm{prox}_{\left| \cdot \right|_2 ,\rho} (\mathbf{z}) = \Fi \left{  \frac{\F \left{ c \right}^* \cdot \F \left{ b \right} + \rho \left( \F \left{ d_x \right}^* \cdot \F \left{ z \right} + \F \left{ d_y \right}^* \cdot \F \left{  z \right}  	  \right)}{\F \left{ c \right}^* \cdot \F \left{ c \right} + \rho \left( \F \left{ d_x \right}^* \cdot \F \left{ d_x \right} + \F \left{ d_y \right}^* \cdot \F \left{  d_y \right}     \right)} \right} \,.
+\end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>As for the inverse filer introduced before, this proximal operator is also unstable with respect to noise and zeros in the involved Fourier transforms. However, the integration into the HQS iterations will mitigate these effects so that the resulting estimate $\mathbf{\hat{x}}$ will not be affected.</p>
+
+<pre><code class="language-{note}">   All terms of the proximal operator that do not depend on $z$ only have to be computed once and can then be reused.
+</code></pre>
+
+<p>+++</p>
+
+<h6 id="general-regularizer">General regularizer</h6>
+
+<p>For a general regularizer, we assume $\mathbf{D}$ to be the identity matrix so that it can be ignored. The proximal operator can then be written as:</p>
+
+<p>\begin{align} 
+  \mathrm{prox}_{\left| \cdot \right|_2 ,\rho} (\mathbf{z}) = \Fi \left{ \frac{\F \left{ c \right}^* \cdot \F \left{ b \right} + \rho \F \left{ z \right}  }{\F \left{ c \right}^* \cdot \F \left{ c \right} + \rho}  \right} \,.
+\end{align}</p>
+
+<p>+++</p>
+
+<h5 id="efficient-implementation-of-z-update-for-anisotropic-tv-regularizer">Efficient implementation of $z$-update for anisotropic TV regularizer</h5>
+
+<p>For the $z$-update, we need to find a solution for the proximal operator
+\begin{align} 
+   \mathrm{prox}_{\left| \cdot \right|_1, \rho } (\mathbf{Dx}) = \argmin{\mathbf{z}} \lambda \left| \mathbf{z} \right|_1 + \frac{\rho}{2}\left| \mathbf{Dx-z} \right|^2_2 \,.<br />
+\end{align}</p>
+
+<p>To simplify the writing, we substitute $\mathbf{v} = \mathbf{Dx}$:</p>
+
+<p>\begin{align} 
+  \mathrm{prox}_{\left| \cdot \right|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}} \lambda \left| \mathbf{z} \right|_1 + \frac{\rho}{2}\left| \mathbf{v-z} \right|^2_2 \,.<br />
+\end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>We now have to calculate the gradient of that expression with respect to $\mathbf{z}$. To easily follow the derivation, we will work on a single element of the gradient, i.e., we consider the scalar function</p>
+
+<p>\begin{align} 
+   h(z) = \frac{\rho}{2}(v-z)^2 + \lambda \vert z \vert \,.
+\end{align}</p>
+
+<p>In order to calculate the gradient $h’(z)$ of $h(z)$, we can work on the two terms of the addition separately. The derivative of the first term $\frac{\rho}{2}(v-z)^2$ is 
+\begin{align} 
+   \frac{\mathrm{d}}{\mathrm{d}z}\,\, \frac{\rho}{2}(v-z)^2 = \rho (-v + z) \,.
+\end{align}
+Unfortunately, the absolute value function $\vert \cdot \vert$ (i.e., the 1-norm $\left| \cdot \right|_1$) is not differentiable and we have to take a detour to solve that problem.</p>
+
+<p>For convex functions there is the concept of subdifferentials and subgradients which can be employed to approximate the gradient of convex functions at positions where they are not differentiable.</p>
+
+<p>Consider a convex function $f:\mathcal{S} \rightarrow \mathbb{R}$ defined on the open interval $\mathcal{S}$. According to Taylor’s theorem, the linear approximation of such a function $f$ at any point is strictly smaller than the value of the function at that point itself, i.e.,
+\begin{align} 
+   \forall a \in \mathcal{S}: f(x) \geq f(a) + f’(a)(x-a) \,.
+\end{align}
+This inequality also holds for other values $g$ instead of $f’(a)$, which are smaller than the true gradient $f’(a)$ and since a gradient is never infinite, there have to be infinitely many of suitable $g$:
+\begin{align} 
+   \forall a \in \mathcal{S} \exists g \in \mathbb{R}: f(x) \geq f(a) + g(x-a) \,.
+\end{align}
+Such values $g$ are called <em>subgradients</em> of the function $f$ at position $a$. The set of all subgradients of $f$ at position $a$ is called the <em>subdifferential</em> $\partial_a f$ of $f$ at position $a$:
+\begin{align} 
+   \partial_a f(x) = \left{ g\in \mathbb{R}: f(x) \geq f(a) + g(x-a) \right}  \,.
+\end{align}</p>
+
+<p>Subdifferentials have the following useful properties (w.r.t a convex function $f$ as defined above):</p>
+<ul>
+  <li>The function $f$ is differentiable at position $a$ if and only if the set of subdifferentials at position $a$ contains only a single slope value, i.e., if $\vert \partial_a f(x) \vert = 1$.</li>
+  <li>A point $a$ is a global minimum of $f$ if and only if $0 \in \partial_a f(x)$.</li>
+  <li>Let $k(x)$ be another convex function like $f$. With the subdifferentials $\partial_a f(x), \partial_a k(x)$ for some position $a$, the subdifferential of $f+k$ for position $a$ is then $\partial_a (f+k)(x) = \partial_a f(x) \oplus \partial_a k(x)$ with $\oplus$ denoting the so-called Minkowski sum (i.e., the set of all possible sums between all elements of the two input sets).</li>
+</ul>
+
+<p>We will now derive the subdifferential of $h(z) = \frac{\rho}{2}(v-z)^2 + \lambda \vert z \vert $ (neglecting the position $a$ for simplicity) and look for subgradients of $0$, which correspond to the sought minimum.</p>
+
+<p>According to the third property introduced before, it is:
+\begin{align} 
+   \partial h(z) = \partial \frac{\rho}{2}(v-z)^2 \oplus  \partial \lambda \vert z \vert \,.
+\end{align}</p>
+
+<p>Of course, the true gradient $f’(a)$ of a function $f(x)$ at position $a$ is also a valid subgradient at position $a$, i.e.:
+\begin{align}\label{eq:hqs_z_1} 
+  \partial h(z) = \lbrace \rho(-v+z) \rbrace \oplus  \partial \lambda \vert z \vert \,. <br />
+\end{align}</p>
+
+<p>The subdifferentials for the absolute value function are:
+\begin{align}\label{eq:hqs_z_2}
+  \partial \lambda \vert z \vert = \begin{cases}
+   &amp;-\lambda &amp;\text{ if } z &lt; 0<br />
+   &amp;[-\lambda, \lambda] &amp;\text{ if } z = 0<br />
+   &amp;\lambda &amp;\text{ if } z &gt; 0<br />
+  \end{cases} \,.
+\end{align}
+For $z\neq 0$, the absolute function is differentiable which is why its subdifferentials for those positions contains only one element ($\lambda$ or $-\lambda$ respectively). For $z=0$ there infinitely many possible slope values inside the interval $[-\lambda, \lambda]$ (note: the value $0$ is also contained in that interval, indicating that the global minimum must be at position $0$).</p>
+
+<p>Combining \eqref{eq:hqs_z_1} and \eqref{eq:hqs_z_2} yields:
+\begin{align}\label{eq:hqs_z_1} 
+  \partial h(z) =  \begin{cases}
+    &amp;\rho(-v+z) - \lambda &amp;\text{ if } z &lt; 0<br />
+    &amp;[-\rho v-\lambda, -\rho v + \lambda] &amp;\text{ if } z = 0<br />
+   \end{cases} \,.
+\end{align}</p>
+
+<p>We now equate all cases separately to $0$, solve for $z$ and calculate the corresponding interval for $v$ (which is the variable that we know, so we can use it to decide which case applies):
+\begin{align} 
+  \textbf{Case 1,  } z &lt; 0: \quad &amp;\rho(-v+z) - \lambda \overset{!}{=}0 \Leftrightarrow z \overset{!}{=} v + \frac{\lambda}{\rho} <br />
+  &amp;v + \frac{\lambda}{\rho}  \overset{!}{&lt;} 0 \Leftrightarrow v &lt; - \frac{\lambda}{\rho} \,.
+\end{align}</p>
+
+<p>For the second case, which is where the sought minimum is located, we want to always return $0$ which is why we have to make sure that $0$ is contained in the interval of possible slopes, i.e.,  $0 \in [-\rho v-\lambda, -\rho v + \lambda]$. Hence, it must hold 
+\begin{align}
+   -\rho v - \lambda \leq 0 &amp;\Leftrightarrow v \geq - \frac{\lambda }{\rho } \quad \text{and} <br />
+   0 \leq -\rho v + \lambda  &amp;\Leftrightarrow v \leq \frac{\lambda}{\rho} \,,
+\end{align}
+i.e., 
+\begin{align} 
+  \textbf{Case 2,  } z &lt; 0: \quad \left| v \right| \leq \frac{\lambda }{\rho }\,.
+\end{align}</p>
+
+<p>The third case can be solved analogously to the first case:
+\begin{align} 
+  \textbf{Case 3,  } z &gt; 0: \quad &amp;\rho(-v-z) + \lambda \overset{!}{=}0 \Leftrightarrow z \overset{!}{=} v - \frac{\lambda}{\rho} <br />
+  &amp; v - \frac{\lambda}{\rho}  \overset{!}{&gt;} 0 \Leftrightarrow v &gt; \frac{\lambda}{\rho} \,.
+\end{align}
+$\square$</p>
+
+<p>+++</p>
+
+<p>The sought proximal operator is given by
+\begin{align} 
+  \mathrm{prox}<em>{\left| \cdot \right|_1, \rho } (\mathbf{v})_i =  \mathcal{S}</em>{\lambda / \rho} (v_i) = \begin{cases}
+  v_i + \frac{\lambda}{\rho} &amp;\text{if } v_i &lt; - \frac{\lambda}{\rho}<br />
+  0 &amp;\text{if } \left| v_i \right| \leq \frac{\lambda }{\rho }<br />
+  v_i - \frac{\lambda}{\rho} &amp;\text{if } v_i &gt; \frac{\lambda}{\rho} 
+\end{cases} \,,<br />
+\end{align}
+with $v_i$ refering to the $i$-th element of the corresponding vector $\mathbf{v}$ (etc.).</p>
+
+<p>The operator $\mathcal{S}$ is also called the element-wise <em>soft thresholding operator</em>.</p>
+
+<p>+++</p>
+
+<h5 id="visualization-of-soft-thresholding-operator">Visualization of soft thresholding operator</h5>
+
+<p>```{code-cell} ipython3
+def y(z,v, rho, lam):
+    return lam*np.abs(z) + rho/2.0 * np.linalg.norm(v-z)**2</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+def s(v,kap):
+    if v &gt; kap:
+        return v-kap
+    if v &lt; (-1*kap):
+        return v+kap
+    else:
+        return 0
+</code></pre></div></div>
+
+<p>```{code-cell} ipython3
+def soft_thres_visu(v):
+    rho = 0.5
+    lam = 0.4</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zs = np.arange(-5.0,5.0,0.1)
+ys = [y(z,v,rho,lam) for z in zs]
+
+vs = np.arange(-3.0,3.0,0.1)
+ss = [s(v,lam/rho) for v in vs]
+
+#plt.subplots(1,2)
+plt.clf()
+plt.subplot(1,2,1)
+plt.plot(zs, ys)
+plt.plot(cur_s:=s(v, lam/rho), y(cur_s, v, rho, lam), 'bo' )
+
+plt.subplot(1,2,2)
+plt.plot(vs, ss)
+plt.plot(v,s(v,lam/rho),'bo') ```
+</code></pre></div></div>
+
+<h2 id="code-cell-ipython3-4">```{code-cell} ipython3</h2>
+<p>slideshow:
+  slide_type: fragment
+—
+plt.subplots(1,2)
+interact(lambda v: soft_thres_visu(v), v=widgets.FloatSlider(min=-3.0,max=3.0, step=0.2, value=0))
+```</p>
+
+<h5 id="efficient-implementation-of-z-update-for-isotropic-tv-regularizer">Efficient implementation of $z$-update for isotropic TV regularizer</h5>
+
+<p>+++</p>
+
+<p>For the isotropic case, the $l_2$-norm of the finite differences approximation of the horizontal and vertical image gradients is used as the regularizer instead of the $l_1$-norm, i.e.,
+\begin{align} 
+   \lambda \left| \mathbf{z} \right|<em>{2,1}  = \lambda \sum\limits^N</em>{i=1} \left| \left[ \begin{pmatrix} 
+      (\mathbf{D}<em>x \mathbf{x})_i \ (\mathbf{D}_y \mathbf{x})_i
+   \end{pmatrix} \right] \right|_2 = \lambda \sum\limits^N</em>{i=1} \sqrt{(\mathbf{D}_x \mathbf{x})^2_i + (\mathbf{D}_y \mathbf{x})^2_i } \,.
+\end{align}
+This expression is also called the <em>group lasso</em>.</p>
+
+<p>+++</p>
+
+<p>Accordingly, the whole deconvolution problem for the isotropic TV regularizer is
+\begin{align} 
+   &amp;\argmin{\mathbf{x}} \underbrace{\frac{1}{2} \left| \mathbf{Cx-b} \right|^2<em>2}</em>{=:f(\mathbf{x})} + \underbrace{\lambda \sum\limits^N_{i=1} \left| \left[ \begin{pmatrix} 
+      z_i \ z_{i+N}
+   \end{pmatrix} \right]  \right|<em>2 }</em>{=:g(\mathbf{z})} <br />
+   &amp;\text{subject to } \mathbf{Dx-z=\mathbf{0}}\,.
+\end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>Again, the vector $\mathbf{z} \in \mathbb{R}^{2\times N}$ so that its first, respectively, second half can hold the image gradients in $x$-direction, respectively, in $y$-direction, i.e., $\mathbf{z} = \left[ \mathbf{D}_x \mathbf{x}\,\, \mathbf{D}_y \mathbf{x}   \right]\transp $.</p>
+
+<p>+++</p>
+
+<p>As only the regularization term $g(\mathbf{z})$ has changed, we only have to derive a corresponding $\mathbf{z}$-update rule, i.e., we have to find a solution for the proximal operator
+\begin{align} 
+   \mathbf{z} \leftarrow \mathbf{prox}<em>{\left| \cdot \right|</em>{2,1},\rho } (\mathbf{v}) = \argmin{\mathbf{z}}\,\, \lambda \sum\limits^N_{i=1} \left| \left[ \begin{pmatrix} 
+    z_i \ z_{i+N}
+ \end{pmatrix} \right]  \right|_2  + \frac{\rho}{2} \left| \mathbf{v-z} \right| ^2_2, \quad \mathbf{v=Dx} \,.
+\end{align}</p>
+
+<p>+++ {“tags”: [“book_only”]}</p>
+
+<p>Therefore, we again extract the term we have to minimize:
+\begin{align}\label{eq:hqs:iso:1}
+   h(\mathbf{z}) := \lambda \left| \mathbf{z} \right|_2 + \frac{\rho}{2} \left| \mathbf{v-z} \right| ^2_2 \,.
+\end{align}</p>
+
+<p>We follow the approach of calculating the gradient of $h(\mathbf{z})$, equating it to $\mathbf{0}$ and solving for $\mathbf{z}$.</p>
+
+<p>The gradient of the second term with respect to $\mathbf{z}$ can be calculated straight forward:
+\begin{align} 
+   \nabla_\mathbf{z} \frac{\rho}{2} \left| \mathbf{v-z} \right| ^2_2 = \rho (-\mathbf{v} + \mathbf{z}) \,.
+\end{align}</p>
+
+<p>The gradient of the Euclidean norm $\left| \mathbf{x} \right| <em>2$ is
+\begin{align} 
+   \nabla</em>\mathbf{x} \left| \mathbf{x} \right|<em>2 = \frac{\mathbf{x}}{\left| \mathbf{x} \right|_2 }, \quad \text{for } \mathbf{x} \neq \mathbf{0} \,.
+\end{align}
+Hence, the gradient of the first term of \eqref{eq:hqs:iso:1} is 
+\begin{align} 
+   \nabla</em>\mathbf{z} \lambda \left| \mathbf{z} \right| _2 = \lambda \frac{\mathbf{z}}{\left| \mathbf{z} \right|_2 } \quad \text{for } \mathbf{z} \neq \mathbf{0} \,.
+\end{align}</p>
+
+<p>So for $\mathbf{z} \neq \mathbf{0}$, we will find a $\hat{\mathbf{z}}$ with $  \nabla_\mathbf{z} \lbrace h(\mathbf{z}) \rbrace (\hat{\mathbf{z}}) = \mathbf{0}$:
+\begin{align} 
+  \lambda \frac{\mathbf{z}}{\left| \mathbf{z} \right|_2 } +  \rho (-\mathbf{v} + \mathbf{z}) &amp;\overset{!}{=} \mathbf{0} <br />
+  \mathbf{z}\left( \frac{\lambda}{\left| \mathbf{z} \right|_2 } + \rho \right) &amp;= \rho \mathbf{v} \,. \label{eq:hqs:iso:2}
+\end{align}
+We now apply the $l_2$-norm to both sides of the equation:
+\begin{align}  \label{eq:hqs:iso:3}
+   \left| \frac{\lambda}{\left| \mathbf{z} \right|_2 }  + \rho\right| \cdot \left| \mathbf{z} \right|_2 = \left| \rho \right|  \left| \mathbf{v} \right|_2 \,.
+\end{align}
+The last step introduced two absolute values for each of which the two possible cases, .i.e, $&gt;0$, $&lt;0$ have to be considered. Regarding the term $\left| \rho \right| $ on the right side of the equation, only the positive case has to be considered since $\rho &gt; 0$ by definition.</p>
+
+<p>The first absolute term $\left| \frac{\lambda}{\left| \mathbf{z} \right|_2 }  + \rho\right|$ is positive if
+\begin{align} 
+   \frac{\lambda}{\left| \mathbf{z} \right|_2 }  + \rho &amp;&gt; 0 \</p>
+<ul>
+  <li>\frac{\lambda}{\rho} &amp;&lt; \left| \mathbf{z} \right| _2 \,,
+\end{align}
+what always holds since due to $\lambda &gt; 0$ and $\rho &gt; 0$ it follows $-\frac{\lambda}{\rho} &lt; 0$ and since  $\left| \mathbf{z} \right| _2 &gt; 0$ as $\left| \cdot \right| \geq 0$ for any norm and $\mathbf{z} \neq \mathbf{0}$ by definition of the considered case. Hence, the negative case is impossible.</li>
+</ul>
+
+<p>We continue to solve \eqref{eq:hqs:iso:3} for $\left| \mathbf{z} \right| _2$:
+\begin{align} 
+  \left( \frac{\lambda}{\left| \mathbf{z} \right|_2 }  + \rho\right) \cdot \left| \mathbf{z} \right|_2 &amp;= \rho  \left| \mathbf{v} \right|_2  <br />
+  \lambda + \rho \left| \mathbf{z} \right| _2 &amp;= \rho \left| \mathbf{v} \right| _2 <br />
+  \left| \mathbf{z} \right| _2 &amp;= \frac{\rho \left| \mathbf{v} \right|_2 - \lambda  }{\rho} \,,
+\end{align}
+and now insert this expression for $\left| \mathbf{z} \right| _2$ into \eqref{eq:hqs:iso:2} and solve for $\mathbf{z}$:
+\begin{align} 
+   \mathbf{z} \left( \lambda \cdot \frac{\rho }{\rho \left| \mathbf{v} \right|_2 - \lambda } + \rho  \right) &amp;= \rho \mathbf{v} <br />
+   \mathbf{z} \frac{\lambda + \rho  \left| \mathbf{v} \right|_2 - \lambda  }{\rho  \left| \mathbf{v} \right|_2 - \lambda  } &amp;= \mathbf{v}  <br />
+   \mathbf{z} &amp;= \mathbf{v} \cdot \frac{\rho  \left| \mathbf{v} \right|_2 - \lambda  }{\rho  \left| \mathbf{v} \right|_2 } <br />
+   \mathbf{z} &amp;= \mathbf{v} \cdot \left( 1 - \frac{\lambda }{\rho \left| \mathbf{v} \right|_2 } \right) \,.
+\end{align}
+In order to make sure that $\mathbf{z} \overset{!}{\neq} \mathbf{0}$, we have to check for which conditions $\left( 1 - \frac{\lambda }{\rho \left| \mathbf{v} \right|_2 } \right) &gt; 0$ holds (we do not have to check for $&lt;0$ as this is impossible as we showed when inspecting the absolute terms before):
+\begin{align} 
+  \left( 1 - \frac{\lambda }{\rho \left| \mathbf{v} \right|_2 } \right) &amp;&gt; 0 <br />
+  \left| \mathbf{v} \right|_2 &amp;&gt; \frac{\lambda }{\rho } \,.
+\end{align}</p>
+
+<p>For $\mathbf{z} = \mathbf{0}$, there is no well-defined gradient for $\left| \mathbf{z} \right|<em>2$, so we make use of the concept of subdifferentials again and derive the subdifferential of $h(\mathbf{z})$ with respect to position $\mathbf{z} = \mathbf{0}$:
+\begin{align} 
+  h(\mathbf{z}) &amp;= \lambda \left| \mathbf{z} \right|_2 + \frac{\rho}{2} \left| \mathbf{v-z} \right| ^2_2 <br />
+  \frac{h(\mathbf{z})}{\rho} &amp;= \frac{\lambda}{\rho } \left| \mathbf{z} \right|_2 + \frac{1}{2} \left| \mathbf{v-z} \right|^2_2  <br />
+  \partial</em>\mathbf{0} \frac{h(\mathbf{z})}{\rho} &amp;= \partial_\mathbf{0} \frac{\lambda}{\rho } \left| \mathbf{z} \right|<em>2 \oplus  \partial</em>\mathbf{0}\frac{1}{2} \left| \mathbf{v-z} \right|^2<em>2 \,.
+\end{align}
+As before, we can replace the second subdifferential on the right side of the equation with the true gradient:
+\begin{align} 
+  \partial</em>\mathbf{0} \frac{h(\mathbf{z})}{\rho} &amp;= \partial_\mathbf{0} \frac{\lambda}{\rho } \left| \mathbf{z} \right|<em>2 \oplus  \lbrace - \mathbf{v} \rbrace \,.
+\end{align}
+For the first term, i.e., $\partial</em>\mathbf{0}\frac{\lambda}{\rho} \left| \mathbf{z} \right|<em>2$, we employ the definition of subdifferentials:
+\begin{align} 
+  \partial</em>\mathbf{0}\frac{\lambda}{\rho} \left| \mathbf{z} \right|<em>2 &amp;= \left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho} \left| \mathbf{z} \right|_2 \geq \frac{\lambda}{\rho} \left| \mathbf{0} \right|_2 + \left\langle \mathbf{g} , \mathbf{z} - \mathbf{0}\right\rangle  \right} <br />
+  \partial</em>\mathbf{0}\frac{\lambda}{\rho} \left| \mathbf{z} \right|<em>2 &amp;= \left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho} \left| \mathbf{z} \right|_2 \geq \left\langle \mathbf{g} , \mathbf{z}\right\rangle  \right} \,.
+\end{align}
+By means of the Cauchy-Schwarz inequality, i.e., $\left\langle \mathbf{g}, \mathbf{z} \right\rangle \leq \left| \mathbf{g} \right| \cdot \left| \mathbf{z} \right| $, we can further simplify the derivation:
+\begin{align} 
+  \partial</em>\mathbf{0}\frac{\lambda}{\rho} \left| \mathbf{z} \right|<em>2 &amp;= \left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho} \left| \mathbf{z} \right|_2 \geq \left\langle \mathbf{g} , \mathbf{z}\right\rangle  \right} <br />
+  &amp;= \left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho} \left| \mathbf{z} \right|_2 \geq \left| \mathbf{g} \right|_2 \cdot \left| \mathbf{z} \right|_2     \right} <br />
+  &amp;= \left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left| \mathbf{g} \right|_2      \right} \,.
+\end{align}
+The resulting combined expression for the subdifferential of $\frac{h(\mathbf{z})}{\rho} $ is:
+\begin{align} 
+   \partial</em>\mathbf{0}\frac{h(\mathbf{z})}{\rho} = \left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left| \mathbf{g} \right|<em>2      \right} \oplus \lbrace -\mathbf{v} \rbrace \,.
+\end{align} 
+For $\mathbf{z} = \mathbf{0}$ we want to return $\mathbf{0}$ if possible since that would correspond to the sought minimum. A subgradient $\mathbf{0}$ is contained in $\partial</em>\mathbf{0}\frac{h(\mathbf{z})}{\rho}$ if the first subdifferential $\left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left| \mathbf{g} \right|_2      \right}$ contains a vector $\mathbf{g}$ with $\mathbf{g} = \mathbf{v}$ because then the Minkowski sum $\left{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left| \mathbf{g} \right|_2      \right} \oplus \lbrace -\mathbf{v} \rbrace$ would contain $\mathbf{0}$. This is only possible for any vectors $\mathbf{v}$ with $\left| \mathbf{v} \right|_2 \leq \frac{\lambda}{\rho}  $.</p>
+
+<p>With these results, the final $\mathbf{z}$-update rule is given by:</p>
+
+<p>+++ {“tags”: [“presentation_only”, “remove-cell”]}</p>
+
+<p>The concept of subdifferentials yields the sought $\mathbf{z}$-update rule:</p>
+
+<p>+++</p>
+
+<p>\begin{align} 
+  \mathbf{z} \leftarrow \mathbf{prox}<em>{\left| \cdot \right|</em>{2,1},\rho } (\mathbf{v}) = \begin{cases} 
+    \mathbf{v} \cdot \left( 1 - \frac{\lambda }{\rho \left| \mathbf{v} \right|_2 } \right) &amp;\text{if } \left| \mathbf{v} \right| _2 &gt; \frac{\lambda}{\rho} <br />
+    \mathbf{0} &amp;\text{if } \left| \mathbf{v} \right| _2 \leq \frac{\lambda}{\rho}
+  \end{cases}
+   \,.
+\end{align}
+This expression is also known as the vector soft-thresholding operator.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Computational Imaging</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Computational Imaging</li><li><a class="u-email" href="mailto:jojomey@googlemail.com">jojomey@googlemail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/bullette007"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">bullette007</span></a></li><li><a href="https://www.twitter.com/jojomey87"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jojomey87</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Course website for lecture Computational Imaging at KIT.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
