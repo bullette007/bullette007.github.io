@@ -13,6 +13,7 @@ kernelspec:
 ---
 
 ```{code-cell} ipython3
+:init_cell: true
 :tags: [remove-cell]
 
 %%js
@@ -50,6 +51,8 @@ from IPython.display import SVG, display, IFrame, HTML
 ```
 
 ```{code-cell} ipython3
+:tags: [remove-input, book_only]
+
 %matplotlib inline
 ```
 
@@ -108,7 +111,7 @@ $\begin{align}
 
 <font size="7"> Computational Imaging </font><br><br><br>
 
-+++ {"slideshow": {"slide_type": "notes"}}
++++ {"slideshow": {"slide_type": "subslide"}}
 
 # Fundamental Basics
 
@@ -767,7 +770,7 @@ For a defocused optical imaging system (see 2.1.2.1), object points from the obs
 
 The impulse response $h(\mathbf{x})$ will have the shape of a two-dimensional $\mathrm{rect}$-function:<br>
 $\begin{align}
-    h(\mathbf{x}) = \mathrm{rect}\left( \Vert x \Vert, \varepsilon \right)\,,
+    h(\mathbf{x}) = \mathrm{rect}\left( \Vert \mathbf{x} \Vert, \varepsilon \right)\,,
 \end{align}$<br>
 sometimes also denoted as the so-called **pillbox function** (looks like a round box for drugs).
 
@@ -785,7 +788,6 @@ def createPillobxResponse(r):
     X,Y = np.meshgrid(np.arange(-r-1,r+2,1), np.arange(-r-1,r+2,1))
     psf = np.zeros_like(X)
     psf[np.sqrt(X**2+Y**2) <= r] = 1
-    #psf = psf * (1 / np.sum(np.sum(psf)))
     return psf, X, Y
 ```
 
@@ -996,7 +998,7 @@ $\begin{align}
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The coefficients are symmetric in the way that $c_i = c^*_{-i}$ with $^*$ denoting the complex conjugate. Hence, all the imaginary parts cancel out during the synthesis.
+The coefficients are symmetric in the way that $c_i = c^*_{-i}$ with $^*$ denoting the complex conjugate. Hence, all the imaginary parts cancel out during the synthesis of a real-valued input signal $g(x)$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1280,61 +1282,3 @@ plt.plot(xs,gs)
 
 ##### Note
 In practice, one would employ one of the existing, highly optimized libraries to perform the DFT calculation, e.g., the `numpy.fft` module.
-
-+++
-
-### Example: Image filtering in the Fourier domain
-
-+++
-
-In this example, again the effect of a defocused optical imaging system will be simulated by using the previously introduced pillbox function as the point spread function.
-
-+++
-
-However, this time the convolution will be performed as a multiplication in the Fourier domain.
-
-+++
-
-1. Read the input image, convert it to grayscale and ensure that is has odd dimensions by padding with zeros:
-
-```{code-cell} ipython3
-img = cv2.cvtColor(plt.imread('figures/2/input_Cam020.png'), cv2.COLOR_RGB2GRAY)
-img = np.pad(img,(((img.shape[0]+1)%2,0),((img.shape[1]+1)%2,0)))
-imshow(img, cmap='gray')
-```
-
-2. Create a PSF using the `createPillboxResponse`-function and pad it with zeros so that it matches the size of the input image:
-
-```{code-cell} ipython3
-psf,_,_ = createPillobxResponse(5)
-rows2add = int((img.shape[0] - psf.shape[0])/2)
-cols2add = int((img.shape[1] - psf.shape[1])/2)
-psf = np.pad(psf, ((rows2add,rows2add),(cols2add,cols2add)))
-```
-
-3. Transform both, the image and the PSF into the Fourier domain using DFT, shift their spectra into the common arrangement, multiply the spectra, undo the shift and transform the result back into the spatial frequency domain.
-
-```{code-cell} ipython3
-imgF = np.fft.fft2(img)         #DFT of img
-psfF = np.fft.fft2(             #DFT of
-        np.fft.ifftshift(psf))  #shifted psf
-
-imgF = np.fft.fftshift(imgF)    #shifting of imgF
-psfF = np.fft.fftshift(psfF)    #shifting of psfF
-
-resF = imgF * psfF              #multiplication of 
-                                #the shifted spectra
-    
-res  = np.fft.ifft2(            #inverse DFT of
-        np.fft.ifftshift(resF)) #inverse shift
-```
-
-```{code-cell} ipython3
-plt.figure()
-imshow(np.real(res), cmap='gray')
-```
-
-+++ {"tags": ["remove-cell"]}
-
-## TODOS:
-* Introduce and explain term OTF.

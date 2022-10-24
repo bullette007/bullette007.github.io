@@ -13,6 +13,7 @@ kernelspec:
 ---
 
 ```{code-cell} ipython3
+:init_cell: true
 :tags: [remove-cell]
 
 %%js
@@ -25,7 +26,7 @@ var cells = Jupyter.notebook.get_cells();
                console.log(tags);
                if (tags != undefined) {
                for (var j = 0; j < tags.length; j++) {
-                  if (tags[j]=="book_only" | tags[j]=="remove-cell") {cur_cell.element.hide();
+                  if (tags[j]=="book_only" | tags[j]=="remove-cell") {cur_cell.element.hide()};
                   if (tags[j]=="presentation_only") {cur_cell.element.show();}
             }}}
 ```
