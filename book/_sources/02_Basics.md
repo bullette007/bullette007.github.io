@@ -1,65 +1,35 @@
-<!DOCTYPE html>
-<html lang="en"><head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Computational Imaging | Course website for lecture Computational Imaging at KIT.</title>
-<meta name="generator" content="Jekyll v3.9.2" />
-<meta property="og:title" content="Computational Imaging" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="Course website for lecture Computational Imaging at KIT." />
-<meta property="og:description" content="Course website for lecture Computational Imaging at KIT." />
-<link rel="canonical" href="https://computational-imaging.de/book/_sources/02_Basics.html" />
-<meta property="og:url" content="https://computational-imaging.de/book/_sources/02_Basics.html" />
-<meta property="og:site_name" content="Computational Imaging" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Computational Imaging" />
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Course website for lecture Computational Imaging at KIT.","headline":"Computational Imaging","url":"https://computational-imaging.de/book/_sources/02_Basics.html"}</script>
-<!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://computational-imaging.de/feed.xml" title="Computational Imaging" /></head>
-<body><header class="site-header" role="banner">
+---
+jupytext:
+  formats: ipynb,md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.14.1
+kernelspec:
+  display_name: compimg
+  language: python
+  name: compimg
+---
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">Computational Imaging</a><nav class="site-nav">
-        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
-        <label for="nav-trigger">
-          <span class="menu-icon">
-            <svg viewBox="0 0 18 15" width="18px" height="15px">
-              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
-            </svg>
-          </span>
-        </label>
+```{code-cell} ipython3
+:tags: [remove-cell]
 
-        <div class="trigger"><a class="page-link" href="/about/">About</a><a class="page-link" href="/book/_sources/markdown-notebooks.html">Notebooks with MyST Markdown</a><a class="page-link" href="/book/_sources/intro.html">Computational Imaging - Course Notes for Winter Term 2022 / 2023</a><a class="page-link" href="/book/_sources/markdown.html">Markdown Files</a></div>
-      </nav></div>
-</header>
-<main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        <article class="post">
-
-  <header class="post-header">
-    <h1 class="post-title"></h1>
-  </header>
-
-  <div class="post-content">
-    <p>```{code-cell} ipython3
-:tags: [remove-cell]</p>
-
-<p>%%js
+%%js
 var cells = Jupyter.notebook.get_cells();
-           for (var i = 0; i &lt; cells.length; i++) {
+           for (var i = 0; i < cells.length; i++) {
                var cur_cell = cells[i];
                var tags = cur_cell._metadata.tags;
                console.log(i);
                console.log(tags == undefined);
                console.log(tags);
                if (tags != undefined) {
-               for (var j = 0; j &lt; tags.length; j++) {
-                  if (tags[j]==”book_only” | tags[j]==”remove-cell”) {cur_cell.element.hide();}
-                  if (tags[j]==”presentation_only”) {cur_cell.element.show();}
-            }}}</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+               for (var j = 0; j < tags.length; j++) {
+                  if (tags[j]=="book_only" | tags[j]=="remove-cell") {cur_cell.element.hide();}
+                  if (tags[j]=="presentation_only") {cur_cell.element.show();}
+            }}}
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -77,11 +47,12 @@ import scipy.signal as sig
 from scipy.integrate import simpson
 from IPython.display import SVG, display, IFrame, HTML
 %matplotlib notebook
-</code></pre></div></div>
+```
 
-<p>```{code-cell} ipython3
-%matplotlib inline</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+```{code-cell} ipython3
+%matplotlib inline
+```
+
 +++ {"init_cell": true, "slideshow": {"slide_type": "notes"}, "tags": ["remove-cell"]}
 
 def showFig(path,i,ending, width, height):
@@ -94,20 +65,22 @@ def showFig(path,i,ending, width, height):
 
 def showFig(path,i,ending, width, height):
     filename = path+str(i)+ending
-    return HTML("&lt;img src=\"" + filename +  f"\" style=\"max-height:{height}vh\"/&gt;")
-</code></pre></div></div>
+    return HTML("<img src=\"" + filename +  f"\" style=\"max-height:{height}vh\"/>")
+```
 
-<h2 id="code-cell-ipython3">```{code-cell} ipython3</h2>
-<p>slideshow:
+```{code-cell} ipython3
+---
+slideshow:
   slide_type: notes
 tags: [remove-cell]
-—
+---
 def imshow(img, cmap=None):
-    plt.close(‘all’)
+    plt.close('all')
     plt.figure()
     plt.imshow(img, cmap=cmap)
-    plt.show()</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    plt.show()
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -119,11 +92,11 @@ def imshow(img, cmap=None):
     plt.clf()
     plt.imshow(img, cmap=cmap)
     plt.show()
-</code></pre></div></div>
+```
 
-<p>+++ {“slideshow”: {“slide_type”: “slide”}}</p>
++++ {"slideshow": {"slide_type": "slide"}}
 
-<p>$\begin{align}
+$\begin{align}
   \newcommand{transp}{^\intercal}
   \newcommand{F}{\mathcal{F}}
   \newcommand{Fi}{\mathcal{F}^{-1}}
@@ -131,37 +104,35 @@ def imshow(img, cmap=None):
   \newcommand{stochvec}[1]{\mathbf{\tilde{#1}}}
   \newcommand{argmax}[1]{\underset{#1}{\mathrm{arg\, max}}}
   \newcommand{argmin}[1]{\underset{#1}{\mathrm{arg\, min}}}
-\end{align}$</p>
+\end{align}$
 
-<font size="7"> Computational Imaging </font>
-<p><br /><br /><br /></p>
+<font size="7"> Computational Imaging </font><br><br><br>
 
-<p>+++ {“slideshow”: {“slide_type”: “notes”}}</p>
++++ {"slideshow": {"slide_type": "notes"}}
 
-<h1 id="fundamental-basics">Fundamental Basics</h1>
+# Fundamental Basics
 
-<p>+++ {“slideshow”: {“slide_type”: “fragment”}}</p>
++++ {"slideshow": {"slide_type": "fragment"}}
 
-<h5 id="content">Content</h5>
-<ul>
-  <li>Optics</li>
-  <li>Illumination</li>
-  <li>Image acquisition and image formation process</li>
-</ul>
+##### Content
+* Optics
+* Illumination
+* Image acquisition and image formation process
 
-<p>+++ {“slideshow”: {“slide_type”: “slide”}}</p>
++++ {"slideshow": {"slide_type": "slide"}}
 
-<h2 id="optics">Optics</h2>
+## Optics
 
-<p>+++</p>
++++
 
-<p>Conventional imaging: produce sharp image of scene on image plane.</p>
+Conventional imaging: produce sharp image of scene on image plane.
 
-<p>```{code-cell} ipython3
-:init_cell: true</p>
+```{code-cell} ipython3
+:init_cell: true
 
-<p>interact(lambda i: showFig(‘figures/2/imaging_pinhole_lens_‘,i,’.svg’,800,40), i=widgets.IntSlider(min=1,max=4, step=1, value=1))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+interact(lambda i: showFig('figures/2/imaging_pinhole_lens_',i,'.svg',800,40), i=widgets.IntSlider(min=1,max=4, step=1, value=1))
+```
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Conventions:
@@ -181,7 +152,7 @@ $\begin{align}
 \frac{p^\mathrm{c}_x}{p^\mathrm{c}_z} = - \frac{p^\mathrm{b}_x}{b}\,,
 \end{align}$
 
-with image distance $b$.&lt;br&gt;&lt;br&gt;
+with image distance $b$.<br><br>
 Analogously it is:
 
 $\begin{align}
@@ -196,7 +167,7 @@ $\begin{align}
 
 +++ {"cell_style": "center", "slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/pinholePrinciple.svg" style="max-height:40vh"&gt;
+<img src="figures/2/pinholePrinciple.svg" style="max-height:40vh">
 
 +++ {"cell_style": "center", "slideshow": {"slide_type": "fragment"}, "tags": ["presentation_only", "remove-cell"]}
 
@@ -233,7 +204,7 @@ Common cameras employ a lens to collect light and focus it on the sensor. Even l
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/thinLensPrinciple.svg" style="max-height:60vh"&gt;
+<img src="figures/2/thinLensPrinciple.svg" style="max-height:60vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -275,7 +246,7 @@ The following happens, if the image plane is not located at the image distance $
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-&lt;img src="figures/2/thinLensDefocus.svg" style="max-height:40vh"&gt;
+<img src="figures/2/thinLensDefocus.svg" style="max-height:40vh">
 
 +++ {"tags": ["book_only"]}
 
@@ -287,7 +258,7 @@ If the area of the circle of confusion exceeds the area of a single pixel of the
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/thinLensDefocusDetail.svg" style="width:30vw"&gt;
+<img src="figures/2/thinLensDefocusDetail.svg" style="width:30vw">
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -323,7 +294,7 @@ TODO: Example aperture images / maybe with star aperture
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/thinLensDefocusAperture.svg" style="max-height:60vh"&gt;
+<img src="figures/2/thinLensDefocusAperture.svg" style="max-height:60vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}, "tags": ["book_only"]}
 
@@ -339,7 +310,7 @@ When imaging with a lens, light rays intersect the image-side *focal plane* (i.e
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/thinLensPrinciplePlaneOfFocus.svg" style="max-height:60vh"&gt;
+<img src="figures/2/thinLensPrinciplePlaneOfFocus.svg" style="max-height:60vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}, "tags": ["book_only"]}
 
@@ -347,7 +318,7 @@ Objects located at *optical infinity*, i.e., at a distance $g \gg f$, will resul
 
 +++ {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 
-&lt;img src="figures/2/thinLensPrinciplePlaneOfFocus2.svg" style="max-height:80vh"&gt;
+<img src="figures/2/thinLensPrinciplePlaneOfFocus2.svg" style="max-height:80vh">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -359,7 +330,7 @@ $\begin{align}
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/deflectionMeasurement.svg" style="max-height:40vh"&gt;
+<img src="figures/2/deflectionMeasurement.svg" style="max-height:40vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}, "tags": ["book_only"]}
 
@@ -372,7 +343,7 @@ By placing a sensor in the focal plane, this information can be captured. Since 
 
 +++ {"tags": ["book_only"]}
 
-Just shown: Spatial positions on the image-side focal plane correspond to directional information about captured light rays. &lt;br&gt; *Spatial filters* placed in the image-side focal plane act as *directional filters* w.r.t. the captured light rays.
+Just shown: Spatial positions on the image-side focal plane correspond to directional information about captured light rays. <br> *Spatial filters* placed in the image-side focal plane act as *directional filters* w.r.t. the captured light rays.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -380,7 +351,7 @@ Frequently used filter: Pinhole centered at the optical axis.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/telecentricImaging.svg" style="max-height:40vh"&gt;
+<img src="figures/2/telecentricImaging.svg" style="max-height:40vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}, "tags": ["book_only"]}
 
@@ -405,8 +376,8 @@ Important: Since the opening of the telecentric stop allows ray bundles of a cer
 +++
 
 Two main different physical effects can be exploited to emit light: 
-* **Thermal radiation**&lt;br&gt;A certain material is heated (energy supply) and therefore emits light. &lt;br&gt; Examples: Halogen lamps, fluorescent lamps, metal vapor lamps, xenon short-arc lamps.
-* **Luminescsent radiation**&lt;br&gt;Potential energy is directly transformed into light.&lt;br&gt; Examples: Gas-discharge lamps, light-emitting diodes (LEDs) and lasers.
+* **Thermal radiation**<br>A certain material is heated (energy supply) and therefore emits light. <br> Examples: Halogen lamps, fluorescent lamps, metal vapor lamps, xenon short-arc lamps.
+* **Luminescsent radiation**<br>Potential energy is directly transformed into light.<br> Examples: Gas-discharge lamps, light-emitting diodes (LEDs) and lasers.
 
 The emitted spectrum heavily depends on the employed technology.
 
@@ -420,16 +391,16 @@ The emitted spectrum heavily depends on the employed technology.
 
 +++ {"cell_style": "split"}
 
-Concept:&lt;br&gt;
+Concept:<br>
 An infinitely small point shaped light source emitting light uniformly in all directions.
 
 +++ {"cell_style": "split"}
 
-&lt;img src="figures/2/pointSource.svg" style="max-width:50vw; max-height:30vh"&gt;
+<img src="figures/2/pointSource.svg" style="max-width:50vw; max-height:30vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-Realization:&lt;br&gt;
+Realization:<br>
 LEDs (ultra bright ones).
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -438,20 +409,20 @@ LEDs (ultra bright ones).
 
 +++ {"cell_style": "split"}
 
-Concept:&lt;br&gt;
+Concept:<br>
 Finite size area of which each point emits beams of light of a certain spectrum uniformly into all directions of the respective half-space.
 
 +++ {"cell_style": "split"}
 
-&lt;img src="figures/2/areaLightSource.svg" style="max-width:50vw; max-height:30vh"&gt;
+<img src="figures/2/areaLightSource.svg" style="max-width:50vw; max-height:30vh">
 
 +++ {"cell_style": "split"}
 
-Realization:&lt;br&gt;Multiple LEDs arranged in a dens grid behind a diffuser.
+Realization:<br>Multiple LEDs arranged in a dens grid behind a diffuser.
 
 +++ {"cell_style": "split"}
 
-&lt;img src="figures/2/areaLightExample.jpg" style="max-width:50vw; max-height:30vh"&gt;
+<img src="figures/2/areaLightExample.jpg" style="max-width:50vw; max-height:30vh">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -459,16 +430,16 @@ Realization:&lt;br&gt;Multiple LEDs arranged in a dens grid behind a diffuser.
 
 +++ {"cell_style": "split"}
 
-Concept:&lt;br&gt;
+Concept:<br>
 Similar to the area light source extended by a controllable spatial pattern of the emitted spectrum (including its intensity).
 
 +++ {"cell_style": "split"}
 
-&lt;img src="figures/2/spatiallyControllableAreaLightSource.svg" style="max-width:50vw; max-height:30vh"&gt;
+<img src="figures/2/spatiallyControllableAreaLightSource.svg" style="max-width:50vw; max-height:30vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-Realization:&lt;br&gt; Computer display / projector.
+Realization:<br> Computer display / projector.
 
 +++
 
@@ -480,11 +451,11 @@ Note: It is also possible to control the direction of propagation of the emitted
 
 +++ {"cell_style": "split"}
 
-Concept:&lt;br&gt;Similar to telecentric imaging light sources can be adapted to only emit light rays that propagate approximately parallel to each other.
+Concept:<br>Similar to telecentric imaging light sources can be adapted to only emit light rays that propagate approximately parallel to each other.
 
 +++ {"cell_style": "split"}
 
-&lt;img src="figures/2/telecentricLightSource.svg" style="max-width:50vw; max-height:30vh"&gt;
+<img src="figures/2/telecentricLightSource.svg" style="max-width:50vw; max-height:30vh">
 
 +++ {"cell_style": "split", "slideshow": {"slide_type": "fragment"}}
 
@@ -496,7 +467,7 @@ $\begin{align}
 
 +++ {"cell_style": "split", "slideshow": {"slide_type": "fragment"}}
 
-&lt;img src="figures/2/telecentricLightSourceExample.png" style="max-width:40vw; max-height:20vh"&gt;
+<img src="figures/2/telecentricLightSourceExample.png" style="max-width:40vw; max-height:20vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -516,7 +487,7 @@ For the scope of this course (except stated otherwise), the image acquisition pr
 
 +++ {"slideshow": {"slide_type": "subslide"}, "cell_style": "center"}
 
-&lt;img src="figures/2/imageFormationModel.svg" style="max-height:40vh"&gt;
+<img src="figures/2/imageFormationModel.svg" style="max-height:40vh">
 
 +++ {"slideshow": {"slide_type": "fragment"}, "cell_style": "center"}
 
@@ -530,19 +501,19 @@ For the scope of this course (except stated otherwise), the image acquisition pr
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-Image signals $\mathbf{g}$ will typically be modelled as functions&lt;br&gt;
+Image signals $\mathbf{g}$ will typically be modelled as functions<br>
 
 $\begin{align}
 \mathbf{g}:\Omega \rightarrow \mathbb{R}^c\,,\quad \Omega \subseteq \mathbb{R}^2
 \end{align}$
-&lt;br&gt;
-defined over a two-dimensional support $\Omega$ and yielding $c$-channel image values $\mathbf{g}$ for every position $\mathbf{x}$:&lt;br&gt;&lt;br&gt;
-$$\mathbf{g}(\mathbf{x})=\begin{pmatrix}
+<br>
+defined over a two-dimensional support $\Omega$ and yielding $c$-channel image values $\mathbf{g}$ for every position $\mathbf{x}$:<br><br>
+$\begin{align}\mathbf{g}(\mathbf{x})=\begin{pmatrix}
 g_1(\mathbf{x})\\ g_2(\mathbf{x}) \\ \vdots \\ g_c (\mathbf{x})
 \end{pmatrix}\,, \quad \mathrm{with} \quad \mathbf{x} = 
 \begin{pmatrix}
 x \\ y
-\end{pmatrix}\,.$$
+\end{pmatrix}\,.\end{align}$
 
 +++ {"tags": ["book_only"]}
 
@@ -554,7 +525,7 @@ Note: Digital image signals are usually not continuous, neither w.r.t. their sup
 
 +++ {"tags": ["book_only"]}
 
-The whole set of imaging components (illumination, lenses, sensor, algorithms, etc.) can be considered as a system $\mathscr{S}$.&lt;br&gt; The system transforms an input signal $\mathbf{f}(\mathbf{x})$ to an output signal $\mathbf{k}(\mathbf{x})$:&lt;br&gt;
+The whole set of imaging components (illumination, lenses, sensor, algorithms, etc.) can be considered as a system $\mathscr{S}$.<br> The system transforms an input signal $\mathbf{f}(\mathbf{x})$ to an output signal $\mathbf{k}(\mathbf{x})$:<br>
 
 $\begin{align}
 \mathbf{k}(\mathbf{x})=\mathscr{S}\lbrace \mathbf{f}(\mathbf{x}) \rbrace \,.
@@ -562,7 +533,7 @@ $\begin{align}
 
 +++
 
-&lt;img src="figures/2/systemTheory.svg" style="max-height:150px"&gt;
+<img src="figures/2/systemTheory.svg" style="max-height:150px">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -571,7 +542,7 @@ An important type of systems are so-called **linear shift invariant (LSI) system
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 ##### Linearity
-Given two signals $\mathbf{f}(\mathbf{x}), \mathbf{f}'(\mathbf{x})$ and two constants $a, a'$, a system $\mathscr{S}$ is called linear if&lt;br&gt;&lt;br&gt;
+Given two signals $\mathbf{f}(\mathbf{x}), \mathbf{f}'(\mathbf{x})$ and two constants $a, a'$, a system $\mathscr{S}$ is called linear if<br><br>
 
 $\begin{align}
 \mathscr{S}\lbrace a\, \mathbf{f}(\mathbf{x}) + a'\, \mathbf{f}'(\mathbf{x})\rbrace=a\, \mathscr{S}\lbrace \mathbf{f}(\mathbf{x})\rbrace + a'\, \mathscr{S}\lbrace \mathbf{f}'(\mathbf{x}) \rbrace\,.
@@ -580,7 +551,7 @@ $\begin{align}
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 ##### Shift invariance
-A system $\mathscr{S}$ is called shift invariant if&lt;br&gt;&lt;br&gt;
+A system $\mathscr{S}$ is called shift invariant if<br><br>
 
 $\begin{align}
 \mathscr{S}\lbrace \mathbf{f}(\mathbf{x}-\mathbf{x}_0) \rbrace = \mathbf{k}(\mathbf{x}-\mathbf{x}_0) \quad \mathrm{with} \quad \mathbf{k}(\mathbf{x})=\mathscr{S}\lbrace\mathbf{f}(\mathbf{x})\rbrace \,.
@@ -600,15 +571,15 @@ Note: For the sake of simplicity, the scalar case is considered at first.
 
 +++
 
-The Dirac delta function $\delta(x)$ is defined via its effect when being used as an integral kernel together with an arbitrary function $f(x)$:&lt;br&gt;&lt;br&gt;
+The Dirac delta function $\delta(x)$ is defined via its effect when being used as an integral kernel together with an arbitrary function $f(x)$:<br><br>
 $\begin{align}
 \int\limits^\infty_{-\infty} \delta(x-x_0)f(x) \mathrm{d}x = f(x_0) \quad \mathrm{with}\, f(x)\, \mathrm{continuous\, at}\, x_0\,. 
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 $\Rightarrow$ it extracts the value of $f(x)$ at the position $x_0$.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-Assuming $f(x)\equiv 1$ immediately implies &lt;br&gt;&lt;br&gt;
+Assuming $f(x)\equiv 1$ immediately implies <br><br>
 
 $\begin{align}
 \int\limits^\infty_{-\infty} \delta (x) \mathrm{d}x = 1\,. 
@@ -616,18 +587,18 @@ $\begin{align}
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-The Dirac delta function can be imagined as a very narrow, impulse-shaped function with an integral of $1$. It can be approximated via:&lt;br&gt;&lt;br&gt;
+The Dirac delta function can be imagined as a very narrow, impulse-shaped function with an integral of $1$. It can be approximated via:<br><br>
 
 $\begin{align}
  \delta_\varepsilon (x):=\frac{1}{\varepsilon}\,\mathrm{rect}(x,\varepsilon) 
 \end{align}$
 
-with the **rectangular function** &lt;br&gt;
-$$ \mathrm{rect}(x,\varepsilon):=
+with the **rectangular function** <br>
+$\begin{align} \mathrm{rect}(x,\varepsilon):=
 \begin{cases}
-1 \quad \mathrm{if}\, \vert x \vert &lt; \frac{\varepsilon}{2}\,, \\
+1 \quad \mathrm{if}\, \vert x \vert < \frac{\varepsilon}{2}\,, \\
 0 \quad \mathrm{otherwise}\,,
-\end{cases} $$
+\end{cases} \end{align}$
 with $\varepsilon$ denoting the width of the impulse.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
@@ -637,8 +608,8 @@ For $\varepsilon \rightarrow 0$ it holds:
 $\begin{align}
  \lim_{\varepsilon \rightarrow 0} \int\limits^\infty_{-\infty} \delta_\varepsilon(x-x_0)f(x)\mathrm{d}x=f(x_0)=\int\limits^\infty_{-\infty} \delta(x-x_0)f(x) \mathrm{d}x \quad \mathrm{with}\, f(x)\, \mathrm{continuous\, at}\, x_0\,,
 \end{align}$
-&lt;br&gt;
-since $f(x) \approx f(x_0)$ for a sufficiently small neighborhood of $\varepsilon$ around $x_0$ because of the continuity of $f(x)$ in $x_0$, leading to&lt;br&gt;&lt;br&gt;
+<br>
+since $f(x) \approx f(x_0)$ for a sufficiently small neighborhood of $\varepsilon$ around $x_0$ because of the continuity of $f(x)$ in $x_0$, leading to<br><br>
 
 $\begin{align}
  \delta_\varepsilon(x)\xrightarrow{\varepsilon \rightarrow 0} \delta(x)\,. 
@@ -652,20 +623,22 @@ $\begin{align}
 :init_cell: true
 
 def rect(x,eps):
-    if np.linalg.norm(x) &lt; (eps/2.0):
+    if np.linalg.norm(x) < (eps/2.0):
         return 1
     else:
         return 0
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-1">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: subslide
-—
+---
 def diracEps(x,eps):
-    return (1.0/eps) * rect(x,eps)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    return (1.0/eps) * rect(x,eps)
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -679,23 +652,25 @@ def plotDiracEps(eps):
     plt.clf()
     plt.plot(xs, ys)
     print("Integral: " + str(np.sum(ys)/factor))
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-2">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: subslide
-—
+---
 plt.figure()
-interact(plotDiracEps, eps=widgets.FloatSlider(min=0.01, max=2.0, step=0.1, value=2.0))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+interact(plotDiracEps, eps=widgets.FloatSlider(min=0.01, max=2.0, step=0.1, value=2.0))
+```
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### 2D Dirac delta function
 The two-dimensional Dirac delta function is defined as
 $\begin{align}
 \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty}\delta (\mathbf{x}-\mathbf{x_0})f(\mathbf{x})\mathrm{d}\mathbf{x}=f(\mathbf{x}_0)\quad \mathrm{with\,}f(\mathbf{x})\,\mathrm{continuous\,at\,}\mathbf{x}_0\,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 The same properties hold as for the one-dimensional case.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -704,7 +679,7 @@ The same properties hold as for the one-dimensional case.
 
 +++
 
-The **convolution** $f(x)* h(x)$ of two functions $f(x),h(x)$ is defined as:&lt;br&gt;
+The **convolution** $f(x)* h(x)$ of two functions $f(x),h(x)$ is defined as:<br>
 $
 \begin{align}
 f(x)* h(x):= \int\limits^\infty_{-\infty}f(\alpha)h(x-\alpha)\mathrm{d}\alpha=\int\limits^\infty_{-\infty}f(x-\alpha)h(\alpha)\mathrm{d}\alpha\,.
@@ -713,7 +688,7 @@ $
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-Convolving an arbitrary function $f(x)$ with $\delta(x-x_0)$ corresponds to shifting $f(x)$ by $x_0$:&lt;br&gt;
+Convolving an arbitrary function $f(x)$ with $\delta(x-x_0)$ corresponds to shifting $f(x)$ by $x_0$:<br>
 $\begin{align}
 f(x)*\delta(x-x_0)=\int\limits^\infty_{-\infty}f(\alpha)\delta(\underbrace{x-x_0-\alpha}_{=\,0\, \Leftrightarrow\, \alpha\, =\, x-x_0})\mathrm{d}\alpha=f(x-x_0)\,.
 \end{align}
@@ -729,7 +704,7 @@ Hence, for $x_0=0:\quad    f(x)*\delta(x)=f(x)\,.$
 
 +++
 
-The two-dimensional convolution of two functions $f(\mathbf{x}), h(\mathbf{x})$ is denoted by the $**$-operator and is defined as follows:&lt;br&gt;
+The two-dimensional convolution of two functions $f(\mathbf{x}), h(\mathbf{x})$ is denoted by the $**$-operator and is defined as follows:<br>
 $\begin{align}
     f(\mathbf{x})**h(\mathbf{x}) := \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty} f\left((\alpha,\beta)^\intercal\right)h\left( (x-\alpha, y-\beta)^\intercal \right)\mathrm{d}\alpha\, \mathrm{d}\beta\,.
 \end{align}$
@@ -740,12 +715,12 @@ $\begin{align}
 
 +++
 
-The response of an LSI system $\mathscr{S}\lbrace \cdot \rbrace$ to an input signal $f(x)$ can be expressed using a convolution integral:&lt;br&gt;
+The response of an LSI system $\mathscr{S}\lbrace \cdot \rbrace$ to an input signal $f(x)$ can be expressed using a convolution integral:<br>
 $\begin{align}
     \mathscr{S}\lbrace f(x)\rbrace = 
-    \mathscr{S}\lbrace f(x) * \delta(x) \rbrace &amp;= 
-    \mathscr{S} \left\lbrace \int\limits^\infty_{-\infty} f(\alpha)\delta(x-\alpha)\mathrm{d}\alpha \right\rbrace \\ &amp;=
-    \int\limits^\infty_{-\infty}f(\alpha)\underbrace{\mathscr{S}\lbrace\delta(x-\alpha)\rbrace}_{h(x-\alpha)}\mathrm{d}\alpha \\ &amp;=
+    \mathscr{S}\lbrace f(x) * \delta(x) \rbrace &= 
+    \mathscr{S} \left\lbrace \int\limits^\infty_{-\infty} f(\alpha)\delta(x-\alpha)\mathrm{d}\alpha \right\rbrace \\ &=
+    \int\limits^\infty_{-\infty}f(\alpha)\underbrace{\mathscr{S}\lbrace\delta(x-\alpha)\rbrace}_{h(x-\alpha)}\mathrm{d}\alpha \\ &=
     f(x)*h(x)\,.
 \end{align}$
 
@@ -767,7 +742,7 @@ For a defocused optical imaging system (see 2.1.2.1), object points from the obs
 
 +++
 
-&lt;img src="figures/2/thinLensDefocus.svg" style="max-height:40vh"&gt;
+<img src="figures/2/thinLensDefocus.svg" style="max-height:40vh">
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
 
@@ -786,14 +761,14 @@ For a defocused optical imaging system (see 2.1.2.1), object points from the obs
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-&lt;img src="figures/2/thinLensDefocusPSF.svg" style="max-height:80vh"&gt;
+<img src="figures/2/thinLensDefocusPSF.svg" style="max-height:80vh">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-The impulse response $h(\mathbf{x})$ will have the shape of a two-dimensional $\mathrm{rect}$-function:&lt;br&gt;
+The impulse response $h(\mathbf{x})$ will have the shape of a two-dimensional $\mathrm{rect}$-function:<br>
 $\begin{align}
     h(\mathbf{x}) = \mathrm{rect}\left( \Vert x \Vert, \varepsilon \right)\,,
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 sometimes also denoted as the so-called **pillbox function** (looks like a round box for drugs).
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -809,18 +784,20 @@ slideshow:
 def createPillobxResponse(r):
     X,Y = np.meshgrid(np.arange(-r-1,r+2,1), np.arange(-r-1,r+2,1))
     psf = np.zeros_like(X)
-    psf[np.sqrt(X**2+Y**2) &lt;= r] = 1
+    psf[np.sqrt(X**2+Y**2) <= r] = 1
     #psf = psf * (1 / np.sum(np.sum(psf)))
     return psf, X, Y
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-3">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: subslide
-—
-psf, X, Y = createPillobxResponse(10)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+---
+psf, X, Y = createPillobxResponse(10)
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -830,17 +807,19 @@ slideshow:
 fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 surf = ax.plot_surface(X, Y, psf)
 plt.show()
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-4">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: subslide
-—
-img = cv2.cvtColor(plt.imread(‘figures/2/input_Cam020.png’), cv2.COLOR_RGB2GRAY)
+---
+img = cv2.cvtColor(plt.imread('figures/2/input_Cam020.png'), cv2.COLOR_RGB2GRAY)
 plt.figure()
-imshow(img, cmap=’gray’)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+imshow(img, cmap='gray')
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -851,16 +830,18 @@ def defocusExample(r):
     psf, _, _ = createPillobxResponse(r)
     res = sig.convolve2d(img, psf, mode='same', boundary='fill')
     imshow(res, cmap='gray')
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-5">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: fragment
-—
+---
 plt.figure()
-interact(defocusExample, r=widgets.IntSlider(min=0, max=10, step=1, value=3))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+interact(defocusExample, r=widgets.IntSlider(min=0, max=10, step=1, value=3))
+```
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Fourier transform
@@ -872,21 +853,21 @@ interact(defocusExample, r=widgets.IntSlider(min=0, max=10, step=1, value=3))</p
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Every periodic function $g(x)$ with a periodic interval $\left[0, L\right]$ can be expressed as a series of weighted sine functions and cosine functions via the so-called Fourier series synthesis:
-&lt;br&gt;
+<br>
 $\begin{align}
     g(x) = a_0 + \sum\limits^\infty_{f=1} \left(a_f \cos \left( \frac{2\pi f x}{L} \right) + b_f \sin \left(\frac{2\pi f x}{L} \right)\right)\,,
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 with $a_f$ and $b_f$ denoting the Fourier series coefficients.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 The Fourier series coefficients are obtained via the Fourier series analysis:
-&lt;br&gt;
+<br>
 $\begin{align}
-    a_0 &amp;= \frac{1}{L} \int\limits^L_0 g(x)\mathrm{d}x \\
-    a_f &amp;= \frac{2}{L} \int\limits^L_0 g(x) \cos\left(\frac{2\pi f x}{L}\right) \mathrm{d}x \\
-    b_f &amp;= \frac{2}{L} \int\limits^L_0 g(x) \sin\left(\frac{2\pi f x}{L}\right) \mathrm{d}x 
-\end{align}$&lt;br&gt;
+    a_0 &= \frac{1}{L} \int\limits^L_0 g(x)\mathrm{d}x \\
+    a_f &= \frac{2}{L} \int\limits^L_0 g(x) \cos\left(\frac{2\pi f x}{L}\right) \mathrm{d}x \\
+    b_f &= \frac{2}{L} \int\limits^L_0 g(x) \sin\left(\frac{2\pi f x}{L}\right) \mathrm{d}x 
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -910,19 +891,21 @@ xs = (np.linspace(0,L,samples,endpoint=True))
 gs = sig.sawtooth(2*np.pi*xs*freq/L,)
 plt.figure()
 plt.plot(xs, gs)
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-6">```{code-cell} ipython3</h2>
-<p>slideshow:
+```{code-cell} ipython3
+---
+slideshow:
   slide_type: notes
-—
+---
 a0 = 1/L * simpson(gs,xs)
 an = []
 bn = []
 for i in range(1,110):
-    an.append((2.0/L)<em>simpson(gs</em>np.cos(2<em>np.pi</em>i<em>xs/L) ,xs))
-    bn.append((2.0/L)</em>simpson(gs<em>np.sin(2</em>np.pi<em>i</em>xs/L) ,xs))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    an.append((2.0/L)*simpson(gs*np.cos(2*np.pi*i*xs/L) ,xs))
+    bn.append((2.0/L)*simpson(gs*np.sin(2*np.pi*i*xs/L) ,xs))
+```
+
 ```{code-cell} ipython3
 ---
 slideshow:
@@ -933,17 +916,19 @@ gs2 = np.zeros_like(xs)
 gs2 = gs2 + a0
 for i in range(0,len(an)):
     gs2 = gs2 + an[i]*np.cos(2*np.pi*xs/L*(i+1)) + bn[i]*np.sin(2*np.pi*xs/L*(i+1))
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-7">```{code-cell} ipython3</h2>
-<p>slideshow:
+```{code-cell} ipython3
+---
+slideshow:
   slide_type: notes
 tags: [remove-cell]
-—
+---
 plt.figure()
 plt.plot(xs,gs2)
-plt.plot(xs,gs)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+plt.plot(xs,gs)
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -966,46 +951,48 @@ def reconstrTrigFourier(terms):
     plt.clf()
     plt.plot(xs,gs2)
     plt.plot(xs,gs)
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-8">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: subslide
-—
+---
 plt.figure()
-interact(reconstrTrigFourier, terms=widgets.IntSlider(min=1, max=100, step=4, value=1))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+interact(reconstrTrigFourier, terms=widgets.IntSlider(min=1, max=100, step=4, value=1))
+```
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Fourier series, exponential form
 
 +++
 
-The concept of Fourier series can be further simplified and compacted by making use of complex numbers $a+b\,\mathrm{j} \in \mathbb{C}$ with the imaginary unit $\mathrm{j}$.&lt;br&gt;
+The concept of Fourier series can be further simplified and compacted by making use of complex numbers $a+b\,\mathrm{j} \in \mathbb{C}$ with the imaginary unit $\mathrm{j}$.<br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-Key ingredient to the following considerations is the so-called **Euler's formula**:&lt;br&gt;
+Key ingredient to the following considerations is the so-called **Euler's formula**:<br>
 $\begin{align}
-    \mathrm{e}^{\,\mathrm{j}x}&amp;= \cos(x)+\mathrm{j}\,\sin(x)\,,\\
-    \mathrm{e}^{\,-\mathrm{j}x}&amp;= \cos(x)-\mathrm{j}\,\sin(x)\,.
-\end{align}$&lt;br&gt;
+    \mathrm{e}^{\,\mathrm{j}x}&= \cos(x)+\mathrm{j}\,\sin(x)\,,\\
+    \mathrm{e}^{\,-\mathrm{j}x}&= \cos(x)-\mathrm{j}\,\sin(x)\,.
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The Fourier synthesis then simplifies to&lt;br&gt;
+The Fourier synthesis then simplifies to<br>
 $\begin{align}
     g(x)=\sum\limits^{+\infty}_{f=-\infty} c_f \exp\left(\frac{\mathrm{j}2\pi f x}{L}\right)\,,
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 with $c_f$ denoting the complex Fourier coefficients.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-The complex Fourier coefficients are obtained via the more compact complex Fourier analysis:&lt;br&gt;
+The complex Fourier coefficients are obtained via the more compact complex Fourier analysis:<br>
 $\begin{align}
     c_f = \frac{1}{L} \int\limits^L_0 g(x)\exp\left(\frac{-\mathrm{j}2\pi f x}{L}\right)\mathrm{d}x
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -1025,19 +1012,21 @@ xs = (np.linspace(0,L,samples,endpoint=True))
 gs = sig.sawtooth(2*np.pi*xs*freq/L,)+3
 plt.figure()
 plt.plot(xs, gs)
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-9">```{code-cell} ipython3</h2>
-<p>slideshow:
+```{code-cell} ipython3
+---
+slideshow:
   slide_type: notes
 tags: [remove-cell]
-—
+---
 terms = 100
-fs = np.arange(-1<em>terms,terms+1)
-cn = np.zeros(len(fs),dtype=’complex128’)
+fs = np.arange(-1*terms,terms+1)
+cn = np.zeros(len(fs),dtype='complex128')
 for i in range(0,len(fs)):
-    cn[i]=((1.0/L)</em>simpson(gs<em>np.exp(-1j</em>2<em>np.pi</em>fs[i]*xs/L),xs))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    cn[i]=((1.0/L)*simpson(gs*np.exp(-1j*2*np.pi*fs[i]*xs/L),xs))
+```
+
 ```{code-cell} ipython3
 ---
 slideshow:
@@ -1047,17 +1036,19 @@ tags: [remove-cell]
 gs2 = np.zeros_like(xs)
 for i in range(0,len(fs)):
     gs2 = gs2 + cn[i]*np.exp(1j*2*np.pi*fs[i]*xs/L)
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-10">```{code-cell} ipython3</h2>
-<p>slideshow:
+```{code-cell} ipython3
+---
+slideshow:
   slide_type: notes
 tags: [remove-cell]
-—
+---
 plt.figure()
 plt.plot(xs,np.real_if_close(gs2))
-plt.plot(xs,gs)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+plt.plot(xs,gs)
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -1078,41 +1069,43 @@ def reconstrExpFourier(terms):
     plt.plot(xs,np.real_if_close(gs2))
     plt.plot(xs,gs)
     
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-11">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: subslide
-—
+---
 plt.figure()
-interact(reconstrExpFourier, terms=widgets.IntSlider(min=1, max=100, step=4, value=20))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+interact(reconstrExpFourier, terms=widgets.IntSlider(min=1, max=100, step=4, value=20))
+```
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Fourier transform
 
 +++
 
-The Fourier transform transforms a nearly arbitrary, usually real-valued function $g(x)$ into a complex-valued function $G(f):\mathbb{R}\rightarrow \mathbb{C}$ with frequency $f$:&lt;br&gt;
+The Fourier transform transforms a nearly arbitrary, usually real-valued function $g(x)$ into a complex-valued function $G(f):\mathbb{R}\rightarrow \mathbb{C}$ with frequency $f$:<br>
 $\begin{align}
     G(f):=\int\limits^\infty_{-\infty}g(x) \exp (-\mathrm{j}2\pi f x)\,\mathrm{d}x=:\mathscr{F}\lbrace g(x) \rbrace\,,
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 which is also called the **spectrum** of $g(x)$.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The inverse transform is given by:&lt;br&gt;
+The inverse transform is given by:<br>
 $\begin{align}
     g(x)=\int\limits^\infty_{-\infty}G(f)\exp(\mathrm{j}2\pi f x)\,\mathrm{d}f=:\mathscr{F}^{-1}\lbrace G(f) \rbrace\,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-Since $G(f)\in \mathbb{C}$, it can be expressed as&lt;br&gt;&lt;br&gt;
+Since $G(f)\in \mathbb{C}$, it can be expressed as<br><br>
 $\begin{align}
     G(f)=\vert G(f) \vert\cdot \exp(\mathrm{j}\varphi(f)) =  \mathscr{R}\lbrace G(f) \rbrace + \mathrm{j}\,\mathscr{I}\lbrace G(f) \rbrace\,,
-\end{align}$&lt;br&gt;&lt;br&gt;
+\end{align}$<br><br>
 with $\vert G(f) \vert$ denoting the **magnitude spectrum**, $\varphi(f)$ denoting the **phase spectrum**, $\mathscr{R}\lbrace G(f) \rbrace$ denoting the real part of $G(f)$ and  $\mathscr{I}\lbrace G(f) \rbrace$ denoting the imaginary part of $G(f)$.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
@@ -1131,17 +1124,17 @@ Common naming conventions:
 
 +++
 
-The two-dimensional Fourier transform $G(\mathbf{f}):\mathbb{R}^2\rightarrow \mathbb{C},\, \mathbf{f}=(f_x,f_y)^\intercal$ of a two-dimensional function $g(\mathbf{x}):\mathbb{R}^2 \rightarrow \mathbb{C},\, \mathbf{x}=(x,y)^\intercal$ is obtained via the following integral transform:&lt;br&gt;
+The two-dimensional Fourier transform $G(\mathbf{f}):\mathbb{R}^2\rightarrow \mathbb{C},\, \mathbf{f}=(f_x,f_y)^\intercal$ of a two-dimensional function $g(\mathbf{x}):\mathbb{R}^2 \rightarrow \mathbb{C},\, \mathbf{x}=(x,y)^\intercal$ is obtained via the following integral transform:<br>
 $\begin{align}
     G(\mathbf{f})=\mathscr{F}\lbrace g(\mathbf{x}) \rbrace := \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty}g(\mathbf{x}) \exp \left(-\mathrm{j}2\pi\,\mathbf{f}^\intercal \mathbf{x} \right) \mathrm{d} \mathbf{x} \,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The inverse transform is given by:&lt;br&gt;
+The inverse transform is given by:<br>
 $\begin{align}
     g(\mathbf{x})=\mathscr{F}^{-1}\lbrace G(\mathbf{f}) \rbrace = \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty} G(\mathbf{f}) \exp\left( \mathrm{j}2\pi\,\mathbf{f}^\intercal \mathbf{x} \right) \mathrm{d}\mathbf{f}\,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1150,28 +1143,28 @@ $\begin{align}
 +++
 
 Consider the Fourier transform of the convolution of two signals $g(x), h(x)$:
-&lt;br&gt;
+<br>
 $\begin{align}
-    \mathscr{F}\lbrace g(x) * h(x) \rbrace &amp;= \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty}g(\alpha)h(x-\alpha)\mathrm{d}\alpha\, \exp\left( -\mathrm{j}2\pi f x  \right)\, \mathrm{d} x\\
-    &amp;= \int\limits^\infty_{-\infty}g(\alpha)\int\limits^\infty_{-\infty}h(x-\alpha)\exp\left( -\mathrm{j}2\pi f x  \right)\, \mathrm{d}x\,\mathrm{d} \alpha \,.
-\end{align}$&lt;br&gt;
+    \mathscr{F}\lbrace g(x) * h(x) \rbrace &= \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty}g(\alpha)h(x-\alpha)\mathrm{d}\alpha\, \exp\left( -\mathrm{j}2\pi f x  \right)\, \mathrm{d} x\\
+    &= \int\limits^\infty_{-\infty}g(\alpha)\int\limits^\infty_{-\infty}h(x-\alpha)\exp\left( -\mathrm{j}2\pi f x  \right)\, \mathrm{d}x\,\mathrm{d} \alpha \,.
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-Now, the substitution $\beta:= x- \alpha$ yields:&lt;br&gt;
+Now, the substitution $\beta:= x- \alpha$ yields:<br>
 $\begin{align}
-    \mathscr{F}\lbrace g(x) * h(x) \rbrace &amp;=  \int\limits^\infty_{-\infty}g(\alpha)\int\limits^\infty_{-\infty}h(\beta)\exp\left( -\mathrm{j}2\pi f (\alpha + \beta)  \right)\, \mathrm{d}x\,\mathrm{d} \alpha \\
-    &amp;= \underbrace{ \int\limits^\infty_{-\infty} g(\alpha) \exp\left( -\mathrm{j}2\pi f \alpha  \right)\, \mathrm{d} \alpha }_{G(f)}\cdot 
+    \mathscr{F}\lbrace g(x) * h(x) \rbrace &=  \int\limits^\infty_{-\infty}g(\alpha)\int\limits^\infty_{-\infty}h(\beta)\exp\left( -\mathrm{j}2\pi f (\alpha + \beta)  \right)\, \mathrm{d}x\,\mathrm{d} \alpha \\
+    &= \underbrace{ \int\limits^\infty_{-\infty} g(\alpha) \exp\left( -\mathrm{j}2\pi f \alpha  \right)\, \mathrm{d} \alpha }_{G(f)}\cdot 
     \underbrace{\int\limits^\infty_{-\infty} h(\beta) \exp\left( -\mathrm{j}2\pi f \beta  \right)\, \mathrm{d} \beta}_{H(f)}\,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-Hence, the Fourier transform transforms the convolution of two signals into a multiplication of their spectra and vice versa:&lt;br&gt;
+Hence, the Fourier transform transforms the convolution of two signals into a multiplication of their spectra and vice versa:<br>
 $\begin{align}
-    g(x)*h(x) &amp;= \mathscr{F}^{-1}\lbrace G(f)\cdot H(f) \rbrace \,, \\
-    g(x)\cdot h(x) &amp;= \mathscr{F}^{-1}\lbrace G(f) * H(f) \rbrace \,. \\
-\end{align}$&lt;br&gt;
+    g(x)*h(x) &= \mathscr{F}^{-1}\lbrace G(f)\cdot H(f) \rbrace \,, \\
+    g(x)\cdot h(x) &= \mathscr{F}^{-1}\lbrace G(f) * H(f) \rbrace \,. \\
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -1195,17 +1188,17 @@ The signal $g(x)$ is assumed to be sampled at $N$ positions having an equidistan
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-The DFT $G(f)$ of $g(x)$ is then obtained via:&lt;br&gt;
+The DFT $G(f)$ of $g(x)$ is then obtained via:<br>
 $\begin{align}
     G(f) = \sum\limits^{N-1}_{n=0} g(n\Delta x)\exp\left( -\mathrm{j}2\pi  \frac{fn}{N} \right) \,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The inverse DFT is calculated as:&lt;br&gt;
+The inverse DFT is calculated as:<br>
 $\begin{align}
     g(n\Delta x)\approx \frac{1}{N} \sum\limits^{N-1}_{f=0} G(f) \exp \left( \mathrm{j}2\pi \frac{fn}{N} \right)\,.
-\end{align}$&lt;br&gt;
+\end{align}$<br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1218,41 +1211,38 @@ slideshow:
   slide_type: subslide
 ---
 interact(lambda i: showFig('figures/2/dftSpectrum_',i,'.svg',800,60), i=widgets.IntSlider(min=1,max=3, step=1, value=1))
-</code></pre></div></div>
+```
 
-<p>+++ {“tags”: [“book_only”], “slideshow”: {“slide_type”: “subslide”}}</p>
++++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
 
-<h5 id="note">Note</h5>
+##### Note
 
-<p>+++ {“tags”: [“book_only”]}</p>
++++ {"tags": ["book_only"]}
 
-<p>The following two important properties of the DFT can be seen in the last step of the animation:</p>
-<ol>
-  <li>The DFT implicitly periodically repeats the approximated spectrum.<br />This has to be taken into account when making use of the convolution theorem, since convolutions performed as multiplications in the Fourier domain (calculated with the DFT) have to be regarded as cyclic.</li>
-</ol>
+The following two important properties of the DFT can be seen in the last step of the animation:
+1. The DFT implicitly periodically repeats the approximated spectrum.<br>This has to be taken into account when making use of the convolution theorem, since convolutions performed as multiplications in the Fourier domain (calculated with the DFT) have to be regarded as cyclic.
 
-<p>+++ {“tags”: [“book_only”]}</p>
++++ {"tags": ["book_only"]}
 
-<ol>
-  <li>The center of the extracted window of length $N$ corresponds to the highest spatial frequencies.<br /> By appropriately swapping the window halves, the correct arrangement can be obtained.</li>
-</ol>
+2. The center of the extracted window of length $N$ corresponds to the highest spatial frequencies.<br> By appropriately swapping the window halves, the correct arrangement can be obtained.
 
-<p>+++ {“slideshow”: {“slide_type”: “subslide”}}</p>
++++ {"slideshow": {"slide_type": "subslide"}}
 
-<h5 id="example-dft-calculation">Example: DFT calculation</h5>
+##### Example: DFT calculation
 
-<p>```{code-cell} ipython3
-:init_cell: true</p>
+```{code-cell} ipython3
+:init_cell: true
 
-<p>L=20.0
+L=20.0
 freq=4
 samples=10001
 xs = (np.linspace(0,L,samples,endpoint=True))
 xs2 = np.arange(0,samples)
-gs = sig.sawtooth(2<em>np.pi</em>xs*freq/L,)
+gs = sig.sawtooth(2*np.pi*xs*freq/L,)
 plt.figure()
-plt.plot(xs, gs)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+plt.plot(xs, gs)
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -1262,17 +1252,19 @@ slideshow:
 cn = np.zeros(samples,dtype='complex128')
 for i in range(0,samples):
     cn[i] = np.sum(gs * np.exp(-1j*2*np.pi*xs2*i/samples))
-</code></pre></div></div>
+```
 
-<h2 id="code-cell-ipython3-12">```{code-cell} ipython3</h2>
-<p>init_cell: true
+```{code-cell} ipython3
+---
+init_cell: true
 slideshow:
   slide_type: fragment
-—
+---
 gs2 = np.zeros_like(cn)
 for i in range(0,samples):
-    gs2[i] = (1.0/samples) * np.sum(cn<em>np.exp(1j</em>2<em>np.pi</em>xs2*i/samples))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+    gs2[i] = (1.0/samples) * np.sum(cn*np.exp(1j*2*np.pi*xs2*i/samples))
+```
+
 ```{code-cell} ipython3
 ---
 init_cell: true
@@ -1282,36 +1274,35 @@ slideshow:
 plt.figure()
 plt.plot(xs,np.real_if_close(gs2))
 plt.plot(xs,gs)
-</code></pre></div></div>
+```
 
-<p>+++ {“tags”: [“book_only”], “slideshow”: {“slide_type”: “subslide”}}</p>
++++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
 
-<h5 id="note-1">Note</h5>
-<p>In practice, one would employ one of the existing, highly optimized libraries to perform the DFT calculation, e.g., the <code class="language-plaintext highlighter-rouge">numpy.fft</code> module.</p>
+##### Note
+In practice, one would employ one of the existing, highly optimized libraries to perform the DFT calculation, e.g., the `numpy.fft` module.
 
-<p>+++</p>
++++
 
-<h3 id="example-image-filtering-in-the-fourier-domain">Example: Image filtering in the Fourier domain</h3>
+### Example: Image filtering in the Fourier domain
 
-<p>+++</p>
++++
 
-<p>In this example, again the effect of a defocused optical imaging system will be simulated by using the previously introduced pillbox function as the point spread function.</p>
+In this example, again the effect of a defocused optical imaging system will be simulated by using the previously introduced pillbox function as the point spread function.
 
-<p>+++</p>
++++
 
-<p>However, this time the convolution will be performed as a multiplication in the Fourier domain.</p>
+However, this time the convolution will be performed as a multiplication in the Fourier domain.
 
-<p>+++</p>
++++
 
-<ol>
-  <li>Read the input image, convert it to grayscale and ensure that is has odd dimensions by padding with zeros:</li>
-</ol>
+1. Read the input image, convert it to grayscale and ensure that is has odd dimensions by padding with zeros:
 
-<p>```{code-cell} ipython3
-img = cv2.cvtColor(plt.imread(‘figures/2/input_Cam020.png’), cv2.COLOR_RGB2GRAY)
+```{code-cell} ipython3
+img = cv2.cvtColor(plt.imread('figures/2/input_Cam020.png'), cv2.COLOR_RGB2GRAY)
 img = np.pad(img,(((img.shape[0]+1)%2,0),((img.shape[1]+1)%2,0)))
-imshow(img, cmap=’gray’)</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+imshow(img, cmap='gray')
+```
+
 2. Create a PSF using the `createPillboxResponse`-function and pad it with zeros so that it matches the size of the input image:
 
 ```{code-cell} ipython3
@@ -1319,67 +1310,31 @@ psf,_,_ = createPillobxResponse(5)
 rows2add = int((img.shape[0] - psf.shape[0])/2)
 cols2add = int((img.shape[1] - psf.shape[1])/2)
 psf = np.pad(psf, ((rows2add,rows2add),(cols2add,cols2add)))
-</code></pre></div></div>
+```
 
-<ol>
-  <li>Transform both, the image and the PSF into the Fourier domain using DFT, shift their spectra into the common arrangement, multiply the spectra, undo the shift and transform the result back into the spatial frequency domain.</li>
-</ol>
+3. Transform both, the image and the PSF into the Fourier domain using DFT, shift their spectra into the common arrangement, multiply the spectra, undo the shift and transform the result back into the spatial frequency domain.
 
-<p>```{code-cell} ipython3
+```{code-cell} ipython3
 imgF = np.fft.fft2(img)         #DFT of img
 psfF = np.fft.fft2(             #DFT of
-        np.fft.ifftshift(psf))  #shifted psf</p>
+        np.fft.ifftshift(psf))  #shifted psf
 
-<p>imgF = np.fft.fftshift(imgF)    #shifting of imgF
-psfF = np.fft.fftshift(psfF)    #shifting of psfF</p>
+imgF = np.fft.fftshift(imgF)    #shifting of imgF
+psfF = np.fft.fftshift(psfF)    #shifting of psfF
 
-<p>resF = imgF * psfF              #multiplication of 
-                                #the shifted spectra</p>
+resF = imgF * psfF              #multiplication of 
+                                #the shifted spectra
+    
+res  = np.fft.ifft2(            #inverse DFT of
+        np.fft.ifftshift(resF)) #inverse shift
+```
 
-<p>res  = np.fft.ifft2(            #inverse DFT of
-        np.fft.ifftshift(resF)) #inverse shift</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 ```{code-cell} ipython3
 plt.figure()
 imshow(np.real(res), cmap='gray')
-</code></pre></div></div>
+```
 
-<p>+++ {“tags”: [“remove-cell”]}</p>
++++ {"tags": ["remove-cell"]}
 
-<h2 id="todos">TODOS:</h2>
-<ul>
-  <li>Introduce and explain term OTF.</li>
-</ul>
-
-  </div>
-
-</article>
-
-      </div>
-    </main><footer class="site-footer h-card">
-  <data class="u-url" href="/"></data>
-
-  <div class="wrapper">
-
-    <h2 class="footer-heading">Computational Imaging</h2>
-
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">Computational Imaging</li><li><a class="u-email" href="mailto:jojomey@googlemail.com">jojomey@googlemail.com</a></li></ul>
-      </div>
-
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/bullette007"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">bullette007</span></a></li><li><a href="https://www.twitter.com/jojomey87"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">jojomey87</span></a></li></ul>
-</div>
-
-      <div class="footer-col footer-col-3">
-        <p>Course website for lecture Computational Imaging at KIT.</p>
-      </div>
-    </div>
-
-  </div>
-
-</footer>
-</body>
-
-</html>
+## TODOS:
+* Introduce and explain term OTF.
