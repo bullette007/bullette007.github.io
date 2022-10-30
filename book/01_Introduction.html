@@ -600,16 +600,12 @@ title="Print to PDF"
 <p><br> By means of computational imaging, the number and required quality of the lenses of a camera can be reduced without negatively impacting the quality of the resulting images. The intermediate image on the sensor may appear unsatisfying to the naked eye (e.g., blurred) but the sought-after sharp image is reconstructed by the image processing algorithms. This reduces the cost, weight and complexity of the optical system of the camera.<br> In the extreme case, it is even possible to obtain sharp images without employing a lens at all (so-called <em>lensless imaging</em>).</p>
 <p><strong>Diffuser Cam</strong><br>
 (Grace Kuo, Nick Antipa, Ren Ng, and Laura Waller. “DiffuserCam: Diffuser-Based Lensless Cameras.” Computational Optical Sensing and Imaging. Optical Society of America, 2017)</p>
-<p><img src="figures/1/diffusercam.png" style="max-height:40vh"><br></p>
 <p><strong>Lensless camera</strong><br>
 (Xiuxi Pan et al, Image reconstruction with transformer for mask-based lensless imaging, Optics Letters (2022). DOI: 10.1364/OL.455378)</p>
-<img src="figures/1/lensless_camera.png" style="height:40vh"><img src="figures/1/lensless_camera_reconstruction.png" style="max-height:40vh"><p><strong>High dynamic range (HDR) imaging</strong></p>
+<p><strong>High dynamic range (HDR) imaging</strong></p>
 <p>Most commonly, images captured with digital cameras are stored with 8 bit precision per color channel (more details later). As a consequence, images of scenes with high dynamics regarding the light intensities will lose information resulting in either white oversaturated or completely black areas. <br> HDR imaging methods acquire a series of images with varying integration times and processes the images either to obtain a high dynamic range image (with more than 8 bit per channel) or to compress the dynamic range so that no images regions appear oversaturated or under exposed (so-called <strong>tone mapping</strong>).</p>
 <p><strong>Single-shot high dynamic range imaging</strong> <br>
 (Metzler, C., Ikoma, H., Peng, Y., Wetzstein, G., Deep Optics for Single-shot High-dynamic-range Imaging, CVPR 2020)</p>
-<p><img src="figures/1/hdr_1.jpg" style="max-height:40vh"><br></p>
-<p><img src="figures/1/hdr_2.jpg" style="max-height:40vh"><br></p>
-<p><img src="figures/1/hdr_3.jpg" style="max-height:40vh"><br></p>
 <p><strong>Light field imaging</strong></p>
 <p>In contrast to conventional cameras, light field cameras also capture the direction of incidence with which light rays enter the camera. This additional information allows to post-process the acquired to image to change the viewing perspective, to alter the focus distance or to enhance the depth of field.</p>
 <p><strong>Post-acquisition refocusing</strong></p>
@@ -617,7 +613,7 @@ title="Print to PDF"
 <p>In an optical system, the aperture is the optical or mechanical element that mostly limits the amount of light reaching the sensor (more details later). Making this element computationally controllable provides another handle for influencing the image formation process. By this means it is possible, e.g., to deblur images which are affected by motion blur or which have been acquired out of focus or to additionally capture depth information.</p>
 <p><strong>Coded aperture imaging for image and depth acquisition</strong><br>
 (Levin, A., Fergus, R., Durand, F.,  Freeman, W. T. (2007). Image and depth from a conventional camera with a coded aperture. ACM transactions on graphics (TOG), 26(3), 70-es.)</p>
-<img src="figures/1/coded_aperture_1.jpg" style="max-height:40vh"><img src="figures/1/coded_aperture_2.jpg" style="max-height:40vh"><img src="figures/1/coded_aperture_3.jpg" style="max-height:40vh"><img src="figures/1/coded_aperture_4.jpg" style="max-height:40vh"></section>
+</section>
 <section id="medical-imaging-and-microscopy">
 <h3>Medical imaging and microscopy<a class="headerlink" href="#medical-imaging-and-microscopy" title="Permalink to this headline">#</a></h3>
 <p><strong>Tomography</strong></p>
@@ -625,9 +621,9 @@ title="Print to PDF"
 <p><strong>Coded illumination for microscopic phase imaging</strong><br>
 (Kellman, M. R., Bostan, E., Repina, N. A., Waller, L. (2019). Physics-based learned design: optimized coded-illumination for quantitative phase imaging. IEEE Transactions on Computational Imaging, 5(3), 344-353.)</p>
 <p>In medical microscopy one is often interested in the phase (i.e., the direction of propagation) of the light that has been transmitted through a sample, rather than in its intensity (conventional imaging). This can be achieved by adequately processing a series of images acquired under varying illumination patterns learned with machine learning approaches.</p>
-<img src="figures/1/phase_imaging.png" style="max-height:40vh"><p><strong>Fourier Ptychography</strong></p>
+<p><strong>Fourier Ptychography</strong></p>
 <p>In microscopy, the achievable lateral resolution (i.e., the resolutions along the axes parpendicular to the optical axis) is linked to the numerical aperture (more later) of the lens system. By acquiring multiple images under varying illumination one can reconstruct the complex phase via Fourier Ptychography resulting in an increased synthetic numerical aperture. By this means it is possible to up to double the resolution.</p>
-<img src="figures/1/ptychography_1.png" style="max-height:40vh"><img src="figures/1/ptychography_2.png" style="max-height:40vh"></section>
+</section>
 <section id="visual-inspection">
 <h3>Visual inspection<a class="headerlink" href="#visual-inspection" title="Permalink to this headline">#</a></h3>
 <p><strong>Deflection map acquisition and processing</strong></p>

@@ -182,27 +182,15 @@ Computational imaging applied to photography applications is often referred to a
 
 <br> By means of computational imaging, the number and required quality of the lenses of a camera can be reduced without negatively impacting the quality of the resulting images. The intermediate image on the sensor may appear unsatisfying to the naked eye (e.g., blurred) but the sought-after sharp image is reconstructed by the image processing algorithms. This reduces the cost, weight and complexity of the optical system of the camera.<br> In the extreme case, it is even possible to obtain sharp images without employing a lens at all (so-called *lensless imaging*).
 
-+++ {"cell_style": "split", "slideshow": {"slide_type": "fragment"}}
++++ {"cell_style": "center", "slideshow": {"slide_type": "fragment"}}
 
 **Diffuser Cam**<br> 
 (Grace Kuo, Nick Antipa, Ren Ng, and Laura Waller. "DiffuserCam: Diffuser-Based Lensless Cameras." Computational Optical Sensing and Imaging. Optical Society of America, 2017)
-
-+++ {"cell_style": "split"}
-
-<img src="figures/1/diffusercam.png" style="max-height:40vh"><br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 **Lensless camera**<br>
 (Xiuxi Pan et al, Image reconstruction with transformer for mask-based lensless imaging, Optics Letters (2022). DOI: 10.1364/OL.455378)
-
-+++ {"slideshow": {"slide_type": "-"}, "cell_style": "split"}
-
-<img src="figures/1/lensless_camera.png" style="height:40vh">
-
-+++ {"slideshow": {"slide_type": "fragment"}, "cell_style": "split"}
-
-<img src="figures/1/lensless_camera_reconstruction.png" style="max-height:40vh">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -216,18 +204,6 @@ Most commonly, images captured with digital cameras are stored with 8 bit precis
 
 **Single-shot high dynamic range imaging** <br>
 (Metzler, C., Ikoma, H., Peng, Y., Wetzstein, G., Deep Optics for Single-shot High-dynamic-range Imaging, CVPR 2020)
-
-+++
-
-<img src="figures/1/hdr_1.jpg" style="max-height:40vh"><br>
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-<img src="figures/1/hdr_2.jpg" style="max-height:40vh"><br>
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-<img src="figures/1/hdr_3.jpg" style="max-height:40vh"><br>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -262,22 +238,6 @@ In an optical system, the aperture is the optical or mechanical element that mos
 **Coded aperture imaging for image and depth acquisition**<br>
 (Levin, A., Fergus, R., Durand, F.,  Freeman, W. T. (2007). Image and depth from a conventional camera with a coded aperture. ACM transactions on graphics (TOG), 26(3), 70-es.)
 
-+++ {"cell_style": "split", "slideshow": {"slide_type": "fragment"}}
-
-<img src="figures/1/coded_aperture_1.jpg" style="max-height:40vh">
-
-+++ {"cell_style": "split"}
-
-<img src="figures/1/coded_aperture_2.jpg" style="max-height:40vh">
-
-+++ {"cell_style": "split", "slideshow": {"slide_type": "subslide"}}
-
-<img src="figures/1/coded_aperture_3.jpg" style="max-height:40vh">
-
-+++ {"cell_style": "split"}
-
-<img src="figures/1/coded_aperture_4.jpg" style="max-height:40vh">
-
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Medical imaging and microscopy
@@ -299,10 +259,6 @@ In many medical imaging applications one is interested in obtaining threedimensi
 
 In medical microscopy one is often interested in the phase (i.e., the direction of propagation) of the light that has been transmitted through a sample, rather than in its intensity (conventional imaging). This can be achieved by adequately processing a series of images acquired under varying illumination patterns learned with machine learning approaches.
 
-+++ {"slideshow": {"slide_type": "fragment"}}
-
-<img src="figures/1/phase_imaging.png" style="max-height:40vh">
-
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 **Fourier Ptychography**
@@ -310,14 +266,6 @@ In medical microscopy one is often interested in the phase (i.e., the direction 
 +++ {"tags": ["book_only"]}
 
 In microscopy, the achievable lateral resolution (i.e., the resolutions along the axes parpendicular to the optical axis) is linked to the numerical aperture (more later) of the lens system. By acquiring multiple images under varying illumination one can reconstruct the complex phase via Fourier Ptychography resulting in an increased synthetic numerical aperture. By this means it is possible to up to double the resolution.
-
-+++ {"slideshow": {"slide_type": "fragment"}}
-
-<img src="figures/1/ptychography_1.png" style="max-height:40vh">
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-<img src="figures/1/ptychography_2.png" style="max-height:40vh">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
