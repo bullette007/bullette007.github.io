@@ -48,12 +48,14 @@ import scipy.signal as sig
 from scipy.integrate import simpson
 from IPython.display import SVG, display, IFrame, HTML
 %matplotlib notebook
+book = False
 ```
 
 ```{code-cell} ipython3
 :tags: [remove-input, book_only]
 
 %matplotlib inline
+book=True
 ```
 
 +++ {"init_cell": true, "slideshow": {"slide_type": "notes"}, "tags": ["remove-cell"]}
@@ -133,7 +135,7 @@ Conventional imaging: produce sharp image of scene on image plane.
 ```{code-cell} ipython3
 :init_cell: true
 
-interact(lambda i: showFig('figures/2/imaging_pinhole_lens_',i,'.svg',800,40), i=widgets.IntSlider(min=1,max=4, step=1, value=1))
+interact(lambda i: showFig('figures/2/imaging_pinhole_lens_',i,'.svg',800,40), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=4), step=1, value=(max_i if book else min_i)))
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -664,7 +666,7 @@ slideshow:
   slide_type: subslide
 ---
 plt.figure()
-interact(plotDiracEps, eps=widgets.FloatSlider(min=0.01, max=2.0, step=0.1, value=2.0))
+interact(plotDiracEps, eps=widgets.FloatSlider(min=(min_i:=0.01),max=(max_i:=2.0), step=0.1, value=(min_i if book else max_i)))
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -841,7 +843,7 @@ slideshow:
   slide_type: fragment
 ---
 plt.figure()
-interact(defocusExample, r=widgets.IntSlider(min=0, max=10, step=1, value=3))
+interact(defocusExample, r=widgets.IntSlider(min=(min_i:=0),max=(max_i:=10), step=1, value=(max_i if book else min_i)))
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -962,7 +964,7 @@ slideshow:
   slide_type: subslide
 ---
 plt.figure()
-interact(reconstrTrigFourier, terms=widgets.IntSlider(min=1, max=100, step=4, value=1))
+interact(reconstrTrigFourier, terms=widgets.IntSlider(min=(min_i:=1),max=(max_i:=100), step=4, value=(max_i if book else min_i)))
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1080,7 +1082,7 @@ slideshow:
   slide_type: subslide
 ---
 plt.figure()
-interact(reconstrExpFourier, terms=widgets.IntSlider(min=1, max=100, step=4, value=20))
+interact(reconstrExpFourier, terms=widgets.IntSlider(min=(min_i:=1),max=(max_i:=100), step=1, value=(max_i if book else min_i)))
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1212,7 +1214,7 @@ init_cell: true
 slideshow:
   slide_type: subslide
 ---
-interact(lambda i: showFig('figures/2/dftSpectrum_',i,'.svg',800,60), i=widgets.IntSlider(min=1,max=3, step=1, value=1))
+interact(lambda i: showFig('figures/2/dftSpectrum_',i,'.svg',800,60), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=3), step=1, value=(max_i if book else min_i)))
 ```
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
