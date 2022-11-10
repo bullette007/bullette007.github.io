@@ -201,7 +201,7 @@ This leads to a simplification of $\rho$, the so-called **light field**
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 $\begin{align}
-    L(x,y,\theta, \varphi)=\int \rho(x,y,z,\theta,\varphi,\tau)\mathrm{d}\lambda\vert_{z=\mathrm{const.},\tau=\mathrm{const.}}
+    L(x,y,\theta, \varphi)=\int \rho(x,y,z,\theta,\varphi, \lambda,\tau)\mathrm{d}\lambda\vert_{z=\mathrm{const.},\tau=\mathrm{const.}}
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "fragment"}}
@@ -694,6 +694,7 @@ Light gets refracted, i.e., its direction of propagation changes, when it passes
 According to Snell's law of refraction it is
 
 +++
+
 $
 \begin{align}
     n_1 \sin \theta_1 = n_2 \sin \theta_2

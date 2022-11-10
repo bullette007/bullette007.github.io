@@ -1157,7 +1157,7 @@ $\begin{align}
 
 Now, the substitution $\beta:= x- \alpha$ yields:<br>
 $\begin{align}
-    \mathscr{F}\lbrace g(x) * h(x) \rbrace &=  \int\limits^\infty_{-\infty}g(\alpha)\int\limits^\infty_{-\infty}h(\beta)\exp\left( -\mathrm{j}2\pi f (\alpha + \beta)  \right)\, \mathrm{d}x\,\mathrm{d} \alpha \\
+    \mathscr{F}\lbrace g(x) * h(x) \rbrace &=  \int\limits^\infty_{-\infty}g(\alpha)\int\limits^\infty_{-\infty}h(\beta)\exp\left( -\mathrm{j}2\pi f (\alpha + \beta)  \right)\, \mathrm{d}\beta\,\mathrm{d} \alpha \\
     &= \underbrace{ \int\limits^\infty_{-\infty} g(\alpha) \exp\left( -\mathrm{j}2\pi f \alpha  \right)\, \mathrm{d} \alpha }_{G(f)}\cdot 
     \underbrace{\int\limits^\infty_{-\infty} h(\beta) \exp\left( -\mathrm{j}2\pi f \beta  \right)\, \mathrm{d} \beta}_{H(f)}\,.
 \end{align}$<br>
