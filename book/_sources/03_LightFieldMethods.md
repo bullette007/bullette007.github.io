@@ -364,10 +364,12 @@ Goal: no crosstalk, i.e., rays incident to a microlens only reach the pixel corr
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-In order to map the whole main lens to the pixels corresponding to one microlens, it has to be<br>
+In order to map the whole main lens to the pixels corresponding to one microlens, it has to be
+
 $\begin{align}
     \frac{d_\mathrm{ML}}{b_\mathrm{ML}}=\frac{d_\mathrm{L}}{b_\mathrm{L}}\,,
-\end{align}$<br>
+\end{align}$
+
 according to the intercept theorem.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -410,7 +412,8 @@ When a light field image is provided as a conventional image $g(\mathbf{x})$, as
 $\begin{align}
     L\left( (m,n)^\intercal, (j,k)^\intercal \right) = g\begin{pmatrix} (m-1)\cdot J + j \\ (n-1)\cdot K + k \end{pmatrix} \,,
     \quad\mathrm{with}\, j\in \left[1,\ldots,J\right],\,k\in\left[1,\ldots,K\right]\,,  
-\end{align}$<br>
+\end{align}$
+
 with horizontal, respectively, vertical angular resolution $J$, respectively, $K$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -438,10 +441,11 @@ $\begin{align}
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 Note<br>
-The term SAI is also applicable for the continuous case, i.e.,<br><br>
+The term SAI is also applicable for the continuous case, i.e.,
+
 $\begin{align}
     L^{(u,v)}\left((x,y)^\intercal\right):=L\left( (x,y)^\intercal, (u,v)^\intercal \right)\,.
-\end{align}$<br>
+\end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -536,10 +540,13 @@ A single light ray intersecting the lens at $\mathbf{p}^\mathrm{L}=(p^\mathrm{L}
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-At point $\mathbf{p}^\mathrm{S}$ the sensor integrates over light rays coming from all possible aperture positions, i.e., for all $\mathbf{p}^\mathrm{L}$ lying on the lens surface. This corresponds to an integration<br>
+At point $\mathbf{p}^\mathrm{S}$ the sensor integrates over light rays coming from all possible aperture positions, i.e., for all $\mathbf{p}^\mathrm{L}$ lying on the lens surface. This corresponds to an integration
+
 $\begin{align}
     g_b\left(\mathbf{p}^\mathrm{S}\right)=\int\int L_b(p^\mathrm{S}_x,p^\mathrm{S}_y,u,v)\, \mathrm{d}u\,\mathrm{d}v\,,
-\end{align}$<br>with $g_b$ denoting the image formed when the sensor is positioned at image distance $b$.
+\end{align}$
+
+with $g_b$ denoting the image formed when the sensor is positioned at image distance $b$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -862,6 +869,7 @@ Important parameters of a light field display:
 +++ {"tags": ["book_only"]}
 
 Calculation of $\theta_\mathrm{t}, \varphi_\mathrm{t}$:
+
 $\begin{align}
  \tan\left( \frac{\varphi_\mathrm{t}}{2} \right) &= \frac{d_\mathrm{ML}}{2} \cdot \frac{1}{f_\mathrm{ML}} \Leftrightarrow \\ \varphi_\mathrm{t} &= 2\cdot \tan^{-1}\left( \frac{d_\mathrm{ML}}{2} \cdot \frac{1}{f_\mathrm{ML}} \right) \,.
 \end{align}
@@ -870,14 +878,17 @@ $
 +++ {"tags": ["book_only"]}
 
 Calculation of $A_\mathrm{h}, A_\mathrm{v}$:
+
 $\begin{align}
  A_\mathrm{h}=\frac{d_\mathrm{ML}}{e_\mathrm{h}},\quad A_\mathrm{v}=\frac{d_\mathrm{ML}}{e_\mathrm{v}}\,
-\end{align}
-$with $e_\mathrm{h}, e_\mathrm{v}$ denoting the horizontal and vertical sizes of the pixel elements of the display.
+\end{align}$
+
+with $e_\mathrm{h}, e_\mathrm{v}$ denoting the horizontal and vertical sizes of the pixel elements of the display.
 
 +++ {"tags": ["book_only"]}
 
 The angular pitches $\theta_\Delta, \varphi_\Delta$ can be estimated via
+
 $\begin{align}
     \theta_\Delta \approx \frac{\theta_\mathrm{t}}{A_\mathrm{h}},\quad \varphi_\Delta \approx \frac{\varphi_\mathrm{t}}{A_\mathrm{v}} \,.
 \end{align}
@@ -902,6 +913,7 @@ Question: which pixels of the employed display have to be turned on to emit a li
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 $\Rightarrow\,$ Calibration needed to obtain a function
+
 $\begin{align}
     f_\mathrm{LF}:(x,y,\theta,\varphi)\mapsto \mathbf{u}\,,
 \end{align}
@@ -924,6 +936,7 @@ To emit a requested ray bundle $(x,y,\theta,\varphi)$,
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 By this means, $f_\mathrm{LF}$ can be evaluated:
+
 $\begin{align}
 f_\mathrm{LF}(x,y,\theta,\varphi)=\tilde{\mathbf{u}}_{(x,y)} + \Delta \mathbf{u}_{(\theta,\varphi)}\,.
 \end{align}$
@@ -1083,6 +1096,7 @@ interact(lambda i: showFig('figures/3/exampleDeflMap_',i,'.svg',800,50), i=widge
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Similar to a digital light field $L$, a deflection map is defined as the four-dimensional structure
+
 $\begin{align}
     a(\mathbf{m},\mathbf{j}),\,\mathbf{m}=(m,n)^\intercal,\,\mathbf{j}=(j,k)^\intercal,
 \end{align}
@@ -1093,6 +1107,7 @@ $\begin{align}
     (j,k) \in \Omega_\mathrm{a} &= \lbrace 1,2,\ldots, J \rbrace \times \lbrace 1,2,\ldots,K\rbrace \subset \mathbb{Z}^2\,,\\
 \end{align}
 $
+
 composed of two discrete spatial coordinates $(m,n)^\intercal$ and two discrete angular coordinates $(j,k)^\intercal$ with a spatial domain $\Omega_\mathrm{s}$ and an angular domain $\Omega_\mathrm{a}$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1241,6 +1256,7 @@ $\Rightarrow$ Approch: Calculate gradient of deflection maps with respect to the
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Classical gradient formulation for gray value images $g(\mathbf{x}), \mathbf{x}=(x,y)^\intercal$:
+
 $\begin{align}
     \mathrm{grad}\, g(\mathbf{x}) = \begin{pmatrix} 
         \frac{\partial g(\mathbf{x})}{\partial y} \\
@@ -1251,6 +1267,7 @@ $\begin{align}
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 The gradient can be approximated by means of the so-called **symmetric difference quotient**:
+
 $\begin{align}
     \mathrm{grad}\, g(\mathbf{x}) \approx \begin{pmatrix} 
         \frac{g(x+1, y) - g(x-1,y)}{2} \\
@@ -1265,17 +1282,20 @@ Problem: This can not be directly applied for deflection maps since they are no 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 $\Rightarrow$ Generalize the gradient approximation:
+
 $\begin{align}
     \mathrm{grad}\, f(\mathbf{x}) \approx \frac{1}{2} \begin{pmatrix} 
         d \lbrace f(x+1, y), f(x-1,y)\rbrace \\
         d \lbrace f(x, y+1), f(x,y-1)\rbrace  
     \end{pmatrix}\,,
 \end{align}$
+
 with $d\lbrace \cdot, \cdot \rbrace$ representing a suitable distance function and $f(\mathbf{x})$ an arbitrary function.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 For the application to a deflection map $a(\mathbf{m}, \mathbf{j})$, this turns to
+
 $\begin{align}
     \mathrm{grad}_\mathbf{m}\, a(\mathbf{m},\cdot) \approx \begin{pmatrix} 
         d \lbrace a( ( m+1,n)^\intercal, \cdot ), a((m-1,n)^\intercal,\cdot) \rbrace \\
@@ -1286,9 +1306,11 @@ $\begin{align}
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Here, the distance function $d\lbrace \cdot, \cdot \rbrace$ hast to process two two-dimensional intensity distributions, i.e.,
+
 $\begin{align}
     d \lbrace a(\mathbf{m}_1,\cdot), a(\mathbf{m}_2,\cdot)\rbrace : \left( \Omega_\mathrm{a} \rightarrow \mathcal{Q} \right)^2 \rightarrow \mathbb{R}\,,
 \end{align}$
+
 with $\Omega_\mathrm{a}$ denoting the angular domain and $\mathcal{Q}$ the quantized intensity values.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
@@ -1348,17 +1370,20 @@ Promising choices: *Earth Mover's Distance* and *Generalized Cramér-von Mises D
 
 +++
 
-The respective LCD $F(\mathbf{x},\mathbf{b})$ is defined as:<br>
+The respective LCD $F(\mathbf{x},\mathbf{b})$ is defined as:
+
 $\begin{align}
     F(\mathbf{x},\mathbf{b}) := P(\vert \mathbf{\tilde{x}}-\mathbf{x}\vert \leq \mathbf{b}), \\
     F(\cdot,\cdot):\Omega \rightarrow \left[ 0,1 \right] \,, \\
 	\Omega \subset \mathbb{R}^N \times \mathbb{R}^N_+ , \ \mathbf{b} \in \mathbb{R}^N_+ \,,
 \end{align}$
+
 with $\mathbf{x} \leq \mathbf{y},\, \mathbf{x},\mathbf{y} \in \mathbb{R}^N_+$ representing a component-wise relation that holds only if $\forall j\in \left[ 1,\ldots, N \right]:x_j \leq y_j\, $.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 The LCD $F(\mathbf{x},\mathbf{b})$ can be calculated via:
+
 $\begin{align}
     F(\mathbf{x},\mathbf{b}) = 
 	\begin{cases}
@@ -1383,6 +1408,7 @@ Let $\stochvec{x}, \stochvec{y} \in \mathbb{R}^N, N\in \mathbb{N}$ be two random
 +++
 
 For the continuous case, the CMD of $f(\mathbf{x})$ and $h(\mathbf{x})$ is given by:
+
 $\begin{align}
 	\text{CMD}(f,h) := \int\limits_{\mathbb{R}^N}\int\limits_{\mathbb{R}^N_+} \left( F(\mathbf{x},\mathbf{b}) - H(\mathbf{x},\mathbf{b}) \right)^2 \mathrm{d} \mathbf{b} \mathrm{d} \mathbf{x} \,.
 \end{align}$
@@ -1390,9 +1416,11 @@ $\begin{align}
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 For discrete random vectors, the integrals turn into summations yielding:
+
 $\begin{align}
 	\text{CMD}(f,h) = \sum\limits_{\mathbf{x}\in \Omega} \limits \sum\limits^{b_\mathrm{max}}_{b=0} \left( F(\mathbf{x},(b,\ldots,b)\transp) - H(\mathbf{x},(b,\ldots,b)\transp) \right)^2 \,,
 \end{align}$
+
 with $\Omega$ denoting the domain of the probability density functions and $b_\mathrm{max}$ representing the absolute maximum component value of $\Omega$, i.e., the maximum kernel size necessary to capture the whole probability density functions.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1430,14 +1458,17 @@ Each iteration of the inner summation of the CMD involves two LCD evaluations an
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 The kernel size $b$ is increased from $b=0$ to $b=b_\mathrm{max}=\sqrt{n}$ and hence involves a number of
+
 $\begin{align}
     \mathcal{O}\left(\sum\limits^{\sqrt{n}}_{b=0} b^2 \right) = \mathscr{O}\left(\frac{n^{1.5}}{3}+\frac{n}{2}+\frac{\sqrt{n}}{ 6}\right)=\mathscr{O}(n^{1.5})
 \end{align}$
+
 operations according to Faulhaber's formula and hence the inner summation has a complexity of $\mathscr{O}(n^{1.5})$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Since these computations are performed $n$ times by the outer summation, the naive calculation of the CMD has a total complexity of $\mathcal{O}(n^{2.5})$:
+
 $\begin{align}
     \text{CMD}(f,h) = \underbrace{\sum\limits_{\mathbf{x}\in \Omega} \limits \underbrace{\sum\limits^{b_\mathrm{max}}_{b=0} \overbrace{\left( F(\mathbf{x},(b,\ldots,b)\transp) - H(\mathbf{x},(b,\ldots,b)\transp) \right)^2}^{\in \mathcal{O}(b^2)}}_{\in \mathcal{O}(n^{1.5})}}_{\in \mathcal{O}(n^{2.5})} \,.
 \end{align}$
@@ -1467,6 +1498,7 @@ Let $i(m,n)\in \mathbb{R}$, $m \in \left[ 1, \ldots, M \right],n \in \left[ 1, \
 +++
 
 The corresponding SAT $\mathfrak{s}$ is then defined as:
+
 $
 \begin{align}
 	\mathfrak{s}(m,n):=
@@ -1480,6 +1512,7 @@ $
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 The calculation of the SAT $\mathfrak{s}$ can be performed in a single sweep over the input array $i$ by means of the following iterative formulation:
+
 $
 \begin{align}\label{eq:lfproc:sat:iterative}
 	\mathfrak{s}(m,n) = i(m,n) + \mathfrak{s}(m-1,n) + \mathfrak{s}(m,n-1) - \mathfrak{s}(m-1,n-1)\,.
@@ -1489,6 +1522,7 @@ $
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 With the help of $\mathfrak{s}$, the sum of the array entries of $i$ inside a rectangular region given by $m\in \left[ m_\mathrm{f}, m_\mathrm{t} \right]$, $n \in \left[n_\mathrm{f},n_\mathrm{t} \right]$ can be obtained with only three arithmetic operations performed on $\mathfrak{s}$:
+
 $
 \begin{align}\label{eq:lfproc:sat:eval}
 	\sum\limits^{m_\mathrm{t}}_{m=m_\mathrm{f}} \sum\limits^{n_\mathrm{t}}_{n=n_\mathrm{f}} i(m,n) =\, &\mathfrak{s}(m_\mathrm{t}, n_\mathrm{t}) - \mathfrak{s}(m_\mathrm{f}-1,n_\mathrm{t}) \\
@@ -1616,10 +1650,12 @@ Again,
 
 * To allow a quantitative evaluation, the peak contrast-to-noise ration CNR is determined based on the resulting inspection images.
 * The CNR is calculated for every considered defect of interest:
+
 $\begin{align}
     \mathrm{CNR}=\frac{\vert \tilde{s}-\tilde{\mu}\vert}{\tilde{\sigma}}\,,
 \end{align}$
-    with $\tilde{s}$ denoting the maximum image value of the image region covered by the defect, $\hat{\mu}$ denoting the mean value and $\hat{\sigma}$ the standard deviation estimated for a defect-free image region near the defect.
+
+with $\tilde{s}$ denoting the maximum image value of the image region covered by the defect, $\hat{\mu}$ denoting the mean value and $\hat{\sigma}$ the standard deviation estimated for a defect-free image region near the defect.
 
 +++ {"tags": ["remove-cell"]}
 

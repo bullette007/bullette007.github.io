@@ -47,6 +47,7 @@ import cv2
 import scipy.signal as sig
 from scipy.integrate import simpson
 from IPython.display import SVG, display, IFrame, HTML
+import seaborn as sns
 %matplotlib notebook
 book = False
 ```
@@ -168,9 +169,11 @@ The elements of $\mathbf{T}$ are non-negative as only positive energy or no ener
 +++
 
 The *light transport equation* 
+
 $\begin{align} 
    \mathbf{i} = \mathbf{T}\mathbf{p}
 \end{align}$
+
 describes the formation of the sensor values $\mathbf{i}$ of the $I$ sensor elements when the scene is illuminated by the $P$ light sources with respective intensities $\mathbf{p}$.
 
 +++
@@ -184,6 +187,7 @@ In this case, $\mathbf{i}$ and $\mathbf{p}$ are the vector representations of th
 +++
 
 If the light transport matrix $\mathbf{T}$ is known, the camera image that would result from the illumination with an arbitrary pattern $\mathbf{p}$ could be synthetically calculated by just evaluating the light transport equation
+
 $\begin{align} 
   \mathbf{i} = \mathbf{T}\mathbf{p} \,.
 \end{align}$
@@ -193,6 +197,8 @@ $\begin{align}
 ##### Example
 
 ```{code-cell} ipython3
+:init_cell: true
+
 interact(lambda i: showFig('figures/4/desk_lightsources_example_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=5), step=1, value=(max_i if book else min_i)))
 ```
 
@@ -205,6 +211,15 @@ In this sense, the element $T[m,n]$ of $\mathbf{T}$ encodes the contribution of 
 +++
 
 Unfortunately, the matrix $\mathbf{T}$ is too large to measure and handle digitally for many practically relevant applications.
+
++++
+
+##### Example
+
++++
+
+Example light transport matrix for a single row (highlighted in (a)) of image and projector pixels. Further highlighted are the image position corresponding to camera pixel $m$ and the position corresponding to projector pixel $n$:<br>
+<img src="figures/4/example_transport_matrix.svg" style="max-width:30vw">
 
 +++
 
@@ -289,9 +304,11 @@ We will see, how we
 ### Entries of the light transport matrix
 
 Each entry of $\mathbf{T}[m,n]$ describes the ratio of radiant energy that is transmitted from light source $n$ to sensor element $m$ via all optical paths that somehow connect source $n$ and sensor element $m$:
+
 $\begin{align} 
    T[m,n] = \int\limits_{\Omega_{m,n}} f(x) \mathrm{d} \mu (x)\,,
 \end{align}$
+
 with $\Omega_{m,n}$ denoting the support, i.e., the space of light paths between source $n$ and sensor element $m$, the scattering throughput function $f(x)$ encoding the radiant energy transported along a light path $x$ and $\mu (x)$ representing the corresponding measure.
 
 +++
@@ -307,9 +324,11 @@ For many practically relevant scenes, the scattering throughput scene can be ass
 +++
 
 When illuminating the scene with an illumination vector $\mathbf{p}$, capturing a camera image yields
+
 $\begin{align} 
    \mathbf{i} = \mathbf{T}\mathbf{p} \,,
 \end{align}$
+
 i.e., the matrix multiplication $\mathbf{Tp}$ has been performed in the optical domain.
 
 +++
@@ -331,9 +350,11 @@ We will first study a simple method to obtain the eigenvector $\mathbf{v}_1$ of 
 +++
 
 The vector $\mathbf{v}$ is called the eigenvector of a square matrix $\mathbf{T}$ if 
+
 $\begin{align} 
    \mathbf{Tv} = \lambda \mathbf{v} \,,
 \end{align}$
+
 with the so-called scalar eigenvalue $\lambda$.
 
 +++
@@ -345,9 +366,11 @@ The eigenvector $\mathbf{v}_1$ that corresponds to the eigenvalue $\lambda_1$ wi
 #### Power iteration
 
 Power iteration is a simple numerical algorithm for calculating the principal eigenvector of a square matrix $\mathbf{T}$. It exploits the fact the sequence 
+
 $\begin{align} 
    \mathbf{p}, \mathbf{Tp}, \mathbf{T}^2\mathbf{p}, \mathbf{T}^3\mathbf{p}, \ldots 
 \end{align}$
+
 converges to the principal eigenvector $\mathbf{v}_1$ of $\mathbf{T}$ for any initial vector $\mathbf{p}$, that is not orthogonal to $\mathbf{v}_1$.
 
 +++
@@ -410,6 +433,7 @@ Before we introduce the actual algorithms, we cover some prerequisites.
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 The Krylov subspace of dimension $k$ is the span of vectors produced after $k$ steps via power iteration, i.e.:
+
 $\begin{align} 
    \left( \mathbf{p}_1 , \mathbf{p}_2 = \mathbf{Tp}, \mathbf{p}_3 = \mathbf{T}^2 \mathbf{p}_1 , \ldots , \mathbf{p}_{k+1} = \mathbf{T}^k \mathbf{p}_1 \right) \,.
 \end{align}$
@@ -423,6 +447,7 @@ Krylov subspace methods require to compute products with $\mathbf{T}$ for arbitr
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 For this purpose, we express $\mathbf{p}$ as the difference between two non-negative vectors $\mathbf{p}^+$ and $\mathbf{p}^-$:
+
 $\begin{align} 
    \mathbf{p} &= \mathbf{p}^+ - \mathbf{p}^- \\
    \mathbf{Tp} &= \mathbf{Tp}^+ - \mathbf{Tp}^- \,.
@@ -445,6 +470,8 @@ Only for symmetric matrices the convergence characteristics of Krylov subspace i
 By using a coaxial camera-projector arrangement and equal resolutions for both components, the symmetry of $\mathbf{T}$ can be guaranteed due to Helmholtz reciprocity (see the following figure).
 
 ```{code-cell} ipython3
+:init_cell: true
+
 interact(lambda i: showFig('figures/4/symmetric_transport_matrix_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=7), step=1, value=(max_i if book else min_i)))
 ```
 
@@ -477,6 +504,7 @@ $\quad \textbf{return}\,  \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \lef
 +++
 
 The function $\text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)$ projects its last argument $\mathbf{i}_k$ onto the subspace orthogonal to the columns of the matrix $\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \ldots, \mathbf{p}_k]$, i.e.,
+
 $\begin{align} 
   \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k) = \mathbf{i}_k - \mathbf{P}\left( \mathbf{P}\transp \mathbf{P} \right)^{-1}  \mathbf{P}\transp \mathbf{i}_k
 \end{align}$
@@ -488,6 +516,7 @@ The Arnoldi algorithm constructs an orthogonal basis $\left[ \mathbf{p}_1 \cdots
 +++
 
 In order to synthetically relight the scene with an arbitrary illumination $\mathbf{p}$, the following expression has to be evaluated:
+
 $\begin{align} 
    \mathbf{Tp} \approx \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp \mathbf{p} \,.
 \end{align}$
@@ -505,6 +534,7 @@ $\begin{align}
 +++
 
 We now assume that we are given a camera image $\mathbf{i}$ of our scene and want to obtain the illumination $\mathbf{p}$ that produced it, i.e., we want to find
+
 $\begin{align} 
    \mathbf{p} = \argmin{\mathbf{x}} \left\| \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp \mathbf{x} - \mathbf{i} \right\|_2 \,. 
 \end{align}$
@@ -512,6 +542,7 @@ $\begin{align}
 +++
 
 This optimization problem can be solved via the Moore-Penrose pseudoinverse $\mathbf{T}^\dagger$ of $\mathbf{T}$ (in order to account for a potentially singular matrix $\mathbf{T}$):
+
 $\begin{align} 
    \mathbf{p} = \mathbf{T}^\dagger \mathbf{i}\,.
 \end{align}$
@@ -556,23 +587,31 @@ Intuitively, GMRES calculates a rank-$K$ approximation of $\mathbf{T}$ and calcu
 
 +++
 
-*Optical probing* can be seen as the optical implementation of *matrix probing*, a topic of numerical mathematics dealing with the efficient estimation of special regions of interest of very large matrices (like $\mathbf{T}$), e.g., its trace or diagonal. 
+*Optical probing* can be seen as the optical implementation of *matrix probing*, a topic of numerical mathematics dealing with the efficient estimation of special regions of interest of very large matrices (like $\mathbf{T}$), e.g., its trace or diagonal.
 
 +++
 
-Optical probing allows to obtain certain latent images of the scene which are normally hidden in the global light transport. 
+Optical probing allows to obtain certain latent images of the scene which are normally hidden in the global light transport.
 
 +++
 
-For example, it is possible to obtain images corresponding to either (approximately) only direct or (approximately) only indirect light transport. Such images can reveal interesting insights about the observed scene (e.g., the structure of the blood vessels under the skin). 
+For example, it is possible to obtain images corresponding to either (approximately) only direct or (approximately) only indirect light transport. Such images can reveal interesting insights about the observed scene (e.g., the structure of the blood vessels under the skin).
 
 +++
 
 Optical probing can be mathematically modelled as
+
 $\begin{align} 
    \mathbf{i} = \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} \,,
 \end{align}$
+
 with $\boldsymbol{\Pi}$ denoting the *probing matrix* and $\odot$ denoting the element-wise product between two matrices of equal size, $\mathbf{1}$ denoting a vector of all ones representing a uniform illumination and finally $\mathbf{i}$ representing the image captured under uniform illumination and for a light transport matrix that is the result of $\boldsymbol{\Pi} \odot \mathbf{T}$.
+
++++
+
+Visualization of the probing equation:<br>
+
+<img src="figures/4/probing_equation.svg" style="max-width:30vw">
 
 +++
 
@@ -582,194 +621,261 @@ In order to be able to manipulate $\mathbf{T}$ in this way, it is necessary to c
 
 +++
 
-Control of the dual domain is possible by 
+Controlling the dual domain means, that certain pixels of the camera can be blocked from receiving light during the acquisition of a single camera image. 
 
+This can be achieved
 
++++
 
-```{code-cell} ipython3
+* via a so-called spatial light modulator, i.e., a transmission mask (e.g., an LCD panel) whose spatial transmission pattern can be computationally controlled or
 
-```
++++
 
-```{code-cell} ipython3
-#Generate synth. LTM
-SIZE = 128
-RANK = 90
-LTM = np.random.randn(SIZE,RANK)@np.random.randn(RANK,SIZE)
-LTM = LTM + 1e-3 * np.random.randn(SIZE)
-```
+* by capturing single images $\mathbf{i}_k$ for every modulation pattern $k\in [0,\ldots, K]$ where the respective pixel values are computationally modulated after the image acquisition and by synthesizing the actual image by calculating a sum over all $\mathbf{i}_k$.
 
-```{code-cell} ipython3
-NUM_ITERATIONS = 128#1024     # Number of Arnoldi iterations
-NUM_ITERATIONS_STEP = 1   # Only reconstruct matrix every 
-```
++++
 
-```{code-cell} ipython3
-import h5py
-f = h5py.File('Green.mat','r')
-data = f.get('LTM')
-data = np.array(data) # For converting to a NumPy array
-LTM = data
-NUM_ITERATIONS = 1024     # Number of Arnoldi iterations
-NUM_ITERATIONS_STEP = 32   # Only reconstruct matrix every 
-```
+Visualization of the optical setup:<br>
 
-```{code-cell} ipython3
-M,N = LTM.shape
-```
+<img src="figures/4/probing_setup.svg" style="max-width:30vw">
 
-```{code-cell} ipython3
-right_Arnoldi_vectors = np.zeros((N,NUM_ITERATIONS + 1))
-right_Arnoldi_vectors[:,0] = (a:=np.ones(N))/np.linalg.norm(a)
-left_Arnoldi_vectors  = np.zeros((M,NUM_ITERATIONS))
-```
++++
 
-```{code-cell} ipython3
-for k in range(0,NUM_ITERATIONS):
-    
-    tmp = LTM@right_Arnoldi_vectors[:,k];    
-    left_Arnoldi_vectors[:,k] = tmp;
-    
-    tmp = LTM.transpose()@left_Arnoldi_vectors[:,k];
-    inv = np.linalg.inv(right_Arnoldi_vectors[:,0:k+1].transpose()@right_Arnoldi_vectors[:,0:k+1])
-    print(inv.shape)
-    right = right_Arnoldi_vectors[:,0:k+1].transpose()@tmp
-    right = inv @ right
-    right = right_Arnoldi_vectors[:,0:k+1] @ right
-    tmp = tmp - right
-    #tmp = tmp - right_Arnoldi_vectors[:,0:k+1] @ inv @right_Arnoldi_vectors[:,0:k+1].transpose()@tmp
-    tmp = tmp/np.linalg.norm(tmp);
+### Probing the light transport matrix
 
-    right_Arnoldi_vectors[:,k+1] = tmp;
-```
++++
 
-```{code-cell} ipython3
-a,b = optArnoldi(NUM_ITERATIONS, LTM)
-```
+The only way we can gain information about the light transport (matrix) is by projecting and capturing images.
 
-```{code-cell} ipython3
-errors = []
-for k in range(0, NUM_ITERATIONS, NUM_ITERATIONS_STEP):
-    LTM_approx = left_Arnoldi_vectors[0,0:k+1]@right_Arnoldi_vectors[0,0:k+1].transpose()
-    #errors.append(np.linalg.norm(LTM - LTM_approx) / np.linalg.norm(LTM))
-    errors.append(np.sum(np.abs(LTM-LTM_approx)))
-```
++++
 
-```{code-cell} ipython3
-errors2 = []
-for k in range(0, NUM_ITERATIONS, NUM_ITERATIONS_STEP):
-    LTM_approx = a[0,0:k+1]@b[0,0:k+1].transpose()
-    #LTM_approx = b[0,0:k+1]@a[0,0:k+1].transpose()
-    #errors2.append(np.linalg.norm(LTM - LTM_approx) / np.linalg.norm(LTM))
-    errors2.append(np.sum(np.abs(LTM-LTM_approx)))
-```
+However, this leaves a notable dimensionality gap: 
+* $\mathbf{T}$ has $I \times P$ elements, whereas
+* one image $\mathbf{i}$ only as $I$ elements.
 
-```{code-cell} ipython3
-tmp = LTM.transpose()@LTM
-U,S,right_singular_vectors = np.linalg.svd(tmp)
++++
 
-left_singular_vectors = LTM@right_singular_vectors
+$\Rightarrow$ Use probing equation to only analyze elements of $\mathbf{T}$ of interest.
 
-errors3 = []
-for k in range(0, NUM_ITERATIONS, NUM_ITERATIONS_STEP):
-    LTM_approx = left_singular_vectors[:,0:k+1]@right_singular_vectors[:,0:k+1].transpose()
-    #errors2.append(np.linalg.norm(LTM - LTM_approx) / np.linalg.norm(LTM))
-    errors3.append(np.sum(np.abs(LTM-LTM_approx)))
-```
++++ {"slideshow": {"slide_type": "subslide"}}
 
-```{code-cell} ipython3
-plt.figure()
-plt.plot(errors)
-```
+#### Example probing matrices
 
-```{code-cell} ipython3
-plt.figure()
-plt.plot(errors2)
-```
++++ {"slideshow": {"slide_type": "subslide"}}
 
-```{code-cell} ipython3
-plt.figure()
-plt.plot(errors3)
-```
+<img src="figures/4/example_probing_matrix_1.svg" style="max-width:30vw">
 
-```{code-cell} ipython3
-def optArnoldi(K, A:np.ndarray):
-    i = np.zeros((A.shape[0], K))
-    p = np.zeros((A.shape[0], K+1))
-    #p[:,0] = np.random.rand(A.shape[1])
-    p[:,0] = (a:=np.ones(A.shape[1]))/np.linalg.norm(a)
+Acquisition of a common image for illumination $\mathbf{p}$.
 
-    for k in range(0,K):
-        i[:,k] = A@p[:,k]
-        P = p[:,0:k+1]
-        #print(P.shape)
-        #print(P)
-        p[:,k+1] = i[:,k] - P@np.linalg.inv(P.transpose() @ P)@P.transpose()@i[:,k]
-        p[:,k+1] = p[:,k+1] / np.linalg.norm(p[:,k+1])
-        
-    return i, p[:,:-1]
-    
-```
++++ {"slideshow": {"slide_type": "subslide"}}
 
-```{code-cell} ipython3
-def classicArnoldi(K, A:np.ndarray):
-    eps = 1e-10
-    v1 = (a:=np.ones(A.shape[1]))/np.linalg.norm(a)
-    H = np.zeros((K+1,K+1))
-    W = np.zeros((A.shape[0],K+1))
-    V = np.zeros((A.shape[0],K+1))
-    V[:,0] = v1
-    for j in range(0,K):
-        for i in range(0, j+1):
-            H[i,j] = np.dot(A@V[:,j], V[:,i])
-        tmp = np.zeros((A.shape[0]))
-        for i in range(0,j+1):
-            tmp = tmp + H[i,j]*V[:,i]
-        print(tmp.shape)
-        moep = A@V[:,j]
-        print(moep.shape)
-        W[:,j] = A@V[:,j] - tmp
-        H[j+1, j] = np.linalg.norm(W[:,j])
-        print(f"{j}: {H[j+1,j]}")
-        if (H[j+1,j] < eps):
-            print("moep")
-            break
-        V[:,j+1] = W[:,j] / H[j+1,j]
-    return H, W, V
-```
+<img src="figures/4/example_probing_matrix_2.svg" style="max-width:30vw">
 
-```{code-cell} ipython3
-K2 = 128
-h,w,v = classicArnoldi(K2, LTM)
-```
+Same as before but via probing matrix and constant illumination $\mathbf{1}$.
 
-```{code-cell} ipython3
-v = v[:,0:-1]
-h = h[0:-1,0:-1]
-```
++++ {"slideshow": {"slide_type": "subslide"}}
 
-```{code-cell} ipython3
-plt.figure()
-plt.imshow(h)
-```
+<img src="figures/4/example_probing_matrix_3.svg" style="max-width:30vw">
 
-```{code-cell} ipython3
-LTM_approx = v@h@v.transpose()
-```
+Acquisition of the diagonal of $\mathbf{T}$.
 
-```{code-cell} ipython3
-errors4 = []
-for k in range(0, K2):
-    LTM_approx = v[:,0:k+1]@h[0:k+1,0:k+1]@v[:,0:k+1].transpose()
-    errors4.append(np.sum(np.abs(LTM-LTM_approx)))
-```
++++ {"slideshow": {"slide_type": "subslide"}}
 
-```{code-cell} ipython3
-plt.figure()
-plt.plot(errors4)
-plt.plot(errors3)
-```
+<img src="figures/4/example_probing_matrix_4.svg" style="max-width:30vw">
 
-```{code-cell} ipython3
-plt.figure()
-plt.imshow(np.abs(LTM-LTM_approx))
-```
+Acquisition of an off-diagonal of $\mathbf{T}$.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/example_probing_matrix_5.svg" style="max-width:30vw">
+
+Acquisition of one specific element of $\mathbf{T}$ per row.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/example_probing_matrix_6.svg" style="max-width:30vw">
+
+Acquisition of a linear combination of two elements (red and blue) of $\mathbf{T}$ per row.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/example_probing_matrix_7.svg" style="max-width:30vw">
+
+Acquisition of an image for illumination $\mathbf{p}$ for a transport matrix $\hat{\mathbf{T}}=\mathbf{A}\odot \mathbf{T}$.
+
++++
+
+Each element $(m,n)$ of $\mathbf{T}$ encodes different optical paths of light that originated from projector pixel $n$ and reach camera pixel $m$.
+
++++
+
+<img src="figures/4/probing_light_paths.svg" style="max-width:30vw">
+
++++
+
+* (a): $\mathbf{T}[m,n]$: All light paths from projector pixel $n$ to camera pixel $m$.
+* (b): $\mathbf{T}[m,m]$, i.e., diagonal of $\mathbf{T}$: The direct component (red) but maybe also back-scattering (blue) and retro reflections (green).
+* (c): The distance $\left| m-n \right|$ allows to distinguish between short distance and long distance optical paths.
+
++++
+
+By adequately probing $\mathbf{T}$, photos can be acquired, for which certain light paths (e.g., direct, indirect, etc.) have been enhanced, attenuated or even blocked.
+
++++
+
+##### How to perform the probing?
+
+Naive idea: To probe $\mathbf{T}[m,n]$, illuminate with a single projector pixel $n$ while reading out only camera pixel $m$, repeat for all non-zero elements of the probing matrix $\boldsymbol{\Pi}$.
+
+$\Rightarrow$ Very inefficient (in terms of light) and slow!
+
++++
+
+#### Optical implementation of matrix probing
+
++++
+
+Decompose $\boldsymbol{\Pi}$ into a sum of rank-1 matrices:
+
+$\begin{align} 
+   \boldsymbol{\Pi} = \sum\limits^K_{k=1} \mathbf{m}_k \mathbf{p}^\intercal_k \,,
+\end{align}$
+
+for $K$ vectors $\mathbf{m}_k, \mathbf{p}_k$.
+
++++
+
+With this, we can reformulate the probing equation:
+
+$\begin{align} 
+   \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} &= \sum\limits^P_{n=1} \boldsymbol{\Pi} [n] \circ \mathbf{T}[n] \\
+   &= \sum\limits^P_{n=1} \left( \sum\limits^K_{k=1} \mathbf{m}_k p_k[n] \right) \circ \mathbf{T}[n] \\
+   &= \sum\limits^K_{k=1} \left( \mathbf{m}_k \circ \sum\limits^P_{n=1} \mathbf{T}[n]p_k[n] \right) \\
+   &= \sum\limits^K_{k=1} \mathbf{m}_k \circ \mathbf{T}\mathbf{p}_k \,,
+\end{align}$
+
+with $\circ$ denoting the element-wise product between vectors, $\mathbf{T}[n]$ denoting the $n$-th column of $\mathbf{T}$ and $p_k[n]$ denoting the $n$-th element of the vector $\mathbf{p}_k$, i.e., $p_k[n]$ is a scalar.
+
++++
+
+According to this derivation, every decomposition of the probing matrix into a sum of rank-1 matrices can be realized via a sequence of step-wise corresponding illumination patterns $\mathbf{p}_k$ and sensor modulations $\mathbf{m}_k$ for $k \in [1,\ldots, K]$:
+
+$\begin{align} 
+    \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} = \sum\limits^K_{k=1} \underbrace{\mathbf{m}_k \circ \overbrace{\mathbf{T}\mathbf{p}_k}^{\text{acquired image } \mathbf{i}_k \text{ for illumination }\mathbf{p}_k}}_{\text{image } \mathbf{i}_k \text{ modulated with } \mathbf{m}_k} \,.
+\end{align}$
+
++++
+
+This leads to the following algorithm for optical probing of the light transport matrix:
+
+$\mathbf{Function}\, \mathrm{opticalMatrixProbing}\left(\mathtt{camera},\, \mathtt{projector}, \left\{ \mathbf{p}_k, k \in \left[ 1,\ldots, K \right]  \right\}, \left\{ \mathbf{m}_k, k \in \left[ 1,\ldots, K \right]  \right\}  \right)$<br><br>
+$\quad \mathbf{i}_{\mathrm{result}} \leftarrow \text{ empty image }$<br>
+$\quad \mathbf{for}\, k \in [1,\ldots,K]:$<br>
+$\qquad \mathtt{projector}.\text{project}(\mathbf{p}_k)$<br>
+$\qquad \mathbf{i}_k \leftarrow \mathtt{camera}.\text{acquireImage}()$<br>
+$\qquad \mathbf{i}_{\mathrm{result}} \leftarrow \mathbf{i}_\mathrm{result} +  \mathbf{m}_k \circ \mathbf{i}_k$<br><br>
+
+$\quad \textbf{return}\,  \mathbf{i}_\mathrm{result}$
+
++++
+
+#### Enhancing the direct component
+
+For enhancing the direct component, i.e., the diagonal of $\mathbf{T}$, one can use a sequence of $\mathbf{p}_k = \mathbf{m}_k$ drawn from the Bernoulli distribution. The resulting vectors have values of 1 with probability $p$ and $0$ with probability $1-p$. When drawing $K$ vectors, their approximated matrix converges to a probing matrix with $p\cdot K$ on the diagonal and $p^2 \cdot K$ everywhere else, i.e., enhancing the diagonal of $\mathbf{T}$ by a factor of $\frac{p \cdot K}{p^2 \cdot K} = \frac{1}{p}$.
+
++++
+
+Example approximated probing matrix for enhancing the direct component with size $10 \times 10$ resulting from the described method for $p=0.125, K=1000$.
+
+<img src="figures/4/approx_prob_mat_direct_enhanced.svg" style="max-width:30vw">
+
++++
+
+Example results for enhancing the direct light path components via different values for $p$:
+
+<img src="figures/4/example_direct_enhanced.svg" style="max-width:30vw">
+
++++
+
+#### Attenuation of local scattering 
+
+When light from a projector pixel $n$ is locally scattered by small structures, e.g., by dust particles, it will most likely not contribute to the camera pixel $n$, which corresponds to direct light transport, but to a nearby camera pixel $m$, i.e., with $\vert m - n \vert = 1$.
+
++++
+
+Such light transport phenomena are encoded by the first off-diagonal of $\mathbf{T}$.
+
++++
+
+In order to attenuate local scattering effects, first an image $\mathbf{i}_2$ is acquired, where these effects are enhanced. This image can then be subtracted from an image $\mathbf{i}_1$ with enhanced direct light transport (previous example) to obtain the final image $\mathbf{i}_3 = \mathbf{i}_1 - \mathbf{i}_2$.
+
++++
+
+To approximate the probing matrix for acquiring the off-diagonal of $\mathbf{T}$, the previously mentioned Bernoulli sequence can be used for $\mathbf{m}_k$ and the illumination vectors have to be shifted by $w$ for probing the $w$-th off-diagonal: 
+
+$\begin{align} 
+   \mathbf{p}_k := \text{shift}(\mathbf{m}_k, w)\,.
+\end{align}$
+
+The operation $\text{shift}(\mathbf{m}_k, w)$ denotes a circular shift of the vector $\mathbf{m}_k$ by $w$, i.e.,
+
+$\begin{align} 
+   \text{shift}(\mathbf{x}, w) &= \text{shift}\left( (x_1, x_2, \ldots, x_N)\transp , w \right) \\ &= (x_{N-(w-1) \text{ mod }N}, x_{N-(w-2) \text{ mod }N}, \ldots, x_{N-(w-N) \text{ mod }N})\transp \,.
+\end{align}$
+
++++
+
+Example:<br>
+Imaging a test chart in turbid media (milky water) as an example scene for strong local scattering effects.
+
++++
+
+Without compensation:
+
+<img src="figures/4/example_descattering_conventional.svg" style="max-width:30vw">
+
++++
+
+Results for attenuation of local scattering effects:
+
+<img src="figures/4/example_descattering.svg" style="max-width:30vw">
+
++++
+
+Example approximation of a $10 \times 10$ probing matrix (same parameters as before, i.e., $p=0.125, K=1000$) for enhancing the first off-diagonal:
+
+<img src="figures/4/approx_prob_mat_offdiag_enhanced.svg" style="max-width:30vw">
+
++++
+
+Similar approximation for the probing matrix that would result for the subtraction $\mathbf{i}_3 = \mathbf{i}_1 - \mathbf{i}_2$:
+
+<img src="figures/4/approx_prob_mat_local_descattering.svg" style="max-width:30vw">
+
++++
+
+#### Only indirect light transport
+
+To suppress direct light transport, the illumination vectors $\mathbf{p}_k$ can be drawn from the Bernoulli distribution and the mask patterns can be set as $\mathbf{m}_k := \mathbf{1} - \mathbf{p}_k$.
+
++++
+
+The resulting approximated matrix will have $0$ on its diagonal and an expected value of $p(1-p)\cdot K$ everywhere else.
+
++++
+
+Example approximated probing matrix for suppressing the direct component with size $10 \times 10$ resulting from the described method for $p=0.1, K=1000$.
+
+<img src="figures/4/approx_prob_mat_indirect_only.svg" style="max-width:30vw">
+
++++
+
+Example results for only indirect light transport imaging and for enhancing the direct component via subtraction of the indirect only-image from an image acquired under constant illumination:
+
++++
+
+<img src="figures/4/example_indirect_etc_1.svg" style="max-width:30vw">
+
++++
+
+<img src="figures/4/example_indirect_etc_2.svg" style="max-width:30vw">

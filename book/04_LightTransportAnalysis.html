@@ -56,7 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Inverse Problems in Computational Imaging" href="05_InverseProblemsInCompimg.html" />
+    <link rel="next" title="Neural Networks for Computational Imaging" href="05_NeuralNetworksForCompImg.html" />
     <link rel="prev" title="Light Field Methods" href="03_LightFieldMethods.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -134,7 +134,12 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="05_InverseProblemsInCompimg.html">
+  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
+   Neural Networks for Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
    Inverse Problems in Computational Imaging
   </a>
  </li>
@@ -314,152 +319,7 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#practical-limitations">
-     Practical limitations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optical-linear-algebra">
-     Optical linear algebra
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#light-paths">
-     Light paths
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#teaser">
-     Teaser
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#entries-of-the-light-transport-matrix">
-     Entries of the light transport matrix
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#helmholtz-reciprocity-principle">
-       Helmholtz reciprocity principle
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#light-transport-analysis-via-optical-computing">
-   Light transport analysis via optical computing
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optical-power-iteration">
-     Optical power iteration
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#power-iteration">
-       Power iteration
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#implementation">
-       Implementation
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#limitations">
-       Limitations
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#krylov-subspace-methods">
-     Krylov subspace methods
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#optical-matrix-vector-multiplication-for-arbitrary-vectors">
-       Optical matrix-vector multiplication for arbitrary vectors
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#symmetry-of-transport-matrix">
-       Symmetry of transport matrix
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#enforcing-symmetry-for-mathbf-t">
-         Enforcing symmetry for
-         <span class="math notranslate nohighlight">
-          \(\mathbf{T}\)
-         </span>
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#low-rank-approximation-of-mathbf-t-via-optical-arnoldi">
-       Low-rank approximation of
-       <span class="math notranslate nohighlight">
-        \(\mathbf{T}\)
-       </span>
-       via optical Arnoldi
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#optical-matrix-inversion-via-gmres">
-       Optical matrix inversion via GMRES
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#example-experiments">
-         Example experiments
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#primal-dual-coding-for-optical-probing">
-   Primal-Dual coding for optical probing
-  </a>
- </li>
-</ul>
-
-    </nav>
-</div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Light Transport Analysis</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#content">
-   Content
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction-into-light-transport">
-   Introduction into light transport
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example">
+    <a class="reference internal nav-link" href="#id1">
      Example
     </a>
    </li>
@@ -578,6 +438,243 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#primal-dual-coding-for-optical-probing">
    Primal-Dual coding for optical probing
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#probing-the-light-transport-matrix">
+     Probing the light transport matrix
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-probing-matrices">
+       Example probing matrices
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#how-to-perform-the-probing">
+         How to perform the probing?
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optical-implementation-of-matrix-probing">
+       Optical implementation of matrix probing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#enhancing-the-direct-component">
+       Enhancing the direct component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#attenuation-of-local-scattering">
+       Attenuation of local scattering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#only-indirect-light-transport">
+       Only indirect light transport
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Light Transport Analysis</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-into-light-transport">
+   Introduction into light transport
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example">
+     Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#practical-limitations">
+     Practical limitations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optical-linear-algebra">
+     Optical linear algebra
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#light-paths">
+     Light paths
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#teaser">
+     Teaser
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#entries-of-the-light-transport-matrix">
+     Entries of the light transport matrix
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#helmholtz-reciprocity-principle">
+       Helmholtz reciprocity principle
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#light-transport-analysis-via-optical-computing">
+   Light transport analysis via optical computing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optical-power-iteration">
+     Optical power iteration
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#power-iteration">
+       Power iteration
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#implementation">
+       Implementation
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#limitations">
+       Limitations
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#krylov-subspace-methods">
+     Krylov subspace methods
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optical-matrix-vector-multiplication-for-arbitrary-vectors">
+       Optical matrix-vector multiplication for arbitrary vectors
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#symmetry-of-transport-matrix">
+       Symmetry of transport matrix
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#enforcing-symmetry-for-mathbf-t">
+         Enforcing symmetry for
+         <span class="math notranslate nohighlight">
+          \(\mathbf{T}\)
+         </span>
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#low-rank-approximation-of-mathbf-t-via-optical-arnoldi">
+       Low-rank approximation of
+       <span class="math notranslate nohighlight">
+        \(\mathbf{T}\)
+       </span>
+       via optical Arnoldi
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optical-matrix-inversion-via-gmres">
+       Optical matrix inversion via GMRES
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#example-experiments">
+         Example experiments
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#primal-dual-coding-for-optical-probing">
+   Primal-Dual coding for optical probing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#probing-the-light-transport-matrix">
+     Probing the light transport matrix
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-probing-matrices">
+       Example probing matrices
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#how-to-perform-the-probing">
+         How to perform the probing?
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optical-implementation-of-matrix-probing">
+       Optical implementation of matrix probing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#enhancing-the-direct-component">
+       Enhancing the direct component
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#attenuation-of-local-scattering">
+       Attenuation of local scattering
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#only-indirect-light-transport">
+       Only indirect light transport
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -646,15 +743,15 @@ title="Print to PDF"
 </ul>
 <p>The matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> contains the individual influences of all <span class="math notranslate nohighlight">\(P\)</span> light sources to all <span class="math notranslate nohighlight">\(I\)</span> sensor elements and hence has dimensions of <span class="math notranslate nohighlight">\(\mathbf{T} \in \mathbb{R}^{I\times P}_+\)</span>.</p>
 <p>The elements of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> are non-negative as only positive energy or no energy can be transported via light.</p>
-<p>The <em>light transport equation</em>
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>The <em>light transport equation</em></p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{i} = \mathbf{T}\mathbf{p}
-\end{align}\)</span>
-describes the formation of the sensor values <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> of the <span class="math notranslate nohighlight">\(I\)</span> sensor elements when the scene is illuminated by the <span class="math notranslate nohighlight">\(P\)</span> light sources with respective intensities <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>.</p>
+\end{align}\)</span></p>
+<p>describes the formation of the sensor values <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> of the <span class="math notranslate nohighlight">\(I\)</span> sensor elements when the scene is illuminated by the <span class="math notranslate nohighlight">\(P\)</span> light sources with respective intensities <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>.</p>
 <p>For the following content, we will assume illumination of the scene by a projector projecting a two-dimensional image and a two-dimensional gray-value camera serving as the sensor.</p>
 <p>In this case, <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> are the vector representations of the camera image, respectively, of the projected image or pattern.</p>
-<p>If the light transport matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is known, the camera image that would result from the illumination with an arbitrary pattern <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> could be synthetically calculated by just evaluating the light transport equation
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>If the light transport matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is known, the camera image that would result from the illumination with an arbitrary pattern <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> could be synthetically calculated by just evaluating the light transport equation</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
   \mathbf{i} = \mathbf{T}\mathbf{p} \,.
 \end{align}\)</span></p>
 <section id="example">
@@ -667,7 +764,7 @@ describes the formation of the sensor values <span class="math notranslate nohig
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "6498cb6226ec45e69b568402e254fd61"}
+{"version_major": 2, "version_minor": 0, "model_id": "58684a3c5bb846c08e19f178138db9cc"}
 </script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
 </pre></div>
 </div>
@@ -676,6 +773,11 @@ describes the formation of the sensor values <span class="math notranslate nohig
 <p>(All images in this chapter are kindly provided by Matthew O’Toole).</p>
 <p>In this sense, the element <span class="math notranslate nohighlight">\(T[m,n]\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> encodes the contribution of light source (i.e., projector pixel) <span class="math notranslate nohighlight">\(n\)</span> to camera pixel <span class="math notranslate nohighlight">\(m\)</span>.</p>
 <p>Unfortunately, the matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is too large to measure and handle digitally for many practically relevant applications.</p>
+</section>
+<section id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>Example light transport matrix for a single row (highlighted in (a)) of image and projector pixels. Further highlighted are the image position corresponding to camera pixel <span class="math notranslate nohighlight">\(m\)</span> and the position corresponding to projector pixel <span class="math notranslate nohighlight">\(n\)</span>:<br>
+<img src="figures/4/example_transport_matrix.svg" style="max-width:30vw"></p>
 </section>
 <section id="practical-limitations">
 <h3>Practical limitations<a class="headerlink" href="#practical-limitations" title="Permalink to this headline">#</a></h3>
@@ -724,11 +826,11 @@ describes the formation of the sensor values <span class="math notranslate nohig
 <img src="figures/4/Example_Separation_Direct_Indirect.svg" style="max-width:30vw"></section>
 <section id="entries-of-the-light-transport-matrix">
 <h3>Entries of the light transport matrix<a class="headerlink" href="#entries-of-the-light-transport-matrix" title="Permalink to this headline">#</a></h3>
-<p>Each entry of <span class="math notranslate nohighlight">\(\mathbf{T}[m,n]\)</span> describes the ratio of radiant energy that is transmitted from light source <span class="math notranslate nohighlight">\(n\)</span> to sensor element <span class="math notranslate nohighlight">\(m\)</span> via all optical paths that somehow connect source <span class="math notranslate nohighlight">\(n\)</span> and sensor element <span class="math notranslate nohighlight">\(m\)</span>:
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>Each entry of <span class="math notranslate nohighlight">\(\mathbf{T}[m,n]\)</span> describes the ratio of radiant energy that is transmitted from light source <span class="math notranslate nohighlight">\(n\)</span> to sensor element <span class="math notranslate nohighlight">\(m\)</span> via all optical paths that somehow connect source <span class="math notranslate nohighlight">\(n\)</span> and sensor element <span class="math notranslate nohighlight">\(m\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    T[m,n] = \int\limits_{\Omega_{m,n}} f(x) \mathrm{d} \mu (x)\,,
-\end{align}\)</span>
-with <span class="math notranslate nohighlight">\(\Omega_{m,n}\)</span> denoting the support, i.e., the space of light paths between source <span class="math notranslate nohighlight">\(n\)</span> and sensor element <span class="math notranslate nohighlight">\(m\)</span>, the scattering throughput function <span class="math notranslate nohighlight">\(f(x)\)</span> encoding the radiant energy transported along a light path <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(\mu (x)\)</span> representing the corresponding measure.</p>
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\Omega_{m,n}\)</span> denoting the support, i.e., the space of light paths between source <span class="math notranslate nohighlight">\(n\)</span> and sensor element <span class="math notranslate nohighlight">\(m\)</span>, the scattering throughput function <span class="math notranslate nohighlight">\(f(x)\)</span> encoding the radiant energy transported along a light path <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(\mu (x)\)</span> representing the corresponding measure.</p>
 <section id="helmholtz-reciprocity-principle">
 <h4>Helmholtz reciprocity principle<a class="headerlink" href="#helmholtz-reciprocity-principle" title="Permalink to this headline">#</a></h4>
 <p>For many practically relevant scenes, the scattering throughput scene can be assumed to obey the <em>Helmholtz reciprocity principle</em>, according to which the value of <span class="math notranslate nohighlight">\(f(x)\)</span> for a light path <span class="math notranslate nohighlight">\(x\)</span> does not depend on the propagation direction of the light rays of <span class="math notranslate nohighlight">\(x\)</span> (i.e., interchanging projector pixel <span class="math notranslate nohighlight">\(n\)</span> with camera pixel <span class="math notranslate nohighlight">\(m\)</span> would result in the same value for <span class="math notranslate nohighlight">\(T[m,n]\)</span>).</p>
@@ -737,30 +839,30 @@ with <span class="math notranslate nohighlight">\(\Omega_{m,n}\)</span> denoting
 </section>
 <section id="light-transport-analysis-via-optical-computing">
 <h2>Light transport analysis via optical computing<a class="headerlink" href="#light-transport-analysis-via-optical-computing" title="Permalink to this headline">#</a></h2>
-<p>When illuminating the scene with an illumination vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, capturing a camera image yields
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>When illuminating the scene with an illumination vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, capturing a camera image yields</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{i} = \mathbf{T}\mathbf{p} \,,
-\end{align}\)</span>
-i.e., the matrix multiplication <span class="math notranslate nohighlight">\(\mathbf{Tp}\)</span> has been performed in the optical domain.</p>
+\end{align}\)</span></p>
+<p>i.e., the matrix multiplication <span class="math notranslate nohighlight">\(\mathbf{Tp}\)</span> has been performed in the optical domain.</p>
 <p>This is the only possible way to interact with <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> in order to get information about it, i.e., via multiplying <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> with some vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> and observing the result <span class="math notranslate nohighlight">\(\mathbf{i}\)</span>.</p>
 <p>Luckily, dealing with very large matrices like <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> only via matrix multiplication as stated before, represents a well-studied problem in the field of linear algebra.</p>
 <p>Especially the set of so-called <em>Krylov subspace methods</em> is suitable for our case, which is why we will study some of these approaches in the following.</p>
 <section id="optical-power-iteration">
 <h3>Optical power iteration<a class="headerlink" href="#optical-power-iteration" title="Permalink to this headline">#</a></h3>
 <p>We will first study a simple method to obtain the eigenvector <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> that corresponds to its largest eigenvalue <span class="math notranslate nohighlight">\(\lambda_1\)</span>. For this purpose, we will transform a method called <em>power iteration</em> into the optical domain.</p>
-<p>The vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> is called the eigenvector of a square matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> if
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>The vector <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> is called the eigenvector of a square matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> if</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{Tv} = \lambda \mathbf{v} \,,
-\end{align}\)</span>
-with the so-called scalar eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+\end{align}\)</span></p>
+<p>with the so-called scalar eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
 <p>The eigenvector <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> that corresponds to the eigenvalue <span class="math notranslate nohighlight">\(\lambda_1\)</span> with the highest absolute value is called the <em>principal eigenvector</em>.</p>
 <section id="power-iteration">
 <h4>Power iteration<a class="headerlink" href="#power-iteration" title="Permalink to this headline">#</a></h4>
-<p>Power iteration is a simple numerical algorithm for calculating the principal eigenvector of a square matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>. It exploits the fact the sequence
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>Power iteration is a simple numerical algorithm for calculating the principal eigenvector of a square matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>. It exploits the fact the sequence</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{p}, \mathbf{Tp}, \mathbf{T}^2\mathbf{p}, \mathbf{T}^3\mathbf{p}, \ldots 
-\end{align}\)</span>
-converges to the principal eigenvector <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> for any initial vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, that is not orthogonal to <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span>.</p>
+\end{align}\)</span></p>
+<p>converges to the principal eigenvector <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> for any initial vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, that is not orthogonal to <span class="math notranslate nohighlight">\(\mathbf{v}_1\)</span>.</p>
 </section>
 <section id="implementation">
 <h4>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">#</a></h4>
@@ -797,15 +899,15 @@ converges to the principal eigenvector <span class="math notranslate nohighlight
 <p>Krylov subspace methods represent a powerful family of algorithms for analyzing large sparse matrices <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> whose shape can be square or rectangular. All they need is to perform multiplications with <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> and sometimes with its transpose <span class="math notranslate nohighlight">\(\mathbf{T}\transp\)</span>.
 <br>
 Before we introduce the actual algorithms, we cover some prerequisites.</p>
-<p>The Krylov subspace of dimension <span class="math notranslate nohighlight">\(k\)</span> is the span of vectors produced after <span class="math notranslate nohighlight">\(k\)</span> steps via power iteration, i.e.:
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>The Krylov subspace of dimension <span class="math notranslate nohighlight">\(k\)</span> is the span of vectors produced after <span class="math notranslate nohighlight">\(k\)</span> steps via power iteration, i.e.:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \left( \mathbf{p}_1 , \mathbf{p}_2 = \mathbf{Tp}, \mathbf{p}_3 = \mathbf{T}^2 \mathbf{p}_1 , \ldots , \mathbf{p}_{k+1} = \mathbf{T}^k \mathbf{p}_1 \right) \,.
 \end{align}\)</span></p>
 <section id="optical-matrix-vector-multiplication-for-arbitrary-vectors">
 <h4>Optical matrix-vector multiplication for arbitrary vectors<a class="headerlink" href="#optical-matrix-vector-multiplication-for-arbitrary-vectors" title="Permalink to this headline">#</a></h4>
 <p>Krylov subspace methods require to compute products with <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> for arbitrary vectors <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, which may also contain negative values.</p>
-<p>For this purpose, we express <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> as the difference between two non-negative vectors <span class="math notranslate nohighlight">\(\mathbf{p}^+\)</span> and <span class="math notranslate nohighlight">\(\mathbf{p}^-\)</span>:
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>For this purpose, we express <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> as the difference between two non-negative vectors <span class="math notranslate nohighlight">\(\mathbf{p}^+\)</span> and <span class="math notranslate nohighlight">\(\mathbf{p}^-\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{p} &amp;= \mathbf{p}^+ - \mathbf{p}^- \\
    \mathbf{Tp} &amp;= \mathbf{Tp}^+ - \mathbf{Tp}^- \,.
 \end{align}\)</span></p>
@@ -825,7 +927,7 @@ Before we introduce the actual algorithms, we cover some prerequisites.</p>
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "eb3ff299caac48ecb9d780bccd170a9a"}
+{"version_major": 2, "version_minor": 0, "model_id": "ddf21d824a144878b0c1a264c4ad2ca3"}
 </script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
 </pre></div>
 </div>
@@ -849,13 +951,13 @@ Before we introduce the actual algorithms, we cover some prerequisites.</p>
 <span class="math notranslate nohighlight">\(\qquad \mathbf{p}_{k+1} \leftarrow \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)\)</span>
 <span class="math notranslate nohighlight">\(\qquad \mathbf{p}_{k+1} \leftarrow \frac{\mathbf{p}_{k+1}}{\left\| \mathbf{p}_{k+1} \right\|_2 }\)</span><br><br>
 <span class="math notranslate nohighlight">\(\quad \textbf{return}\,  \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp  \)</span></p>
-<p>The function <span class="math notranslate nohighlight">\(\text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)\)</span> projects its last argument <span class="math notranslate nohighlight">\(\mathbf{i}_k\)</span> onto the subspace orthogonal to the columns of the matrix <span class="math notranslate nohighlight">\(\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \ldots, \mathbf{p}_k]\)</span>, i.e.,
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>The function <span class="math notranslate nohighlight">\(\text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)\)</span> projects its last argument <span class="math notranslate nohighlight">\(\mathbf{i}_k\)</span> onto the subspace orthogonal to the columns of the matrix <span class="math notranslate nohighlight">\(\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \ldots, \mathbf{p}_k]\)</span>, i.e.,</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
   \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k) = \mathbf{i}_k - \mathbf{P}\left( \mathbf{P}\transp \mathbf{P} \right)^{-1}  \mathbf{P}\transp \mathbf{i}_k
 \end{align}\)</span></p>
 <p>The Arnoldi algorithm constructs an orthogonal basis <span class="math notranslate nohighlight">\(\left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\)</span> for the subspace of illumination vectors and a basis <span class="math notranslate nohighlight">\(\left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right]\)</span> for the subspace of acquired images. The product <span class="math notranslate nohighlight">\(\left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp\)</span> is a low-rank approximation of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>.</p>
-<p>In order to synthetically relight the scene with an arbitrary illumination <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, the following expression has to be evaluated:
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>In order to synthetically relight the scene with an arbitrary illumination <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, the following expression has to be evaluated:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{Tp} \approx \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp \mathbf{p} \,.
 \end{align}\)</span></p>
 <div class="admonition note">
@@ -865,12 +967,12 @@ Before we introduce the actual algorithms, we cover some prerequisites.</p>
 </section>
 <section id="optical-matrix-inversion-via-gmres">
 <h4>Optical matrix inversion via GMRES<a class="headerlink" href="#optical-matrix-inversion-via-gmres" title="Permalink to this headline">#</a></h4>
-<p>We now assume that we are given a camera image <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> of our scene and want to obtain the illumination <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> that produced it, i.e., we want to find
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>We now assume that we are given a camera image <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> of our scene and want to obtain the illumination <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> that produced it, i.e., we want to find</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{p} = \argmin{\mathbf{x}} \left\| \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp \mathbf{x} - \mathbf{i} \right\|_2 \,. 
 \end{align}\)</span></p>
-<p>This optimization problem can be solved via the Moore-Penrose pseudoinverse <span class="math notranslate nohighlight">\(\mathbf{T}^\dagger\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> (in order to account for a potentially singular matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>):
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>This optimization problem can be solved via the Moore-Penrose pseudoinverse <span class="math notranslate nohighlight">\(\mathbf{T}^\dagger\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> (in order to account for a potentially singular matrix <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>):</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{p} = \mathbf{T}^\dagger \mathbf{i}\,.
 \end{align}\)</span></p>
 <p>This solution can also be calculated optically via another popular Krylov subspace method called <em>generalized minimum residual (GMRES)</em> that also only relies on computing products with <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> and does not need to access to the complete matrix.</p>
@@ -902,303 +1004,134 @@ Before we introduce the actual algorithms, we cover some prerequisites.</p>
 <p><em>Optical probing</em> can be seen as the optical implementation of <em>matrix probing</em>, a topic of numerical mathematics dealing with the efficient estimation of special regions of interest of very large matrices (like <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>), e.g., its trace or diagonal.</p>
 <p>Optical probing allows to obtain certain latent images of the scene which are normally hidden in the global light transport.</p>
 <p>For example, it is possible to obtain images corresponding to either (approximately) only direct or (approximately) only indirect light transport. Such images can reveal interesting insights about the observed scene (e.g., the structure of the blood vessels under the skin).</p>
-<p>Optical probing can be mathematically modelled as
-<span class="math notranslate nohighlight">\(\begin{align} 
+<p>Optical probing can be mathematically modelled as</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{i} = \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} \,,
-\end{align}\)</span>
-with <span class="math notranslate nohighlight">\(\boldsymbol{\Pi}\)</span> denoting the <em>probing matrix</em> and <span class="math notranslate nohighlight">\(\odot\)</span> denoting the element-wise product between two matrices of equal size, <span class="math notranslate nohighlight">\(\mathbf{1}\)</span> denoting a vector of all ones representing a uniform illumination and finally <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> representing the image captured under uniform illumination and for a light transport matrix that is the result of <span class="math notranslate nohighlight">\(\boldsymbol{\Pi} \odot \mathbf{T}\)</span>.</p>
-<p>In order to be able to manipulate <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> in this way, it is necessary to control two aspects of the image formation process:</p>
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\boldsymbol{\Pi}\)</span> denoting the <em>probing matrix</em> and <span class="math notranslate nohighlight">\(\odot\)</span> denoting the element-wise product between two matrices of equal size, <span class="math notranslate nohighlight">\(\mathbf{1}\)</span> denoting a vector of all ones representing a uniform illumination and finally <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> representing the image captured under uniform illumination and for a light transport matrix that is the result of <span class="math notranslate nohighlight">\(\boldsymbol{\Pi} \odot \mathbf{T}\)</span>.</p>
+<p>Visualization of the probing equation:<br></p>
+<img src="figures/4/probing_equation.svg" style="max-width:30vw"><p>In order to be able to manipulate <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> in this way, it is necessary to control two aspects of the image formation process:</p>
 <ul class="simple">
 <li><p>the illumination, the so-called <em>primal domain</em> via the projected image and</p></li>
 <li><p>the pixel-wise modulation of the camera’s sensor, the so-called <em>dual domain</em>.</p></li>
 </ul>
-<p>Control of the dual domain is possible by</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Generate synth. LTM</span>
-<span class="n">SIZE</span> <span class="o">=</span> <span class="mi">128</span>
-<span class="n">RANK</span> <span class="o">=</span> <span class="mi">90</span>
-<span class="n">LTM</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">SIZE</span><span class="p">,</span><span class="n">RANK</span><span class="p">)</span><span class="nd">@np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">RANK</span><span class="p">,</span><span class="n">SIZE</span><span class="p">)</span>
-<span class="n">LTM</span> <span class="o">=</span> <span class="n">LTM</span> <span class="o">+</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">SIZE</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NUM_ITERATIONS</span> <span class="o">=</span> <span class="mi">128</span><span class="c1">#1024     # Number of Arnoldi iterations</span>
-<span class="n">NUM_ITERATIONS_STEP</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># Only reconstruct matrix every </span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">h5py</span>
-<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;Green.mat&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;LTM&#39;</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># For converting to a NumPy array</span>
-<span class="n">LTM</span> <span class="o">=</span> <span class="n">data</span>
-<span class="n">NUM_ITERATIONS</span> <span class="o">=</span> <span class="mi">1024</span>     <span class="c1"># Number of Arnoldi iterations</span>
-<span class="n">NUM_ITERATIONS_STEP</span> <span class="o">=</span> <span class="mi">32</span>   <span class="c1"># Only reconstruct matrix every </span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="n">b77b20a38d3c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">h5py</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s1">&#39;Green.mat&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;LTM&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># For converting to a NumPy array</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">LTM</span> <span class="o">=</span> <span class="n">data</span>
-
-<span class="nn">~\repos\vlcompimg\compimg\lib\site-packages\h5py\_hl\files.py</span> in <span class="ni">__init__</span><span class="nt">(self, name, mode, driver, libver, userblock_size, swmr, rdcc_nslots, rdcc_nbytes, rdcc_w0, track_order, fs_strategy, fs_persist, fs_threshold, fs_page_size, page_buf_size, min_meta_keep, min_raw_keep, locking, alignment_threshold, alignment_interval, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">531</span>                                  <span class="n">fs_persist</span><span class="o">=</span><span class="n">fs_persist</span><span class="p">,</span> <span class="n">fs_threshold</span><span class="o">=</span><span class="n">fs_threshold</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">532</span>                                  <span class="n">fs_page_size</span><span class="o">=</span><span class="n">fs_page_size</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">533</span>                 <span class="n">fid</span> <span class="o">=</span> <span class="n">make_fid</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">userblock_size</span><span class="p">,</span> <span class="n">fapl</span><span class="p">,</span> <span class="n">fcpl</span><span class="p">,</span> <span class="n">swmr</span><span class="o">=</span><span class="n">swmr</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">534</span> 
-<span class="g g-Whitespace">    </span><span class="mi">535</span>             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">libver</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-
-<span class="nn">~\repos\vlcompimg\compimg\lib\site-packages\h5py\_hl\files.py</span> in <span class="ni">make_fid</span><span class="nt">(name, mode, userblock_size, fapl, fcpl, swmr)</span>
-<span class="g g-Whitespace">    </span><span class="mi">224</span>         <span class="k">if</span> <span class="n">swmr</span> <span class="ow">and</span> <span class="n">swmr_support</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">225</span>             <span class="n">flags</span> <span class="o">|=</span> <span class="n">h5f</span><span class="o">.</span><span class="n">ACC_SWMR_READ</span>
-<span class="ne">--&gt; </span><span class="mi">226</span>         <span class="n">fid</span> <span class="o">=</span> <span class="n">h5f</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">fapl</span><span class="o">=</span><span class="n">fapl</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">227</span>     <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;r+&#39;</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">228</span>         <span class="n">fid</span> <span class="o">=</span> <span class="n">h5f</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">h5f</span><span class="o">.</span><span class="n">ACC_RDWR</span><span class="p">,</span> <span class="n">fapl</span><span class="o">=</span><span class="n">fapl</span><span class="p">)</span>
-
-<span class="nn">h5py\_objects.pyx</span> in <span class="ni">h5py._objects.with_phil.wrapper</span><span class="nt">()</span>
-
-<span class="nn">h5py\_objects.pyx</span> in <span class="ni">h5py._objects.with_phil.wrapper</span><span class="nt">()</span>
-
-<span class="nn">h5py\h5f.pyx</span> in <span class="ni">h5py.h5f.open</span><span class="nt">()</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] Unable to open file (unable to open file: name = &#39;Green.mat&#39;, errno = 2, error message = &#39;No such file or directory&#39;, flags = 0, o_flags = 0)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span><span class="p">,</span><span class="n">N</span> <span class="o">=</span> <span class="n">LTM</span><span class="o">.</span><span class="n">shape</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">right_Arnoldi_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">NUM_ITERATIONS</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">right_Arnoldi_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">:=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="n">left_Arnoldi_vectors</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">NUM_ITERATIONS</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">NUM_ITERATIONS</span><span class="p">):</span>
-    
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">LTM</span><span class="nd">@right_Arnoldi_vectors</span><span class="p">[:,</span><span class="n">k</span><span class="p">];</span>    
-    <span class="n">left_Arnoldi_vectors</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
-    
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">LTM</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="nd">@left_Arnoldi_vectors</span><span class="p">[:,</span><span class="n">k</span><span class="p">];</span>
-    <span class="n">inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">right_Arnoldi_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="nd">@right_Arnoldi_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">inv</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">right</span> <span class="o">=</span> <span class="n">right_Arnoldi_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="nd">@tmp</span>
-    <span class="n">right</span> <span class="o">=</span> <span class="n">inv</span> <span class="o">@</span> <span class="n">right</span>
-    <span class="n">right</span> <span class="o">=</span> <span class="n">right_Arnoldi_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">@</span> <span class="n">right</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">-</span> <span class="n">right</span>
-    <span class="c1">#tmp = tmp - right_Arnoldi_vectors[:,0:k+1] @ inv @right_Arnoldi_vectors[:,0:k+1].transpose()@tmp</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">tmp</span><span class="p">);</span>
-
-    <span class="n">right_Arnoldi_vectors</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">optArnoldi</span><span class="p">(</span><span class="n">NUM_ITERATIONS</span><span class="p">,</span> <span class="n">LTM</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NUM_ITERATIONS</span><span class="p">,</span> <span class="n">NUM_ITERATIONS_STEP</span><span class="p">):</span>
-    <span class="n">LTM_approx</span> <span class="o">=</span> <span class="n">left_Arnoldi_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="nd">@right_Arnoldi_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
-    <span class="c1">#errors.append(np.linalg.norm(LTM - LTM_approx) / np.linalg.norm(LTM))</span>
-    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LTM</span><span class="o">-</span><span class="n">LTM_approx</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors2</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NUM_ITERATIONS</span><span class="p">,</span> <span class="n">NUM_ITERATIONS_STEP</span><span class="p">):</span>
-    <span class="n">LTM_approx</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="nd">@b</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
-    <span class="c1">#LTM_approx = b[0,0:k+1]@a[0,0:k+1].transpose()</span>
-    <span class="c1">#errors2.append(np.linalg.norm(LTM - LTM_approx) / np.linalg.norm(LTM))</span>
-    <span class="n">errors2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LTM</span><span class="o">-</span><span class="n">LTM_approx</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">LTM</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="nd">@LTM</span>
-<span class="n">U</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">right_singular_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-
-<span class="n">left_singular_vectors</span> <span class="o">=</span> <span class="n">LTM</span><span class="nd">@right_singular_vectors</span>
-
-<span class="n">errors3</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">NUM_ITERATIONS</span><span class="p">,</span> <span class="n">NUM_ITERATIONS_STEP</span><span class="p">):</span>
-    <span class="n">LTM_approx</span> <span class="o">=</span> <span class="n">left_singular_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="nd">@right_singular_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
-    <span class="c1">#errors2.append(np.linalg.norm(LTM - LTM_approx) / np.linalg.norm(LTM))</span>
-    <span class="n">errors3</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LTM</span><span class="o">-</span><span class="n">LTM_approx</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">errors2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">errors3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">optArnoldi</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">K</span><span class="p">))</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="c1">#p[:,0] = np.random.rand(A.shape[1])</span>
-    <span class="n">p</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">:=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">):</span>
-        <span class="n">i</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@p</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span>
-        <span class="n">P</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-        <span class="c1">#print(P.shape)</span>
-        <span class="c1">#print(P)</span>
-        <span class="n">p</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">P</span><span class="nd">@np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="o">@</span> <span class="n">P</span><span class="p">)</span><span class="nd">@P</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="nd">@i</span><span class="p">[:,</span><span class="n">k</span><span class="p">]</span>
-        <span class="n">p</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">p</span><span class="p">[:,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
-        
-    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span><span class="p">[:,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classicArnoldi</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-    <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-10</span>
-    <span class="n">v1</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="o">:=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">V</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">K</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="nd">@V</span><span class="p">[:,</span><span class="n">j</span><span class="p">],</span> <span class="n">V</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-            <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">+</span> <span class="n">H</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">V</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="n">moep</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">moep</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="n">W</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="nd">@V</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">tmp</span>
-        <span class="n">H</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">W</span><span class="p">[:,</span><span class="n">j</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">H</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moep&quot;</span><span class="p">)</span>
-            <span class="k">break</span>
-        <span class="n">V</span><span class="p">[:,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">W</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">H</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">V</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K2</span> <span class="o">=</span> <span class="mi">128</span>
-<span class="n">h</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">v</span> <span class="o">=</span> <span class="n">classicArnoldi</span><span class="p">(</span><span class="n">K2</span><span class="p">,</span> <span class="n">LTM</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">LTM_approx</span> <span class="o">=</span> <span class="n">v</span><span class="nd">@h@v</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors4</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">K2</span><span class="p">):</span>
-    <span class="n">LTM_approx</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="nd">@h</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="nd">@v</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
-    <span class="n">errors4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LTM</span><span class="o">-</span><span class="n">LTM_approx</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">errors4</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">errors3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">LTM</span><span class="o">-</span><span class="n">LTM_approx</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Controlling the dual domain means, that certain pixels of the camera can be blocked from receiving light during the acquisition of a single camera image.</p>
+<p>This can be achieved</p>
+<ul class="simple">
+<li><p>via a so-called spatial light modulator, i.e., a transmission mask (e.g., an LCD panel) whose spatial transmission pattern can be computationally controlled or</p></li>
+</ul>
+<ul class="simple">
+<li><p>by capturing single images <span class="math notranslate nohighlight">\(\mathbf{i}_k\)</span> for every modulation pattern <span class="math notranslate nohighlight">\(k\in [0,\ldots, K]\)</span> where the respective pixel values are computationally modulated after the image acquisition and by synthesizing the actual image by calculating a sum over all <span class="math notranslate nohighlight">\(\mathbf{i}_k\)</span>.</p></li>
+</ul>
+<p>Visualization of the optical setup:<br></p>
+<img src="figures/4/probing_setup.svg" style="max-width:30vw"><section id="probing-the-light-transport-matrix">
+<h3>Probing the light transport matrix<a class="headerlink" href="#probing-the-light-transport-matrix" title="Permalink to this headline">#</a></h3>
+<p>The only way we can gain information about the light transport (matrix) is by projecting and capturing images.</p>
+<p>However, this leaves a notable dimensionality gap:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{T}\)</span> has <span class="math notranslate nohighlight">\(I \times P\)</span> elements, whereas</p></li>
+<li><p>one image <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> only as <span class="math notranslate nohighlight">\(I\)</span> elements.</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\Rightarrow\)</span> Use probing equation to only analyze elements of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> of interest.</p>
+<section id="example-probing-matrices">
+<h4>Example probing matrices<a class="headerlink" href="#example-probing-matrices" title="Permalink to this headline">#</a></h4>
+<img src="figures/4/example_probing_matrix_1.svg" style="max-width:30vw">
+<p>Acquisition of a common image for illumination <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>.</p>
+<img src="figures/4/example_probing_matrix_2.svg" style="max-width:30vw">
+<p>Same as before but via probing matrix and constant illumination <span class="math notranslate nohighlight">\(\mathbf{1}\)</span>.</p>
+<img src="figures/4/example_probing_matrix_3.svg" style="max-width:30vw">
+<p>Acquisition of the diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>.</p>
+<img src="figures/4/example_probing_matrix_4.svg" style="max-width:30vw">
+<p>Acquisition of an off-diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>.</p>
+<img src="figures/4/example_probing_matrix_5.svg" style="max-width:30vw">
+<p>Acquisition of one specific element of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> per row.</p>
+<img src="figures/4/example_probing_matrix_6.svg" style="max-width:30vw">
+<p>Acquisition of a linear combination of two elements (red and blue) of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> per row.</p>
+<img src="figures/4/example_probing_matrix_7.svg" style="max-width:30vw">
+<p>Acquisition of an image for illumination <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> for a transport matrix <span class="math notranslate nohighlight">\(\hat{\mathbf{T}}=\mathbf{A}\odot \mathbf{T}\)</span>.</p>
+<p>Each element <span class="math notranslate nohighlight">\((m,n)\)</span> of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> encodes different optical paths of light that originated from projector pixel <span class="math notranslate nohighlight">\(n\)</span> and reach camera pixel <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<img src="figures/4/probing_light_paths.svg" style="max-width:30vw"><ul class="simple">
+<li><p>(a): <span class="math notranslate nohighlight">\(\mathbf{T}[m,n]\)</span>: All light paths from projector pixel <span class="math notranslate nohighlight">\(n\)</span> to camera pixel <span class="math notranslate nohighlight">\(m\)</span>.</p></li>
+<li><p>(b): <span class="math notranslate nohighlight">\(\mathbf{T}[m,m]\)</span>, i.e., diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>: The direct component (red) but maybe also back-scattering (blue) and retro reflections (green).</p></li>
+<li><p>(c): The distance <span class="math notranslate nohighlight">\(\left| m-n \right|\)</span> allows to distinguish between short distance and long distance optical paths.</p></li>
+</ul>
+<p>By adequately probing <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>, photos can be acquired, for which certain light paths (e.g., direct, indirect, etc.) have been enhanced, attenuated or even blocked.</p>
+<section id="how-to-perform-the-probing">
+<h5>How to perform the probing?<a class="headerlink" href="#how-to-perform-the-probing" title="Permalink to this headline">#</a></h5>
+<p>Naive idea: To probe <span class="math notranslate nohighlight">\(\mathbf{T}[m,n]\)</span>, illuminate with a single projector pixel <span class="math notranslate nohighlight">\(n\)</span> while reading out only camera pixel <span class="math notranslate nohighlight">\(m\)</span>, repeat for all non-zero elements of the probing matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Pi}\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\Rightarrow\)</span> Very inefficient (in terms of light) and slow!</p>
 </section>
 </section>
+<section id="optical-implementation-of-matrix-probing">
+<h4>Optical implementation of matrix probing<a class="headerlink" href="#optical-implementation-of-matrix-probing" title="Permalink to this headline">#</a></h4>
+<p>Decompose <span class="math notranslate nohighlight">\(\boldsymbol{\Pi}\)</span> into a sum of rank-1 matrices:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \boldsymbol{\Pi} = \sum\limits^K_{k=1} \mathbf{m}_k \mathbf{p}^\intercal_k \,,
+\end{align}\)</span></p>
+<p>for <span class="math notranslate nohighlight">\(K\)</span> vectors <span class="math notranslate nohighlight">\(\mathbf{m}_k, \mathbf{p}_k\)</span>.</p>
+<p>With this, we can reformulate the probing equation:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} &amp;= \sum\limits^P_{n=1} \boldsymbol{\Pi} [n] \circ \mathbf{T}[n] \\
+   &amp;= \sum\limits^P_{n=1} \left( \sum\limits^K_{k=1} \mathbf{m}_k p_k[n] \right) \circ \mathbf{T}[n] \\
+   &amp;= \sum\limits^K_{k=1} \left( \mathbf{m}_k \circ \sum\limits^P_{n=1} \mathbf{T}[n]p_k[n] \right) \\
+   &amp;= \sum\limits^K_{k=1} \mathbf{m}_k \circ \mathbf{T}\mathbf{p}_k \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\circ\)</span> denoting the element-wise product between vectors, <span class="math notranslate nohighlight">\(\mathbf{T}[n]\)</span> denoting the <span class="math notranslate nohighlight">\(n\)</span>-th column of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> and <span class="math notranslate nohighlight">\(p_k[n]\)</span> denoting the <span class="math notranslate nohighlight">\(n\)</span>-th element of the vector <span class="math notranslate nohighlight">\(\mathbf{p}_k\)</span>, i.e., <span class="math notranslate nohighlight">\(p_k[n]\)</span> is a scalar.</p>
+<p>According to this derivation, every decomposition of the probing matrix into a sum of rank-1 matrices can be realized via a sequence of step-wise corresponding illumination patterns <span class="math notranslate nohighlight">\(\mathbf{p}_k\)</span> and sensor modulations <span class="math notranslate nohighlight">\(\mathbf{m}_k\)</span> for <span class="math notranslate nohighlight">\(k \in [1,\ldots, K]\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+    \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} = \sum\limits^K_{k=1} \underbrace{\mathbf{m}_k \circ \overbrace{\mathbf{T}\mathbf{p}_k}^{\text{acquired image } \mathbf{i}_k \text{ for illumination }\mathbf{p}_k}}_{\text{image } \mathbf{i}_k \text{ modulated with } \mathbf{m}_k} \,.
+\end{align}\)</span></p>
+<p>This leads to the following algorithm for optical probing of the light transport matrix:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{Function}\, \mathrm{opticalMatrixProbing}\left(\mathtt{camera},\, \mathtt{projector}, \left\{ \mathbf{p}_k, k \in \left[ 1,\ldots, K \right]  \right\}, \left\{ \mathbf{m}_k, k \in \left[ 1,\ldots, K \right]  \right\}  \right)\)</span><br><br>
+<span class="math notranslate nohighlight">\(\quad \mathbf{i}_{\mathrm{result}} \leftarrow \text{ empty image }\)</span><br>
+<span class="math notranslate nohighlight">\(\quad \mathbf{for}\, k \in [1,\ldots,K]:\)</span><br>
+<span class="math notranslate nohighlight">\(\qquad \mathtt{projector}.\text{project}(\mathbf{p}_k)\)</span><br>
+<span class="math notranslate nohighlight">\(\qquad \mathbf{i}_k \leftarrow \mathtt{camera}.\text{acquireImage}()\)</span><br>
+<span class="math notranslate nohighlight">\(\qquad \mathbf{i}_{\mathrm{result}} \leftarrow \mathbf{i}_\mathrm{result} +  \mathbf{m}_k \circ \mathbf{i}_k\)</span><br><br></p>
+<p><span class="math notranslate nohighlight">\(\quad \textbf{return}\,  \mathbf{i}_\mathrm{result}\)</span></p>
+</section>
+<section id="enhancing-the-direct-component">
+<h4>Enhancing the direct component<a class="headerlink" href="#enhancing-the-direct-component" title="Permalink to this headline">#</a></h4>
+<p>For enhancing the direct component, i.e., the diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>, one can use a sequence of <span class="math notranslate nohighlight">\(\mathbf{p}_k = \mathbf{m}_k\)</span> drawn from the Bernoulli distribution. The resulting vectors have values of 1 with probability <span class="math notranslate nohighlight">\(p\)</span> and <span class="math notranslate nohighlight">\(0\)</span> with probability <span class="math notranslate nohighlight">\(1-p\)</span>. When drawing <span class="math notranslate nohighlight">\(K\)</span> vectors, their approximated matrix converges to a probing matrix with <span class="math notranslate nohighlight">\(p\cdot K\)</span> on the diagonal and <span class="math notranslate nohighlight">\(p^2 \cdot K\)</span> everywhere else, i.e., enhancing the diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> by a factor of <span class="math notranslate nohighlight">\(\frac{p \cdot K}{p^2 \cdot K} = \frac{1}{p}\)</span>.</p>
+<p>Example approximated probing matrix for enhancing the direct component with size <span class="math notranslate nohighlight">\(10 \times 10\)</span> resulting from the described method for <span class="math notranslate nohighlight">\(p=0.125, K=1000\)</span>.</p>
+<img src="figures/4/approx_prob_mat_direct_enhanced.svg" style="max-width:30vw"><p>Example results for enhancing the direct light path components via different values for <span class="math notranslate nohighlight">\(p\)</span>:</p>
+<img src="figures/4/example_direct_enhanced.svg" style="max-width:30vw"></section>
+<section id="attenuation-of-local-scattering">
+<h4>Attenuation of local scattering<a class="headerlink" href="#attenuation-of-local-scattering" title="Permalink to this headline">#</a></h4>
+<p>When light from a projector pixel <span class="math notranslate nohighlight">\(n\)</span> is locally scattered by small structures, e.g., by dust particles, it will most likely not contribute to the camera pixel <span class="math notranslate nohighlight">\(n\)</span>, which corresponds to direct light transport, but to a nearby camera pixel <span class="math notranslate nohighlight">\(m\)</span>, i.e., with <span class="math notranslate nohighlight">\(\vert m - n \vert = 1\)</span>.</p>
+<p>Such light transport phenomena are encoded by the first off-diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>.</p>
+<p>In order to attenuate local scattering effects, first an image <span class="math notranslate nohighlight">\(\mathbf{i}_2\)</span> is acquired, where these effects are enhanced. This image can then be subtracted from an image <span class="math notranslate nohighlight">\(\mathbf{i}_1\)</span> with enhanced direct light transport (previous example) to obtain the final image <span class="math notranslate nohighlight">\(\mathbf{i}_3 = \mathbf{i}_1 - \mathbf{i}_2\)</span>.</p>
+<p>To approximate the probing matrix for acquiring the off-diagonal of <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>, the previously mentioned Bernoulli sequence can be used for <span class="math notranslate nohighlight">\(\mathbf{m}_k\)</span> and the illumination vectors have to be shifted by <span class="math notranslate nohighlight">\(w\)</span> for probing the <span class="math notranslate nohighlight">\(w\)</span>-th off-diagonal:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{p}_k := \text{shift}(\mathbf{m}_k, w)\,.
+\end{align}\)</span></p>
+<p>The operation <span class="math notranslate nohighlight">\(\text{shift}(\mathbf{m}_k, w)\)</span> denotes a circular shift of the vector <span class="math notranslate nohighlight">\(\mathbf{m}_k\)</span> by <span class="math notranslate nohighlight">\(w\)</span>, i.e.,</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \text{shift}(\mathbf{x}, w) &amp;= \text{shift}\left( (x_1, x_2, \ldots, x_N)\transp , w \right) \\ &amp;= (x_{N-(w-1) \text{ mod }N}, x_{N-(w-2) \text{ mod }N}, \ldots, x_{N-(w-N) \text{ mod }N})\transp \,.
+\end{align}\)</span></p>
+<p>Example:<br>
+Imaging a test chart in turbid media (milky water) as an example scene for strong local scattering effects.</p>
+<p>Without compensation:</p>
+<img src="figures/4/example_descattering_conventional.svg" style="max-width:30vw"><p>Results for attenuation of local scattering effects:</p>
+<img src="figures/4/example_descattering.svg" style="max-width:30vw"><p>Example approximation of a <span class="math notranslate nohighlight">\(10 \times 10\)</span> probing matrix (same parameters as before, i.e., <span class="math notranslate nohighlight">\(p=0.125, K=1000\)</span>) for enhancing the first off-diagonal:</p>
+<img src="figures/4/approx_prob_mat_offdiag_enhanced.svg" style="max-width:30vw"><p>Similar approximation for the probing matrix that would result for the subtraction <span class="math notranslate nohighlight">\(\mathbf{i}_3 = \mathbf{i}_1 - \mathbf{i}_2\)</span>:</p>
+<img src="figures/4/approx_prob_mat_local_descattering.svg" style="max-width:30vw"></section>
+<section id="only-indirect-light-transport">
+<h4>Only indirect light transport<a class="headerlink" href="#only-indirect-light-transport" title="Permalink to this headline">#</a></h4>
+<p>To suppress direct light transport, the illumination vectors <span class="math notranslate nohighlight">\(\mathbf{p}_k\)</span> can be drawn from the Bernoulli distribution and the mask patterns can be set as <span class="math notranslate nohighlight">\(\mathbf{m}_k := \mathbf{1} - \mathbf{p}_k\)</span>.</p>
+<p>The resulting approximated matrix will have <span class="math notranslate nohighlight">\(0\)</span> on its diagonal and an expected value of <span class="math notranslate nohighlight">\(p(1-p)\cdot K\)</span> everywhere else.</p>
+<p>Example approximated probing matrix for suppressing the direct component with size <span class="math notranslate nohighlight">\(10 \times 10\)</span> resulting from the described method for <span class="math notranslate nohighlight">\(p=0.1, K=1000\)</span>.</p>
+<img src="figures/4/approx_prob_mat_indirect_only.svg" style="max-width:30vw"><p>Example results for only indirect light transport imaging and for enhancing the direct component via subtraction of the indirect only-image from an image acquired under constant illumination:</p>
+<img src="figures/4/example_indirect_etc_1.svg" style="max-width:30vw"><img src="figures/4/example_indirect_etc_2.svg" style="max-width:30vw"></section>
+</section>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"f3eeafe43a8f4d1084fc27a15059c490": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "3e1219e8032a46e6aa40c086c95b3b83": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "9fc67d4823754bbeb2b97949496fd22b": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_f3eeafe43a8f4d1084fc27a15059c490", "max": 5, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_3e1219e8032a46e6aa40c086c95b3b83", "value": 5}}, "cbe335bb3d3342ac9b6e14fb464a14f7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "58684a3c5bb846c08e19f178138db9cc": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_9fc67d4823754bbeb2b97949496fd22b", "IPY_MODEL_4628d54c23b34823b7fffbda4488b4b5"], "layout": "IPY_MODEL_cbe335bb3d3342ac9b6e14fb464a14f7"}}, "e5fd149fe6394e50a6c7a99ec6b1c2bb": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4628d54c23b34823b7fffbda4488b4b5": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_e5fd149fe6394e50a6c7a99ec6b1c2bb", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/4/desk_lightsources_example_5.svg\" style=\"max-height:50vh\"/>"}}]}}, "2e94b6c1a39d4baeb6d96911907e2bc6": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7a7fa36c292f40d690b77397a130e306": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "5b95dd48bcb4463c8cb78f255fe6a0ea": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_2e94b6c1a39d4baeb6d96911907e2bc6", "max": 7, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_7a7fa36c292f40d690b77397a130e306", "value": 7}}, "dbc485206a65442fbed638c7fa0bd64b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ddf21d824a144878b0c1a264c4ad2ca3": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_5b95dd48bcb4463c8cb78f255fe6a0ea", "IPY_MODEL_8a5738cf71944ca8a926cfe15f87119c"], "layout": "IPY_MODEL_dbc485206a65442fbed638c7fa0bd64b"}}, "6802f6c37764419e8d86674f5b3d36ca": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8a5738cf71944ca8a926cfe15f87119c": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_6802f6c37764419e8d86674f5b3d36ca", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/4/symmetric_transport_matrix_7.svg\" style=\"max-height:50vh\"/>"}}]}}}, "version_major": 2, "version_minor": 0}
+</script>
+
 
     <script type="text/x-thebe-config">
     {
@@ -1234,10 +1167,10 @@ with <span class="math notranslate nohighlight">\(\boldsymbol{\Pi}\)</span> deno
             <p class="prev-next-title">Light Field Methods</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="05_InverseProblemsInCompimg.html" title="next page">
+    <a class='right-next' id="next-link" href="05_NeuralNetworksForCompImg.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Inverse Problems in Computational Imaging</p>
+        <p class="prev-next-title">Neural Networks for Computational Imaging</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
