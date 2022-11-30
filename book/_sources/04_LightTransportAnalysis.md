@@ -134,20 +134,8 @@ $\begin{align}
 
 ##### Content
 * Introduction into light transport
-    * The light transport equation
-    * The light transport matrix
-* Optical computing for fast light transport 
-    * Optical interpretation of matrix vector products
-    * Krylov subspace methods (optical power iteration, optical Arnoldi)
-* Light transport matrix processing for visual inspection
-    * Light transport matrix feature extraction
-    * Signal-to-noise ratio based image fusion
-* Separation of direct and indirect light transport
-    * Inverse light transport
-    * Indirect appearance by structured light transport
-* Compressed sensing for light transport analysis
-    * Introduction to compressed sensing
-    * Compressive light transport matrix acquisition
+* Light transport analysis via optical computing
+* Primal-Dual coding for optical probing
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
@@ -158,15 +146,15 @@ $\begin{align}
 * Light transport = all light travelling in a scene from illumination sources to sensor elements (i.e., pixels).
 * Can be mathematically described via the so-called *light transport matrix* $\mathbf{T}$, if the common assumption of linear light transport is made.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The matrix $\mathbf{T}$ contains the individual influences of all $P$ light sources to all $I$ sensor elements and hence has dimensions of $\mathbf{T} \in \mathbb{R}^{I\times P}_+$.
 
-+++ {"tags": ["book_only"]}
++++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
 The elements of $\mathbf{T}$ are non-negative as only positive energy or no energy can be transported via light.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The *light transport equation* 
 
@@ -176,15 +164,15 @@ $\begin{align}
 
 describes the formation of the sensor values $\mathbf{i}$ of the $I$ sensor elements when the scene is illuminated by the $P$ light sources with respective intensities $\mathbf{p}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 For the following content, we will assume illumination of the scene by a projector projecting a two-dimensional image and a two-dimensional gray-value camera serving as the sensor.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 In this case, $\mathbf{i}$ and $\mathbf{p}$ are the vector representations of the camera image, respectively, of the projected image or pattern.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 If the light transport matrix $\mathbf{T}$ is known, the camera image that would result from the illumination with an arbitrary pattern $\mathbf{p}$ could be synthetically calculated by just evaluating the light transport equation
 
@@ -192,7 +180,7 @@ $\begin{align}
   \mathbf{i} = \mathbf{T}\mathbf{p} \,.
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Example
 
@@ -204,15 +192,15 @@ interact(lambda i: showFig('figures/4/desk_lightsources_example_',i,'.svg',800,5
 
 (All images in this chapter are kindly provided by Matthew O'Toole).
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 In this sense, the element $T[m,n]$ of $\mathbf{T}$ encodes the contribution of light source (i.e., projector pixel) $n$ to camera pixel $m$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 Unfortunately, the matrix $\mathbf{T}$ is too large to measure and handle digitally for many practically relevant applications.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Example
 
@@ -221,7 +209,7 @@ Unfortunately, the matrix $\mathbf{T}$ is too large to measure and handle digita
 Example light transport matrix for a single row (highlighted in (a)) of image and projector pixels. Further highlighted are the image position corresponding to camera pixel $m$ and the position corresponding to projector pixel $n$:<br>
 <img src="figures/4/example_transport_matrix.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Practical limitations 
 
@@ -230,13 +218,13 @@ Consider a pair of a camera and a projector both having a (comparatively low) re
 * With an acquisition rate of $30$ Hz, acquiring the required $10^6$ measurements would need over 9 hours of time.
 * For a quantization of 8 bit per pixel for the camera images, $\mathbf{T}$ would require about one terabyte of storage.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Optical linear algebra
 
 To overcome the mentioned limitations, we will study approaches to perform linear algebra calculations involving $\mathbf{T}$ only in the optical domain, i.e., without ever capturing the single elements of $\mathbf{T}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Light paths
 
@@ -246,42 +234,42 @@ We again assume that all geometric structures involved in our imaging system are
 
 While travelling through the scene, light rays can be refracted, reflected, scattered, etc. until they either hit one of the camera's pixels or get absorbed or exit the scene.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 We denote a sequence of such light rays which connect a light source (i.e., a projector pixel) and a camera pixel as a *light path*.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 Light paths can be categorized into *direct* and *indirect* paths.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 <img src="figures/4/light_path_categories.png" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 * **Black ray - direct paths**: From projector pixel to camera pixel via single scene point interaction.
 * **Indirect paths**: Interaction with multiple scene points:
     * **Red rays - diffuse indirect paths**: Diffusely scatter at two or more diffuse points.
     * **Green rays - sepcular indirect paths**: Diffusely scatter at most once.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Important: Since the area of a camera pixel is not infinitely small, it usually receives both, rays from direct and indirect light paths.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The image captured with the camera can be imagined as a superposition of multiple latent images, all corresponding to different kinds of light paths.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The reconstruction of these latent images is one major goal of light transport analysis.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 They often reveal interesting properties of the scene.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Teaser
 
@@ -289,17 +277,21 @@ We will see, how we
 
 * can synthetically relight a scene, i.e., synthesize the image that would result when illuminating it with arbitrary illumination patterns (see previous example images),
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 * can manipulate the image of a projector in order to compensate disturbing structures on the screen surface,
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 * can separate direct an indirect light transport to obtain images dominated only by the respective optical effects.
 
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Example
+
 <img src="figures/4/Example_Separation_Direct_Indirect.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Entries of the light transport matrix
 
@@ -311,17 +303,17 @@ $\begin{align}
 
 with $\Omega_{m,n}$ denoting the support, i.e., the space of light paths between source $n$ and sensor element $m$, the scattering throughput function $f(x)$ encoding the radiant energy transported along a light path $x$ and $\mu (x)$ representing the corresponding measure.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Helmholtz reciprocity principle
 
-For many practically relevant scenes, the scattering throughput scene can be assumed to obey the *Helmholtz reciprocity principle*, according to which the value of $f(x)$ for a light path $x$ does not depend on the propagation direction of the light rays of $x$ (i.e., interchanging projector pixel $n$ with camera pixel $m$ would result in the same value for $T[m,n]$).
+For many practically relevant scenes, the scattering throughput can be assumed to obey the *Helmholtz reciprocity principle*, according to which the value of $f(x)$ for a light path $x$ does not depend on the propagation direction of the light rays of $x$ (i.e., interchanging projector pixel $n$ with camera pixel $m$ would result in the same value for $T[m,n]$).
 
-+++
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Light transport analysis via optical computing
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 When illuminating the scene with an illumination vector $\mathbf{p}$, capturing a camera image yields
 
@@ -331,23 +323,25 @@ $\begin{align}
 
 i.e., the matrix multiplication $\mathbf{Tp}$ has been performed in the optical domain.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 This is the only possible way to interact with $\mathbf{T}$ in order to get information about it, i.e., via multiplying $\mathbf{T}$ with some vector $\mathbf{p}$ and observing the result $\mathbf{i}$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 Luckily, dealing with very large matrices like $\mathbf{T}$ only via matrix multiplication as stated before, represents a well-studied problem in the field of linear algebra.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
-Especially the set of so-called *Krylov subspace methods* is suitable for our case, which is why we will study some of these approaches in the following. 
+Especially the set of so-called *Krylov subspace methods* is suitable for our case, which is why we will study some of these approaches in the following.
+
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Optical power iteration
 
 We will first study a simple method to obtain the eigenvector $\mathbf{v}_1$ of $\mathbf{T}$ that corresponds to its largest eigenvalue $\lambda_1$. For this purpose, we will transform a method called *power iteration* into the optical domain.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The vector $\mathbf{v}$ is called the eigenvector of a square matrix $\mathbf{T}$ if 
 
@@ -357,11 +351,11 @@ $\begin{align}
 
 with the so-called scalar eigenvalue $\lambda$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The eigenvector $\mathbf{v}_1$ that corresponds to the eigenvalue $\lambda_1$ with the highest absolute value is called the *principal eigenvector*.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Power iteration
 
@@ -373,7 +367,7 @@ $\begin{align}
 
 converges to the principal eigenvector $\mathbf{v}_1$ of $\mathbf{T}$ for any initial vector $\mathbf{p}$, that is not orthogonal to $\mathbf{v}_1$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Implementation
 
@@ -388,7 +382,7 @@ $\qquad \mathbf{i}_k \leftarrow \mathbf{Tp}_k$<br>
 $\qquad \mathbf{p}_{k+1} \leftarrow \frac{\mathbf{i}_k}{\left\| \mathbf{i}_k \right\|_2 }$<br><br>
 $\quad \textbf{return}\,  \mathbf{p}_{k+1}$
 
-+++ {"cell_style": "split"}
++++ {"cell_style": "split", "slideshow": {"slide_type": "fragment"}}
 
 The optical counterpart is given by:
 
@@ -400,17 +394,17 @@ $\qquad \mathbf{i}_k \leftarrow \mathtt{camera}.\text{acquireImage}()$<br>
 $\qquad \mathbf{p}_{k+1} \leftarrow \frac{\mathbf{i}_k}{\left\| \mathbf{i}_k \right\|_2 }$<br><br>
 $\quad \textbf{return}\,  \mathbf{p}_{k+1}$
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 Note that all elements of $\mathbf{p}$ have to be non-negative so that they can be projected onto the scene.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Some intermediate steps of an example optical power iteration application:
 
 <img src="figures/4/powerIteration_example.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Limitations
 
@@ -418,11 +412,11 @@ Some intermediate steps of an example optical power iteration application:
 
 * Power iteration can only be applied to square matrices (i.e., for same sizes of projected images and captured images).
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 * The convergence behavior of power iteration strongly depends on properties of $\mathbf{T}$, especially on the similarity of the top two eigenvalues.
 
-+++ {"slideshow": {"slide_type": "slide"}}
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Krylov subspace methods
 
@@ -430,7 +424,7 @@ Krylov subspace methods represent a powerful family of algorithms for analyzing 
 <br>
 Before we introduce the actual algorithms, we cover some prerequisites.
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The Krylov subspace of dimension $k$ is the span of vectors produced after $k$ steps via power iteration, i.e.:
 
@@ -457,13 +451,15 @@ $\begin{align}
 
 As a result, we have to project and capture two images to achieve an optical realization of these kinds of matrix-vector multiplications.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Symmetry of transport matrix
 
-Only for symmetric matrices the convergence characteristics of Krylov subspace is well-understood and promises fast convergence. Hence, we stick to that case and ensure optically that the light transport matrix $\mathbf{T}$ is symmetric.
+Only for symmetric matrices the convergence characteristics of Krylov subspace are well-understood and promise fast convergence. Hence, we stick to that case and ensure optically that the light transport matrix $\mathbf{T}$ is symmetric.
 
-+++
+However, by using two camera-projector systems, two unsymmetric transport matrices can be combined into one symmetric light transport matrix (not covered here).
+
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Enforcing symmetry for $\mathbf{T}$
 
@@ -475,19 +471,21 @@ By using a coaxial camera-projector arrangement and equal resolutions for both c
 interact(lambda i: showFig('figures/4/symmetric_transport_matrix_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=7), step=1, value=(max_i if book else min_i)))
 ```
 
++++ {"slideshow": {"slide_type": "subslide"}}
+
 #### Low-rank approximation of $\mathbf{T}$ via optical Arnoldi
 
 In its $k$-th iteration, the Arnoldi method allows to calculate the top $k$ eigenvectors (or singular vectors) of a matrix.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 It calculates a sequence of orthogonal vectors $\mathbf{p}_1, \ldots, \mathbf{p}_k$ whose span is an approximation of the span of the top $k$ eigenvectors of the matrix under investigation.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The accuracy of the approximation increases with $k$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 $\mathbf{Function}\, \mathrm{opticalSymmetricArnoldi}(\mathtt{camera},\, \mathtt{projector})$<br><br>
 $\quad \mathbf{p}_1 \leftarrow \text{ non-zero random vector}$<br>
@@ -497,11 +495,11 @@ $\qquad \mathbf{i}^+_k \leftarrow \mathtt{camera}.\text{acquireImage}()$<br>
 $\qquad \mathtt{projector}.\text{project}(\mathbf{p}^-_k)$<br>
 $\qquad \mathbf{i}^-_k \leftarrow \mathtt{camera}.\text{acquireImage}()$<br>
 $\qquad \mathbf{i}_k \leftarrow i^+_k - i^-_k$<br>
-$\qquad \mathbf{p}_{k+1} \leftarrow \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)$
+$\qquad \mathbf{p}_{k+1} \leftarrow \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)$<br>
 $\qquad \mathbf{p}_{k+1} \leftarrow \frac{\mathbf{p}_{k+1}}{\left\| \mathbf{p}_{k+1} \right\|_2 }$<br><br>
 $\quad \textbf{return}\,  \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp  $
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The function $\text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)$ projects its last argument $\mathbf{i}_k$ onto the subspace orthogonal to the columns of the matrix $\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \ldots, \mathbf{p}_k]$, i.e.,
 
@@ -509,11 +507,11 @@ $\begin{align}
   \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k) = \mathbf{i}_k - \mathbf{P}\left( \mathbf{P}\transp \mathbf{P} \right)^{-1}  \mathbf{P}\transp \mathbf{i}_k
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The Arnoldi algorithm constructs an orthogonal basis $\left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]$ for the subspace of illumination vectors and a basis $\left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right]$ for the subspace of acquired images. The product $\left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp$ is a low-rank approximation of $\mathbf{T}$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 In order to synthetically relight the scene with an arbitrary illumination $\mathbf{p}$, the following expression has to be evaluated:
 
@@ -527,7 +525,7 @@ $\begin{align}
    If this equation is successively evaluated from right to left, at no time a matrix larger than $K \times N$ has to be kept in memory.
 ```
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Optical matrix inversion via GMRES
 
@@ -539,7 +537,7 @@ $\begin{align}
    \mathbf{p} = \argmin{\mathbf{x}} \left\| \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]\transp \mathbf{x} - \mathbf{i} \right\|_2 \,. 
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 This optimization problem can be solved via the Moore-Penrose pseudoinverse $\mathbf{T}^\dagger$ of $\mathbf{T}$ (in order to account for a potentially singular matrix $\mathbf{T}$):
 
@@ -547,17 +545,17 @@ $\begin{align}
    \mathbf{p} = \mathbf{T}^\dagger \mathbf{i}\,.
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 This solution can also be calculated optically via another popular Krylov subspace method called *generalized minimum residual (GMRES)* that also only relies on computing products with $\mathbf{T}$ and does not need to access to the complete matrix.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The algorithm differs only slightly from optical Arnoldi, namely
 * in the initialization vector $\mathbf{p}_1$, which is always the target image $\mathbf{i}$ and
 * in the return value, which is $\left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]^\dagger \mathbf{i}$, i.e., the approximation of the sought illumination vector.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 $\mathbf{Function}\, \mathrm{opticalSymmetricGMRES}(\mathtt{camera},\, \mathtt{projector}, \mathbf{i})$<br><br>
 $\quad \mathbf{p}_1 \leftarrow \mathbf{i}$<br>
@@ -567,21 +565,21 @@ $\qquad \mathbf{i}^+_k \leftarrow \mathtt{camera}.\text{acquireImage}()$<br>
 $\qquad \mathtt{projector}.\text{project}(\mathbf{p}^-_k)$<br>
 $\qquad \mathbf{i}^-_k \leftarrow \mathtt{camera}.\text{acquireImage}()$<br>
 $\qquad \mathbf{i}_k \leftarrow i^+_k - i^-_k$<br>
-$\qquad \mathbf{p}_{k+1} \leftarrow \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)$
+$\qquad \mathbf{p}_{k+1} \leftarrow \text{ortho}(\mathbf{p}_1, \ldots ,\mathbf{p}_k,\mathbf{i}_k)$<br>
 $\qquad \mathbf{p}_{k+1} \leftarrow \frac{\mathbf{p}_{k+1}}{\left\| \mathbf{p}_{k+1} \right\|_2 }$<br><br>
 $\quad \textbf{return}\,  \left[ \mathbf{i}_1 \cdots \mathbf{i}_{K} \right] \left[ \mathbf{p}_1 \cdots \mathbf{p}_K  \right]^\dagger \mathbf{i}  $
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Intuitively, GMRES calculates a rank-$K$ approximation of $\mathbf{T}$ and calculates its pseudoinverse to solve for $\mathbf{p}$. The initialization of $\mathbf{p}_1$ with $\mathbf{i}$ helps to explore only a portion of $\mathbf{T}$'s row space that is suitable for the inversion with respect to $\mathbf{i}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Example experiments
 
 <img src="figures/4/result_GMRES.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Primal-Dual coding for optical probing
 
@@ -589,15 +587,15 @@ Intuitively, GMRES calculates a rank-$K$ approximation of $\mathbf{T}$ and calcu
 
 *Optical probing* can be seen as the optical implementation of *matrix probing*, a topic of numerical mathematics dealing with the efficient estimation of special regions of interest of very large matrices (like $\mathbf{T}$), e.g., its trace or diagonal.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Optical probing allows to obtain certain latent images of the scene which are normally hidden in the global light transport.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 For example, it is possible to obtain images corresponding to either (approximately) only direct or (approximately) only indirect light transport. Such images can reveal interesting insights about the observed scene (e.g., the structure of the blood vessels under the skin).
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Optical probing can be mathematically modelled as
 
@@ -607,39 +605,39 @@ $\begin{align}
 
 with $\boldsymbol{\Pi}$ denoting the *probing matrix* and $\odot$ denoting the element-wise product between two matrices of equal size, $\mathbf{1}$ denoting a vector of all ones representing a uniform illumination and finally $\mathbf{i}$ representing the image captured under uniform illumination and for a light transport matrix that is the result of $\boldsymbol{\Pi} \odot \mathbf{T}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Visualization of the probing equation:<br>
 
 <img src="figures/4/probing_equation.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 In order to be able to manipulate $\mathbf{T}$ in this way, it is necessary to control two aspects of the image formation process: 
 * the illumination, the so-called *primal domain* via the projected image and
 * the pixel-wise modulation of the camera's sensor, the so-called *dual domain*.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Controlling the dual domain means, that certain pixels of the camera can be blocked from receiving light during the acquisition of a single camera image. 
 
 This can be achieved
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 * via a so-called spatial light modulator, i.e., a transmission mask (e.g., an LCD panel) whose spatial transmission pattern can be computationally controlled or
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 * by capturing single images $\mathbf{i}_k$ for every modulation pattern $k\in [0,\ldots, K]$ where the respective pixel values are computationally modulated after the image acquisition and by synthesizing the actual image by calculating a sum over all $\mathbf{i}_k$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Visualization of the optical setup:<br>
 
 <img src="figures/4/probing_setup.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Probing the light transport matrix
 
@@ -647,13 +645,13 @@ Visualization of the optical setup:<br>
 
 The only way we can gain information about the light transport (matrix) is by projecting and capturing images.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 However, this leaves a notable dimensionality gap: 
 * $\mathbf{T}$ has $I \times P$ elements, whereas
 * one image $\mathbf{i}$ only as $I$ elements.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 $\Rightarrow$ Use probing equation to only analyze elements of $\mathbf{T}$ of interest.
 
@@ -703,13 +701,13 @@ Acquisition of a linear combination of two elements (red and blue) of $\mathbf{T
 
 Acquisition of an image for illumination $\mathbf{p}$ for a transport matrix $\hat{\mathbf{T}}=\mathbf{A}\odot \mathbf{T}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Each element $(m,n)$ of $\mathbf{T}$ encodes different optical paths of light that originated from projector pixel $n$ and reach camera pixel $m$.
 
 +++
 
-<img src="figures/4/probing_light_paths.svg" style="max-width:30vw">
+<img src="figures/4/probing_light_paths.svg" style="max-height:40vh">
 
 +++
 
@@ -717,11 +715,11 @@ Each element $(m,n)$ of $\mathbf{T}$ encodes different optical paths of light th
 * (b): $\mathbf{T}[m,m]$, i.e., diagonal of $\mathbf{T}$: The direct component (red) but maybe also back-scattering (blue) and retro reflections (green).
 * (c): The distance $\left| m-n \right|$ allows to distinguish between short distance and long distance optical paths.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 By adequately probing $\mathbf{T}$, photos can be acquired, for which certain light paths (e.g., direct, indirect, etc.) have been enhanced, attenuated or even blocked.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### How to perform the probing?
 
@@ -729,7 +727,7 @@ Naive idea: To probe $\mathbf{T}[m,n]$, illuminate with a single projector pixel
 
 $\Rightarrow$ Very inefficient (in terms of light) and slow!
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Optical implementation of matrix probing
 
@@ -743,7 +741,7 @@ $\begin{align}
 
 for $K$ vectors $\mathbf{m}_k, \mathbf{p}_k$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 With this, we can reformulate the probing equation:
 
@@ -756,7 +754,7 @@ $\begin{align}
 
 with $\circ$ denoting the element-wise product between vectors, $\mathbf{T}[n]$ denoting the $n$-th column of $\mathbf{T}$ and $p_k[n]$ denoting the $n$-th element of the vector $\mathbf{p}_k$, i.e., $p_k[n]$ is a scalar.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 According to this derivation, every decomposition of the probing matrix into a sum of rank-1 matrices can be realized via a sequence of step-wise corresponding illumination patterns $\mathbf{p}_k$ and sensor modulations $\mathbf{m}_k$ for $k \in [1,\ldots, K]$:
 
@@ -764,7 +762,7 @@ $\begin{align}
     \left( \boldsymbol{\Pi} \odot \mathbf{T} \right) \mathbf{1} = \sum\limits^K_{k=1} \underbrace{\mathbf{m}_k \circ \overbrace{\mathbf{T}\mathbf{p}_k}^{\text{acquired image } \mathbf{i}_k \text{ for illumination }\mathbf{p}_k}}_{\text{image } \mathbf{i}_k \text{ modulated with } \mathbf{m}_k} \,.
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 This leads to the following algorithm for optical probing of the light transport matrix:
 
@@ -777,39 +775,39 @@ $\qquad \mathbf{i}_{\mathrm{result}} \leftarrow \mathbf{i}_\mathrm{result} +  \m
 
 $\quad \textbf{return}\,  \mathbf{i}_\mathrm{result}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Enhancing the direct component
 
 For enhancing the direct component, i.e., the diagonal of $\mathbf{T}$, one can use a sequence of $\mathbf{p}_k = \mathbf{m}_k$ drawn from the Bernoulli distribution. The resulting vectors have values of 1 with probability $p$ and $0$ with probability $1-p$. When drawing $K$ vectors, their approximated matrix converges to a probing matrix with $p\cdot K$ on the diagonal and $p^2 \cdot K$ everywhere else, i.e., enhancing the diagonal of $\mathbf{T}$ by a factor of $\frac{p \cdot K}{p^2 \cdot K} = \frac{1}{p}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Example approximated probing matrix for enhancing the direct component with size $10 \times 10$ resulting from the described method for $p=0.125, K=1000$.
 
 <img src="figures/4/approx_prob_mat_direct_enhanced.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Example results for enhancing the direct light path components via different values for $p$:
 
 <img src="figures/4/example_direct_enhanced.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Attenuation of local scattering 
 
 When light from a projector pixel $n$ is locally scattered by small structures, e.g., by dust particles, it will most likely not contribute to the camera pixel $n$, which corresponds to direct light transport, but to a nearby camera pixel $m$, i.e., with $\vert m - n \vert = 1$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 Such light transport phenomena are encoded by the first off-diagonal of $\mathbf{T}$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 In order to attenuate local scattering effects, first an image $\mathbf{i}_2$ is acquired, where these effects are enhanced. This image can then be subtracted from an image $\mathbf{i}_1$ with enhanced direct light transport (previous example) to obtain the final image $\mathbf{i}_3 = \mathbf{i}_1 - \mathbf{i}_2$.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 To approximate the probing matrix for acquiring the off-diagonal of $\mathbf{T}$, the previously mentioned Bernoulli sequence can be used for $\mathbf{m}_k$ and the illumination vectors have to be shifted by $w$ for probing the $w$-th off-diagonal: 
 
@@ -823,59 +821,59 @@ $\begin{align}
    \text{shift}(\mathbf{x}, w) &= \text{shift}\left( (x_1, x_2, \ldots, x_N)\transp , w \right) \\ &= (x_{N-(w-1) \text{ mod }N}, x_{N-(w-2) \text{ mod }N}, \ldots, x_{N-(w-N) \text{ mod }N})\transp \,.
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
-Example:<br>
+##### Example
 Imaging a test chart in turbid media (milky water) as an example scene for strong local scattering effects.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Without compensation:
 
 <img src="figures/4/example_descattering_conventional.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Results for attenuation of local scattering effects:
 
-<img src="figures/4/example_descattering.svg" style="max-width:30vw">
+<img src="figures/4/example_descattering.svg" style="max-height:90vh">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Example approximation of a $10 \times 10$ probing matrix (same parameters as before, i.e., $p=0.125, K=1000$) for enhancing the first off-diagonal:
 
 <img src="figures/4/approx_prob_mat_offdiag_enhanced.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Similar approximation for the probing matrix that would result for the subtraction $\mathbf{i}_3 = \mathbf{i}_1 - \mathbf{i}_2$:
 
 <img src="figures/4/approx_prob_mat_local_descattering.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Only indirect light transport
 
 To suppress direct light transport, the illumination vectors $\mathbf{p}_k$ can be drawn from the Bernoulli distribution and the mask patterns can be set as $\mathbf{m}_k := \mathbf{1} - \mathbf{p}_k$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The resulting approximated matrix will have $0$ on its diagonal and an expected value of $p(1-p)\cdot K$ everywhere else.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Example approximated probing matrix for suppressing the direct component with size $10 \times 10$ resulting from the described method for $p=0.1, K=1000$.
 
 <img src="figures/4/approx_prob_mat_indirect_only.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Example results for only indirect light transport imaging and for enhancing the direct component via subtraction of the indirect only-image from an image acquired under constant illumination:
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 <img src="figures/4/example_indirect_etc_1.svg" style="max-width:30vw">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 <img src="figures/4/example_indirect_etc_2.svg" style="max-width:30vw">

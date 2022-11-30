@@ -48,6 +48,7 @@ import scipy.signal as sig
 from scipy.integrate import simpson
 from IPython.display import SVG, display, IFrame, HTML
 import seaborn as sns
+import torch
 %matplotlib notebook
 book = False
 ```
@@ -431,6 +432,132 @@ with $\mathbf{X}, \mathbf{Y}$ indicating batches of multiple training vectors $(
 
 +++
 
+### The chain rule and the backpropagation algorithm
 
+Calculating the gradient required for gradient descent by hand can be infeasible for large expressions. Fortunately, this process can be automated as we will see in the following.
 
-* Hence, only a subset of the 
++++
+
+We start with an example.
+
+Assume we want to calculate the derivative (i.e., the gradient) of $y = \log (x)^2$ with respect to $x$.
+
++++
+
+We can express this function via intermediate variables for all basic math operations:
+
+$\begin{align} 
+   y &= v_2 \\
+   v_2 &= v_1^2 \\
+   v_1 &= \log (x) \,.
+\end{align}$
+
++++
+
+In order to find the derivate of $y$ with respect to $x$, we can iteratively apply the chain rule to obtain:
+
+$\begin{align} 
+   \frac{\partial y}{\partial x} = \frac{\partial y}{\partial v_2} \frac{\partial v_2}{\partial x} = \frac{\partial y}{\partial v_2} \frac{\partial v_2}{\partial v_1} \frac{\partial v_1}{\partial x} \,.
+\end{align}$
+
++++
+
+Those partial derivatives can easily be obtained for the respective terms:
+
+$\begin{align} 
+  \frac{\partial y}{\partial v_2} &= 1 \\
+  \frac{\partial v_2}{\partial v_1} &= 2v_1 \\
+  \frac{\partial v_1}{\partial x} &= \frac{1}{x}.
+\end{align}$
+
++++
+
+Hence, the sought derivate of $y$ w.r.t. $x$ is given by:
+
+$\begin{align} 
+  \frac{\partial y}{\partial x} = \frac{\partial y}{\partial v_2} \frac{\partial v_2}{\partial v_1} \frac{\partial v_1}{\partial x} = 1\cdot 2v_1 \cdot \frac{1}{x} \,.
+\end{align}$
+
++++
+
+This expression can be evaluated in reverse order (the so-called *backward pass*), i.e., from left to right, when the intermediate variables $v_2, v_1$ have been evaluated for some $x$ in the so-called *forward pass*.
+
++++
+
+When every basic mathematical function (e.g., $+, -, \exp, \log, \sin, \ldots$) also provides a method for the calculation of its gradient, the process of obtaining the derivative of an arbitrary complex expression, with respect to some variable and given the actual input numbers for the parameter(s), can be automated.
+
++++
+
+During the forward pass, a calculation graph is constructed that represents the hierarchical relations of the individual mathematical functions in terms of the chain rule. The intermediate results for every operation are saved in the nodes of this graph. Then, the graph can be traversed backwards starting from all leaves and intermediate gradient values can be calculated for every node and can then be backpropagated to the root yielding the sought gradient.
+
+This approach is also known as the *backpropagation algorithm*.
+
++++
+
+##### Example implementation for $y = \log (x)^2$
+
+```{code-cell} ipython3
+def square(inp):
+    return inp**2
+
+def ln(inp):
+    return np.log(inp)
+
+def square_grad(inp, out):
+    inp.g = 2*inp*out.g
+    
+def ln_grad(inp, out):
+    inp.g = 1/inp * out.g
+```
+
+```{code-cell} ipython3
+def y(x):
+    x = torch.tensor(x)
+    v1 = ln(x)
+    v2 = square(r1)
+        
+    v2.g = 1
+    square_grad(v1, v2)
+    ln_grad(x, v1)
+    
+    return v2, x.g
+```
+
+```{code-cell} ipython3
+y(3)
+```
+
+Note: We just used PyTorch here so that we can easily introduce the property `.g` for all our variables.
+
++++
+
+### Automatic differentiation
+
+There are various libraries that provide the functionality of backpropagation mentioned above without the user (i.e., the programmer) having to explicitly control it. Often a technique called *operator overloading* is employed that builds the computation graph required for the gradient calculation behind the scenes.
+
++++
+
+In PyTorch, calculating the gradient of our equation $y = \log (x)^2$ w.r.t. $x$ could be achieved like this:
+
+```{code-cell} ipython3
+# Definition of our function using torch-routines:
+def y_torch(x):
+    return torch.square(torch.log(x))
+```
+
+```{code-cell} ipython3
+x = torch.tensor(3.0)    # Our input variable
+x.requires_grad = True   # We need the gradient with respect to x
+```
+
+```{code-cell} ipython3
+result = y_torch(x)      # Forward pass
+```
+
+```{code-cell} ipython3
+result.backward()        # Backward pass
+```
+
+```{code-cell} ipython3
+x.grad                   # Access the gradient
+```

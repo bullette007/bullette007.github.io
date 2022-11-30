@@ -1259,8 +1259,8 @@ Classical gradient formulation for gray value images $g(\mathbf{x}), \mathbf{x}=
 
 $\begin{align}
     \mathrm{grad}\, g(\mathbf{x}) = \begin{pmatrix} 
-        \frac{\partial g(\mathbf{x})}{\partial y} \\
-        \frac{\partial g(\mathbf{x})}{\partial x} 
+        \frac{\partial g(\mathbf{x})}{\partial x} \\
+        \frac{\partial g(\mathbf{x})}{\partial y} 
     \end{pmatrix}\,.
 \end{align}$
 
