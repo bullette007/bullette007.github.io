@@ -332,6 +332,111 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#non-linear-layers">
      Non-linear layers
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-popular-non-linear-functions">
+       Other popular non-linear functions
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#sigmoid">
+         Sigmoid
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#rectified-linear-unit-relu">
+         Rectified linear unit (ReLU)
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#softplus">
+         Softplus
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#leaky-relu">
+         Leaky ReLU
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#exponential-linear-unit-elu">
+         Exponential linear unit (ELU)
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#hyperbolic-tangent-tanh">
+         Hyperbolic tangent (tanh)
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pooling-layers">
+     Pooling layers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-max-pooling-with-pytorch">
+       Example max pooling with PyTorch:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolutional-layers">
+     Convolutional layers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#channel-dimensions">
+       Channel dimensions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#times-1-convolutions">
+       <span class="math notranslate nohighlight">
+        \(1 \times 1\)
+       </span>
+       convolutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#transposed-convolutional-layers">
+     Transposed convolutional layers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-transposed-convolution-with-pytorch">
+       Example transposed convolution with PyTorch:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#upsampling-layer">
+     Upsampling layer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-upsampling-with-pytorch">
+       Example upsampling with PyTorch:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-normalization-layers">
+     Batch normalization layers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#softmax-layers">
+     Softmax layers
+    </a>
    </li>
   </ul>
  </li>
@@ -371,6 +476,84 @@ title="Print to PDF"
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#architectures-and-loss-functions">
+   Architectures and loss functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deep-convolutional-networks-for-image-classification">
+     Deep convolutional networks for image classification
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cross-entropy-loss">
+       Cross-entropy loss
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#residual-nets-skip-connections">
+     Residual nets / skip connections
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoder-decoder-modules">
+     Encoder / decoder modules
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mean-squared-error-loss">
+       Mean squared error loss
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#anomaly-detection-for-visual-inspection">
+       Anomaly detection for visual inspection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#variational-auto-encoders">
+       Variational auto encoders
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#u-net-for-segmentation-or-regression-tasks">
+     U-Net for segmentation or regression tasks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-applications">
+   Example applications
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#denoising-with-neural-networks">
+     Denoising with neural networks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learned-image-signal-processing-unit">
+     Learned image signal processing unit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learned-optics-for-single-shot-high-dynamic-range-imaging">
+     Learned optics for single-shot high-dynamic-range imaging
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tools-libraries-and-reading-resources">
+   Tools, libraries and reading resources
+  </a>
  </li>
 </ul>
 
@@ -420,6 +603,111 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#non-linear-layers">
      Non-linear layers
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-popular-non-linear-functions">
+       Other popular non-linear functions
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#sigmoid">
+         Sigmoid
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#rectified-linear-unit-relu">
+         Rectified linear unit (ReLU)
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#softplus">
+         Softplus
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#leaky-relu">
+         Leaky ReLU
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#exponential-linear-unit-elu">
+         Exponential linear unit (ELU)
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#hyperbolic-tangent-tanh">
+         Hyperbolic tangent (tanh)
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pooling-layers">
+     Pooling layers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-max-pooling-with-pytorch">
+       Example max pooling with PyTorch:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolutional-layers">
+     Convolutional layers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#channel-dimensions">
+       Channel dimensions
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#times-1-convolutions">
+       <span class="math notranslate nohighlight">
+        \(1 \times 1\)
+       </span>
+       convolutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#transposed-convolutional-layers">
+     Transposed convolutional layers
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-transposed-convolution-with-pytorch">
+       Example transposed convolution with PyTorch:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#upsampling-layer">
+     Upsampling layer
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#example-upsampling-with-pytorch">
+       Example upsampling with PyTorch:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-normalization-layers">
+     Batch normalization layers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#softmax-layers">
+     Softmax layers
+    </a>
    </li>
   </ul>
  </li>
@@ -460,6 +748,84 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#architectures-and-loss-functions">
+   Architectures and loss functions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deep-convolutional-networks-for-image-classification">
+     Deep convolutional networks for image classification
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#cross-entropy-loss">
+       Cross-entropy loss
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#residual-nets-skip-connections">
+     Residual nets / skip connections
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoder-decoder-modules">
+     Encoder / decoder modules
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mean-squared-error-loss">
+       Mean squared error loss
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#anomaly-detection-for-visual-inspection">
+       Anomaly detection for visual inspection
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#variational-auto-encoders">
+       Variational auto encoders
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#u-net-for-segmentation-or-regression-tasks">
+     U-Net for segmentation or regression tasks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-applications">
+   Example applications
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#denoising-with-neural-networks">
+     Denoising with neural networks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learned-image-signal-processing-unit">
+     Learned image signal processing unit
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learned-optics-for-single-shot-high-dynamic-range-imaging">
+     Learned optics for single-shot high-dynamic-range imaging
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tools-libraries-and-reading-resources">
+   Tools, libraries and reading resources
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -471,35 +837,6 @@ title="Print to PDF"
               <div>
                 
   <div class="cell tag_remove-input tag_book_only docutils container">
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/4/desk_lightsources_example_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">5</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "dcfb8042a91e4e20b6d8a429a9da3191"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;figures/4/light_path_categories.png&quot;</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;max-width:30vw&quot;</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-9-1642348dfef1&gt;&quot;</span><span class="gt">, line </span><span class="mi">1</span>
-    <span class="o">&lt;</span><span class="n">img</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;figures/4/light_path_categories.png&quot;</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;max-width:30vw&quot;</span><span class="o">&gt;</span>
-    <span class="o">^</span>
-<span class="ne">SyntaxError</span>: invalid syntax
-</pre></div>
-</div>
-</div>
 </div>
 <p><span class="math notranslate nohighlight">\(\begin{align}
   \newcommand{transp}{^\intercal}
@@ -517,27 +854,26 @@ title="Print to PDF"
 <h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>Introduction to neural networks</p></li>
-<li><p>Principal building blocks of a neural network</p></li>
+<li><p>Principal building blocks</p></li>
 <li><p>Universal approximation theorem</p></li>
-<li><p>Gradient descent</p></li>
-<li><p>Automatic differentiation</p></li>
+<li><p>Optimization of network parameters</p></li>
 <li><p>Architectures and loss functions</p></li>
-<li><p>Regularization</p></li>
-<li><p>Libraries, tools and other resources</p></li>
+<li><p>Example applications</p></li>
+<li><p>Tools, libraries and reading resources</p></li>
 </ul>
 </section>
 <section id="introduction-to-neural-networks">
 <h2>Introduction to neural networks<a class="headerlink" href="#introduction-to-neural-networks" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>(Artificial) neural networks represent a class of machine learning methods.</p></li>
-<li><p>They can be imagined as versatile approximators <span class="math notranslate nohighlight">\(\varphi_\boldsymbol{\theta}\)</span> of arbitrary, continuous functions <span class="math notranslate nohighlight">\(\mathbf{y} = f(\mathbf{x}), \quad f:\mathbb{R}^N \mapsto \mathbb{R}^M,\quad M,N \in \mathbb{N}\)</span>, i.e., with <span class="math notranslate nohighlight">\(\varphi_\boldsymbol{\theta}(\mathbf{x}) \approx f(\mathbf{x})\)</span>.</p></li>
+<li><p>They can be imagined as versatile approximators <span class="math notranslate nohighlight">\(\phi_\boldsymbol{\theta}\)</span> of arbitrary, continuous functions <span class="math notranslate nohighlight">\(\mathbf{y} = f(\mathbf{x}), \quad f:\mathbb{R}^N \mapsto \mathbb{R}^M,\quad M,N \in \mathbb{N}\)</span>, i.e., with <span class="math notranslate nohighlight">\(\phi_\boldsymbol{\theta}(\mathbf{x}) \approx f(\mathbf{x})\)</span>.</p></li>
 <li><p>They are defined by their architecture and the corresponding parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>.</p></li>
 </ul>
 <ul class="simple">
 <li><p>Via a suitable training procedure and a so-called <em>training set</em> of example pairs <span class="math notranslate nohighlight">\(\mathcal{T} = \left\{ (\mathbf{x}_i, \mathbf{y}_i), i \in \left[ 1,\ldots , N \right]  \right\}\)</span> of input variables <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> and corresponding output variables <span class="math notranslate nohighlight">\(\mathbf{y}_i\)</span>, their parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> are optimized so that</p>
 <ul>
-<li><p><span class="math notranslate nohighlight">\(\forall (\mathbf{x},\mathbf{y}) \in \mathcal{T}:\text{dist}(\varphi_\boldsymbol{\theta}(\mathbf{x}), \mathbf{y} ) \rightarrow \text{Min.}\,,\)</span> with a suitable distance function <span class="math notranslate nohighlight">\(\text{dist}\)</span> and</p></li>
-<li><p>(hopefully) <span class="math notranslate nohighlight">\(\text{dist}(\varphi_\boldsymbol{\theta}(\mathbf{x}), f(\mathbf{x}) ) \rightarrow \text{Min.}\,,\)</span> for unseen input vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, i.e., which are not part of the training set.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\forall (\mathbf{x},\mathbf{y}) \in \mathcal{T}:\text{dist}(\phi_\boldsymbol{\theta}(\mathbf{x}), \mathbf{y} ) \rightarrow \text{Min.}\,,\)</span> with a suitable distance function <span class="math notranslate nohighlight">\(\text{dist}\)</span> and</p></li>
+<li><p>(hopefully) <span class="math notranslate nohighlight">\(\text{dist}(\phi_\boldsymbol{\theta}(\mathbf{x}), f(\mathbf{x}) ) \rightarrow \text{Min.}\,,\)</span> for unseen input vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, i.e., which are not part of the training set.</p></li>
 </ul>
 </li>
 </ul>
@@ -572,7 +908,7 @@ title="Print to PDF"
    y = \sum\limits^{N}_{i=1} w_i \cdot x_i + b \,,
 \end{align}\)</span></p>
 <p>with <span class="math notranslate nohighlight">\(w_i\)</span> denoting the <span class="math notranslate nohighlight">\(i\)</span>-th so-called <em>weight</em>, i.e. parameter, of this block and <span class="math notranslate nohighlight">\(b\)</span> denoting the so-called <em>bias</em> (also a parameter), i.e., an additive term not depending on the input.</p>
-<p>When one input is simultaneously processed by <span class="math notranslate nohighlight">\(K\)</span> linear blocks, i.e.,</p>
+<img src="figures/5/single_block_linear_only.svg" style="max-height:40vh"><p>When one input is simultaneously processed by <span class="math notranslate nohighlight">\(K\)</span> linear blocks, i.e.,</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    y_k = \sum\limits^{N}_{i=1} w^k_i \cdot x_i + b^k = \underbrace{\left( w^k_1, w^k_2, \ldots, w^k_N, b^k \right)}_{\mathbf{w}\transp_k} \cdot \underbrace{\begin{pmatrix} 
       x_1 \\ x_2 \\ \vdots \\ x_N \\ 1
@@ -593,7 +929,7 @@ title="Print to PDF"
    &amp;= \qquad \quad \mathbf{W} \quad \qquad \cdot \quad  \mathbf{x} \,,
 \end{align}\)</span></p>
 <p>with <span class="math notranslate nohighlight">\(\mathbf{W} \in \mathbb{R}^{K \times (N+1)}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^{(N+1) \times 1}\)</span>.</p>
-<p>This expression can be further extended for the case when multiple input vectors <span class="math notranslate nohighlight">\(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_B\)</span>, i.e., a so-called <em>batch</em> of size <span class="math notranslate nohighlight">\(B\)</span>, have to be processed simultaneously:</p>
+<img src="figures/5/single_layer_linear_only.svg" style="max-height:40vh"><p>This expression can be further extended for the case when multiple input vectors <span class="math notranslate nohighlight">\(\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_B\)</span>, i.e., a so-called <em>batch</em> of size <span class="math notranslate nohighlight">\(B\)</span>, have to be processed simultaneously:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
   \begin{pmatrix} 
     \qquad \mathbf{w}\transp_1 \qquad  \\ \mathbf{w}\transp_2 \\ \vdots \\ \mathbf{w}\transp_K
@@ -611,18 +947,21 @@ title="Print to PDF"
 \end{pmatrix}
  \,.
 \end{align}\)</span></p>
+<p>Although not fully correct, linear layers are sometimes also referred to as <em>feed forward layers</em> or <em>multi-layer perceptron (MLP)</em>.</p>
 </section>
 <section id="non-linear-layers">
 <h3>Non-linear layers<a class="headerlink" href="#non-linear-layers" title="Permalink to this headline">#</a></h3>
 <p>Neural networks constructed only out of linear layers are very limited in their approximation abilities since in essence they just represent a long linear function and hence can only mimic linear functions.</p>
 <p>This is why additional, so-called <em>non-linear layers</em> consisting of non-linear building blocks are necessary.</p>
 <p>In general, a non-linear building block is a non-linear function <span class="math notranslate nohighlight">\(\psi:\mathbb{R}\rightarrow \mathbb{R}\)</span> that is applied to the scalar output of a linear building block.</p>
-<p>A popular example for a non-linearity is the so-called <em>sigmoid</em>-function</p>
+<p>The combination of a linear and a non-linear block then looks like:</p>
+<img src="figures/5/single_block.svg" style="max-height:40vh"><p>And a corresponding layer looks like:</p>
+<img src="figures/5/single_layer.svg" style="max-height:40vh"><p>A popular example for a non-linearity is the so-called <em>sigmoid</em>-function</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
   \psi(y)=\frac{1}{1+\mathrm{e}^{-y} } \,.
 \end{align}\)</span></p>
-<p>When choosing high values for <span class="math notranslate nohighlight">\(\mathbf{W}\)</span>, the sigmoid-function resembles a unit step-function which can be shifted left or right by adjusting the bias <span class="math notranslate nohighlight">\(b\)</span>:</p>
-<div class="cell docutils container">
+<p>When choosing high values for <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> in the preceding linear block, the sigmoid-function resembles a unit step-function which can be shifted left or right by adjusting the bias <span class="math notranslate nohighlight">\(b\)</span>:</p>
+<div class="cell tag_delete-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">x</span><span class="p">))</span>
@@ -632,6 +971,8 @@ title="Print to PDF"
     <span class="n">y2s</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">y1s</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">y2s</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -643,16 +984,444 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
 </div>
-<p>In batch processing, he result of a batch of data processed by a linear layer, i.e. <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{Wx}\)</span>, is processed by the non-linearity in an element-wise fashion.</p>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "5e220415511b4f70b83f5c4ecc97fff0"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(w, b)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>In batch processing, the result of a batch of data processed by a linear layer, i.e. <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{Wx}\)</span>, is processed by the non-linearity in an element-wise fashion.</p>
+<section id="other-popular-non-linear-functions">
+<h4>Other popular non-linear functions<a class="headerlink" href="#other-popular-non-linear-functions" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_delete-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">ys_softplus</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">()(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">ys_leakyrelu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="n">negative_slope</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">ys_elu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">()(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">ys_relu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">ys_tanh</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()(</span><span class="n">xs</span><span class="p">)</span>
+<span class="n">ys_sigm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="n">xs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="sigmoid">
+<h5>Sigmoid<a class="headerlink" href="#sigmoid" title="Permalink to this headline">#</a></h5>
+<p>The <em>sigmoid function</em>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \sigma(x) = \frac{1}{1+\exp(-x)} \,.
+\end{align}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_sigm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Sigmoid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_NeuralNetworksForCompImg_36_0.png" src="_images/05_NeuralNetworksForCompImg_36_0.png" />
+</div>
+</div>
+</section>
+<section id="rectified-linear-unit-relu">
+<h5>Rectified linear unit (ReLU)<a class="headerlink" href="#rectified-linear-unit-relu" title="Permalink to this headline">#</a></h5>
+<p>The <em>rectified linear unit (ReLU)</em> with <span class="math notranslate nohighlight">\(\mathrm{ReLU}(x) = \max (0,x)\)</span> is a good general purpose activation function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_relu</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ReLU (rectified linear unit)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_NeuralNetworksForCompImg_38_0.png" src="_images/05_NeuralNetworksForCompImg_38_0.png" />
+</div>
+</div>
+</section>
+<section id="softplus">
+<h5>Softplus<a class="headerlink" href="#softplus" title="Permalink to this headline">#</a></h5>
+<p>Smooth approximation of the ReLU function:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   y_i = \frac{1}{\beta} \cdot \log \left( 1 + \exp (\beta \cdot x_i) \right) \,,
+\end{align}\)</span></p>
+<p>with parameter <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_softplus</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Softplus&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_NeuralNetworksForCompImg_40_0.png" src="_images/05_NeuralNetworksForCompImg_40_0.png" />
+</div>
+</div>
+</section>
+<section id="leaky-relu">
+<h5>Leaky ReLU<a class="headerlink" href="#leaky-relu" title="Permalink to this headline">#</a></h5>
+<p>Similar to ReLU but with a non-zero slope for negative inputs:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathrm{LeakyReLU}(x) = \begin{cases} 
+      x, &amp; \text{if } x \geq 0 \\
+      \beta \cdot x, &amp; \text{otherwise}
+   \end{cases} \,,
+\end{align}\)</span></p>
+<p>with the negative slope value <span class="math notranslate nohighlight">\(\beta\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_leakyrelu</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;leaky ReLU (rectified linear unit)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_NeuralNetworksForCompImg_42_0.png" src="_images/05_NeuralNetworksForCompImg_42_0.png" />
+</div>
+</div>
+</section>
+<section id="exponential-linear-unit-elu">
+<h5>Exponential linear unit (ELU)<a class="headerlink" href="#exponential-linear-unit-elu" title="Permalink to this headline">#</a></h5>
+<p>Another smooth approximation of the ReLU function:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathrm{ELU}(x) = \begin{cases} 
+      x, &amp; \text{if } x &gt; 0 \\
+      \exp (x) -1 &amp; \text{otherwise} 
+   \end{cases}\,.
+\end{align}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_elu</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ELU (exponential linear unit)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_NeuralNetworksForCompImg_44_0.png" src="_images/05_NeuralNetworksForCompImg_44_0.png" />
+</div>
+</div>
+</section>
+<section id="hyperbolic-tangent-tanh">
+<h5>Hyperbolic tangent (tanh)<a class="headerlink" href="#hyperbolic-tangent-tanh" title="Permalink to this headline">#</a></h5>
+<p>The <em>hyperbolic tangent (tanh)</em> function:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathrm{tanh}(x) = \frac{\exp (x) - \exp (-x)}{\exp (x) + \exp (-x)} \,.
+\end{align}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys_tanh</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;tanh&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_NeuralNetworksForCompImg_46_0.png" src="_images/05_NeuralNetworksForCompImg_46_0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="pooling-layers">
+<h3>Pooling layers<a class="headerlink" href="#pooling-layers" title="Permalink to this headline">#</a></h3>
+<p>Pooling layers reduce the size of the input data by selecting or calculating a certain value out of a region of input values and by replacing that whole region by this value.</p>
+<p>A common example is <em>max pooling</em>. The layer is parameterized via</p>
+<ul class="simple">
+<li><p>its window size <span class="math notranslate nohighlight">\(h\)</span> and</p></li>
+<li><p>its stride <span class="math notranslate nohighlight">\(s\)</span>.</p></li>
+</ul>
+<p>The layer shifts a square-shaped window with edge length <span class="math notranslate nohighlight">\(h\)</span> over the input data and selects the highest value out of all values covered by the window and returns this value as one of its outputs. Then, the window is shifted by the stride value <span class="math notranslate nohighlight">\(s\)</span> and the procedure is repeated until the whole input data has been processed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/5/pooling_layer_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">5</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "fc0628cc232f44058ff08a29dca210c5"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="example-max-pooling-with-pytorch">
+<h4>Example max pooling with PyTorch:<a class="headerlink" href="#example-max-pooling-with-pytorch" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pooling</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tens</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">tens</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[2., 1., 1., 1.],
+         [1., 2., 1., 1.],
+         [1., 1., 2., 1.],
+         [1., 1., 1., 2.]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pooling</span><span class="p">(</span><span class="n">tens</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[2., 1.],
+         [1., 2.]]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="convolutional-layers">
+<h3>Convolutional layers<a class="headerlink" href="#convolutional-layers" title="Permalink to this headline">#</a></h3>
+<p>Convolutional layers process their input by convolving it with one or more convolution kernels.</p>
+<p>The coefficients of the convolution kernels also represent parameters of the network which are optimized during training.</p>
+<p>Convolutional layers are mainly parameterized via</p>
+<ul class="simple">
+<li><p>number of kernels (often referred to as <em>channels</em>),</p></li>
+<li><p>sizes of the kernels,</p></li>
+<li><p>their stride <span class="math notranslate nohighlight">\(s\)</span> and</p></li>
+<li><p>the padding mode (i.e., how to deal with the situation at the borders of the input data when the kernel protrudes the input’s support).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/5/convolutional_layer_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">5</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "05fd35a6ffb14c588dcc2a3863c844d1"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Depending on the stride <span class="math notranslate nohighlight">\(s\)</span> and the padding mode, convolutional layers can yield outputs of lower spatial dimensions (e.g., smaller images).</p>
+<p>Depending on the number of kernels, the output can have a larger or lower number of channels.</p>
+<section id="channel-dimensions">
+<h4>Channel dimensions<a class="headerlink" href="#channel-dimensions" title="Permalink to this headline">#</a></h4>
+<p>If the input to a convolutional layer has <span class="math notranslate nohighlight">\(C\)</span> channels, each filter kernel must also have <span class="math notranslate nohighlight">\(C\)</span> channels. Considering one kernel, the individual channels of the input are convolved with the respective channels of that kernel and the results are summed up to yield one channel of the output of the layer. Hence, every kernel yields one channel of the output.</p>
+</section>
+<section id="times-1-convolutions">
+<h4><span class="math notranslate nohighlight">\(1 \times 1\)</span> convolutions<a class="headerlink" href="#times-1-convolutions" title="Permalink to this headline">#</a></h4>
+<p>In order to reduce the channel dimension while processing data in a neural network, so-called <span class="math notranslate nohighlight">\(1 \times 1\)</span> <em>convolutions</em>, i.e., convolutions with a kernel of size <span class="math notranslate nohighlight">\(1 \times 1\)</span> can be employed.</p>
+<p>A <span class="math notranslate nohighlight">\(1 \times 1\)</span>-kernel does not alter the spatial distribution of the data but can reduce the channel dimension if the number of <span class="math notranslate nohighlight">\(1 \times 1\)</span>-kernels is less than the number of channels of the input data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sometimes, the results of a convolutional layer are denoted as <em>features</em> or <em>feature maps</em>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In many programming libraries for neural networks, biases (i.e., additive terms) are also added to the results of convolutional layers. This can lead to unexpected results if it is not considered.</p>
+</div>
+</section>
+</section>
+<section id="transposed-convolutional-layers">
+<h3>Transposed convolutional layers<a class="headerlink" href="#transposed-convolutional-layers" title="Permalink to this headline">#</a></h3>
+<p>Although the name might be a bit misleading, so-called <em>transposed convolutional layers</em> can be imagined as a kind of inverse of convolutional layers, in the sense as they increase the spatial resolution of the input.</p>
+<p>Transposed convolutional layers are parameterized similarly to convolutional layers, i.e., via</p>
+<ul class="simple">
+<li><p>number of kernels,</p></li>
+<li><p>sizes of the kernels,</p></li>
+<li><p>their stride <span class="math notranslate nohighlight">\(s\)</span> and</p></li>
+<li><p>the padding mode.</p></li>
+</ul>
+<p>Every element of the input scales a kernel which yields the values of the output in the spatial region covered by the kernel. The kernel is then shifted by the stride <span class="math notranslate nohighlight">\(s\)</span> and the process is repeated with the next value of the input vector. Depending on the stride <span class="math notranslate nohighlight">\(s\)</span>, there might already be values present in the currently considered region of the output vector. In that case, the new values are additively superposed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/5/transposed_convolutional_layer_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">3</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "7401c8ac1d534ad08022858d84d68559"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="example-transposed-convolution-with-pytorch">
+<h4>Example transposed convolution with PyTorch:<a class="headerlink" href="#example-transposed-convolution-with-pytorch" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transposed_convolution</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">transposed_convolution</span><span class="o">.</span><span class="n">weight</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
+tensor([[[[ 0.0692, -0.0522, -0.0901],
+          [ 0.1084, -0.0900, -0.2849],
+          [-0.1629, -0.2709,  0.0565]]]], requires_grad=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">only_one_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]]))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">only_one_tensor</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[1., 0., 0.],
+         [0., 0., 0.],
+         [0., 0., 0.]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transposed_convolution</span><span class="p">(</span><span class="n">only_one_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.0692, -0.0522, -0.0901,  0.0000,  0.0000],
+         [ 0.1084, -0.0900, -0.2849,  0.0000,  0.0000],
+         [-0.1629, -0.2709,  0.0565,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  0.0000,  0.0000]]],
+       grad_fn=&lt;SqueezeBackward1&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eye_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">eye_tensor</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[1., 0., 0.],
+         [0., 1., 0.],
+         [0., 0., 1.]]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transposed_convolution</span><span class="p">(</span><span class="n">eye_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[ 0.0692, -0.0522, -0.0901,  0.0000,  0.0000],
+         [ 0.1084, -0.0208, -0.3370, -0.0901,  0.0000],
+         [-0.1629, -0.1625,  0.0357, -0.3370, -0.0901],
+         [ 0.0000, -0.1629, -0.1625, -0.0335, -0.2849],
+         [ 0.0000,  0.0000, -0.1629, -0.2709,  0.0565]]],
+       grad_fn=&lt;SqueezeBackward1&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="upsampling-layer">
+<h3>Upsampling layer<a class="headerlink" href="#upsampling-layer" title="Permalink to this headline">#</a></h3>
+<p>Another possibility to increase the spatial resolution of the data is to employ so-called <em>upsampling layers</em>. The missing values in the resulting higher-dimensional output are usually calculated via any common interpolation method (e.g., bilinear, nearest neighbor, etc.).</p>
+<img src="figures/5/upsampling_layer.svg" style="max-height:40vh"><section id="example-upsampling-with-pytorch">
+<h4>Example upsampling with PyTorch:<a class="headerlink" href="#example-upsampling-with-pytorch" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upsample_layer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Upsample</span><span class="p">(</span><span class="n">scale_factor</span><span class="o">=</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upsample_layer</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[1., 1., 0., 0., 0., 0.],
+          [1., 1., 0., 0., 0., 0.],
+          [0., 0., 1., 1., 0., 0.],
+          [0., 0., 1., 1., 0., 0.],
+          [0., 0., 0., 0., 1., 1.],
+          [0., 0., 0., 0., 1., 1.]]]])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="batch-normalization-layers">
+<h3>Batch normalization layers<a class="headerlink" href="#batch-normalization-layers" title="Permalink to this headline">#</a></h3>
+<p>It has been shown to be beneficial for the training procedure if the outputs of neural network layers are normalized w.r.t. the mean and variance of the currently processed batch of training data. For this purpose, so-called <em>batch normalization layers</em> can be employed.</p>
+<p>During every training iteration, they normalize their input vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> via:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   y_i = \frac{x_i - \mu_i}{\sqrt{\sigma^2_i+ \epsilon}} \cdot \gamma + \beta \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\mu_i , \sigma^2_i\)</span> denoting the mean, respectively, the variance of the <span class="math notranslate nohighlight">\(i\)</span>-th element of the input estimated over the processed batch of training data and <span class="math notranslate nohighlight">\(\beta, \gamma\)</span> representing the mean, respectively, the standard deviation assigned after the normalization. The parameters <span class="math notranslate nohighlight">\(\beta, \gamma\)</span> can also be learned during training and are typically initialized with <span class="math notranslate nohighlight">\(\beta = 0, \gamma = 1\)</span>.</p>
+<p>Typical implementations of batch normalization layers aggregate the estimated statistics over all training iterations in order to use them when the neural network is evaluated in forward mode.</p>
+</section>
+<section id="softmax-layers">
+<h3>Softmax layers<a class="headerlink" href="#softmax-layers" title="Permalink to this headline">#</a></h3>
+<p>Softmax layers apply the the so-called <em>softmax</em> function to their input. The input values are rescaled, so that they sum up to one and can be interpreted as a probability distribution.</p>
+<p>The softmax function is defined as:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathrm{Softmax}(x_i) = \frac{\exp (x_i)}{\sum\limits_j \exp (x_j) } \,.
+\end{align}\)</span></p>
 </section>
 </section>
 <section id="universal-approximation-theorem">
 <h2>Universal approximation theorem<a class="headerlink" href="#universal-approximation-theorem" title="Permalink to this headline">#</a></h2>
-<p>It could be shown, that a neural network consisting only of one (sufficiently large) linear layer and one non-linear layer which are combined by a single linear building block can approximate any continuous function.</p>
-<p>TODO: Add figure.</p>
+<p>It could be shown, that a neural network consisting only of one (sufficiently large) linear layer and one non-linear layer (together called one <em>hidden layer</em>) which are combined by a single linear building block (a so-called <em>fully connected layer</em>) can approximate any continuous function.</p>
 <p>In the following, we will sketch the proof of that theorem.</p>
-<p>Consider again the sigmoid function <span class="math notranslate nohighlight">\(\psi\)</span> from before applied to a linear block, i.e., <span class="math notranslate nohighlight">\(\psi(wx+b)\)</span>  form before.</p>
+<img src="figures/5/one_hidden_layer.svg" style="max-height:40vh"><p>Consider again the sigmoid function <span class="math notranslate nohighlight">\(\psi\)</span> from before applied to a linear block, i.e., <span class="math notranslate nohighlight">\(\psi(wx+b)\)</span>  form before.</p>
 <p>The position of the unit step approximated by <span class="math notranslate nohighlight">\(\psi\)</span> for high <span class="math notranslate nohighlight">\(w\)</span> resides at the position <span class="math notranslate nohighlight">\(s=-\frac{b}{w}\)</span>. Since this is easier to interpret, we will focus on the parameter <span class="math notranslate nohighlight">\(s\)</span> from now on.</p>
 <p>We now consider two of such blocks added together by an additional single linear building block, i.e.,</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
@@ -672,12 +1441,30 @@ title="Print to PDF"
     <span class="n">res</span> <span class="o">=</span> <span class="n">w1</span> <span class="o">*</span> <span class="n">y1s</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">*</span> <span class="n">y2s</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">:</span> <span class="n">plot_2_neurons</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">),</span> \
          <span class="n">s1</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span> \
          <span class="n">s2</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.6</span><span class="p">),</span> \
          <span class="n">w1</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.4</span><span class="p">),</span> \
          <span class="n">w2</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "2fa773bceba54e7594f9d5c59e52179e"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(s1, s2, w1, w2)&gt;
 </pre></div>
 </div>
 </div>
@@ -701,7 +1488,15 @@ title="Print to PDF"
     <span class="n">res</span> <span class="o">=</span> <span class="n">y1s</span> <span class="o">+</span> <span class="n">y2s</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s11</span><span class="p">,</span> <span class="n">s12</span><span class="p">,</span> <span class="n">s21</span><span class="p">,</span> <span class="n">s22</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">:</span> <span class="n">plot_2_rects</span><span class="p">(</span><span class="n">s11</span><span class="p">,</span> <span class="n">s12</span><span class="p">,</span> <span class="n">s21</span><span class="p">,</span> <span class="n">s22</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">),</span> \
          <span class="n">s11</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span> \
          <span class="n">s12</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span> \
@@ -709,6 +1504,16 @@ title="Print to PDF"
          <span class="n">s22</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.6</span><span class="p">),</span> \
          <span class="n">h1</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.3</span><span class="p">),</span> \
          <span class="n">h2</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">value</span><span class="o">=-</span><span class="mf">0.4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 432x288 with 0 Axes&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "d0c71c66934e451fb41baa49ea27f835"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(s11, s12, s21, s22, h1, h2)&gt;
 </pre></div>
 </div>
 </div>
@@ -728,21 +1533,33 @@ title="Print to PDF"
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-8-ee7cdfff0621&gt;:2: RuntimeWarning: overflow encountered in exp
+  return 1/(1+np.exp(-1*x))
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x1ee63726af0&gt;
+</pre></div>
+</div>
+<img alt="_images/05_NeuralNetworksForCompImg_99_2.png" src="_images/05_NeuralNetworksForCompImg_99_2.png" />
 </div>
 </div>
 <p>Although the theorem states that such a simple structure is enough to approximate any function, in practice network structures with more but thinner layers (i.e., with fewer building blocks) are employed as they can achieve similar results with notably fewer building blocks.</p>
 </section>
 <section id="optimization-of-network-parameters">
 <h2>Optimization of network parameters<a class="headerlink" href="#optimization-of-network-parameters" title="Permalink to this headline">#</a></h2>
-<p>How can we automatically determine the parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> of the network so that <span class="math notranslate nohighlight">\(\forall (\mathbf{x},\mathbf{y}) \in \mathcal{T}:\text{dist}(\varphi_\boldsymbol{\theta}(\mathbf{x}), \mathbf{y} ) \rightarrow \text{Min.}\,\)</span>?</p>
+<p>How can we automatically determine the parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> of the network so that <span class="math notranslate nohighlight">\(\forall (\mathbf{x},\mathbf{y}) \in \mathcal{T}:\text{dist}(\phi_\boldsymbol{\theta}(\mathbf{x}), \mathbf{y} ) \rightarrow \text{Min.}\,\)</span>?</p>
 <section id="gradient-descent">
 <h3>Gradient descent<a class="headerlink" href="#gradient-descent" title="Permalink to this headline">#</a></h3>
 <p>To find this minimum, we compute the gradient <span class="math notranslate nohighlight">\(\nabla\text{dist}_\boldsymbol{\theta}\)</span> of the distance function <span class="math notranslate nohighlight">\(\text{dist}\)</span> with respect to the network parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>.</p>
 <p>We can then iteratively update an initial guess <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\theta}}_0\)</span> (e.g., random) of the network parameters by pushing it into the inverse direction of the gradient <span class="math notranslate nohighlight">\(\nabla\text{dist}_\boldsymbol{\theta}\)</span>, i.e., into the direction of the nearest minimum:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
-   \hat{\boldsymbol{\theta}}_{i+1} \leftarrow \hat{\boldsymbol{\theta}}_{i} - \eta \nabla\text{dist}_\boldsymbol{\theta}(\varphi_{\hat{\boldsymbol{\theta}_i}}(\mathbf{X}), \mathbf{Y} )\,, (\mathbf{X},\mathbf{Y}) \in \mathcal{T}
+   \hat{\boldsymbol{\theta}}_{i+1} \leftarrow \hat{\boldsymbol{\theta}}_{i} - \eta \nabla\text{dist}_\boldsymbol{\theta}(\phi_{\hat{\boldsymbol{\theta}_i}}(\mathbf{X}), \mathbf{Y} )\,, (\mathbf{X},\mathbf{Y}) \in \mathcal{T}
 \end{align}\)</span></p>
 <p>with <span class="math notranslate nohighlight">\(\mathbf{X}, \mathbf{Y}\)</span> indicating batches of multiple training vectors <span class="math notranslate nohighlight">\((\mathbf{x}, \mathbf{y}) \in \mathcal{T}\)</span> and <span class="math notranslate nohighlight">\(\eta\)</span> denoting the so-called <em>learning rate</em> or the <em>step size</em> for the gradient descent updates.</p>
 <ul class="simple">
@@ -805,7 +1622,7 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">v1</span> <span class="o">=</span> <span class="n">ln</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">v2</span> <span class="o">=</span> <span class="n">square</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">square</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
         
     <span class="n">v2</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">square_grad</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
@@ -819,6 +1636,11 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor(1.2069, dtype=torch.float64), tensor(0.7324, dtype=torch.float64))
 </pre></div>
 </div>
 </div>
@@ -867,10 +1689,127 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.7324)
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
+<section id="architectures-and-loss-functions">
+<h2>Architectures and loss functions<a class="headerlink" href="#architectures-and-loss-functions" title="Permalink to this headline">#</a></h2>
+<p>During the past 10 years, several multi purpose neural network architectures (or architectural building blocks) have been proposed, which we will discover in the following paragraphs.</p>
+<p>Depending on the task a neural network has to perform, i.e., the function it should approximate, appropriate architectures and suitable distance functions <span class="math notranslate nohighlight">\(\mathrm{dist}\)</span>, so-called <em>loss functions</em> <span class="math notranslate nohighlight">\(\ell\)</span> for the training, have to be chosen.</p>
+<section id="deep-convolutional-networks-for-image-classification">
+<h3>Deep convolutional networks for image classification<a class="headerlink" href="#deep-convolutional-networks-for-image-classification" title="Permalink to this headline">#</a></h3>
+<p>In image classification tasks the neural network is supposed to assign a single class label <span class="math notranslate nohighlight">\(y\)</span> to a given input image <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, e.g. , the result could be a description of the scene visible in the image (e.g., a kitchen).</p>
+<p>Hence, typical image classification architectures successively decrease the input’s spatial resolution while increasing the channel resolution.</p>
+<p>A prominent example are so-called <em>VGG neural networks</em> developed at the Visual Geometry Group (VGG) at University of Oxford by Karen Simonyan and Andrew Zisserman (see <a class="reference external" href="https://arxiv.org/abs/1409.1556">Very Deep Convolutional Networks for Large-Scale Image Recognition</a>).</p>
+<p>The architecture looks as follows:</p>
+<img src="figures/5/VGG_architecture.svg" style="max-height:40vh"><section id="cross-entropy-loss">
+<h4>Cross-entropy loss<a class="headerlink" href="#cross-entropy-loss" title="Permalink to this headline">#</a></h4>
+<p>The so-called <em>cross-entropy loss</em> is a common loss function for (image) classification scenarios.</p>
+<p>When the final layer of a classification neural network yields a vector <span class="math notranslate nohighlight">\(\mathbf{y} \in [0,1]^C\)</span> of probabilities for all <span class="math notranslate nohighlight">\(C\)</span> possible classes (e.g., obtained via a final softmax layer), the cross-entropy loss is calculated via:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \ell_\mathrm{cross} = \sum\limits^C_{i=1}-\log (y_i) \,.
+\end{align}\)</span></p>
 </section>
+</section>
+<section id="residual-nets-skip-connections">
+<h3>Residual nets / skip connections<a class="headerlink" href="#residual-nets-skip-connections" title="Permalink to this headline">#</a></h3>
+<p>In 2016, Kaiming He et al. proposed in their paper <a class="reference external" href="https://openaccess.thecvf.com/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf">Deep Residual Learning for Image Recognition</a> to repeatedly introduce so-called <em>skip connections</em> which add the output of some layer to the output of a deeper layer as visualized in the following figure:</p>
+<img src="figures/5/residual_block.svg" style="max-height:40vh"><p>It has been shown, that employing this design principle makes networks easier to train and hence enables architectures with more layers.</p>
+<p>Intuitively, one could imagine the case where the network should learn the identity function at some layer, i.e., <span class="math notranslate nohighlight">\(\mathcal{F}(\mathbf{x}) = \mathbf{x}\)</span>. By means of a residual block, it could simply learn <span class="math notranslate nohighlight">\(\mathcal{F}(\mathbf{x}) = \mathbf{0}\)</span> and the skip connection would yield <span class="math notranslate nohighlight">\(\mathcal{F}(\mathbf{x}) + \mathbf{x} = \mathbf{0} + \mathbf{x} = \mathbf{x}\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sometimes, skip connections need to increase the dimension of the input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> so that it matches the dimension of <span class="math notranslate nohighlight">\(\mathcal{F}(\mathbf{x})\)</span>. This can be done by appending zeros (<em>zero padding</em>) or by a learned linear projection.</p>
+</div>
+</section>
+<section id="encoder-decoder-modules">
+<h3>Encoder / decoder modules<a class="headerlink" href="#encoder-decoder-modules" title="Permalink to this headline">#</a></h3>
+<p>The concept of so-called <em>encoders</em> and <em>decoders</em> is quite versatile and can be employed in different scenarios. As the names suggest, an encoder transforms the input into another, usually significantly lower dimensional space, the so-called <em>latent space</em>, and the decoder tries to reconstruct the original input based on the output of the encoder as precisely as possible.</p>
+<p>When used in concert as just described, such pairs of encoders and decoders are also called <em>auto encoders</em>.</p>
+<p>During training, usually the reconstruction loss, i.e., a pixel-wise mean squared error between the input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and the reconstruction <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span> is minimized.</p>
+<p>The following figure visualizes the concept:</p>
+<img src="figures/5/encoder_decoder.svg" style="max-height:40vh"><p>Encoders usually involve multiple convolutional and pooling layers to reduce the spatial dimension, whereas decoders heavily rely on transposed convolutions and upsampling layers to increase spatial resolution.</p>
+<p>The latent representation of the input can be exploited in various ways, e.g.:</p>
+<ul class="simple">
+<li><p>as a compression of the input to reduce the necessary amount of data or</p></li>
+<li><p>to perform denoising, inverse filtering etc. and</p></li>
+<li><p>to synthesize new images from the domain of the input data by drawing random vectors in the latent space and by feeding them into the decoder.</p></li>
+</ul>
+<section id="mean-squared-error-loss">
+<h4>Mean squared error loss<a class="headerlink" href="#mean-squared-error-loss" title="Permalink to this headline">#</a></h4>
+<p>A straight forward choice of a loss function for such image-to-image-tasks is the <em>mean squared error (MSE) loss</em>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \ell_\mathrm{MSE} = \frac{1}{N} \left\| \mathbf{Y} - \phi (\mathbf{X}) \right\|^2_2 \,,
+\end{align}\)</span></p>
+<p>for a given batch <span class="math notranslate nohighlight">\((\mathbf{X},\mathbf{Y}) \in \mathcal{T}\)</span> of training samples and the total number <span class="math notranslate nohighlight">\(N\)</span> of elements in <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> or <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span>.</p>
+</section>
+<section id="anomaly-detection-for-visual-inspection">
+<h4>Anomaly detection for visual inspection<a class="headerlink" href="#anomaly-detection-for-visual-inspection" title="Permalink to this headline">#</a></h4>
+<p>As the latent representation focuses its limited amount of information on the significant and important aspects of the input images, it usually does not allow to reconstruct fine image details, e.g., like scratches. This can be exploited to detect such material defects by calculating the pixel-wise difference between the reconstruction <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span> and the input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+</section>
+<section id="variational-auto-encoders">
+<h4>Variational auto encoders<a class="headerlink" href="#variational-auto-encoders" title="Permalink to this headline">#</a></h4>
+<p>The loss function used during the training of variational auto encoders includes a second term besides the reconstruction loss that forces the distribution of the latent representations to follow a normal distribution.</p>
+<p>This usually yields better synthesis performance when using the decoder on random samples drawn from the latent space.</p>
+</section>
+</section>
+<section id="u-net-for-segmentation-or-regression-tasks">
+<h3>U-Net for segmentation or regression tasks<a class="headerlink" href="#u-net-for-segmentation-or-regression-tasks" title="Permalink to this headline">#</a></h3>
+<p>Named after its macroscopic shape which looks like the letter U, the so-called <em>U-Net</em> is a neural network mainly based on convolutional layers that performs a pixel-wise regression. This means that the network consumes images and yields images of the same size with updated pixel values.</p>
+<p>The U-Net has been introduced by Olaf Ronneberger et al. in 2015 (see <a class="reference external" href="http://arxiv.org/abs/1505.04597">U-Net: Convolutional Networks for Biomedical Image Segmentation</a>).</p>
+<p>Its main use case is the pixel-wise segmentation of images (i.e., assigning individual class labels to every pixel), however it has also been employed for various other tasks as we will learn later on.</p>
+<img src="figures/5/u-net.svg" style="max-height:80vh"></section>
+</section>
+<section id="example-applications">
+<h2>Example applications<a class="headerlink" href="#example-applications" title="Permalink to this headline">#</a></h2>
+<section id="denoising-with-neural-networks">
+<h3>Denoising with neural networks<a class="headerlink" href="#denoising-with-neural-networks" title="Permalink to this headline">#</a></h3>
+<p>For solving the problem of denoising we want a neural network <span class="math notranslate nohighlight">\(\phi\)</span> to approximate a function that takes a noisy input image <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{i} + \mathbf{n}\)</span> and yields the image <span class="math notranslate nohighlight">\(\mathbf{i}\)</span> without the noise <span class="math notranslate nohighlight">\(\mathbf{n}\)</span>:</p>
+<img src="figures/5/dnn_denoising.svg" style="max-height:40vh"><p>Apparently, the input and output dimensions of this network have to match, i.e.,</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathrm{dim}\, \mathbf{x} = \mathrm{dim}\, \phi(\mathbf{x})\,.
+\end{align}\)</span></p>
+<p>Furthermore, the input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> represents an image with pixel values and the output <span class="math notranslate nohighlight">\(\phi (\mathbf{x})\)</span> is again an image with pixel values.</p>
+<p>Such a problem to be solved by a neural network, where the output values are continuous, is called a <em>regression problem</em>.</p>
+<p>Although it might be tempting to create a network that directly encodes the mapping from noisy to clear images, there is another way that showed to be easier to train and to yield better results:</p>
+<ul class="simple">
+<li><p>Train <span class="math notranslate nohighlight">\(\phi\)</span> to estimate the noise <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> of the input <span class="math notranslate nohighlight">\(\mathbf{x} = \mathbf{i} + \mathbf{n}\)</span>, i.e., <span class="math notranslate nohighlight">\(\phi(\mathbf{x}) = \hat{\mathbf{n}}\)</span>,</p></li>
+</ul>
+<ul class="simple">
+<li><p>then calculate an estimate of the sought noise-free image <span class="math notranslate nohighlight">\(\hat{\mathbf{i}} = \mathbf{x} - \hat{\mathbf{n}}\)</span>.</p></li>
+</ul>
+<p>This has been done by Kai Zhang et al. (see <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/7839189">Beyond a Gaussian Denoiser: Residual Learning of Deep CNN for Image Denoising</a>):</p>
+<img src="figures/5/residual_learning_denoising.svg" style="max-height:40vh"><ul class="simple">
+<li><p>Another advantage of this method by Zhang is the lack of fully connected layers. This enables that the neural network can be applied to any input size since there are no input size-dependent parameterized structures involved.</p></li>
+</ul>
+</section>
+<section id="learned-image-signal-processing-unit">
+<h3>Learned image signal processing unit<a class="headerlink" href="#learned-image-signal-processing-unit" title="Permalink to this headline">#</a></h3>
+<p>See the paper <a class="reference external" href="https://openaccess.thecvf.com/content_cvpr_2018/papers/Chen_Learning_to_See_CVPR_2018_paper.pdf">Learning to See in the Dark</a> by Chen Chen et al.</p>
+</section>
+<section id="learned-optics-for-single-shot-high-dynamic-range-imaging">
+<h3>Learned optics for single-shot high-dynamic-range imaging<a class="headerlink" href="#learned-optics-for-single-shot-high-dynamic-range-imaging" title="Permalink to this headline">#</a></h3>
+<p>See the paper <a class="reference external" href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Metzler_Deep_Optics_for_Single-Shot_High-Dynamic-Range_Imaging_CVPR_2020_paper.pdf">Deep Optics for Single-shot High-dynamic-range Imaging</a> by Metzler et al.</p>
+</section>
+</section>
+<section id="tools-libraries-and-reading-resources">
+<h2>Tools, libraries and reading resources<a class="headerlink" href="#tools-libraries-and-reading-resources" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pytorch.org/">PyTorch</a> famous Python library for neural network development.</p></li>
+<li><p><a class="reference external" href="https://www.fast.ai/">FastAI</a> high-level API for PyTorch, very informative free online course, book.</p></li>
+</ul>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"a8be8bac847f4d0ab85b500a826efaf4": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "49fdff61378e469eb1f0a4fc7af3dbf9": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "88d8a13884e841e98af625ca5ffef1cb": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "w", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_a8be8bac847f4d0ab85b500a826efaf4", "max": 200.0, "min": 1.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 1.0, "style": "IPY_MODEL_49fdff61378e469eb1f0a4fc7af3dbf9", "value": 8.0}}, "239b60ab4f38449a9b0cce0e5bbbc0c6": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2cc6071474084f688dc2df7782d32d01": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "de519f7f93a244cea27083b55a977d8b": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "b", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_239b60ab4f38449a9b0cce0e5bbbc0c6", "max": 100.0, "min": -100.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 1.0, "style": "IPY_MODEL_2cc6071474084f688dc2df7782d32d01", "value": -4.0}}, "f9d9d75df55c4f2c88fec535b209cb2c": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "5e220415511b4f70b83f5c4ecc97fff0": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_88d8a13884e841e98af625ca5ffef1cb", "IPY_MODEL_de519f7f93a244cea27083b55a977d8b", "IPY_MODEL_c80f5e195c17468b82572b517fa9b5bc"], "layout": "IPY_MODEL_f9d9d75df55c4f2c88fec535b209cb2c"}}, "3e00d6e3f71c45bf9e3a3fa30743db27": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c80f5e195c17468b82572b517fa9b5bc": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_3e00d6e3f71c45bf9e3a3fa30743db27", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {"needs_background": "light"}, "data": {"text/plain": "<Figure size 432x288 with 1 Axes>", "image/png": "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\n"}}]}}, "d557333a47354316b5ca42db3914f8f9": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1448373184a94a63ad9018be7fcc2dd4": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "359f6f7881cc4797ae348dae2f415ce4": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_d557333a47354316b5ca42db3914f8f9", "max": 5, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_1448373184a94a63ad9018be7fcc2dd4", "value": 5}}, "8f23ef121df2492fb7baa3e64de9fe3f": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "fc0628cc232f44058ff08a29dca210c5": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_359f6f7881cc4797ae348dae2f415ce4", "IPY_MODEL_cf3a02579dab423a9b2505bdb6f6bd9e"], "layout": "IPY_MODEL_8f23ef121df2492fb7baa3e64de9fe3f"}}, "cc447d107c30445191d865162be82549": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "cf3a02579dab423a9b2505bdb6f6bd9e": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_cc447d107c30445191d865162be82549", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/5/pooling_layer_5.svg\" style=\"max-height:50vh\"/>"}}]}}, "4d5880d828854c3baedc19c26f3e3fb7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e062f15b1105475f93c1e14944f5ec58": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "1428e162254d4ce4a3cc6c8ad354f491": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_4d5880d828854c3baedc19c26f3e3fb7", "max": 5, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_e062f15b1105475f93c1e14944f5ec58", "value": 5}}, "9556e2619ee04a30ac0bd6dcdf5db5f5": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "05fd35a6ffb14c588dcc2a3863c844d1": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_1428e162254d4ce4a3cc6c8ad354f491", "IPY_MODEL_6631fe85925c4f4aa06c7826a48b3969"], "layout": "IPY_MODEL_9556e2619ee04a30ac0bd6dcdf5db5f5"}}, "6ef841f185ff4c29af89b0e845eca3ea": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6631fe85925c4f4aa06c7826a48b3969": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_6ef841f185ff4c29af89b0e845eca3ea", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/5/convolutional_layer_5.svg\" style=\"max-height:50vh\"/>"}}]}}, "07f56920fbd54d0a9d037acde831db7d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "80c6244bdda148e48fa82f5724ad23ac": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "29903979a91b4d888b7851e7562a5cd0": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_07f56920fbd54d0a9d037acde831db7d", "max": 3, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_80c6244bdda148e48fa82f5724ad23ac", "value": 3}}, "a7b646c1edff4e5dba406fc26852d72f": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7401c8ac1d534ad08022858d84d68559": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_29903979a91b4d888b7851e7562a5cd0", "IPY_MODEL_1214ca8da6e8453192d09f20a03456e0"], "layout": "IPY_MODEL_a7b646c1edff4e5dba406fc26852d72f"}}, "9eee57920179474691874c49f762d6eb": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1214ca8da6e8453192d09f20a03456e0": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_9eee57920179474691874c49f762d6eb", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/5/transposed_convolutional_layer_3.svg\" style=\"max-height:50vh\"/>"}}]}}, "fc7533dd179644259b4dbcf98ca3e31a": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "805766c0b897491eb87d81bcf75e5a69": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "b886f85841c24de6ae6c0a1568288fb7": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "s1", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_fc7533dd179644259b4dbcf98ca3e31a", "max": 1.0, "min": 0.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_805766c0b897491eb87d81bcf75e5a69", "value": 0.2}}, "40b5290d3f784d7793cd9c42be7e0725": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "615878e02270499f98f73ffce0d1c573": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "d330b9eb5a6c4c3fb07ad85225c19dd1": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "s2", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_40b5290d3f784d7793cd9c42be7e0725", "max": 1.0, "min": 0.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_615878e02270499f98f73ffce0d1c573", "value": 0.6}}, "197c5ba95c7f4afe87914cb64126e0fc": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "5d22493c6ba14795a86900e1223bdd11": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "b8bdd08cd14149178968fa6786c312ec": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "w1", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_197c5ba95c7f4afe87914cb64126e0fc", "max": 2.0, "min": -2.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_5d22493c6ba14795a86900e1223bdd11", "value": 0.4}}, "75fb95559a514ac5ac8016d2ca29cda1": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d23724cb00ed4b7f9e3450fa485a0a3c": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "1644d3ba6e9e4ee1bad559e7e7c10324": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "w2", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_75fb95559a514ac5ac8016d2ca29cda1", "max": 2.0, "min": -2.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_d23724cb00ed4b7f9e3450fa485a0a3c", "value": 0.6}}, "0bdef03591904c2daae6911f9e7c781a": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2fa773bceba54e7594f9d5c59e52179e": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_b886f85841c24de6ae6c0a1568288fb7", "IPY_MODEL_d330b9eb5a6c4c3fb07ad85225c19dd1", "IPY_MODEL_b8bdd08cd14149178968fa6786c312ec", "IPY_MODEL_1644d3ba6e9e4ee1bad559e7e7c10324", "IPY_MODEL_e48841d3744743f7be680925cabf2202"], "layout": "IPY_MODEL_0bdef03591904c2daae6911f9e7c781a"}}, "e2a897523c1c4b1e86322531eb316ccb": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e48841d3744743f7be680925cabf2202": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_e2a897523c1c4b1e86322531eb316ccb", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {"needs_background": "light"}, "data": {"text/plain": "<Figure size 432x288 with 1 Axes>", "image/png": "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\n"}}]}}, "405caf7ae7ab4182be327f1cd31d3b99": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7f71593d35504409a679496b85fae210": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "311e16fe24e64ddbb54648b70a988aa8": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "s11", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_405caf7ae7ab4182be327f1cd31d3b99", "max": 1.0, "min": 0.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_7f71593d35504409a679496b85fae210", "value": 0.2}}, "f51e5775b2374063accc4811bcda8e61": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "831bc207fe3042e9a71552af315b9be7": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "5c5f1849a84d41b2b10860404f193817": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "s12", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_f51e5775b2374063accc4811bcda8e61", "max": 1.0, "min": 0.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_831bc207fe3042e9a71552af315b9be7", "value": 0.3}}, "beaf8b6fd6bf4c6490e4a6e1753bc164": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "2c717fa6fe40452fa069b71e6a04752d": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "8a51a9ad856043288e59580a8fc75381": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "s21", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_beaf8b6fd6bf4c6490e4a6e1753bc164", "max": 1.0, "min": 0.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_2c717fa6fe40452fa069b71e6a04752d", "value": 0.4}}, "5442859b3075424cbd3ca496a8d37393": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c9350ade27d745f6be7ef391a53d0825": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "2797659759bd42b8b2b0b277399094e2": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "s22", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_5442859b3075424cbd3ca496a8d37393", "max": 1.0, "min": 0.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_c9350ade27d745f6be7ef391a53d0825", "value": 0.6}}, "e827649202e84b72a01e55e9971c411f": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4327adeb7f774992ba05da9727d7ff59": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "5bcc94f587a34a8084ede281f7ec536d": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "h1", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_e827649202e84b72a01e55e9971c411f", "max": 2.0, "min": -2.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_4327adeb7f774992ba05da9727d7ff59", "value": 0.3}}, "cd7cffa1b4e94c71a7704e38df2f62db": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "bdfb039d3da7410a99fd7ea0cf6e2f48": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "7e1a2a99ec5847fa8a28feed960d34ee": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "h2", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_cd7cffa1b4e94c71a7704e38df2f62db", "max": 2.0, "min": -2.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.1, "style": "IPY_MODEL_bdfb039d3da7410a99fd7ea0cf6e2f48", "value": -0.4}}, "a289fb8ebfb24baf9fd29c163db1f5af": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d0c71c66934e451fb41baa49ea27f835": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_311e16fe24e64ddbb54648b70a988aa8", "IPY_MODEL_5c5f1849a84d41b2b10860404f193817", "IPY_MODEL_8a51a9ad856043288e59580a8fc75381", "IPY_MODEL_2797659759bd42b8b2b0b277399094e2", "IPY_MODEL_5bcc94f587a34a8084ede281f7ec536d", "IPY_MODEL_7e1a2a99ec5847fa8a28feed960d34ee", "IPY_MODEL_bc01a71d44884a29a5fb2a964782e440"], "layout": "IPY_MODEL_a289fb8ebfb24baf9fd29c163db1f5af"}}, "3f7bd6eeffb6454f94739c7d1e6aafa4": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "bc01a71d44884a29a5fb2a964782e440": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_3f7bd6eeffb6454f94739c7d1e6aafa4", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {"needs_background": "light"}, "data": {"text/plain": "<Figure size 432x288 with 1 Axes>", "image/png": "iVBORw0KGgoAAAANSUhEUgAAAXwAAAD4CAYAAADvsV2wAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjQuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/Z1A+gAAAACXBIWXMAAAsTAAALEwEAmpwYAAAbGElEQVR4nO3df5Dc9X3f8edrd+8koR9GgCwESIg4CrUaPMS+4HgmttUiJ+DMgKdxXGjdiNZU47h0OiXTKRk6bsaZaXCcH22nTGPF9pgk42KbmcRqo4TBirFT1zAcsU0sCJGCMQgECCxLgHS62913/9jvnlbHnm5vv3v7vc9+X48ZzX2/+/3cfj5f3Xdf97nP9/P9fhURmJnZ6KsU3QAzMxsOB76ZWUk48M3MSsKBb2ZWEg58M7OSqBXdgPlcdNFFsXXr1r6+98knnwTgyiuvHGCLzMyWv0cfffTliNjQbduyDfytW7cyOTnZ1/fu2LEDgAcffHBwDTIzS4CkH8y3zUM6ZmYl4cA3MysJB76ZWUk48M3MSsKBb2ZWEgMJfEnXSXpS0iFJd3TZ/lFJfyPpO5L+r6Ttg6jXzMx6lzvwJVWBu4Hrge3AzV0C/QsRcVVEXA38FvC7ees1M7PFGcQ8/GuAQxHxFICke4EbgcfbBSLiREf51YDvybwEputN/vd3n+fwsVM0I5i99bWEWl+odCxLam8++3VEtqn1usi2nb389i3r2X7JuuHvqJn1ZRCBfynwbMf6YeCdcwtJ+jfA7cA48I+7vZGk3cBugC1btgygaeXyX/Y9wef/39NDq2+8VmH/7e9l8wXnDa1OM+vf0K60jYi7gbsl/TPgPwG7upTZA+wBmJiY8F8BixAR/Mm3n+MXrtrEf7vpaqoVzfbg29sjWn9aNWeXW19b27PX22Wz15jn9ed+dIoP3P1NHnj8Rf7Vz14x9P01s8UbROA/B2zuWL8se20+9wL/cwD1WoeXX5vm+KkZfnrremrVN56aaQ/HAFTRG7Yv1oa1K9i4bgWPHzmxcGEzWxYGMUvnEWCbpCskjQM3AXs7C0ja1rH6C8DBAdRrHZ754esAXH7h6qHVuXHdSo6+enpo9ZlZPrl7+BFRl3QbcD9QBT4XEQckfQKYjIi9wG2SdgIzwDG6DOdYPj86OQPA+tXjQ6tzw5oVHDk+NbT6zCyfgYzhR8Q+YN+c1z7esfzvBlGPze/VqToAa1cO7waoF64Z53vPHx9afWaWj6+0HRGvTrV6+OtWjg2tztUrapw83RhafWaWjwN/RJwooId/3niVUzMOfLNUOPBHxKtTdcaqYuVYdWh1rhqrUm8GM43m0Oo0s/458EfE1ExjqGEPzNbnXr5ZGhz4I2K60WRFbbg/zlXjrcCfmnbgm6XAgT8iputNxrtccLWUVrmHb5YUB/6ImK43GR92Dz8L/JPu4ZslwYE/IooI/PYY/pR7+GZJcOCPiOnG8AO/Vm3dk6fe9H3uzFLgwB8RRYzh1yqt+jwt0ywNDvwRUcSQznit1cOfabiHb5YCB/6ION1oMl4b7jz8dg+/7h6+WRIc+COikCGdqnv4Zilx4I+I6XpjdohlWMayXzD1pnv4Zilw4I+IRjNmA3hYapVslo57+GZJcOCPiHozqFaK6eF7lo5ZGhz4I6LRjNke97CcCXz38M1S4MAfEa0eflEXXrmHb5YCB/6IKKSHX3EP3ywlAwl8SddJelLSIUl3dNl+u6THJT0mab+kywdRr51RbzSHPoY/28P3GL5ZEnIHvqQqcDdwPbAduFnS9jnFvg1MRMTbgPuA38pbr52tiB6+76VjlpZB9PCvAQ5FxFMRMQ3cC9zYWSAivhYRJ7PVh4DLBlCvdag3g2q1mCGd6bp7+GYpGETgXwo827F+OHttPh8B/rzbBkm7JU1Kmjx69OgAmlYeRfTwKxVRrcgnbc0SMdSTtpI+DEwAn+q2PSL2RMRERExs2LBhmE1LWkQUMksHoFoRHsI3S0NtAO/xHLC5Y/2y7LWzSNoJ3Am8NyJOD6Bey7SH0Ifdw2/X2XAP3ywJg+gSPgJsk3SFpHHgJmBvZwFJPwV8GrghIl4aQJ3WoT2kMuxZOu06fdLWLA25Az8i6sBtwP3AE8CXIuKApE9IuiEr9ilgDfBlSd+RtHeet7M+NLLALa6H78A3S8EghnSIiH3Avjmvfbxjeecg6rHu2j3sYnr4FffwzRLhK21HQKNRbA/fF16ZpcGBPwJme/hDvj0yeAzfLCUO/BFQ6Bh+1WP4Zqlw4I+AImfp1NzDN0uGA38EFDtLpzJ7DsHMljcH/ggodpaOe/hmqXDgj4AzPfzh/zhbY/iepWOWAgf+CGg/U9Y9fDM7Fwf+CPCVtmbWCwf+CDgzD989fDObnwN/BBQ+S8eBb5YEB/4IqDc8S8fMFubAHwGFztLx/fDNkuHAHwGF3w/fF16ZJcGBPwJ8Lx0z64UDfwQUfT98B75ZGhz4I2C2h1/AtEzfPM0sHQ78EVAv8KRt1RdemSXDgT8C2rNkCnvilWfpmCXBgT8CCp+H71k6ZkkYSOBLuk7Sk5IOSbqjy/b3SPprSXVJHxxEnXaGx/DNrBe5A19SFbgbuB7YDtwsafucYs8AtwBfyFufvZFn6ZhZL2oDeI9rgEMR8RSApHuBG4HH2wUi4ulsmwd7l0CRV9qOVT2Gb5aKQSTEpcCzHeuHs9cWTdJuSZOSJo8ePTqAppVD0U+8cg/fLA3L6qRtROyJiImImNiwYUPRzUlGww8xN7MeDCLwnwM2d6xflr1mQzLTKO7WCtVKhQhoOvTNlr1BBP4jwDZJV0gaB24C9g7gfa1H7UccjlWLeaYt4F6+WQJyJ0RE1IHbgPuBJ4AvRcQBSZ+QdAOApJ+WdBj4JeDTkg7krdfOqDeCioobwwc8jm+WgEHM0iEi9gH75rz28Y7lR2gN9dgSmGk0C+ndw5lhpNZMnWohbTCz3iyrk7bWn5lGFBb47uGbpcOBPwJaPfzhD+dAZw/fgW+23DnwR0C92aRWWA+/Va97+GbLnwN/BEzXg/GCx/DbM4XMbPly4I+AVg+/mCGdsVo78N3DN1vuHPgjoF7gSdsVtdbMnOm6e/hmy50DfwRMN5qFXGULzA4lna43CqnfzHrnwB8B9UaT8VoxP8p2ve7hmy1/DvwRMNOIwnr4Kxz4Zslw4I+AmUZx0zLbPfzTDnyzZc+BPwKm6k1WjhVzW4P2SVsHvtny58AfAaem65xXUOCf6eH7pK3ZcufAHwEnpxusGi+qh+8xfLNUOPBHwNTMMgh8X2lrtuw58EfAyelGYUM6K7NfNKemPaRjttw58BMXEZyaaXBeQT38NeM1JDhxaqaQ+s2sdw78xE3NNImAVeMDeZbNolUqYt3KMY478M2WPQd+4tpBu25VMYHfrtuBb7b8OfAT9+KJKQA2rl1ZWBvetMo9fLMUDCTwJV0n6UlJhyTd0WX7CklfzLY/LGnrIOq1jsBfV1zgX7xuFYePnSqsfjPrTe7Al1QF7gauB7YDN0vaPqfYR4BjEfHjwO8Bn8xbr7UceP4EEmy54LzC2rBt4xqefuV1z9QxW+YUke/BFZLeBfx6RPx8tv5rABHxmx1l7s/KfEtSDXgB2BDnqHzt2rXxjne8Y9HtqTeDhx95FIB1l22bv2B0XVxAzF9+gTfptY54w8K53226EaxdUWP7Jet6rGHwXp2qc+D546yoVWcfxDLvrdzUue2Npbp+n85eHK9VuPzC1YXdMK5or52u89yxU8w0m4s5eC0hq8arvGXDmr6+9+tf//qjETHRbdsgzvRdCjzbsX4YeOd8ZSKiLuk4cCHwcmchSbuB3QArVqzoqzFqvQ8AY9XK/MHT7Rs5R1B1L76ob170e/fwDVWJTeev6vGdl8balTXesmENx05O0/4V3i2HFupcxHwrHe8ZwMuvnqYqsfWi1X23OWUHX3qNRjNYPV5FJf2lN+pqlaU5vVrc1I4uImIPsAdgYmIiHnzwwb7eZ8eOHQD0+/22vN16zyN8/+XX2f+rO4puytA9/fLr7PjtB/nNf3IVN1+zpejm2DLU7vB2M4hfI88BmzvWL8te61omG9J5E/DKAOq2Erry4rU8/crJUt6/5+BLrwHwDy5eW3BLLEWDCPxHgG2SrpA0DtwE7J1TZi+wK1v+IPCX5xq/NzuXS85fRaMZHDs5XXRThq49K+uSgofxLE25Az8i6sBtwP3AE8CXIuKApE9IuiEr9lngQkmHgNuBN0zdNOvVupVjQDlv53BiqrXPb1o1VnBLLEUDGcOPiH3AvjmvfbxjeQr4pUHUZbYuC7syXux1/NQM49XK7F1KzRbDR40lp927bfd2y+TEqTrrVo2d88Sc2Xwc+JacdStbf5ieOFUvuCXDd2JqZnb/zRbLgW/JaT+/d2qmfFf2np5pFPb8YkufA9+SM17ip2ydrjdn999ssXzkWHLGS/wc3WkHvuXgI8eSM15tHbanyxj4jaZn6FjffORYctqBX9oeftUfW+uPjxxLTqUixqoq5Ri+h3QsDx85lqTxaqWcPfyGA9/65yPHkjReK2nge0jHcvCRY0kqdeC7h2998pFjSRqvVTyGb7ZIPnIsSWUdwz/tMXzLwUeOJWmsWmGmhD38eqPJ2BI9/s5Gn48cS1JFolmyZ+hEBM1oTUs164cD35JUrYhGs1yB397dmgPf+uTAtyRVK6JRrryn3mwNYVUd+NYnB74lqdXDL9cYfnt3K374ifXJgW9Jqqp8QzqN7JyFr7uyfuU6dCRdIOkBSQezr+vnKfcXkn4k6f/kqc+srVI50+Mti/YvuKpn6Vif8h45dwD7I2IbsD9b7+ZTwL/IWZfZrNYYfsl6+O3A94iO9Slv4N8I3JMt3wN8oFuhiNgPvJqzLrNZ1UqlfEM6sz18J771J2/gb4yII9nyC8DGPG8mabekSUmTR48ezdk0G2VVUbrAb1934Hn41q/aQgUkfRW4uMumOztXIiIk5foERsQeYA/AxMREuT7NtihlnIff3l/Pw7d+LRj4EbFzvm2SXpS0KSKOSNoEvDTQ1pnNo4xX2rYD39MyrV95h3T2Aruy5V3AV3K+n1lPytzD9xi+9Stv4N8FvE/SQWBnto6kCUmfaReS9FfAl4FrJR2W9PM567WSK+UsnXDgWz4LDumcS0S8Alzb5fVJ4NaO9XfnqcdsLvfwzRbPV3BYkkp5pe3sPHwHvvXHgW9JqlREs6SB72mZ1i8HviWpqvKN4bdnJXlapvXLgW9JqlbLN6RTdw/fcnLgW5LKOIbf9Bi+5eTAtyR5lo7Z4jnwLUmtK22LbsVweR6+5eXAtyRVK+W7eZp7+JaXA9+SVObbI/teOtYvB74lqVqhtNMy3cO3fjnwLUllnKXTyB7p6Hn41i8HviWpPRe9TFfbNrKH+HpIx/rlwLckteeil2lYp93D95CO9cuBb0mqZk/yLtOwzplpmQU3xJLlQ8eSNNvDL1PgZ0M61Yo/ttYfHzmWpPawRimHdDyGb31y4FuS2icuy3TStjl787SCG2LJ8qFjSZrt4Zco8H1rBcvLgW9JKmPg131rBcspV+BLukDSA5IOZl/XdylztaRvSTog6TFJ/zRPnWZQzjF83x7Z8srbw78D2B8R24D92fpcJ4Ffjoh/CFwH/FdJ5+es10qunLN03MO3fPIG/o3APdnyPcAH5haIiL+LiIPZ8vPAS8CGnPVayZ250rbghgyR76VjeeUN/I0RcSRbfgHYeK7Ckq4BxoG/n2f7bkmTkiaPHj2as2k2ymolHNLxGL7lVVuogKSvAhd32XRn50pEhKR5P32SNgF/BOyKiK79sojYA+wBmJiYKM8n2RatMnvStjxdfN8e2fJaMPAjYud82yS9KGlTRBzJAv2lecqtA/4MuDMiHuq7tWaZM2P4BTdkiJru4VtOeYd09gK7suVdwFfmFpA0DvwJ8IcRcV/O+syAM/eTKdVJ2/AsHcsnb+DfBbxP0kFgZ7aOpAlJn8nKfAh4D3CLpO9k/67OWa+V3OyVtiUaw280A+nMcJbZYi04pHMuEfEKcG2X1yeBW7PlPwb+OE89ZnPVyni3zGa4d2+5+EpbS1K7h18vU+BHuHdvuTjwLUntE5dlGtJpNsOPN7RcHPiWpDJeaVv3kI7l5MC3JJXxmbbNpod0LB8HviWpjFfaNiI8B99yceBbkto93VKdtG068C0fB74lqVrCJ155Wqbl5cC3JJXxASiNpm+rYPk48C1JZQz8ZoSfZ2u5+PCxJJXxiVf1ZlBz4lsOPnosSaXs4TcDj+hYHg58S1IZL7zyLB3Ly4FvSSpjD781D98fWeufjx5LUikDvxmzzwEw64cPH0tSGU/aeh6+5eXAtyRVy3gvHd8e2XJy4FuSqmW8H75vj2w5OfAtSdUSPvGq3ozZB7+Y9cOBb0kq47TMpqdlWk4OfEtSKU/a+vbIllOuwJd0gaQHJB3Mvq7vUuZySX8t6TuSDkj6aJ46zaCkJ23dw7ec8vbw7wD2R8Q2YH+2PtcR4F0RcTXwTuAOSZfkrNdKrownbf2IQ8srb+DfCNyTLd8DfGBugYiYjojT2eqKAdRpVspHHDb8iEPLKW/4boyII9nyC8DGboUkbZb0GPAs8MmIeH6ecrslTUqaPHr0aM6m2airVVSqHn4z3MO3fGoLFZD0VeDiLpvu7FyJiJDU9dMXEc8Cb8uGcv5U0n0R8WKXcnuAPQATExPl+SRbXyoVleqkbb0Zs9NRzfqxYOBHxM75tkl6UdKmiDgiaRPw0gLv9byk7wHvBu5bdGvNOtQqKtWQTtNj+JZT3iGdvcCubHkX8JW5BSRdJmlVtrwe+FngyZz1mlFVuYZ0PC3T8sob+HcB75N0ENiZrSNpQtJnsjJvBR6W9F3g68BvR8Tf5KzXjErpevh+pq3ls+CQzrlExCvAtV1enwRuzZYfAN6Wpx6zbsp20rbebHpIx3LxFElL1li1Qr1RosBvBGM1B771z4FvyRqriZlGs+hmDM10o8mYn4BiOfjosWSNVStMlyjwZxpNxh34loOPHkvWeLVSqh7+TCPcw7dcfPRYssaqFWZKMobfaAaNpgPf8vHRY8kaq5ZnDL+9nz5pa3k48C1ZY9UK0/VyBb7H8C0PHz2WrPFaecbw20NXHtKxPHz0WLLKNIY/O6TjwLccfPRYsso0ht8euhrz3TItBwe+JatM8/Bnx/Br/sha/3z0WLLKNA/fY/g2CD56LFlj1QqnZ8oR+GeGdPyRtf756LFkrV5R4+R0o+hmDMVrp+sArF5RLbglljIHviVrzcoar52ul+Ke+O3AX7tirOCWWMoc+JasNVlv9+TM6PfyX3cP3wbAgW/JWpP1dl+bqhfckqX3ahb4a1bmemaRlZwD35LVDr/2cMcoe91DOjYADnxL1vmrWuH3w9enC27J0jv2+jTjtQorx/yRtf7lOnokXSDpAUkHs6/rz1F2naTDkv5HnjrN2jZfcB4Az/zwZMEtWXo/eOUkm9evQn6mreWQt7twB7A/IrYB+7P1+fwG8I2c9ZnNuvT8VdQq4m+PnCi6KUsqIvjbF06w9cLVRTfFEpf3DNCNwI5s+R7gQeA/zi0k6R3ARuAvgImcdZoBrdsM7LjyzXz2m9/ngSdepCpRqZzpAUecma551sTN6Lo4b/k4q3x0f32emaG53jP7Wm80OXZyho++9y3dKzHrUd7A3xgRR7LlF2iF+lkkVYDfAT4M7DzXm0naDewG2LJlS86mWRnc9YtX8Qd/tZoXjk/RaAbNCETHsEf3xbOGRs5+fXHlz37/jjLzvk8P5btU8ONvXsOHJjZjlseCgS/pq8DFXTbd2bkSESGpWz/nY8C+iDi80PhjROwB9gBMTEyM/tU0lttFa1bwa9e/tehmmCVhwcCPiHl75ZJelLQpIo5I2gS81KXYu4B3S/oYsAYYl/RaRJxrvN/MzAYs75DOXmAXcFf29StzC0TEP28vS7oFmHDYm5kNX95ZOncB75N0kNb4/F0AkiYkfSZv48zMbHBy9fAj4hXg2i6vTwK3dnn988Dn89RpZmb98WV7ZmYl4cA3MysJB76ZWUk48M3MSkIx3zXhBZN0FPhBjre4CHh5QM1JRdn2uWz7C97nssizz5dHxIZuG5Zt4OclaTIiSnXfnrLtc9n2F7zPZbFU++whHTOzknDgm5mVxCgH/p6iG1CAsu1z2fYXvM9lsST7PLJj+GZmdrZR7uGbmVkHB76ZWUkkHfiSrpP0pKRDkt5wy2VJKyR9Mdv+sKStBTRzoHrY59slPS7pMUn7JV1eRDsHaaF97ij3i5JCUvJT+HrZZ0kfyn7WByR9YdhtHLQeju0tkr4m6dvZ8f3+Ito5KJI+J+klSd+bZ7sk/ffs/+MxSW/PXWlEJPkPqAJ/D/wYMA58F9g+p8zHgN/Plm8Cvlh0u4ewz/8IOC9b/pUy7HNWbi3wDeAhWs9cKLztS/xz3gZ8G1ifrb+56HYPYZ/3AL+SLW8Hni663Tn3+T3A24HvzbP9/cCf03rO5c8AD+etM+Ue/jXAoYh4KiKmgXtpPVS90420Hq4OcB9wrRZ6zuLytuA+R8TXIuJktvoQcNmQ2zhovfycAX4D+CQwNczGLZFe9vlfA3dHxDGAiOj2tLmU9LLPAazLlt8EPD/E9g1cRHwD+OE5itwI/GG0PAScnz1ZsG8pB/6lwLMd64ez17qWiYg6cBy4cCitWxq97HOnj9DqIaRswX3O/tTdHBF/NsyGLaFefs4/AfyEpG9KekjSdUNr3dLoZZ9/HfiwpMPAPuDfDqdphVns531BeR9xaMuUpA8DE8B7i27LUpJUAX4XuKXgpgxbjdawzg5af8V9Q9JVEfGjIhu1xG4GPh8RvyPpXcAfSfrJiGgW3bBUpNzDfw7Y3LF+WfZa1zKSarT+DHxlKK1bGr3sM5J2AncCN0TE6SG1bakstM9rgZ8EHpT0NK2xzr2Jn7jt5ed8GNgbETMR8X3g72j9AkhVL/v8EeBLABHxLWAlrZuMjaqePu+LkXLgPwJsk3SFpHFaJ2X3zinTfsg6wAeBv4zsbEiiFtxnST8FfJpW2Kc+rgsL7HNEHI+IiyJia0RspXXe4oZoPWYzVb0c239Kq3ePpItoDfE8NcQ2Dlov+/wM2SNVJb2VVuAfHWorh2sv8MvZbJ2fAY5HxJE8b5jskE5E1CXdBtxP6wz/5yLigKRPAJMRsRf4LK0/+w7ROjlyU3Etzq/Hff4UsAb4cnZ++pmIuKGwRufU4z6PlB73+X7g5yQ9DjSA/xCtZ0wnqcd9/lXgDyT9e1oncG9JuQMn6X/R+qV9UXZe4j8DYwAR8fu0zlO8HzgEnAT+Ze46E/7/MjOzRUh5SMfMzBbBgW9mVhIOfDOzknDgm5mVhAPfzKwkHPhmZiXhwDczK4n/D3m7jaXCS+RWAAAAAElFTkSuQmCC\n"}}]}}}, "version_major": 2, "version_minor": 0}
+</script>
+
 
     <script type="text/x-thebe-config">
     {
