@@ -5,6 +5,8 @@
 layout: home
 ---
 
+<span style="color:red">**UPDATE** No lecture on December 7 due to illness. </span>
+
 Welcome to the Computational Imaging course website!
 
 Here you will find:
