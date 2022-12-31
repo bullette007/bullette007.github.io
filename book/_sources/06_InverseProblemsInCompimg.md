@@ -648,7 +648,7 @@ We use this expression to substitute $1$ in the equation before and arrive at th
 
 $\begin{align} 
   \frac{\hat{s}_{i+1}}{\hat{s}_i} &= \frac{g}{s*h}*h\transp \quad \Leftrightarrow \\
-  \hat{s}_{i+1} &= \hat{s}_i \frac{g}{s*h}*h\transp \,.
+  \hat{s}_{i+1} &= \hat{s}_i \frac{g}{\hat{s}_i*h}*h\transp \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
