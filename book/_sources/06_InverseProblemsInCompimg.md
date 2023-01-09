@@ -156,7 +156,8 @@ $\begin{align}
 * Richardson-Lucy deconvolution
 * Half-quadratic splitting method
 * Alternating direction method of multipliers
-* More TBD.
+* Deep SNR-estimation for Wiener filtering
+* Unrolled optimization
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
@@ -240,10 +241,10 @@ with the a priori probability $p(\mathbf{s})$ of the sought image $\mathbf{s}$.
 The maximum a-posteriori (MAP) estimate of $ \mathbf{s}$ can be obtained by maximizing (minimizing) the (negative) natural logarithm of the posterior distribution:
 
 $\begin{align} 
-   \hat{\mathbf{s}}_\mathrm{MAP} &= \argmin{\mathbf{s}} -\log \left( p(\mathbf{s} \vert \mathbf{g}, \sigma) \right) \\
-   &= \argmin{\mathbf{s}} - \log p(\mathbf{g}\vert \mathbf{s}, \sigma) - \log p(\mathbf{s}) \\
-   &= \argmin{\mathbf{s}} \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 - \log p(\mathbf{s}) \\
-   &= \argmin{\mathbf{s}} \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 + \Gamma (\mathbf{s}) \,,
+   \hat{\mathbf{s}}_\mathrm{MAP} &= \argmin{\mathbf{s}}\, -\log \left( p(\mathbf{s} \vert \mathbf{g}, \sigma) \right) \\
+   &= \argmin{\mathbf{s}}\, - \log p(\mathbf{g}\vert \mathbf{s}, \sigma) - \log p(\mathbf{s}) \\
+   &= \argmin{\mathbf{s}}\, \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 - \log p(\mathbf{s}) \\
+   &= \argmin{\mathbf{s}}\, \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 + \Gamma (\mathbf{s}) \,,
 \end{align}$
 
 with $\Gamma(\mathbf{s})$ denoting the negative natural logarithm of the prior on $\mathbf{s}$.
@@ -253,7 +254,7 @@ with $\Gamma(\mathbf{s})$ denoting the negative natural logarithm of the prior o
 If no information about the prior $p(\mathbf{s})$ is exploited, every pixel value has to be considered equally likely, i.e., $p(s_i) = 1$, resulting in a trivial but useless solution for the estimate of $\mathbf{s}$:
 
 $\begin{align} 
-   \hat{\mathbf{s}}_\mathrm{flat\ prior} = \argmin{\mathbf{s}} \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 = \mathbf{g} \,.
+   \hat{\mathbf{s}}_\mathrm{flat\ prior} = \argmin{\mathbf{s}}\, \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 = \mathbf{g} \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -263,7 +264,7 @@ We will get to know several suitable priors later on in this chapter but we want
 Any algorithm that successfully denoises an image from normally distributed noise can be interpreted (and used) as a solution to the problem just described, i.e.,
 
 $\begin{align} 
-  \argmin{\mathbf{s}} \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 + \Gamma (\mathbf{s}) \,.
+  \argmin{\mathbf{s}}\, \frac{1}{2\sigma^2}\left\| \mathbf{g} - \mathbf{s} \right\|^2_2 + \Gamma (\mathbf{s}) \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "slide"}}
@@ -278,7 +279,7 @@ $\begin{align}
    \mathbf{b} = \mathbf{Ax} + \mathbf{n} \,,
 \end{align}$
 
-where $\mathbf{b} \in \mathbb{R} ^M$ denotes the $M$ observations or measurements which are the result of the matrix-vector multiplication of the sought latent image $\mathbf{x} \in \mathbb{R} ^N$ with the so-called *measurement matrix* $\mathbf{A} \in \mathbb{R} ^{N \times M}$ and the term $\mathbf{n} \in \mathbb{R} ^M$ represents additive, signal-independent noise.
+where $\mathbf{b} \in \mathbb{R} ^M$ denotes the $M$ observations or measurements which are the result of the matrix-vector multiplication of the sought latent image $\mathbf{x} \in \mathbb{R} ^N$ with the so-called *measurement matrix* $\mathbf{A} \in \mathbb{R} ^{M \times N}$ and the term $\mathbf{n} \in \mathbb{R} ^M$ represents additive, signal-independent noise.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -589,7 +590,7 @@ i.e., $\Lambda$ with additive noise $n$.
 These two expressions can be inserted into the equation of $\log P(g)$ in order to get to our optimization goal of finding an $\hat{s}$ that maximizes $\log P(g)$, i.e., minimizes $-\log P(g)$:
 
 $\begin{align} 
-  \hat{s} = \argmin{s} \underbrace{ \sum \left( s * h-g\log (s * h)  \right)}_{=:J(s)} \,,
+  \hat{s} = \argmin{s}\, \underbrace{ \sum \left( s * h-g\log (s * h)  \right)}_{=:J(s)} \,,
 \end{align}$
 
 with the optimization functional $J(s)$.
@@ -720,13 +721,13 @@ $
 
 We introduced a so-called *slack variable* $\mathbf{z}\in \mathbb{R}^O$ which allows us to separate the data fidelity term and the regularization term so that they do not depend on the same variable anymore. Obviously, $\mathbf{x}$ and $\mathbf{z}$ are still linked by the constraint $\mathbf{Dx-z=0}$.
 
-For now, we assume $\mathbf{D}\in \mathbb{R}^{N\times O}$ to represent the identity matrix (i.e., it does not introduce any changes and can be ignored for now) - it will come back into play later on.
+For now, we assume $\mathbf{D}\in \mathbb{R}^{O\times N}$ to represent the identity matrix (i.e., it does not introduce any changes and can be ignored for now) - it will come back into play later on.
 
 +++ {"tags": ["presentation_only", "remove-cell"], "slideshow": {"slide_type": "fragment"}}
 
 With so-called *slack variable* $\mathbf{z}\in \mathbb{R}^O$.
 
-For now, assume $\mathbf{D}\in \mathbb{R}^{N\times O}$ to represent the identity matrix (will change later).
+For now, assume $\mathbf{D}\in \mathbb{R}^{O\times N}$ to represent the identity matrix (will change later).
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
@@ -752,8 +753,8 @@ $
 
 $
 \begin{align} 
-   &\mathbf{x} \leftarrow \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}} L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{x}} f(\mathbf{x}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,, \\
-   &\mathbf{z} \leftarrow \mathrm{prox}_{g,\rho} (\mathbf{Dx}) = \argmin{\mathbf{z}} L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{z}} g(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,.
+   &\mathbf{x} \leftarrow \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}}\, L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{x}}\, f(\mathbf{x}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,, \\
+   &\mathbf{z} \leftarrow \mathrm{prox}_{g,\rho} (\mathbf{Dx}) = \argmin{\mathbf{z}}\, L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{z}}\, g(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,.
 \end{align}
 $
 
@@ -804,19 +805,19 @@ being a nonempty closed convex set.
 The proximal operator $\mathrm{prox}_f (v):\mathbb{R} ^n \rightarrow \mathbb{R}^n$ of $f$ is defined as
 
 $\begin{align} 
-   \mathrm{prox}_f (v) = \argmin{x} \left( f(x) + \frac{1}{2} \left\| x-v \right\|^2_2  \right)  \,.
+   \mathrm{prox}_f (v) = \argmin{x}\, \left( f(x) + \frac{1}{2} \left\| x-v \right\|^2_2  \right)  \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The minimized term on the right-hand side is strongly convex not infinite everywhere, so it has a unique solution for every $v\in \mathbb{R} ^n$.
+The minimized term on the right-hand side is strongly convex and not infinite everywhere, so it has a unique solution for every $v\in \mathbb{R} ^n$.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 Often the proximal operator for the scaled function $\lambda f$, with $\lambda > 0$, is of interested, which we denote as:
 
 $\begin{align} 
-  \mathrm{prox}_{f,\lambda} (v) = \argmin{x} \left( f(x) + \frac{1}{2} \lambda \left\| x-v \right\|^2_2  \right)  \,.   
+  \mathrm{prox}_{f,\lambda} (v) = \argmin{x}\, \left( f(x) + \frac{1}{2} \lambda \left\| x-v \right\|^2_2  \right)  \,.   
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -879,12 +880,12 @@ For total variation this is:
 
 $
 \begin{align} 
-  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Dx-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda \left\| \mathbf{z} \right\|_1 }_{=:g(\mathbf{z})} \\
+  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Cx-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda \left\| \mathbf{z} \right\|_1 }_{=:g(\mathbf{z})} \\
   \text{subject to}\quad &\mathbf{Dx-z} = \mathbf{0} \,,
 \end{align}
 $
 
-with $\mathbf{D} = \left( \mathbf{D}\transp_x \mathbf{D}\transp_y \right)\transp \in \mathbb{R}^{2N \times N}$ representing the finite difference operator for calculating the gradients of $\mathbf{x}$ in $x$- and $y$-direction.
+with $\mathbf{D} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y \right]\transp \in \mathbb{R}^{2N \times N}$ representing the finite difference operator for calculating the gradients of $\mathbf{x}$ in $x$- and $y$-direction.
 
 +++ {"tags": ["book_only"]}
 
@@ -898,7 +899,7 @@ In the more general case, we use a regularizer $\Psi $ projecting an image onto 
 
 $
 \begin{align} 
-  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Dx-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda  \Psi (\mathbf{z})}_{=:g(\mathbf{z})} \\
+  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Cx-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda  \Psi (\mathbf{z})}_{=:g(\mathbf{z})} \\
   \text{subject to}\quad &\mathbf{x-z} = \mathbf{0} \,.
 \end{align}
 $
@@ -913,7 +914,7 @@ For obtaining the $x$-update, we have to derive the proximal operator $\mathrm{p
 
 $
 \begin{align} 
-  \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}} f(\mathbf{x}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 = \argmin{\mathbf{x}} \frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 \,.
+  \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}}\, f(\mathbf{x}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 = \argmin{\mathbf{x}}\, \frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 \,.
 \end{align}
 $
 
@@ -1018,13 +1019,13 @@ $\begin{align}
 For the $z$-update, we need to find a solution for the proximal operator
 
 $\begin{align} 
-   \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{Dx}) = \argmin{\mathbf{z}} \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\|^2_2 \,.  
+   \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{Dx}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\|^2_2 \,.  
 \end{align}$
 
 To simplify the writing, we substitute $\mathbf{v} = \mathbf{Dx}$:
 
 $\begin{align} 
-  \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}} \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{v-z} \right\|^2_2 \,.  
+  \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{v-z} \right\|^2_2 \,.  
 \end{align}$
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "skip"}}
@@ -1100,6 +1101,7 @@ $\begin{align}
   \partial h(z) =  \begin{cases}
     &\rho(-v+z) - \lambda &\text{ if } z < 0\\
     &[-\rho v-\lambda, -\rho v + \lambda] &\text{ if } z = 0\\
+    &\rho(-v+z) + \lambda &\text{ if } z > 0
    \end{cases} \,.
 \end{align}$
 
@@ -1219,7 +1221,7 @@ This expression is also called the *group lasso*.
 Accordingly, the whole deconvolution problem for the isotropic TV regularizer is
 
 $\begin{align} 
-   &\argmin{\mathbf{x}} \underbrace{\frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2}_{=:f(\mathbf{x})} + \underbrace{\lambda \sum\limits^N_{i=1} \left\|  \begin{bmatrix} 
+   &\argmin{\mathbf{x}}\, \underbrace{\frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2}_{=:f(\mathbf{x})} + \underbrace{\lambda \sum\limits^N_{i=1} \left\|  \begin{bmatrix} 
       z_i \\ z_{i+N}
    \end{bmatrix}   \right\|_2 }_{=:g(\mathbf{z})} \\
    &\text{subject to } \mathbf{Dx-z=\mathbf{0}}\,.
@@ -1402,7 +1404,7 @@ This means that we can use any Gaussian denoiser $\mathcal{D}: \mathbb{R} ^N \ri
 $\rightarrow$ Any Gaussian denoiser suitable for a noise variance of $\sigma^2$ can be used as a general image prior:
 
 $\begin{align} 
-   \mathbf{z} \leftarrow \mathrm{prox}_{\mathcal{D}, \rho} (\mathbf{x}) =\mathcal{D}(\mathbf{x}, \sigma^2 = \frac{\lambda}{\rho}) \,.
+   \mathbf{z} \leftarrow \mathrm{prox}_{\mathcal{D}, \rho} (\mathbf{x}) =\mathcal{D}\left( \mathbf{x}, \sigma^2 = \frac{\lambda}{\rho}  \right)  \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1426,7 +1428,7 @@ However, we have to look again at the $\mathbf{x}$-update, as the matrix-vector 
 For the $\mathbf{x}$-update, we use the following solution:
 
 $\begin{align} 
-   \mathbf{x} \leftarrow \mathrm{prox}_{\left\| \cdot \right\| _2, \rho} (\mathbf{v}) &= \argmin{\mathbf{x}} \frac{1}{2} \left\| \mathbf{Ax-b} \right\| ^2_2 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\| ^2_2  \\
+   \mathbf{x} \leftarrow \mathrm{prox}_{\left\| \cdot \right\| _2, \rho} (\mathbf{v}) &= \argmin{\mathbf{x}}\, \frac{1}{2} \left\| \mathbf{Ax-b} \right\| ^2_2 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\| ^2_2  \\
    &= \left( \underbrace{\mathbf{A}\transp \mathbf{A} + \rho  \mathbf{D}\transp D}_{\tilde{\mathbf{A}}} \right)^{-1}  \left( \underbrace{\mathbf{A}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}}_{\tilde{\mathbf{b}}} \right) \,,
 \end{align}$
 
@@ -1530,29 +1532,168 @@ For the $\mathbf{z}$-update, we can rely on the same proximal operators as HQS.
 In the case of the TV regularizer, the proximal operator is the element-wise soft thresholding operator:
 
 $\begin{align} 
-  \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}} \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{v-z} \right\|^2_2 = \mathcal{S}_{\lambda / \rho} (\mathbf{v})\,.  
+  \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{v-z} \right\|^2_2 = \mathcal{S}_{\lambda / \rho} (\mathbf{v})\,.  
 \end{align}$
 
 Since for HQS it is $\mathbf{v} = \mathbf{Dx}$, we again have to account for $\mathbf{u}$ as $\mathbf{v} = \mathbf{Dx} + \mathbf{u}$.
 
-+++ {"slideshow": {"slide_type": "skip"}}
++++
 
-##### TBD
-
-* Unrolled optimization
-* ADMM $\mathbf{z}$-update for general case
-* Deep SNR-estimation
-
-```{code-cell} ipython3
-
-```
-
-+++ {"slideshow": {"slide_type": "skip"}}
+In the general case, i.e., for $\mathbf{D=I}$, we can use any Gaussian denoiser $\mathcal{D}: \mathbb{R} ^N \rightarrow \mathbb{R}^N$ as a regularizer leading to the following $\mathbf{z}$-update:
 
 $\begin{align} 
-  \mathbf{z} \leftarrow \mathbf{prox}_{\left\| \cdot \right\|_{2,1},\rho } (\mathbf{v}) = \begin{cases} 
-    \mathbf{v} \cdot \left( 1 - \frac{\lambda }{\rho \left\| \mathbf{v} \right\|_2 } \right) &\text{if } \left\| \mathbf{v} \right\| _2 > \frac{\lambda}{\rho} \\
-    \mathbf{0} &\text{if } \left\| \mathbf{v} \right\| _2 \leq \frac{\lambda}{\rho}
-  \end{cases}
-   \,.
+   \mathrm{prox}_{\mathcal{D}, \rho} (\mathbf{v}) = \mathcal{D} \left( \mathbf{v}, \sigma^2=\frac{\lambda }{\rho} \right) \,,
 \end{align}$
+
+with $\mathbf{v = x + u}$.
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+## Deep SNR-estimation for Wiener filtering
+
++++
+
+As elaborated before, one main drawback of the Wiener filter is the necessity for the user to correctly estimate the signal-to-noise ratio 
+
+$\begin{align} 
+   SNR\,(\mathbf{f}) = \frac{S_{ss}(\mathbf{f})}{S_{nn}(\mathbf{f})} \,, 
+\end{align}$
+
+with $S_{ss}(\mathbf{f}), S_{nn}(\mathbf{f})$ denoting the power spectral density of the signal component, respectively, of the noise component.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+In the unusual case when one has access to $s$ and $n$, it is possible to calculate (not unbiased) estimates of $S_{ss}(\mathbf{f}), S_{nn}(\mathbf{f})$ via
+
+$\begin{align} 
+   \hat{S}_{ss}(\mathbf{f}) &= \vert \F \left\{ s(\mathbf{x}) \right\}   \vert^2 \, , \\
+   \hat{S}_{nn}(\mathbf{f}) &= \vert \F \left\{ n(\mathbf{x}) \right\}   \vert^2 \,.
+\end{align}$
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+Fortunately we could show that a neural network $\phi$ can be trained to precisely estimate the signal-to-noise ratio based on the observed image $g$ only.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+To make the task easier for the neural network, we trained it to consume estimates of the power spectral density of $g$ to estimate the signal-to-noise ratio. By this means, both input and output have spatial frequencies as variables.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+Directly training $\phi$ with pairs of $\left( \hat{S}_{gg}, \widehat{SNR} \right)$ would lead to slow or even no convergence of the training due to the high dynamic range of the squared magnitude spectra of the Fourier transforms.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Hence, we train $\phi$ with pairs $\left(  \log \hat{S}_{gg}, \log \widehat{SNR} \right)$,i.e., so that $\phi\left( \log \hat{S}_{gg}(\mathbf{f})\right)= \log \widehat{SNR}\,(\mathbf{f})$.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+The following figure visualizes the training procedure:
+
+<img src="figures/6/dw_training.svg" style="max-height:40vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+To apply the method for image reconstruction the following steps are performed:
+* Calculate $\hat{S}_{gg}(\mathbf{f}) = \left| \F \left\{ g(\mathbf{x}) \right\}  \right|^2 $ for the observed image $g$,
+* use $\phi$ to estimate the signal-to-noise ratio via $\widehat{SNR}\,(\mathbf{f}) \leftarrow \phi(\hat{S}_{gg}(\mathbf{f})) $,
+* estimate the undistorted image $\hat{s}$ by applying the Wiener filter to $g$ and by using the estimated $\widehat{SNR}$.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Example Wiener filter reconstruction results with deep SNR-estimation
+
+```{code-cell} ipython3
+:init_cell: true
+
+interact(lambda i: showFig('figures/6/dw_ex_',i,'.png',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=8), step=1, value=(6 if book else min_i)))
+```
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Quantitative results
+
++++
+
+To quantify the deconvolution performance of the proposed method, the [dataset published by Libin Sun et al.](http://ieeexplore.ieee.org/document/6528301/) has been employed.
+
+The reconstruction results are numerically compared against the ground truths by means of the so-called *peak signal-to-noise ratio PSNR* (logarithmic scale, no maximum value) and the so-called *structural similarity index SSIM* (mimics the human perception of image similarity, maximum value of 1.0 for full equality).
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+<table>
+<thead>
+  
+  <tr>
+      <th style="text-align:left">Method</th>
+      <th>PSNR</th>
+      <th>SSIM</th>
+  </tr>
+</thead>
+<tbody>
+  
+  <tr>
+    <td style="text-align:left">Fourier Deconvolution Network (2017)</td>
+    <td>32.67</td>
+    <td>0.8887</td>
+  </tr>
+  <tr>
+    <td style="text-align:left">Cascade of Shrinkage Fields (2014)</td>
+    <td>32.21</td>
+    <td>0.8622</td>
+  </tr>
+  <tr>
+    <td style="text-align:left">Expected Patch Log Likelihood (2011)</td>
+    <td>32.48</td>
+    <td>0.8815</td>
+  </tr>
+  <tr>
+    <td style="text-align:left">Wiener meets Deep Learning (2020)</td>
+    <td>34.05</td>
+    <td>0.9225</td>
+  </tr>
+  <tr>
+      <td style="text-align:left"><b>Wiener filter with deep SNR-estimation</b></td>
+      <td><b>40.83 $\pm$ 1.8</b></td>
+      <td><b>0.97 $\pm$ 0.01</b></td>
+  </tr>
+  <tr >
+    <td colspan="100%"></td>
+  </tr>
+  <tr>
+    <td style="text-align:left">Wiener filter with ground truth SNR</td>
+    <td>42.31 $\pm$ 1.7</td>
+    <td>0.98 $\pm$ 0.01</td>
+  </tr>
+  <tr>
+    <td style="text-align:left">Wiener filter with heuristic $\mathbf{f}^2$</td>
+    <td>32.23 $\pm$ 2.3</td>
+    <td>0.81 $\pm$ 0.1</td>
+  </tr>
+</tbody>
+</table>
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+## Unrolled optimization
+
++++
+
+For traditional HQS and ADMM implementations, the values of the hyperparameters $\lambda$ and $\rho$ are chosen once and remain fix while performing the optimization.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Although this works well in many cases, it can be beneficial to set the number $i$ of iterations to a fixed value and replicate the parameter update routines $i$ times, each with individual hyperparameters $\lambda_i, \rho_i$.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+The resulting structure can be interpreted and dealt with like a neural network (especially if some deep denoising prior is included). Then, the hyperparameters $\lambda_i, \rho_i$ and the parameters of a potentially included neural network can be learned (i.e., optimized) in an end-to-end fashion in a joint training procedure.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+Advantages of unrolled optimization:
+
+* Whole method becomes end-to-end differentiable.
+* Hyperparameters $\lambda_i, \rho_i$ can be learned and optimized allowing to realize a hyperparameter-schedule (e.g., increasing the $\rho_i$ over time).
+* The denoising neural network can adapt to the actual matrix $\mathbf{A}$ or the convolution kernel (even with respect to every individual iteration).
+* Skip connections from earlier iterations to later iterations can be realized.
