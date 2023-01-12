@@ -155,3 +155,121 @@ $\begin{align}
 
 +++
 
+As the name suggests, lensless imaging setups capture light on a sensor without focusing it using a lens (system). 
+
+* As a direct consequence, the image formed on the sensor is usually not interpretable for the naked human eye. 
+* Only with the help of a suitable reconstruction algorithm, the sought image of the observed scene can be obtained.
+
++++
+
+Lensless imaging systems have some advantages compared to their lens-based counterparts:
+
+* Reduced weight and size,
+* reduced cost,
+* scalability,
+* field of view,
+* visual privacy,
+* potential applicability to ranges of non-visible wavelengths where it is difficult or impossible to build lenses, e.g., x-rays (provided a suitable sensor).
+
++++
+
+Disadvantages of lensless imaging systems:
+
+* Image quality,
+* need for computational image reconstruction (also results in increased power consumption, longer processing times, etc.),
+* reduced amount of collected light.
+
++++
+
+## Modulating light in a lensless imaging system
+
++++
+
+Instead of using lenses, lensless imaging systems use other techniques to modulate the light so that each point of the observed scene yields a different system response. This is a necessary condition for the reconstruction methods to be able to recover the sought sharp image of the scene. 
+
++++
+
+The optical effect of relevant modulators is usually modeled via the corresponding point spread function (PSF).
+
++++
+
+Just using a sensor without any modulator results in a severely ill-posed problem that can barely be solved, as every scene point approximately leads to the same system response.
+
++++ 
+
+Typical modulators can be categorized into the following groups:
+
+* Amplitude mask modulators (block, attenuate or transmit light with a spatially varying pattern),
+* phase mask modulators (change the phase of transmitted light with spatially varying phase shifts),
+* programmable modulators (change amplitude or phase of transmitted light with a spatially varying pattern that can be computationally controlled) and
+* illumination modulators (controlling, patterning the illumination).
+
++++
+
+### Amplitude modulators
+
++++
+
+<img src="figures/7/amplitude_modulators.svg" style="max-height:40vh">
+
++++
+
+Amplitude modulators are usually produced by photo-lithographically etching a binary pattern of reflective chrome on a glass substrate or by printing a binary pattern with dark ink on a thin transparent film.
+
++++
+
+The regions covered with chrome or ink reflect or absorb incident light (i.e., they block it) whereas light is transmitted by the other regions.
+
++++
+
+Amplitude modulators have their roots in x-ray imaging where it is difficult to construct lenses.
+
++++
+
+Light modulation by amplitude masks is modeled in two ways, depending on the distance $d$ between the mask and the sensor: 
+
++++
+
+1. Small $d$: The point spread function (PSF) is modeled based on the shadow of the mask cast on the sensor.
+
++++
+
+2. Large $d$: The PSF is modeled based on the diffraction of incident light at the mask.
+
++++
+
+The so-called *Fresnel number* $N_\mathrm{F}$ helps with distinguishing between the two cases and is defined as:
+
+$\begin{align} 
+   N_\mathrm{F} = \frac{a^2}{d\lambda} \,,
+\end{align}$
+
+with $a$ denoting the size of the mask's smallest open region and $\lambda$ denoting the shortest wavelength of the involved light.
+
++++
+
+For $N_\mathrm{F} >> 1$, the assumptions of geometric optics (i.e., ray optics) hold and the first model can be applied. If $N_\mathrm{F} <= 1$, diffraction has to be taken into account.
+
++++
+
+The major disadvantage of amplitude masks is the reduced light efficiency caused by blocking parts of the incident light. This can lead to poor signal-to-noise ratios, especially in low-light applications.
+
++++
+
+### Phase modulators
+
++++
+
+Phase modulators change the relative optical path length between different light rays reaching the mask. This introduces changes in the direction of propagation of transmitted light rays, so that distributions of spatially varying light intensities arise behind the mask (so-called *caustics*). 
+
++++
+
+Hence, phase modulators can yield quite sophisticated intensity patterns varying with respect to the incident light and therefore represent light modulators suitable for lensless imaging.
+
+Furthermore, they do not block incident light what leads to high signal-to-noise ratios.
+
++++
+
+There are three different main kinds of phase modulators: phase gratings, diffusers and phase masks.
+
+Phase gratings and phase masks and can be produced by photo-lithographically etching structures into glass or by an additively polymerizing photoresist on a transparent substrate. 

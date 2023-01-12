@@ -1134,11 +1134,17 @@ The so-called *cross-entropy loss* is a common loss function for (image) classif
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-When the final layer of a classification neural network yields a vector $\mathbf{y} \in [0,1]^C$ of probabilities for all $C$ possible classes (e.g., obtained via a final softmax layer), the cross-entropy loss is calculated via:
+When the final layer of a classification neural network yields a vector $\mathbf{y} \in [0,1]^C$ of probabilities for all $C$ possible classes (e.g., obtained via a final softmax layer) and $i \in [1,C]$ represents the index of the correct class, the cross-entropy loss is calculated via:
 
 $\begin{align} 
-   \ell_\mathrm{cross} = \sum\limits^C_{i=1}-\log (y_i) \,.
+   \ell_\mathrm{cross} = -\log (y_i) \,.
 \end{align}$
+
++++
+
+```{note}
+  In some libraries (e.g., PyTorch), the implementation of the cross-entropy loss automatically applies softmax to its input $\mathbf{x}$ enforcing that all elements $x_i\leq1$ and $\sum_i x_i=1$.
+```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
