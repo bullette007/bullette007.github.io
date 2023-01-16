@@ -56,6 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Inverse Problems in Computational Imaging" href="06_InverseProblemsInCompimg.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -110,7 +111,7 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Introduction.html">
    Introduction
@@ -139,6 +140,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="06_InverseProblemsInCompimg.html">
    Inverse Problems in Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Lensless Imaging
   </a>
  </li>
 </ul>
@@ -325,6 +331,176 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#phase-modulators">
      Phase modulators
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#phase-gratings">
+       Phase gratings
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#diffusers">
+       Diffusers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#phase-masks">
+       Phase masks
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#programmable-modulators">
+     Programmable modulators
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#liquid-crystal-displays-lcds">
+       Liquid crystal displays (LCDs)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#liquid-crystal-on-silicon-lcos">
+       Liquid crystal on silicon (LCoS)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#digital-micromirror-device-dmd">
+       Digital micromirror device (DMD)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#advantages-and-disadvantage-of-programmable-modulators">
+       Advantages and disadvantage of programmable modulators
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#point-spread-functions-psfs">
+     Point spread functions (PSFs)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-reconstruction">
+   Image reconstruction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model-for-2d-imaging">
+     Forward model for 2D imaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-linear-model">
+       General linear model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#convolutional-model">
+       Convolutional model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#separability-model">
+       Separability model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model-for-3d-imaging">
+     Forward model for 3D-imaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-linear-model-for-3d">
+       General linear model for 3D:
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#convolutional-model-for-3d">
+       Convolutional model for 3D:
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#separability-model-for-3d">
+       Separability model for 3D:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calibration">
+     Calibration
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#calibration-of-the-general-linear-model">
+       Calibration of the general linear model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#calibration-of-the-convolutional-model">
+       Calibration of the convolutional model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#calibration-of-the-separability-model">
+       Calibration of the separability model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#performing-the-reconstruction">
+     Performing the reconstruction
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-diffuser-cam">
+   Example: Diffuser Cam
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model">
+     Forward model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Image reconstruction
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradient-descent-based-reconstruction">
+       Gradient descent-based reconstruction
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#example-reconstruction">
+         Example reconstruction
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#admm-based-reconstruction">
+       ADMM-based reconstruction
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id2">
+         Example reconstruction
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -371,6 +547,176 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#phase-modulators">
      Phase modulators
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#phase-gratings">
+       Phase gratings
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#diffusers">
+       Diffusers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#phase-masks">
+       Phase masks
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#programmable-modulators">
+     Programmable modulators
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#liquid-crystal-displays-lcds">
+       Liquid crystal displays (LCDs)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#liquid-crystal-on-silicon-lcos">
+       Liquid crystal on silicon (LCoS)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#digital-micromirror-device-dmd">
+       Digital micromirror device (DMD)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#advantages-and-disadvantage-of-programmable-modulators">
+       Advantages and disadvantage of programmable modulators
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#point-spread-functions-psfs">
+     Point spread functions (PSFs)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-reconstruction">
+   Image reconstruction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model-for-2d-imaging">
+     Forward model for 2D imaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-linear-model">
+       General linear model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#convolutional-model">
+       Convolutional model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#separability-model">
+       Separability model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model-for-3d-imaging">
+     Forward model for 3D-imaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-linear-model-for-3d">
+       General linear model for 3D:
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#convolutional-model-for-3d">
+       Convolutional model for 3D:
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#separability-model-for-3d">
+       Separability model for 3D:
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#calibration">
+     Calibration
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#calibration-of-the-general-linear-model">
+       Calibration of the general linear model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#calibration-of-the-convolutional-model">
+       Calibration of the convolutional model
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#calibration-of-the-separability-model">
+       Calibration of the separability model
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#performing-the-reconstruction">
+     Performing the reconstruction
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-diffuser-cam">
+   Example: Diffuser Cam
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model">
+     Forward model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Image reconstruction
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradient-descent-based-reconstruction">
+       Gradient descent-based reconstruction
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#example-reconstruction">
+         Example reconstruction
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#admm-based-reconstruction">
+       ADMM-based reconstruction
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id2">
+         Example reconstruction
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -463,10 +809,309 @@ title="Print to PDF"
 <p>Hence, phase modulators can yield quite sophisticated intensity patterns varying with respect to the incident light and therefore represent light modulators suitable for lensless imaging.</p>
 <p>Furthermore, they do not block incident light what leads to high signal-to-noise ratios.</p>
 <p>There are three different main kinds of phase modulators: phase gratings, diffusers and phase masks.</p>
-<p>Phase gratings and phase masks and can be produced by photo-lithographically etching structures into glass or by an additively polymerizing photoresist on a transparent substrate.</p>
+<p>Phase gratings and phase masks and can be produced by photo-lithographically etching structures into glass or by an additively polymerizing photoresist on a transparent substrate. Diffusers can be realized by etching random height structures onto glass or by inexpensively sandblasting a piece of glass.</p>
+<section id="phase-gratings">
+<h4>Phase gratings<a class="headerlink" href="#phase-gratings" title="Permalink to this headline">#</a></h4>
+<p>Phase gratings modulate the phase of the incident light by two possible values (e.g., <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(0\)</span>) depending on the surface height at the respective positions.</p>
+<img src="figures/7/phase_gratings.svg" style="max-height:40vh"></section>
+<section id="diffusers">
+<h4>Diffusers<a class="headerlink" href="#diffusers" title="Permalink to this headline">#</a></h4>
+<p>Diffusers typically have surface profiles with continuous random heights and hence produce pseudorandom patterns representing their PSF.</p>
+<img src="figures/7/diffuser.svg" style="max-height:40vh"></section>
+<section id="phase-masks">
+<h4>Phase masks<a class="headerlink" href="#phase-masks" title="Permalink to this headline">#</a></h4>
+<p>Phase masks are similar to phase gratings but have many different discrete modulation values (i.e., discrete surface heights). By this means, they can be designed to realize a large range of PSFs at the cost of being more expensive.</p>
+<img src="figures/7/phase_mask.svg" style="max-height:40vh"></section>
+</section>
+<section id="programmable-modulators">
+<h3>Programmable modulators<a class="headerlink" href="#programmable-modulators" title="Permalink to this headline">#</a></h3>
+<p>By means of so-called <em>spatial light modulators (SLMs)</em>, spatial light modulation patterns can be realized which can be computationally controlled.</p>
+<section id="liquid-crystal-displays-lcds">
+<h4>Liquid crystal displays (LCDs)<a class="headerlink" href="#liquid-crystal-displays-lcds" title="Permalink to this headline">#</a></h4>
+<p>LCDs represent a cheap form of a programmable transmissive modulator.</p>
+<p>Typical LCDs consist of</p>
+<ol class="simple">
+<li><p>a linear polarizer for the incident light,</p></li>
+<li><p>a layer of liquid crystals whose orientations can be spatially varied by applying different voltage levels and</p></li>
+<li><p>a linear polarizer (usually oriented at 90<span class="math notranslate nohighlight">\(^\circ\)</span> with respect to the first polarizer) for the transmitted light.</p></li>
+</ol>
+<p>Depending on the applied voltage, the liquid crystals change the polarization direction of the incident light so that it can (partially) pass the second polarizer.</p>
+<p>This allows to spatially control the transmissivity of the LCD and hence represents a computationally controllable amplitude modulator.</p>
+<p>By adequately modifying the optical setup of an LCD it is also possible to induce a spatially controllable phase shift to the incident light realizing a computationally controllable phase modulator.</p>
+</section>
+<section id="liquid-crystal-on-silicon-lcos">
+<h4>Liquid crystal on silicon (LCoS)<a class="headerlink" href="#liquid-crystal-on-silicon-lcos" title="Permalink to this headline">#</a></h4>
+<p>LCoS SLMs are quite similar to LCDs however they have to be operated in reflection, i.e., the incident light and the transmitted light are on the same side of the device but with inverse direction of propagation.</p>
+</section>
+<section id="digital-micromirror-device-dmd">
+<h4>Digital micromirror device (DMD)<a class="headerlink" href="#digital-micromirror-device-dmd" title="Permalink to this headline">#</a></h4>
+<p>A DMD can be imagined as a two-dimensional array of small mirrors (lateral lengths of about <span class="math notranslate nohighlight">\(5\)</span> µm) which can be computationally tilted out of the plane of the array.</p>
+<p>Typical DMDs support two different tilt angles (i.e., a binary operation mode).</p>
+<p>By collecting the reflected light in one of the two possible reflection directions, DMDs can be used to realize a computationally controllable amplitude mask.</p>
+</section>
+<section id="advantages-and-disadvantage-of-programmable-modulators">
+<h4>Advantages and disadvantage of programmable modulators<a class="headerlink" href="#advantages-and-disadvantage-of-programmable-modulators" title="Permalink to this headline">#</a></h4>
+<p>Advantages:</p>
+<ul class="simple">
+<li><p>Programmable modulators allow to quickly change between different PSFs,</p></li>
+<li><p>the ability to realize different modulation patterns and acquire images for each individual pattern can allow to significantly reduce the required spatial resolution of the sensor to achieve a certain reconstruction quality (especially useful for spectral regions where high-resolution sensors are not available or expensive).</p></li>
+</ul>
+<p>Disadvantages:</p>
+<ul class="simple">
+<li><p>SLMs are bulky and their integration into optical systems can be complicated,</p></li>
+<li><p>due to their pixelated design with small structures (near the size of the light’s wavelengths), diffraction effects can occur and notably complicate the reconstruction procedure.</p></li>
+</ul>
+</section>
+</section>
+<section id="point-spread-functions-psfs">
+<h3>Point spread functions (PSFs)<a class="headerlink" href="#point-spread-functions-psfs" title="Permalink to this headline">#</a></h3>
+<p>All of the mentioned modulators can be modeled via their PSF, i.e., their optical response to a point light source.</p>
+<p>Typically, the PSF of a modulator used in lensless imaging is designed to have</p>
+<ul class="simple">
+<li><p>an auto-correlation that is close to a Dirac impulse and</p></li>
+<li><p>a flat magnitude spectrum in the Fourier domain, so that as much spatial frequencies as possible are preserved without significant changes of their contributions to the signal.</p></li>
+</ul>
+</section>
+</section>
+<section id="image-reconstruction">
+<h2>Image reconstruction<a class="headerlink" href="#image-reconstruction" title="Permalink to this headline">#</a></h2>
+<p>The image formed on the sensor of lensless imaging systems typically looks blurred or completely scrambled, i.e., useless for the naked human eye.</p>
+<p>In most cases, there is a linear relationship between the observed scene and the resulting measurements on the sensor. Suitable reconstruction algorithms try to invert this mapping in order to obtain a sharp image of the scene based on the blurred and scrambled measurements.</p>
+<p><strong>Forward model</strong></p>
+<p>For a given lensless imaging system, the relationship between the observed scene and the corresponding measurements can be formalized in a so-called <em>forward model</em>.</p>
+<p>The forward model calculates the measurements that can be expected given a certain scene. The model has to achieve a trade-off between physical accuracy and tractability of the reconstruction that is adequate for the targeted application.</p>
+<section id="forward-model-for-2d-imaging">
+<h3>Forward model for 2D imaging<a class="headerlink" href="#forward-model-for-2d-imaging" title="Permalink to this headline">#</a></h3>
+<section id="general-linear-model">
+<h4>General linear model<a class="headerlink" href="#general-linear-model" title="Permalink to this headline">#</a></h4>
+<p>If the scene is assumed to be a two-dimensional plane located at some distance to the imaging system and being oriented perpendicular to the optical axis, the simplest form of an adequate forward model can be expressed via the following general linear model:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} = \mathbf{Hx} \,,
+\end{align}\)</span></p>
+<p>with the intensities <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> emerging from every sampled scene point, the measurement matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> and the resulting measurements <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+<p>This model can be interpreted as if every column <span class="math notranslate nohighlight">\(\mathbf{H}[i]\)</span> of <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> stores the sensor image that is associated with the corresponding scene point (i.e., element <span class="math notranslate nohighlight">\(x_i\)</span> of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>). The value of <span class="math notranslate nohighlight">\(x_i\)</span> (i.e., the reflected intensity of that scene point) then scales <span class="math notranslate nohighlight">\(\mathbf{H}[i]\)</span> before the images corresponding to all captured scene points are additively superposed and yield the measurement <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>.</p>
+<p>Unfortunately, using this simple model is usually computationally intractable.</p>
+<p>To reconstruct a one megapixel image for a one megapixel sensor the matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> would have <span class="math notranslate nohighlight">\(10^6 \cdot 10^6 = 10^{12}\)</span> elements and hence <span class="math notranslate nohighlight">\(10^{12}\)</span> multiplications would have to be carried out for every evaluation of the forward model.</p>
+<p>There are two common approaches for alternative models that reduce the computational complexity, convolutional models and separability models.</p>
+</section>
+<section id="convolutional-model">
+<h4>Convolutional model<a class="headerlink" href="#convolutional-model" title="Permalink to this headline">#</a></h4>
+<p>The general linear model can be approximated as a linear shift-invariant system via a convolution of the scene intensities <span class="math notranslate nohighlight">\(x(m,n)\)</span> with the PSF <span class="math notranslate nohighlight">\(h(m,n)\)</span>, i.e.,</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   y = x * h \,,
+\end{align}\)</span></p>
+<p>when the following conditions hold:</p>
+<ol class="simple">
+<li><p>Narrow field of view,</p></li>
+<li><p>sufficient distance between mask and sensor,</p></li>
+<li><p>far-field approximation.</p></li>
+</ol>
+<p>This formulation has several advantages:</p>
+<ul class="simple">
+<li><p>Instead of storing <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, only the 2D convolution kernel <span class="math notranslate nohighlight">\(h\)</span> has to be stored,</p></li>
+<li><p>model evaluation can be efficiently performed in the Fourier domain.</p></li>
+</ul>
+<p>However, when the mentioned conditions are violated, the assumed shift-invariance breaks down and the convolutional model does no longer yield good approximations.</p>
+<p>One possible mitigation to this problem is to use different convolution kernels depending on the lateral pixel position on the sensor (so-called <em>local convolutional models</em>).</p>
+</section>
+<section id="separability-model">
+<h4>Separability model<a class="headerlink" href="#separability-model" title="Permalink to this headline">#</a></h4>
+<p>Another way to reduce the complexity of the general model is to use modulation masks with a spatial pattern that is <em>separable</em>, i.e., that can be represented as the outer product of two vectors <span class="math notranslate nohighlight">\(\Phi_\mathrm{L}, \Phi_\mathrm{R}\)</span>.</p>
+<p>The image formation is then described by:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} = \Phi_\mathrm{L}\Phi_\mathrm{R}\transp \mathbf{x}
+\end{align}\)</span></p>
+</section>
+</section>
+<section id="forward-model-for-3d-imaging">
+<h3>Forward model for 3D-imaging<a class="headerlink" href="#forward-model-for-3d-imaging" title="Permalink to this headline">#</a></h3>
+<p>The 2D forward model can easily extended to the case of 3D-imaging since</p>
+<ul class="simple">
+<li><p>the relations between scene intensities and sensor measurements are depth-dependent and</p></li>
+<li><p>the intensity distributions from different depths are additively superposed on the sensor.</p></li>
+</ul>
+<p>Hence, all previously described approaches can be extended to 3D by simply additively iterating over all discrete depths <span class="math notranslate nohighlight">\(z\)</span> of interest. This leads to the following expressions for the 3D case:</p>
+<section id="general-linear-model-for-3d">
+<h4>General linear model for 3D:<a class="headerlink" href="#general-linear-model-for-3d" title="Permalink to this headline">#</a></h4>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} = \sum\limits_z \mathbf{H}_z \mathbf{x}_z \,.
+\end{align}\)</span></p>
+</section>
+<section id="convolutional-model-for-3d">
+<h4>Convolutional model for 3D:<a class="headerlink" href="#convolutional-model-for-3d" title="Permalink to this headline">#</a></h4>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   y = \sum\limits_z x_z * h_z \,.
+\end{align}\)</span></p>
+</section>
+<section id="separability-model-for-3d">
+<h4>Separability model for 3D:<a class="headerlink" href="#separability-model-for-3d" title="Permalink to this headline">#</a></h4>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} = \sum\limits_z \Phi_{\mathrm{L},z}\Phi_{\mathrm{R},z}\transp \mathbf{x}_z \,.
+\end{align}\)</span></p>
+</section>
+</section>
+<section id="calibration">
+<h3>Calibration<a class="headerlink" href="#calibration" title="Permalink to this headline">#</a></h3>
+<p>In order to evaluate the forward model, the actual parameters, i.e., the matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, the kernel <span class="math notranslate nohighlight">\(h\)</span> or <span class="math notranslate nohighlight">\(\Phi_\mathrm{L}, \Phi_\mathrm{R}\)</span> have to be determined.</p>
+<p>There are two possible ways to determine these parameters:</p>
+<p>** Model-based calibration **</p>
+<p>The optical system design is known due to the design process and the model parameters are simulated via appropriate wavefront propagation models or raytracing methods.</p>
+<p>Advantage: No measurements have to be acquired.</p>
+<p>Disadvantage: Differences between the simulated optical system and the actual physical system lead to calibration and reconstruction errors.</p>
+<p>** Experimental calibration **</p>
+<p>The parameters can also be determined experimentally by acquiring images of a suitable scene. The simplest approach is to acquire measurements of a point source in order to estimate the PSF.</p>
+<section id="calibration-of-the-general-linear-model">
+<h4>Calibration of the general linear model<a class="headerlink" href="#calibration-of-the-general-linear-model" title="Permalink to this headline">#</a></h4>
+<p>The general linear model assumes a different system response for each individual scene sampling position. Hence, a calibration measurement has to be acquired for a point source that is positioned at every scene sampling position, what is usually intractable.</p>
+<p>Only if a model-based calibration is possible, calibration of the linear model might be realized in reasonable time.</p>
+</section>
+<section id="calibration-of-the-convolutional-model">
+<h4>Calibration of the convolutional model<a class="headerlink" href="#calibration-of-the-convolutional-model" title="Permalink to this headline">#</a></h4>
+<p>Since the convolutional model assumes a linear shift-invariant system, it is sufficient to estimate (i.e., acquire) one PSF for every discrete scene depth <span class="math notranslate nohighlight">\(z\)</span> of interest (i.e., only one for 2D imaging applications) or to computationally scale one PSF with respect to <span class="math notranslate nohighlight">\(z\)</span>.</p>
+<p>If the PSF is not constant across the field of view, multiple PSFs can be acquired in coarse grid.</p>
+</section>
+<section id="calibration-of-the-separability-model">
+<h4>Calibration of the separability model<a class="headerlink" href="#calibration-of-the-separability-model" title="Permalink to this headline">#</a></h4>
+<p>Calibration of the separability model is slightly more challenging than for the convolutional model. Typically, the vectors <span class="math notranslate nohighlight">\(\Phi_\mathrm{L}, \Phi_\mathrm{R}\)</span> can be estimated out of measurements of line images (i.e., bright rows or columns in the scene).</p>
+</section>
+</section>
+<section id="performing-the-reconstruction">
+<h3>Performing the reconstruction<a class="headerlink" href="#performing-the-reconstruction" title="Permalink to this headline">#</a></h3>
+<p>In order to perform the reconstruction of the sought scene intensities <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> for an actual lensless imaging system based on an observation <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>,</p>
+<ul class="simple">
+<li><p>the system’s forward model has to be correctly formulated and</p></li>
+<li><p>the model has to be calibrated,</p></li>
+</ul>
+<p>so that the forward model can be evaluated for an estimate <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span> of the scene intensities.</p>
+<p>Possible approaches to reconstruct <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> are deconvolution methods and convex optimization algorithms as discussed in the previous chapter.</p>
+<p>Also data-driven approaches (i.e., involving neural networks) can be employed to perform the reconstruction or to visually enhance the reconstruction results.</p>
+</section>
+</section>
+<section id="example-diffuser-cam">
+<h2>Example: Diffuser Cam<a class="headerlink" href="#example-diffuser-cam" title="Permalink to this headline">#</a></h2>
+<p>We will now study an example lensless imaging system where a diffuser is used as a modulator and 3D images of the observed scene are reconstructed by means of the ADMM algorithm.</p>
+<p>The following content is based on the publication <a class="reference external" href="https://doi.org/10.1364/OPTICA.5.000001">DiffuserCam: lensless single-exposure 3D imaging</a> by Nick Antipa et al..</p>
+<p>The optical setup of the Diffuser Cam is shown in the following figure:</p>
+<img src="figures/7/diffuser_cam_optical_setup.svg" style="max-height:40vh"><p>The image resulting from illumination with a single point source, the PSF, looks like this:</p>
+<img src="figures/7/diffuser_cam_psf.svg" style="max-height:40vh"><p>The visible structures are caused by the diffuser that focuses the incident light in a pseudo-random pattern, a so-called caustic.</p>
+<section id="forward-model">
+<h3>Forward model<a class="headerlink" href="#forward-model" title="Permalink to this headline">#</a></h3>
+<p>When the single illuminating point source is moved laterally, the PSF is also shifted laterally on the sensor. When the point source is moved axially, the PSF is scaled (getting larger for a decreasing distance to the modulator and larger for increasing distance).</p>
+<p>The forward model can be represented by a linear model</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{b} = \mathbf{Hv} \,,
+\end{align}\)</span></p>
+<p>where the observation is the result of an additive superposition of all PSFs <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> for all possible scene point locations scaled by the corresponding light intensities <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
+<p>As mentioned before, this approach is intractable due to the high number of elements of <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>.</p>
+<p>Instead, a convolutional model is used as the forward model:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   b = \mathcal{C}\left\{  \sum\limits_z v_z * h_z  \right\} \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(v_z\)</span> denoting the intensities of scene points at depth <span class="math notranslate nohighlight">\(z\)</span>, <span class="math notranslate nohighlight">\(h_z\)</span> representing the PSF at depth <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> denoting a linear operator that crops the image to actual sensor size.</p>
+</section>
+<section id="id1">
+<h3>Image reconstruction<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>We will start with a simple gradient descent-based reconstruction approach and then move on to an ADMM-based reconstruction.</p>
+<section id="gradient-descent-based-reconstruction">
+<h4>Gradient descent-based reconstruction<a class="headerlink" href="#gradient-descent-based-reconstruction" title="Permalink to this headline">#</a></h4>
+<p>For the first approach, we will not use any prior and just try to find an estimate <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> that optimizes the data fidelity term:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{\mathbf{v}} &amp;= \argmin{\mathbf{v}} \frac{1}{2} \left\| \underbrace{\mathbf{CH}}_{=:\mathbf{A}}\mathbf{v} - \mathbf{b} \right\|^2_2  \\
+   &amp;= \argmin{\mathbf{v}} \underbrace{\frac{1}{2} \left\| \mathbf{A}\mathbf{v} - \mathbf{b} \right\|^2_2}_{=:g(\mathbf{v})} \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> representing a matrix encoding a cyclic convolution with the PSF <span class="math notranslate nohighlight">\(h\)</span>, <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> denoting a matrix encoding the crop operator <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A} := \mathbf{CH}\)</span>.</p>
+<p>To perform gradient descent, we have to derive the gradient <span class="math notranslate nohighlight">\(\nabla_\mathbf{v} g(\mathbf{v})\)</span> of <span class="math notranslate nohighlight">\(g\)</span> with respect to <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \nabla_\mathbf{v} g(\mathbf{v}) = \nabla_\mathbf{v} \frac{1}{2} \left\| \mathbf{A}\mathbf{v} - \mathbf{b} \right\|^2_2 = \mathbf{A}\transp (\mathbf{Av}-\mathbf{b}) = \mathbf{H}\transp \mathbf{C}\transp \left( \mathbf{CHv} - \mathbf{b}  \right) \,.
+\end{align}\)</span></p>
+<p>The transpose <span class="math notranslate nohighlight">\(\mathbf{C}\transp\)</span> of the crop operation corresponds to zero padding.</p>
+<p>As the reconstruction should only have positive pixel values, we replace any negative values of <span class="math notranslate nohighlight">\(\hat{\mathbf{v}}\)</span> with 0 during the gradient descent iterations. This is also called <em>projected gradient descent</em> since the calculated estimations are projected on the set of images with only positive pixel values.</p>
+<section id="example-reconstruction">
+<h5>Example reconstruction<a class="headerlink" href="#example-reconstruction" title="Permalink to this headline">#</a></h5>
+<p>The following image represents a raw image captured with a Diffuser Cam:</p>
+<img src="figures/7/diffuser_cam_raw_image.svg" style="max-height:40vh"><p>Based on this input, the gradient descent-based reconstruction yields the following results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/7/diffuser_cam_grad_recon_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">9</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "9b6719f8c4204871b0da3627dc854453"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="admm-based-reconstruction">
+<h4>ADMM-based reconstruction<a class="headerlink" href="#admm-based-reconstruction" title="Permalink to this headline">#</a></h4>
+<p>By using the ADMM framework, the reconstruction quality can be increased via additional constraints and the reconstruction speed will increase due to the faster convergence of ADMM.</p>
+<p>In the following, we will iteratively extend the original optimization problem by several constraints.</p>
+<p>First, the composition of the matrix <span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{CH}\)</span> will be decomposed into two steps via the slack variable <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{\mathbf{v}} = &amp;\argmin{\mathbf{q}} \frac{1}{2} \left\| \mathbf{C} \mathbf{q} - \mathbf{b} \right\| ^2_2 \\ &amp;\text{subject to}\quad \mathbf{q} = \mathbf{Hv} \,.
+\end{align}\)</span></p>
+<p>Next, we want to enforce positive values of the reconstruction via the slack variable <span class="math notranslate nohighlight">\(\mathbf{w}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \hat{\mathbf{v}} = &amp;\argmin{\mathbf{q}, \mathbf{w}} \frac{1}{2} \left\| \mathbf{C} \mathbf{q} - \mathbf{b} \right\| ^2_2 + \mathrm{pos}(\mathbf{w}) \\ &amp;\text{subject to}\quad \mathbf{q} = \mathbf{Hv},\, \mathbf{w}=\mathbf{v} \,,   
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\mathrm{pos}(w_i) = \mathrm{max}(w_i,0)\)</span>.</p>
+<p>Finally, we want the reconstruction to be sparse by introducing an anisotropic total variation prior <span class="math notranslate nohighlight">\(\Psi\)</span> via the slack variable <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \hat{\mathbf{v}} = &amp;\argmin{\mathbf{q}, \mathbf{w}, \mathbf{u}} \frac{1}{2} \left\| \mathbf{C} \mathbf{q} - \mathbf{b} \right\| ^2_2 + \mathrm{pos}(\mathbf{w}) + \tau \left\| \mathbf{u} \right\|_1  \\ &amp;\text{subject to}\quad \mathbf{q} = \mathbf{Hv},\, \mathbf{w}=\mathbf{v},\, \mathbf{u} = \Psi \mathbf{v} \,,   
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\Psi\)</span> encoding the finite difference operator in <span class="math notranslate nohighlight">\(x\)</span>- and <span class="math notranslate nohighlight">\(y\)</span>-direction as introduced in Chapter 6.</p>
+<p>All those constraints can now be combined into one constraint-less optimization problem by means of the standard form augmented Lagrangian:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   L(\mathbf{\mathbf{u,q,w,v,\tilde{u},\tilde{q},\tilde{w}}}) = &amp;\frac{1}{2} \left\| \mathbf{C} \mathbf{q} - \mathbf{b} \right\| ^2_2 + \mathrm{pos}(\mathbf{w}) + \tau \left\| \mathbf{u} \right\|_1 \\
+    &amp; + \frac{\mu_1}{2} \left\| \mathbf{Hv} - \mathbf{q} \right\|^2_2 + \tilde{\mathbf{q}} \transp \left( \mathbf{Hv-q} \right)  \\
+    &amp; + \frac{\mu_2}{2}\left\| \Psi \mathbf{v-u} \right\|^2_2 + \mathbf{\tilde{u}} \transp \left( \Psi \mathbf{v-u} \right) \\
+    &amp; + \frac{\mu_3}{2} \left\| \mathbf{v-w} \right\| ^2_2 + \mathbf{\tilde{w}} \transp \left( \mathbf{v-w} \right) \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\tilde{\mathbf{q}}, \tilde{\mathbf{u}}, \tilde{\mathbf{w}}\)</span> denoting the Lagrange multipliers associated with <span class="math notranslate nohighlight">\(\mathbf{q,u,w}\)</span> and <span class="math notranslate nohighlight">\(\mu_1, \mu_2, \mu_3\)</span> denoting the corresponding weights.</p>
+<p>We now have to provide the update rules for all of those seven variables. The solutions are provided in the following and can be derived in the scope of exercise 6.</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{u}_{k+1} &amp;\leftarrow \mathcal{S}_{\tau / \mu_2} \left( \Psi \mathbf{v}_k +  \frac{1}{\mu_2}\tilde{\mathbf{u}}_k \right) \,, \\
+   \mathbf{q}_{k+1} &amp;\leftarrow \left( \mathbf{C}\transp \mathbf{C} + \mu_1 \mathbf{I}  \right) ^{-1} \left( \tilde{\mathbf{q}}_k + \mu_1 \mathbf{Hv}_k + \mathbf{C}\transp \mathbf{b} \right) \,, \\
+   \mathbf{w}_{k+1} &amp;\leftarrow  \mathrm{max}\left( \frac{1}{\mu_3}\tilde{\mathbf{w}}_k + \mathbf{v}_k, \mathbf{0} \right) \,, \\
+   \mathbf{v}_{k+1} &amp;\leftarrow \left( \mu_1 \mathbf{H}\transp \mathbf{H} + \mu_2 \Psi\transp \Psi + \mu_3 \mathbf{I}\right)^{-1} \cdot  \\
+   &amp; \quad\,\,\, \left( \mu_3 \mathbf{w}_{k+1} - \tilde{\mathbf{w}}_k \right) + \Psi\transp \left( \mu_2 \mathbf{u}_{k+1} - \tilde{\mathbf{u}}_k \right) + \mathbf{H}\transp \left( \mu_1 \mathbf{q}_{k+1} - \tilde{\mathbf{q}}_k \right) \,, \\
+   \tilde{\mathbf{q}}_{k+1} &amp;\leftarrow \tilde{\mathbf{q}}_k + \mu_1 \left( \mathbf{Hv}_{k+1} - \mathbf{q}_{k+1} \right) \,, \\
+   \tilde{\mathbf{u}}_{k+1} &amp;\leftarrow  \tilde{\mathbf{u}}_k + \mu_2 \left( \Psi \mathbf{v}_{k+1} - \mathbf{u}_{k+1} \right)  \,, \\
+   \tilde{\mathbf{w}}_{k+1} &amp;\leftarrow \tilde{\mathbf{w}}_k + \mu_3 \left( \mathbf{v}_{k+1} - \mathbf{w}_{k+1} \right) \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> denoting the element-wise soft thresholding operator, <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> denoting the identity matrix and <span class="math notranslate nohighlight">\(\mathrm{max}(\mathbf{a,b})\)</span> denoting the element-wise maximum of <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
+<section id="id2">
+<h5>Example reconstruction<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h5>
+<p>The ADMM-based reconstruction yields the following results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/7/diffuser_cam_ADMM_recon_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">9</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "dc35e0b9f47d407fa5f9b70bb3f68c09"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"958759bd24094875a0672230a977e73c": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "fc48682144bd497f98e4af2e581e5a19": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "f4ecc9565f0b4babbddba5cd8a8d16fb": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_958759bd24094875a0672230a977e73c", "max": 9, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_fc48682144bd497f98e4af2e581e5a19", "value": 9}}, "e07d70834b8a4c98a778a3a8252dae50": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "9b6719f8c4204871b0da3627dc854453": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_f4ecc9565f0b4babbddba5cd8a8d16fb", "IPY_MODEL_eff38161a0e44dfab715a1f4efd8ab82"], "layout": "IPY_MODEL_e07d70834b8a4c98a778a3a8252dae50"}}, "c6db28ea8a7749ae93705e240fc63737": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "eff38161a0e44dfab715a1f4efd8ab82": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_c6db28ea8a7749ae93705e240fc63737", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/7/diffuser_cam_grad_recon_9.svg\" style=\"max-height:50vh\"/>"}}]}}, "7dd2b7893b7647cbb21e9f1e5548dee7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "32d4bba42db8482dab84f02750298fb1": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "c5e4dc6b9f014cca877d5726ec8a4b09": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_7dd2b7893b7647cbb21e9f1e5548dee7", "max": 9, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_32d4bba42db8482dab84f02750298fb1", "value": 9}}, "4564b3dc862a4b798fb9b3194d01bc6f": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "dc35e0b9f47d407fa5f9b70bb3f68c09": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_c5e4dc6b9f014cca877d5726ec8a4b09", "IPY_MODEL_1a07fa11b0fa48d1addd48f5b48137b7"], "layout": "IPY_MODEL_4564b3dc862a4b798fb9b3194d01bc6f"}}, "43e0d6ae2fb74ab7904119d0feca7134": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "1a07fa11b0fa48d1addd48f5b48137b7": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_43e0d6ae2fb74ab7904119d0feca7134", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/7/diffuser_cam_ADMM_recon_9.svg\" style=\"max-height:50vh\"/>"}}]}}}, "version_major": 2, "version_minor": 0}
+</script>
+
 
     <script type="text/x-thebe-config">
     {
@@ -495,6 +1140,13 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="06_InverseProblemsInCompimg.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Inverse Problems in Computational Imaging</p>
+        </div>
+    </a>
 </div>
             </footer>
         </div>
