@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 875 355" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <use id="example_motion_blur_2" xlink:href="#_Image1" x="0" y="0" width="71px" height="71px" transform="matrix(3.62699,0,0,3.62699,7.03309,49.4032)"/>
+    <path d="M47.819,7.586l165.636,339.159" style="fill:none;stroke:rgb(237,28,36);stroke-width:1px;"/>
+    <g>
+        <g>
+            <g id="axes_1">
+                <g id="patch_2">
+                    <rect x="446.3" y="135.817" width="339.162" height="117.572" style="fill:white;fill-rule:nonzero;"/>
+                </g>
+                <g id="matplotlib.axis_2">
+                </g>
+                <g id="line2d_11">
+                    <clipPath id="_clip2">
+                        <rect x="446.3" y="135.817" width="339.162" height="117.572"/>
+                    </clipPath>
+                    <g clip-path="url(#_clip2)">
+                        <path d="M445.781,249.933l30.648,0l0.829,-109.93l275.001,-0l0.829,109.93l33.132,0" style="fill:none;fill-rule:nonzero;stroke:rgb(31,119,180);stroke-width:1.39px;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;"/>
+                    </g>
+                </g>
+                <g id="line2d_12">
+                    <clipPath id="_clip3">
+                        <rect x="413.968" y="135.817" width="403.827" height="117.572"/>
+                    </clipPath>
+                    <g clip-path="url(#_clip3)">
+                        <path d="M413.968,249.933l403.827,0" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1.46px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.46,2.41;"/>
+                    </g>
+                </g>
+                <g id="line2d_13">
+                    <clipPath id="_clip4">
+                        <rect x="446.3" y="102.742" width="339.162" height="150.647"/>
+                    </clipPath>
+                    <g clip-path="url(#_clip4)">
+                        <path d="M614.758,253.389l0,-150.647" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1.69px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.69,2.79;"/>
+                    </g>
+                </g>
+                <g id="patch_3">
+                </g>
+                <g id="patch_4">
+                </g>
+                <g id="patch_5">
+                </g>
+            </g>
+        </g>
+        <rect x="364.781" y="71.705" width="502.202" height="212.72" style="fill:none;stroke:rgb(237,28,36);stroke-width:2.43px;"/>
+    </g>
+    <defs>
+        <image id="_Image1" width="71px" height="71px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEcAAABHCAYAAABVsFofAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABDElEQVR4nO3bwQ3DMBADQSn99+w0kOzLMnnGbgXCgI/7aK+1rmU/+6Qf0Jw4kDiQOJA4kDjQ7TjX9Z7LwOVAt+PsvV+zHpcDHcF5y3pcDnQM5w3rcTnQUZzp63E50HGcyetxOdAjOFPX43Kgx3AmrsflQI/iTFuPy4Eex5m0HpcDRXCmrMflQDGcCetxOVAUp309LgeK4zSvJ47TXAVO63oqcFqrwWlcTw1OY1U4beupwmmrDqdpPXU4TVXitKynEqelWpyG9dTiNFSNk15PNU66epzkeupxko3ASa1nBE6qMTiJ9YzBSbSXX6f/5nIgcSBxIHEgcSBxIHEgcSBxIHEgcSBxIHEgcSBxoC/1F0qINYTGXAAAAABJRU5ErkJggg=="/>
+    </defs>
+</svg>

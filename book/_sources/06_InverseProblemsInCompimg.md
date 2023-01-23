@@ -973,7 +973,7 @@ $\begin{align}\label{eq:hqs_tv_1}
 
 +++ {"tags": ["book_only"]}
 
-For the TV regularizer, the matrix $\mathbf{D}$ represents the finite difference operator.  The matrix-vector multiplications involved in the proximal operator, i.e., $\mathbf{Cx}$ and $\mathbf{Dx} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right]\transp \mathbf{x}$ (and also their adjoint correspondencies $\mathbf{C}\transp \mathbf{b}$ and $\mathbf{D}\transp \mathbf{z} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right] \mathbf{z}   $ ) all encode 2D-convolutions with circular boundary conditions.
+For the TV regularizer, the matrix $\mathbf{D}$ represents the finite difference operator.  The matrix-vector multiplications involved in the proximal operator, i.e., $\mathbf{Cx}$ and $\mathbf{Dx} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right]\transp \mathbf{x}$ (and also their adjoint correspondencies $\mathbf{C}\transp \mathbf{b}$ and $\mathbf{D}\transp \mathbf{z} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right] \mathbf{z} = \mathbf{D}_x\transp\mathbf{z}_1 + \mathbf{D}_y\transp\mathbf{z}_2$, with $\mathbf{z}_1, \mathbf{z}_2$ denoting the first and second half of $\mathbf{z}$.) all encode 2D-convolutions with circular boundary conditions.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -981,7 +981,7 @@ Exploiting the duality of the signal-processing perspective and the algebraic pe
 
 $\begin{align} 
   (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D}) &\Leftrightarrow \Fi \left\{ \F \left\{ c \right\}^* \cdot \F \left\{ c \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)   \right\} \, , \\
-  (\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) &\Leftrightarrow \Fi \left\{ \F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z \right\}  	  \right)   \right\} \,,
+  (\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) &\Leftrightarrow \Fi \left\{ \F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z_1 \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z_2 \right\}  	  \right)   \right\} \,,
 \end{align}$
 
 with $(\cdot)^*$ denoting the element-wise complex conjugate.
@@ -991,7 +991,7 @@ with $(\cdot)^*$ denoting the element-wise complex conjugate.
 Combining both terms in the original fraction yields the sought proximal operator:
 
 $\begin{align} 
-  \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{  \frac{\F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z \right\}  	  \right)}{\F \left\{ c \right\}^* \cdot \F \left\{ c \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)} \right\} \,.
+  \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{  \frac{\F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z_1 \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z_2 \right\}  	  \right)}{\F \left\{ c \right\}^* \cdot \F \left\{ c \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)} \right\} \,.
 \end{align}$
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
@@ -1429,7 +1429,7 @@ For the $\mathbf{x}$-update, we use the following solution:
 
 $\begin{align} 
    \mathbf{x} \leftarrow \mathrm{prox}_{\left\| \cdot \right\| _2, \rho} (\mathbf{v}) &= \argmin{\mathbf{x}}\, \frac{1}{2} \left\| \mathbf{Ax-b} \right\| ^2_2 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\| ^2_2  \\
-   &= \left( \underbrace{\mathbf{A}\transp \mathbf{A} + \rho  \mathbf{D}\transp D}_{\tilde{\mathbf{A}}} \right)^{-1}  \left( \underbrace{\mathbf{A}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}}_{\tilde{\mathbf{b}}} \right) \,,
+   &= \left( \underbrace{\mathbf{A}\transp \mathbf{A} + \rho  \mathbf{D}\transp \mathbf{D}}_{\tilde{\mathbf{A}}} \right)^{-1}  \left( \underbrace{\mathbf{A}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}}_{\tilde{\mathbf{b}}} \right) \,,
 \end{align}$
 
 whose derivation is equivalent to the deconvolution problem.
