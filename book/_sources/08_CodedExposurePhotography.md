@@ -330,59 +330,59 @@ The results can be evaluated quantitatively by calculating the root mean squared
 
 <img src="figures/8/reconstruction_rmse.svg" style="max-height:40vh">
 
-+++ {"heading_collapsed": true}
++++ {"tags": ["remove-cell"]}
 
 ##### Archive
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 h = plt.imread("figures/8/example_motion_blur_2.png")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 h.shape
 ```
 
-+++ {"hidden": true}
++++ {"tags": ["remove-cell"]}
 
 img = np.float32(misc.face(gray=True))
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 img = plt.imread("figures/8/tree.png")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 img_blurred = ndimage.convolve(img, h, mode='wrap')
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.imsave("figures/8/example_motion_blur_tree.png", img_blurred, cmap='gray')
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 imshow(img_blurred, cmap='gray')
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 def mag_square(inp : np.ndarray):
     return inp.real**2 + inp.imag**2
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 xs = np.linspace(-3, 3, 1001)
 ys = np.zeros_like(xs)
@@ -390,7 +390,7 @@ ys[(xs >= -1) & (xs <= 1)] = 1
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 ys = np.array([1,0,1,0,0,0,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,1,1,0,0,1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,0,1,0,0,1,1,0,0,1,1,1])
 ys = np.pad(ys, (100,101))
@@ -399,7 +399,7 @@ xs = xs - int(len(xs)/2)
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 plt.plot(xs,ys)
@@ -408,13 +408,13 @@ plt.axvline(0, color='k', linestyle=":")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.savefig("rect.svg")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 plt.plot(xs,(np.log(mag_square(np.fft.fftshift(np.fft.fft(np.fft.ifftshift(ys)))))))
@@ -423,20 +423,20 @@ plt.axvline(0, color='k', linestyle=":")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.savefig("code_spectrum.svg")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 plt.plot(np.correlate(ys,ys, mode="full"))
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 ys2 = np.random.randint(0,2,1001)
@@ -444,7 +444,7 @@ plt.plot(np.correlate(ys2,ys2, mode="full"))
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 def make_odd_shapes(inp : np.ndarray) -> np.ndarray:
     if (inp.shape[0] % 2 == 0):
@@ -455,7 +455,7 @@ def make_odd_shapes(inp : np.ndarray) -> np.ndarray:
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 def pad_like(inp : np.ndarray, like : np.ndarray):
     to_pad = tuple(np.int32((np.array(like.shape) - np.array(inp.shape))/2))
@@ -463,7 +463,7 @@ def pad_like(inp : np.ndarray, like : np.ndarray):
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 def wiener_filter(g:np.ndarray, h:np.ndarray) -> np.ndarray:
     g_fft = np.fft.fft2(g)
@@ -479,7 +479,7 @@ def wiener_filter(g:np.ndarray, h:np.ndarray) -> np.ndarray:
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 h_encoded = np.array([1,0,1,0,0,0,0,1,1,1,0,0,0,0,0,1,0,1,0,0,0,0,1,1,0,0,1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,0,1,0,0,1,1,0,0,1,1,1])
 h_normal = np.ones_like(h_encoded)
@@ -492,19 +492,19 @@ h_normal = np.vstack((np.zeros_like(h_normal),h_normal, np.zeros_like(h_normal))
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 imshow(ndimage.convolve(img, h_encoded), cmap='gray')
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 img = make_odd_shapes(img)*255
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 sigmas = np.float32(np.array([0,2,4,8,16,32]))  # Standard deviations for Gaussian noise
 noises = []   # List for observations
@@ -514,7 +514,7 @@ for sigma in sigmas:
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 normal_recs = []
 normal_rms = []
@@ -536,7 +536,7 @@ for noise in noises:
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 plt.plot(encoded_rms, 'b+', label="with encoding")
@@ -549,7 +549,7 @@ plt.savefig("reconstruction_rmse.svg")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 def show_reconst(i):
     plt.subplot(1,2,1)
@@ -561,14 +561,14 @@ def show_reconst(i):
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 interact(lambda i: show_reconst(i), i=widgets.IntSlider(min=(min_i:=0),max=(max_i:=len(encoded_recs)-1), step=1, value=(max_i if book else min_i)))
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 for i in range(0,len(encoded_recs)):
@@ -577,7 +577,7 @@ for i in range(0,len(encoded_recs)):
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.figure()
 plt.subplot(1,2,1)
@@ -589,13 +589,13 @@ plt.title(f"Observed image for\n encoded kernel")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 plt.savefig("observation_motion_blur_different_kernels.svg")
 ```
 
 ```{code-cell} ipython3
-:hidden: true
+:tags: [remove-cell]
 
 
 ```
