@@ -1,0 +1,602 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Coded Aperture Spectral Snapshot Imaging &#8212; Computational Imaging - Course Notes</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Quantitative Phase Imaging" href="09_QuantitativePhaseImaging.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Computational Imaging - Course Notes for Winter Term 2022 / 2023
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Basics.html">
+   Fundamental Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_LightFieldMethods.html">
+   Light Field Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_LightTransportAnalysis.html">
+   Light Transport Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
+   Neural Networks for Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
+   Inverse Problems in Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_LenslessImaging.html">
+   Lensless Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_CodedExposurePhotography.html">
+   Coded Exposure Photography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_QuantitativePhaseImaging.html">
+   Quantitative Phase Imaging
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Coded Aperture Spectral Snapshot Imaging
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/10_SpectralSnapshotImaging.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="_sources/10_SpectralSnapshotImaging.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conventional-rgb-camera">
+   Conventional RGB-camera
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#popular-cassi-architectures">
+   Popular CASSI architectures
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prism-mask-video-imaging-spectrometry-pmvis">
+     Prism-mask video imaging spectrometry (PMVIS)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-dispersive-coded-aperture-snapshot-imaging-sd-cassi">
+     Single dispersive coded aperture snapshot imaging (SD-CASSI)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dual-dispersive-coded-aperture-snapshot-imaging-dd-cassi">
+     Dual dispersive coded aperture snapshot imaging (DD-CASSI)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Coded Aperture Spectral Snapshot Imaging</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conventional-rgb-camera">
+   Conventional RGB-camera
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#popular-cassi-architectures">
+   Popular CASSI architectures
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prism-mask-video-imaging-spectrometry-pmvis">
+     Prism-mask video imaging spectrometry (PMVIS)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-dispersive-coded-aperture-snapshot-imaging-sd-cassi">
+     Single dispersive coded aperture snapshot imaging (SD-CASSI)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dual-dispersive-coded-aperture-snapshot-imaging-dd-cassi">
+     Dual dispersive coded aperture snapshot imaging (DD-CASSI)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><span class="math notranslate nohighlight">\(\begin{align}
+  \newcommand{transp}{^\intercal}
+  \newcommand{F}{\mathcal{F}}
+  \newcommand{Fi}{\mathcal{F}^{-1}}
+  \newcommand{inv}{^{-1}}
+  \newcommand{stochvec}[1]{\mathbf{\tilde{#1}}}
+  \newcommand{argmax}[1]{\underset{#1}{\mathrm{arg\, max}}\,}
+  \newcommand{argmin}[1]{\underset{#1}{\mathrm{arg\, min}}\,}
+\end{align}\)</span></p>
+<p><font size="7"> Computational Imaging </font><br><br><br></p>
+<section class="tex2jax_ignore mathjax_ignore" id="coded-aperture-spectral-snapshot-imaging">
+<h1>Coded Aperture Spectral Snapshot Imaging<a class="headerlink" href="#coded-aperture-spectral-snapshot-imaging" title="Permalink to this headline">#</a></h1>
+<section id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Introduction</p></li>
+<li><p>Conventional RGB-camera</p></li>
+<li><p>Popular CASSI architectures</p></li>
+</ul>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>Most camera systems capable of capturing color information filter incident light by means of three spectral filters with peaks in the red, green and blue regions of the spectrum. This design has been chosen to mimic the human visual system with the three different cone cells responsible for human perception of color.</p>
+<p>However, for many fields of applications, such as remote sensing, materials science, biophotonics, environmental monitoring, smart agriculture or food, a finer sampling of the spectral information can be of utter importance.</p>
+<p>Simultaneously capturing high-resolution spatial and spectral information within the classical Nyquist-Shannon sampling regime is currently only possible by performing time-multiplexed measurements.</p>
+<p>Typical classical sensor concepts for capturing spectral information are</p>
+<ul class="simple">
+<li><p>point spectrometers,</p></li>
+<li><p>hyperspectral line scan cameras and</p></li>
+<li><p>multispectral color filter cameras.</p></li>
+</ul>
+<p><strong>Point spectrometers</strong> and <strong>hyperspectral line scan cameras</strong> use prisms or diffraction gratings to map the spectral dimension of the incident light onto a spatial dimension by exploiting the fact that prisms and gratings transmit light with different angles depending on its wavelength.</p>
+<p>The resulting spectrally decomposed light is then captured by a sensor oriented in such a way so that one of its spatial coordinates encodes the wavelength of the incident light.</p>
+<p>Point spectrometers capture the spectrum of a single measurement point whereas hyperspectral line scan cameras retain one dimension of the sensor for spatial information so that the spectrum of a line in the measurement field can be acquired.</p>
+<p><strong>Multispectral cameras</strong> sacrifice spatial resolution to gain some spectral resolution by employing larger filter arrays, e.g., <span class="math notranslate nohighlight">\(5 \times 5\)</span>, similar to the red, green and blue filters of common color cameras.</p>
+<p>So-called <strong>coded aperture spectral snapshot imaging (CASSI) cameras</strong> use computational imaging methods to undersample the high-dimensional spatio-spectral data and then computationally reconstruct the sought data by incorporating suitable prior information (i.e., regularizers).</p>
+<p>They are called <em>snapshot</em> imaging systems, as they only require to capture a single measurement (i.e., a single image).</p>
+<p>Typical CASSI setups modulate the image formation process in two ways: they spatially modulate the amplitude via binary coded aperture masks and they shear the image with respect to the present wavelengths via prisms or diffraction gratings.</p>
+</section>
+<section id="conventional-rgb-camera">
+<h2>Conventional RGB-camera<a class="headerlink" href="#conventional-rgb-camera" title="Permalink to this headline">#</a></h2>
+<p>The following figure shows the sampling scheme of a conventional RGB-camera for a single spatial coordinate <span class="math notranslate nohighlight">\(x\)</span> and the spectral coordinate <span class="math notranslate nohighlight">\(\lambda\)</span>:</p>
+<img src="figures/10/sampling_rgb_camera.svg" style="max-height:40vh"><p>The modulation is performed by the RGB Bayer filter pattern on the sensor and the projection along the spectral dimension is performed by the sensor elements which integrate over the modulated spectra.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{S\times N}\)</span> contain the spectra with length <span class="math notranslate nohighlight">\(S\)</span> as columns for each of the <span class="math notranslate nohighlight">\(N\)</span> spatial positions and let <span class="math notranslate nohighlight">\(\mathbf{x}\in \mathbb{R} ^{S\cdot N}\)</span> denote its vectorized form.</p>
+<p>The modulation can be modeled via a diagonal matrix <span class="math notranslate nohighlight">\(\mathrm{diag}(\mathbf{p})\in \mathbb{R} ^{S\cdot N \times S\cdot N}\)</span> with the modulation pattern <span class="math notranslate nohighlight">\(\mathbf{p}\in \mathbb{R}^{S\cdot N} \)</span> containing the spectral filter coefficients for every spatial and spectral sampling point.</p>
+<p>The modulated spectra are then given by <span class="math notranslate nohighlight">\(\mathrm{diag}(\mathbf{p})\mathbf{x}\)</span>.</p>
+<p>The projection along the spectral dimension can be modeled via a matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\in \mathbb{R} ^{N\times S\cdot N}\)</span> containing blocks of ones of length <span class="math notranslate nohighlight">\(S\)</span> in every row that are shifted by <span class="math notranslate nohighlight">\(S\)</span> from row to row.</p>
+<p>Hence, the overall forward model is given by:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} &amp;= \underbrace{\boldsymbol{\Sigma} \mathrm{diag}(\mathbf{p})}_{=:\mathbf{A}} \mathbf{x} \\
+   &amp;= \mathbf{Ax} \,.
+\end{align}\)</span></p>
+</section>
+<section id="popular-cassi-architectures">
+<h2>Popular CASSI architectures<a class="headerlink" href="#popular-cassi-architectures" title="Permalink to this headline">#</a></h2>
+<p>Fully sampling the spatio-spectral data even with temporal resolution is (currently) infeasible although because of the huge amount of data that would have to be processed and stored:</p>
+<p>A single second of uncompressed hyperspectral video with 60 spectral bands and 1 megapixel spatial resolution yields about 2 GB data.</p>
+<p>In the following we will study several undersampling CASSI architectures which greatly reduce the necessary amount of data that has to be captured and we will derive the corresponding image formation forward models.</p>
+<section id="prism-mask-video-imaging-spectrometry-pmvis">
+<h3>Prism-mask video imaging spectrometry (PMVIS)<a class="headerlink" href="#prism-mask-video-imaging-spectrometry-pmvis" title="Permalink to this headline">#</a></h3>
+<p>The sampling scheme of a PMVIS system is shown in the following Figure:</p>
+<img src="figures/10/sampling_pmvis.svg" style="max-height:40vh"><p>The incident light is first spatially modulated by an aperture mask with uniformly spaced holes.</p>
+<p>The transmitted light is then sheared by a prism and integrated by the sensor.</p>
+<p>The spatial shearing and the position of the holes in the aperture mask are adjusted with respect to each other so that there is no overlap on the sensor.</p>
+<p>Again, <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R} ^{S\cdot N}\)</span> represents the vector form of <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^ {N \times S}\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{p} \in \mathbb{R} ^{S\cdot N}\)</span> denote the spatial modulation pattern (which has blocks of ones of length <span class="math notranslate nohighlight">\(S\)</span> for every spatial position that should not be blocked).</p>
+<p>Then, the result of the modulation is given by <span class="math notranslate nohighlight">\(\mathrm{diag}(\mathbf{p})\mathbf{x}\)</span>.</p>
+<p>The spatial, spectrally dependent shearing can be modeled via a matrix <span class="math notranslate nohighlight">\(\mathbf{T}^{(S\cdot N + \xi) \times (S\cdot N)}\)</span>, with <span class="math notranslate nohighlight">\(\xi = S(S-1)\)</span> denoting the number of zeros which have to be added.</p>
+<p>The projection can be represented by a matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma} \in \mathbb{R} ^{(N + S - 1) \times (S\cdot N + \xi)}\)</span> which selects the elements of sheared data vector that should be combined to finally yield the measurement <span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R} ^{N+S-1}\)</span>.</p>
+<p>Hence, the overall forward model is given by:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} &amp;= \underbrace{\boldsymbol{\Sigma}\mathbf{T}\mathrm{diag}(\mathbf{p})}_{=:\mathbf{A}}\mathbf{x} \\
+    &amp;= \mathbf{Ax} \,.
+\end{align}\)</span></p>
+<p>Due to the non-overlapping organization of the sheared spectral information, there is a known correspondence between spatial positions on the sensor and spectral bands and spatial sampling positions.</p>
+<p>Hence, no special reconstruction algorithms have to be used.</p>
+<p>However, this comes at the cost of reduced spatial resolution.</p>
+<p>Details about the optical setup and resulting images can be found in the publication <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/5765987">A Prism-Mask System for Multispectral Video Acquisition</a> by Xun Cao et al..</p>
+</section>
+<section id="single-dispersive-coded-aperture-snapshot-imaging-sd-cassi">
+<h3>Single dispersive coded aperture snapshot imaging (SD-CASSI)<a class="headerlink" href="#single-dispersive-coded-aperture-snapshot-imaging-sd-cassi" title="Permalink to this headline">#</a></h3>
+<p>The sampling scheme of a SD-CASSI system is shown in the following Figure:</p>
+<img src="figures/10/sampling_sd_cassi.svg" style="max-height:40vh"><p>The sampling scheme of SD-CASSI is quite similar to PMVIS, however, in SD-CASSI the modulation pattern does not lead to spatially separated patterns after the dispersion.</p>
+<p>Hence, no spatial resolution is sacrificed but a suitable reconstruction algorithm has to be employed to obtain the sought spatio-spectral data.</p>
+<p>The forward model is the same as for PMVIS:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \mathbf{y} &amp;= \underbrace{\boldsymbol{\Sigma}\mathbf{T}\mathrm{diag}(\mathbf{p})}_{=:\mathbf{A}}\mathbf{x} \\
+   &amp;= \mathbf{Ax} \,,
+\end{align}\)</span></p>
+<p>with the modulation pattern <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, the shearing operator <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> and the projection matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>.</p>
+<p>To obtain an estimate of the sought data <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, a suitable reconstruction algorithm with adequate regularization has to be employed.</p>
+<p>Details about the optical setup and resulting images can be found in the publication <a class="reference external" href="https://doi.org/10.1364/AO.47.000B44">Single disperser design for coded aperture snapshot spectral imaging</a> by Ashwin Wagadarikar et al..</p>
+</section>
+<section id="dual-dispersive-coded-aperture-snapshot-imaging-dd-cassi">
+<h3>Dual dispersive coded aperture snapshot imaging (DD-CASSI)<a class="headerlink" href="#dual-dispersive-coded-aperture-snapshot-imaging-dd-cassi" title="Permalink to this headline">#</a></h3>
+<p>The sampling scheme of a DD-CASSI system is shown in the following Figure:</p>
+<img src="figures/10/sampling_dd_cassi.svg" style="max-height:40vh"><p>Here, the incident spectrum is sheared, then modulated with a spatial binary pattern and then inversely sheared so that the individual spectral components are arranged back to their original correspondent spatial location.</p>
+<p>The resulting spatio-spectral distribution is then integrated along the spectral domain by the sensor.</p>
+<p>This approach has the benefit that the image recorded by the sensor is not spatially blurred as for SD-CASSI.</p>
+<p>The forward model can be formalized as:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \mathbf{y} &amp;= \underbrace{\boldsymbol{\Sigma}\mathbf{T}\transp\mathrm{diag}(\mathbf{p})\mathbf{T}}_{=:\mathbf{A}}\mathbf{x} \\
+  &amp;= \mathbf{Ax} \,,
+\end{align}\)</span></p>
+<p>with the modulation pattern <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, the shearing operator <span class="math notranslate nohighlight">\(\mathbf{T}\)</span>, the transposed, i.e., inverse shearing operator <span class="math notranslate nohighlight">\(\mathbf{T}\transp\)</span> and the projection matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>.</p>
+<p>Since the successive operations of shearing, modulation, inverse shearing is nothing else than applying a spatially and spectrally varying modulation to the input spatio-spectral data, the forward model can be written more compactly as:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{y} = \underbrace{\boldsymbol{\Sigma}\mathrm{diag}(\mathbf{\tilde{T}p})}_{=:\mathbf{A}}\mathbf{x}\,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\mathbf{\tilde{T}}\)</span> representing the shearing operator that, when applied to the modulation pattern vector <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>, leads to the same modulation of the input data as the operators <span class="math notranslate nohighlight">\(\mathbf{T}\transp\mathrm{diag}(\mathbf{p})\mathbf{T}\)</span>.</p>
+<p>Details about the optical setup and resulting images can be found in the publication <a class="reference external" href="https://opg.optica.org/oe/fulltext.cfm?uri=oe-15-21-14013">Single-shot compressive spectral imaging with a dual-disperser architecture</a> by M. E. Gehm et al..</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "compimg"
+        },
+        kernelOptions: {
+            kernelName: "compimg",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'compimg'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="09_QuantitativePhaseImaging.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Quantitative Phase Imaging</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr.-Ing. Johannes Meyer<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

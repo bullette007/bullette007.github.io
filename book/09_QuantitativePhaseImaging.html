@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Quantitative Phase Imaging &#8212; Computational Imaging - Course Notes</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Coded Aperture Spectral Snapshot Imaging" href="10_SpectralSnapshotImaging.html" />
+    <link rel="prev" title="Coded Exposure Photography" href="08_CodedExposurePhotography.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Computational Imaging - Course Notes for Winter Term 2022 / 2023
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Basics.html">
+   Fundamental Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_LightFieldMethods.html">
+   Light Field Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_LightTransportAnalysis.html">
+   Light Transport Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
+   Neural Networks for Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
+   Inverse Problems in Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_LenslessImaging.html">
+   Lensless Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_CodedExposurePhotography.html">
+   Coded Exposure Photography
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Quantitative Phase Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_SpectralSnapshotImaging.html">
+   Coded Aperture Spectral Snapshot Imaging
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/09_QuantitativePhaseImaging.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="_sources/09_QuantitativePhaseImaging.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optical-setup-for-quantitative-phase-imaging">
+   Optical setup for (quantitative) phase imaging
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-model">
+   Forward model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reconstruction">
+   Reconstruction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-of-led-pattern-via-physics-based-machine-learning">
+   Optimization of LED pattern via physics-based machine learning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loss-function">
+     Loss function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experimental-results">
+     Experimental results
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Quantitative Phase Imaging</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optical-setup-for-quantitative-phase-imaging">
+   Optical setup for (quantitative) phase imaging
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#forward-model">
+   Forward model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reconstruction">
+   Reconstruction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimization-of-led-pattern-via-physics-based-machine-learning">
+   Optimization of LED pattern via physics-based machine learning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loss-function">
+     Loss function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#experimental-results">
+     Experimental results
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><span class="math notranslate nohighlight">\(\begin{align}
+  \newcommand{transp}{^\intercal}
+  \newcommand{F}{\mathcal{F}}
+  \newcommand{Fi}{\mathcal{F}^{-1}}
+  \newcommand{inv}{^{-1}}
+  \newcommand{stochvec}[1]{\mathbf{\tilde{#1}}}
+  \newcommand{argmax}[1]{\underset{#1}{\mathrm{arg\, max}}\,}
+  \newcommand{argmin}[1]{\underset{#1}{\mathrm{arg\, min}}\,}
+\end{align}\)</span></p>
+<p><font size="7"> Computational Imaging </font><br><br><br></p>
+<section class="tex2jax_ignore mathjax_ignore" id="quantitative-phase-imaging">
+<h1>Quantitative Phase Imaging<a class="headerlink" href="#quantitative-phase-imaging" title="Permalink to this headline">#</a></h1>
+<section id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Introduction</p></li>
+<li><p>Optical setup for (quantitative) phase imaging</p></li>
+<li><p>Forward model</p></li>
+<li><p>Reconstruction</p></li>
+<li><p>Optimization of LED pattern via physics-based machine learning</p></li>
+</ul>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>Image sensors and the human eye only capture the intensity of incident light but not its phase. This is because both of them yield a mean value of the incident radiance over their respective exposure times.</p>
+<p>A phase difference between two light rays is caused when one of the rays passes through a material with a different index of refraction, i.e., a different optical path length.</p>
+<p>In various applications, it can be of great interest to even quantitatively capture phase information of observed objects (i.e., to what extent they affect the optical path length).</p>
+<p>For example, in biology, so-called <em>unstained</em> samples (i.e., which have not been artificially colored)  of different cell types, appear to conventional sensors as a nearly constant bright region without much contrast, although the different cell types have different phase properties.</p>
+<p>In order to visualize and differentiate the cell types, the phase information has to be (quantitatively) captured or reconstructed.</p>
+<p>The following image shows the same cell type imaged with a traditional bright field setup (left) and with a phase contrast setup (right):</p>
+<img src="figures/9/phase_contrast_example_image.jpg" style="max-height:60vh"></section>
+<section id="optical-setup-for-quantitative-phase-imaging">
+<h2>Optical setup for (quantitative) phase imaging<a class="headerlink" href="#optical-setup-for-quantitative-phase-imaging" title="Permalink to this headline">#</a></h2>
+<p>A common optical setup for capturing phase information is a so-called <span class="math notranslate nohighlight">\(4f\)</span>-setup:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/9/phase_imaging_opt_setup_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">3</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "bbcc470a98df4674980ae2e110b7a4b5"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>An LED array illuminates the sample from one side. The distance between the LEDs and the sample is large enough so that each LED can be assumed to illuminate the sample with a plane wave oriented according to the relative position of the LED with respect to the optical axis.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Lens 1 creates the Fourier transform of the field distribution behind the sample in the Fourier plane.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Lens 2 performs an inverse Fourier transform to yield the final image on the sensor.</p></li>
+</ul>
+<ul class="simple">
+<li><p>The light of a single LED, i.e., a single plane wave illuminating the sample, is focused to a single point in the Fourier plane.</p></li>
+<li><p>For multiple illuminating LEDs, the individual plane waves and the corresponding points in the Fourier plane are additively superposed.</p></li>
+</ul>
+<p>Controlling the illumination pattern of the LED array allows to somewhat control which parts of the Fourier plane are captured.</p>
+<p>To preserve phase information, illumination patterns have to be employed which do not exhibit any point symmetry in the Fourier plane with respect to the origin.</p>
+<p>This can be explained by examining the sum of two Fourier terms <span class="math notranslate nohighlight">\(G(f), G(-f)\)</span> with point symmetric frequencies <span class="math notranslate nohighlight">\(f, -f\)</span> that would be calculated by the inverse Fourier transform. Since <span class="math notranslate nohighlight">\(G(-f)=G(f)^*\)</span> one can express <span class="math notranslate nohighlight">\(G(f)=(a+bj), G(-f)=G(f)^*=(a-bj)\)</span> and the following happens during inverse Fourier transform:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   &amp;= G(f)\exp ( \underbrace{j2\pi f x}_{=:\alpha} ) + G(-f)\exp(\underbrace{-j2\pi fx}_{-\alpha}) \\
+   &amp;= (a+bj)\cdot (\cos\alpha + j\sin \alpha ) + (a-bj)\cdot (\cos \alpha - j\sin\alpha)\\
+   &amp;= (a\cos\alpha - b\sin\alpha) + j(a\sin\alpha +b\cos\alpha) + (a\cos\alpha-b\sin\alpha)+j(-a\sin\alpha-b\cos\alpha) \\
+   &amp;= (a\cos\alpha-b\sin\alpha +a\cos\alpha -b\sin\alpha) + j(a\sin\alpha + b\cos\alpha-a\sin\alpha -b\cos\alpha) \\
+   &amp;= (2a\cos\alpha-2b\sin\alpha) + j\cdot 0 \,,
+\end{align}\)</span></p>
+<p>i.e., the resulting inverse Fourier <span class="math notranslate nohighlight">\(\Fi \left\{ G \right\}  \)</span> transform has no imaginary part and hence no phase information can be calculated since</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathrm{phase}(x)=\arctan \left( \frac{\mathfrak{I}\left\{ x \right\} }{ \mathfrak{R} \left\{ x \right\} } \right) \overbrace{=}^{\mathfrak{I}\left\{ x \right\}=0} \arctan \left( \frac{0 }{ \mathfrak{R} \left\{ x \right\} } \right) \equiv 0 \,.
+\end{align}\)</span></p>
+<p>The principle is somehow similar to the concept of Schlieren imaging introduced in Chapter 2.</p>
+</section>
+<section id="forward-model">
+<h2>Forward model<a class="headerlink" href="#forward-model" title="Permalink to this headline">#</a></h2>
+<p>The influence of a thin object to the phase of transmitted light can be modeled via its so-called <em>complex transfer function</em></p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   o(\mathbf{r}) = \exp \left( -\mu (\mathbf{r}) + j \phi (\mathbf{r}) \right) \,,
+\end{align}\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is the spatial coordinate in the considered plane of the object, <span class="math notranslate nohighlight">\(\mu\)</span> is the object’s absorption and <span class="math notranslate nohighlight">\(\phi\)</span> is the phase retardation. The phase can be further detailed as</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \phi (\mathbf{r}) = \frac{2\pi}{\lambda} \Delta n(\mathbf{r}) d(\mathbf{r}) \,,
+\end{align}\)</span></p>
+<p>with the wavelength <span class="math notranslate nohighlight">\(\lambda \)</span> of the illumination, <span class="math notranslate nohighlight">\(d\)</span> the thickness of the sample and <span class="math notranslate nohighlight">\(\Delta n\)</span> the change of the refractive index with respect to the surrounding medium.</p>
+<p>If <span class="math notranslate nohighlight">\(s(\mathbf{r})\)</span> denotes the illumination’s complex field at the sample plane and <span class="math notranslate nohighlight">\(p(\mathbf{r})\)</span> denotes the PSF of the optical system, the recorded intensity measurements are given by</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   y(\mathbf{r}) = \left| p(\mathbf{r}) * \left( s(\mathbf{r}) \cdot o(\mathbf{r}) \right)  \right| ^2 \,.
+\end{align}\)</span></p>
+<p>The illumination of a single point source <span class="math notranslate nohighlight">\(i\)</span> can be approximated as a tilted plane wave</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   s_i(\mathbf{r}) = \exp \left( \frac{j}{\lambda} \mathbf{u}_i\transp \mathbf{r}  \right) \,, 
+\end{align}\)</span></p>
+<p>with the tilt angle <span class="math notranslate nohighlight">\(\mathbf{u}_i\)</span> dependent on the position of the point source with respect to the optical system.</p>
+<p>So far, this expression is quite unhandy for performing a reconstruction.</p>
+<p>A significant simplification can be achieved by assuming the so-called <em>weak object approximation</em> which is adequate for thin samples with only small phase effects (what is the case for most biological applications of phase imaging). Furthermore, for unstained objects, the absorption <span class="math notranslate nohighlight">\(\mu(\mathbf{r})\)</span> can be neglected.</p>
+<p>Hence, intensity measurements can be modeled as a linear system yielding the following formulation in Fourier space:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{y}(\mathbf{u}) \approx B\delta (\mathbf{u}) + j h(\mathbf{u}) \hat{\phi}(\mathbf{u}) \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\hat{(\cdot)}\)</span> denoting Fourier transforms, <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> denoting spatial frequency coordinates, <span class="math notranslate nohighlight">\(B\)</span> representing the background intensity and <span class="math notranslate nohighlight">\(h(\mathbf{u})\)</span> denoting the so-called <em>weak object transfer function</em> (WOTF) with respect to the phase.</p>
+<p>The phase WOTF for a single point source is:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   h^\mathrm{single}(\mathbf{u}) = j \left( \hat{p}(\mathbf{u}) \star \hat{s}(\mathbf{u}) - \hat{s}(\mathbf{u}) \star \hat{p}(\mathbf{u}) \right) \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\star\)</span> representing the correlation operator with <span class="math notranslate nohighlight">\((a\star b)(\mathbf{r}) = \int a(\tilde{\mathbf{r}})b^*(\tilde{\mathbf{r}} - \mathbf{r}) \mathrm{d} \tilde{\mathbf{r}}\)</span>, that is not commutative.</p>
+<p>This again confirms that the illumination pattern must not have a symmetric Fourier spectrum. A symmetric illumination pattern leads to <span class="math notranslate nohighlight">\(\hat{s}(\mathbf{u})\)</span> being hermitian, i.e., <span class="math notranslate nohighlight">\(\hat{s}(- \mathbf{u}) = \hat{s}^*(\mathbf{u})\)</span>. In this case, the correlation <span class="math notranslate nohighlight">\(\hat{s}(\mathbf{u}) \star \hat{p}(\mathbf{u})\)</span> is equivalent to the convolution <span class="math notranslate nohighlight">\(\hat{s}(\mathbf{u}) * \hat{p}(\mathbf{u})\)</span>. Since the transfer function <span class="math notranslate nohighlight">\(\hat{p}(\mathbf{u})\)</span> of an aberration-free and focused optical system is also hermitian, this would lead to:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  &amp;\hat{p}(\mathbf{u}) \star \hat{s}(\mathbf{u}) - \hat{s}(\mathbf{u}) \star \hat{p}(\mathbf{u}) \\
+  \overbrace{=}^{\hat{p}\, \text{herm.}}&amp; \hat{p}(\mathbf{u})*\hat{s}(\mathbf{u})-\hat{s}(\mathbf{u}) \star \hat{p}(\mathbf{u}) \\
+  \overbrace{=}^{\hat{s}\, \text{herm.}}&amp; \hat{p}(\mathbf{u})*\hat{s}(\mathbf{u})-\hat{s}(\mathbf{u}) * \hat{p}(\mathbf{u}) \equiv 0 \,.
+\end{align}\)</span></p>
+<p>Since the light emitted by the individual LEDs is spatially incoherent with respect to each other, the corresponding measurements, respectively, the corresponding transfer functions can be weighted by the respective brightness value <span class="math notranslate nohighlight">\(c_w \geq 0\)</span> corresponding to LED <span class="math notranslate nohighlight">\(w\)</span> and summed to yield to overall measurement, respectively, the overall transfer function:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{y}^\mathrm{multi}(\mathbf{u}) &amp;= \sum\limits_{w\in \mathcal{W}} c_w \hat{y}^\mathrm{single}_w (\mathbf{u}) \\
+   h^\mathrm{multi}(\mathbf{u}) &amp;= \sum\limits_{w\in \mathcal{W}} c_w h^\mathrm{single}_w(\mathbf{u}) \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\mathcal{W}\)</span> denoting the set of LEDs.</p>
+<p>We can now express the measurement process in algebraic notation (all vectors represent flattened 2D Fourier spectra).</p>
+<p>A single measurement described in Fourier space can be expressed as</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{\mathbf{y}} = \mathbf{A}\boldsymbol{\phi} \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(y \in \mathbb{C} ^M\)</span>, <span class="math notranslate nohighlight">\(A \in \mathbb{C} ^{M\times M}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{A} = \mathrm{diag}(\hat{\mathbf{h}})\)</span>, i.e., <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> being a matrix with <span class="math notranslate nohighlight">\(\hat{\mathbf{h}}\)</span> on its diagonal and <span class="math notranslate nohighlight">\(0\)</span> elsewhere.</p>
+<p>We further define <span class="math notranslate nohighlight">\(\mathbf{Y} \in \mathbb{C} ^{M \times S}\)</span> as the Fourier transforms of <span class="math notranslate nohighlight">\(S\)</span> measurements where only one LED has been turned on, i.e., for acquiring the image corresponding to column <span class="math notranslate nohighlight">\(i\)</span> of <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span>, only LED <span class="math notranslate nohighlight">\(i\)</span> had been turned on.</p>
+<p>Column <span class="math notranslate nohighlight">\(c_k \in \mathbb{R} ^S\)</span> of the matrix <span class="math notranslate nohighlight">\(\mathbf{C} \in \mathbb{R} ^{S\times K}\)</span> contains the weights for every LED for the <span class="math notranslate nohighlight">\(k\)</span>-th captured image (<span class="math notranslate nohighlight">\(k \in [1,K]\)</span>).</p>
+<p>Hence,</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{\mathbf{y}}_k = \mathbf{Yc}_k
+\end{align}\)</span></p>
+<p>models the Fourier transform of the <span class="math notranslate nohighlight">\(k\)</span>-th acquired multi-LED image.</p>
+<p>Analogously, the matrix <span class="math notranslate nohighlight">\(\mathbf{H}\in \mathbb{C} ^{M \times S}\)</span> contains in column <span class="math notranslate nohighlight">\(i\)</span> the phase WOTF <span class="math notranslate nohighlight">\(\hat{\mathbf{h}}_i\)</span> for the case where only LED <span class="math notranslate nohighlight">\(i\)</span> is turned on.</p>
+<p>Hence,</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \mathbf{A}_k = \mathrm{diag}\left( \mathbf{Hc}_k \right) 
+\end{align}\)</span></p>
+<p>models the multi-LED phase WOTF for the <span class="math notranslate nohighlight">\(k\)</span>-th measurement.</p>
+</section>
+<section id="reconstruction">
+<h2>Reconstruction<a class="headerlink" href="#reconstruction" title="Permalink to this headline">#</a></h2>
+<p>Based on the derived forward model, the phase recovery problem can now be formulated:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \hat{\boldsymbol{\phi}}^* = \argmin{\hat{\boldsymbol{\phi}}} \frac{1}{2K} \sum\limits^K_{k=1} \left\| \hat{\mathbf{y}}_k - \mathbf{A}_k \hat{\boldsymbol{\phi}} \right\| ^2_2 + \Psi \left( \hat{\boldsymbol{\phi}} \right) \,,
+\end{align}\)</span></p>
+<p>with the sought phase <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\phi}}^*\)</span> and a suitable regularizer <span class="math notranslate nohighlight">\(\Psi\)</span>.</p>
+<p>This optimization problem can be approached with one of the methods introduced in Chapter 6.</p>
+<p>Example reconstruction results for heuristically determined illumination patterns can, e.g., be seen in the paper <a class="reference external" href="https://escholarship.org/uc/item/78t7z9w3">Quantitative differential phase contrast imaging in an LED array microscope</a> by Lei Tian and Laura Waller.</p>
+</section>
+<section id="optimization-of-led-pattern-via-physics-based-machine-learning">
+<h2>Optimization of LED pattern via physics-based machine learning<a class="headerlink" href="#optimization-of-led-pattern-via-physics-based-machine-learning" title="Permalink to this headline">#</a></h2>
+<p>Instead of manually trying to derive an optimal illumination pattern, it is also possible to learned by means of unrolled optimization and suitable training data.</p>
+<p>Therefore, each iteration of the employed optimization algorithm is unrolled to form one layer of a neural network <span class="math notranslate nohighlight">\(\mathcal{R}\)</span>:</p>
+<ul class="simple">
+<li><p>The network’s input are the measurements <span class="math notranslate nohighlight">\(\left( \hat{\mathbf{y}}_k \right)^K_{k=1} \)</span> and</p></li>
+<li><p>its output is <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\phi}}^{(N)}\)</span>, i.e., the estimated phase after iteration <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+</ul>
+<p>The learnable parameters of the network are the relative brightness of the LEDs (and potentially also the hyperparameters of the optimization algorithm, but for simplicity they will not be covered in the following derivations).</p>
+<p>Since the resulting network contains the physically based forward model of the image formation process as a part of its layers, the procedure of training it is sometimes called <em>physics-based learning</em>.</p>
+<section id="loss-function">
+<h3>Loss function<a class="headerlink" href="#loss-function" title="Permalink to this headline">#</a></h3>
+<p>The goal of the training is to minimize the phase reconstruction error of a training set <span class="math notranslate nohighlight">\((\mathbf{Y}_l,\boldsymbol{\phi}'_l)^L_{l=1}\)</span> where the matrix <span class="math notranslate nohighlight">\(\mathbf{Y}_l\)</span> contains Fourier transforms of single-LED measurements for the <span class="math notranslate nohighlight">\(l\)</span>-th phase sample <span class="math notranslate nohighlight">\(\boldsymbol{\phi}_l\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \ell (C) &amp;= \frac{1}{L}\sum\limits^L_{l=1} \ell_l (C) \\
+  &amp;= \frac{1}{2L} \sum\limits^L_{l=1} \left\| \mathcal{R} \left( (\mathbf{Y}_l \mathbf{c}_k)^K_{k=1} \right) - \hat{\boldsymbol{\phi}}'_l  \right\| ^2_2 \,.
+\end{align}\)</span></p>
+<p>The following constraints are imposed on the training objective:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   C^* &amp;= \argmin {C} \ell(C)\\
+   \text{s.t. } &amp; \forall\, k \in [1,\ldots, K]: \\
+   &amp;(1)\quad  \mathbf{c}_k \geq 0 &amp; (\text{non-negativity})\\
+   &amp;(2) \quad \left\| \mathbf{c}_k \right\|_1 = 1 &amp; (\text{normalization}) \\
+   &amp;(3) \quad \mathbf{m}_k \odot \mathbf{c}_k = \mathbf{0} &amp;(\text{asymmetry})
+\end{align}\)</span></p>
+<p>Constraint 1 prohibits physically infeasible designs with negative brightness values (enforced by clamping negative values to 0).</p>
+<p>Constraint 2 prevents the same design from appearing multiple times just in scaled versions (enforced by normalizing the brightness values so that they sum to 1).</p>
+<p>Constraint 3 uses geometric constraint masks <span class="math notranslate nohighlight">\(\mathbf{m}_k\)</span> to make sure that there are no point symmetries in the illumination patterns. This is enforced by allowing the LED patterns of one measurement <span class="math notranslate nohighlight">\(k\)</span> only to have brightness values <span class="math notranslate nohighlight">\(&gt;0\)</span> in one of the four quadrants.</p>
+<p>To actually perform the training, gradient descent-based methods can be employed and the gradient can be calculated automatically via automated differentiation.</p>
+</section>
+<section id="experimental-results">
+<h3>Experimental results<a class="headerlink" href="#experimental-results" title="Permalink to this headline">#</a></h3>
+<p>Results can be found in the paper <a class="reference external" href="https://ieeexplore.ieee.org/document/8667888/">Physics-Based Learned Design: Optimized Coded-Illumination for Quantitative Phase Imaging</a> by Michael R. Kellman et al..</p>
+</section>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"4adf92b2c5284a748bfcd24f07bd05b4": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "06ec5eb0f9934d2b9ce37c0b79d37e9b": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "5a9fdab1100a4ccbab1a8290475865d7": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_4adf92b2c5284a748bfcd24f07bd05b4", "max": 3, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_06ec5eb0f9934d2b9ce37c0b79d37e9b", "value": 3}}, "b1d4f45f95fb472d8a0a55f4c3b43e6c": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "bbcc470a98df4674980ae2e110b7a4b5": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_5a9fdab1100a4ccbab1a8290475865d7", "IPY_MODEL_4b6cbd207d5741bfbd33c65f37c40cd8"], "layout": "IPY_MODEL_b1d4f45f95fb472d8a0a55f4c3b43e6c"}}, "5adcc863a6334da4bc0a79d5b3cda3c7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4b6cbd207d5741bfbd33c65f37c40cd8": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_5adcc863a6334da4bc0a79d5b3cda3c7", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/9/phase_imaging_opt_setup_3.svg\" style=\"max-height:50vh\"/>"}}]}}}, "version_major": 2, "version_minor": 0}
+</script>
+
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "compimg"
+        },
+        kernelOptions: {
+            kernelName: "compimg",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'compimg'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="08_CodedExposurePhotography.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Coded Exposure Photography</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="10_SpectralSnapshotImaging.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Coded Aperture Spectral Snapshot Imaging</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr.-Ing. Johannes Meyer<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

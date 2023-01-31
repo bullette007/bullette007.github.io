@@ -164,17 +164,17 @@ When photographing dynamic scenes, moving objects can cause so-called *motion bl
 
 When an object moves during exposure time, its image is smeared over an image region depending on its movement trajectory and its pixel values are blended with those of the stationary background.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The obvious way to mitigate or prevent motion blur is to reduce the exposure time and compensate the reduced light efficiency via:
 * increased digital amplification (at the cost of amplified noise) or
 * by providing sufficient artificial illumination (e.g., flashes).
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 In this chapter, we will explore a different approach to compensate motion blur that is based on deconvolution. The presented content is based on the paper [Coded Exposure Photography: Motion Deblurring using Fluttered Shutter](https://web.media.mit.edu/~raskar/deblur/CodedExpousreLowres.pdf) by Ramesh Raskar et al..
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ### Image formation model for motion blur
 
@@ -190,7 +190,7 @@ $\begin{align}
 
 The motion blur kernel $h$ then consists of a one-dimensional $\mathrm{rect}$-function with a width corresponding to the number of pixels that the image of the object moves on the image sensor during one exposure period. The orientation of the $\mathrm{rect}$-function corresponds to the direction of the linear movement.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Example
 The following shows a simple example of simulated motion blur:
@@ -199,7 +199,7 @@ The following shows a simple example of simulated motion blur:
 
 <img src="figures/8/example_convolution_motion_blur.svg" style="max-height:40vh">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The motion blur kernel $h$ can be modeled as a rotated and translated $\mathrm{rect}$-function:
 
@@ -207,13 +207,13 @@ The motion blur kernel $h$ can be modeled as a rotated and translated $\mathrm{r
 
 <img src="figures/8/blur_kernel_line_section.svg" style="max-height:40vh">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 Directly trying to reconstruct the latent image $x$ based on such an observation would lead to strong artifacts.
 
 This can be seen explained in two ways:
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 1. The Fourier transform of the $\mathrm{rect}(x)$-function is given by $\mathrm{sinc}(x)=\frac{\sin x}{x}$; see the following Figure for a visualization of its graph (logarithm of magnitude of Fourier transform):
 
@@ -223,49 +223,49 @@ This can be seen explained in two ways:
 
 The spectrum of the $\mathrm{sinc}$-function is not flat and has many zeros where information is inevitably lost. Inverting a such a deconvolution would strongly amplify certain frequencies (at the positions of the zeros) and hence might also amplify unwanted noise.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 2. The autocorrelation of the $\mathrm{rect}$-function does not resemble a Dirac-like what is hindering for the reconstruction.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 As a consequence, a better encoding strategy has to be found.
 
-+++
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Optical setup for coded exposure photography
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 In order to control the exposure modulation, an existing camera can be extended via a programmable shutter that is synchronized with the exposure control of the camera.
 
 In the referenced paper, the authors use a programmable LCD as a spatial light modulator placed in front of the main lens of a digital lens reflex camera and simultaneously turn all pixels transparent or opaque to realize an encoding of the exposure.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 The whole exposure period $T$ of the camera can be divided into $M$ time slices, so-called *chops* with duration $T/M$.
 
 During each chop, the LCD-based shutter is either set to transparent or opaque as stated in a corresponding pattern vector $\mathbf{p}\in \left\{ 0,1 \right\}^M $
 
-+++
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Selection of encoding pattern $\mathbf{p}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 When searching for an optimal code, two mutual criteria have to be optimized:
 1. Invertibility (i.e., flat Fourier spectrum and as few zeros as possible), 
 2. light efficiency (i.e., many ones in $\mathbf{p}$).
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 One possibility to ensure light efficiency is to fix the ratio of ones and zeros in $\mathbf{p}$ to $1:1$.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 For a given number $M$ of chops, this design decision sets the set of possible encoding candidates which could be evaluated with respect to criterion 1 (invertibility) in a brute force manner.
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 This has been done by the authors of the referenced paper by means of a randomized linear search for $M=52$. 
 
@@ -274,13 +274,13 @@ $\begin{align}
    \mathbf{p} = (1010000111000001010000110011110111010111001001100111)\transp \,.
 \end{align}$
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The logarithm of the magnitude of the spectrum of that code is shown below (for positive spatial frequencies):
 
 <img src="figures/8/encoding_spectrum.svg" style="max-height:40vh">
 
-+++
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Reconstruction
 
@@ -288,19 +288,19 @@ The logarithm of the magnitude of the spectrum of that code is shown below (for 
 
 The reconstruction can be performed with any suitable deconvolution method (Wiener filter, iterative methods, data-driven methods).
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 When applied in a practical scenario, there are two open points which have to be addressed:
 1. The orientation of the encoding line in the motion blur kernel $h$ has to be determined.
 2. Different regions in the image can be affected by different types of motion blur, i.e., different directions, different movement velocities, no movement (e.g., background) and those regions can also be blended with each other.
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 Point 1 can be solved by prompting the user to estimate the movement direction and length (in pixels).
 
 Both points can be addressed simultaneously by employing methods for locally estimating the blur PSF, i.e., with respect to the pixel position.
 
-+++
++++ {"slideshow": {"slide_type": "slide"}}
 
 ## Example
 
@@ -310,21 +310,30 @@ Consider again the following example image:
 
 <img src="figures/8/tree.png" style="max-height:40vh">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 We simulate a horizontal motion blur by convolving with a 52 pixel width conventional $\mathrm{rect}$-like kernel and with kernel encoded according to the previously mentioned pattern:
 
++++
+
 <img src="figures/8/observation_motion_blur_different_kernels.svg" style="max-height:40vh">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 For both images, we add Gaussian noise of different levels and try to reconstruct the undistorted image with a Wiener filter using the introduced heuristic for estimating the signal-to-noise ratio.
 
 By this means, we achieve the following qualitative results:
 
 ```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
 interact(lambda i: showFig('figures/8/motion_deblur_results_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=0),max=(max_i:=5), step=1, value=(max_i if book else min_i)))
 ```
+
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The results can be evaluated quantitatively by calculating the root mean squared reconstruction error with respect to the undistorted image:
 
