@@ -750,7 +750,15 @@ $\begin{align}
   \hat{\mathbf{v}} = &\argmin{\mathbf{q}, \mathbf{w}} \frac{1}{2} \left\| \mathbf{C} \mathbf{q} - \mathbf{b} \right\| ^2_2 + \mathrm{pos}(\mathbf{w}) \\ &\text{subject to}\quad \mathbf{q} = \mathbf{Hv},\, \mathbf{w}=\mathbf{v} \,,   
 \end{align}$
 
-with $\mathrm{pos}(w_i) = \mathrm{max}(w_i,0)$.
+with 
+
+$\begin{align} 
+  \mathrm{pos}(\mathbf{x})=
+  \begin{cases}    
+    +\infty \quad &\text{if } x_i < 0 \text{ for any } i\\
+    0 &\text{otherwise.}
+  \end{cases}   
+\end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -806,8 +814,4 @@ The ADMM-based reconstruction yields the following results:
 :init_cell: true
 
 interact(lambda i: showFig('figures/7/diffuser_cam_ADMM_recon_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=0),max=(max_i:=9), step=1, value=(max_i if book else min_i)))
-```
-
-```{code-cell} ipython3
-
 ```

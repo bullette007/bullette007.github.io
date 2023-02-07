@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Time-Of-Flight Imaging &#8212; Computational Imaging - Course Notes</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Coded Aperture Spectral Snapshot Imaging" href="10_SpectralSnapshotImaging.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Computational Imaging - Course Notes for Winter Term 2022 / 2023
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Basics.html">
+   Fundamental Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_LightFieldMethods.html">
+   Light Field Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_LightTransportAnalysis.html">
+   Light Transport Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
+   Neural Networks for Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
+   Inverse Problems in Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_LenslessImaging.html">
+   Lensless Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_CodedExposurePhotography.html">
+   Coded Exposure Photography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_QuantitativePhaseImaging.html">
+   Quantitative Phase Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_SpectralSnapshotImaging.html">
+   Coded Aperture Spectral Snapshot Imaging
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Time-Of-Flight Imaging
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/11_TimeOfFlightImaging.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="_sources/11_TimeOfFlightImaging.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ultrashort-pulse-lasers">
+     Ultrashort pulse lasers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-photon-avalanche-diode">
+     Single-photon avalanche diode
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transient-imaging">
+   Transient imaging
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model-of-transient-imaging">
+     Forward model of transient imaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reconstruction-of-transient-images">
+     Reconstruction of transient images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#results">
+     Results
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-line-of-sight-imaging">
+   Non-line-of-sight imaging
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Time-Of-Flight Imaging</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content">
+   Content
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ultrashort-pulse-lasers">
+     Ultrashort pulse lasers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-photon-avalanche-diode">
+     Single-photon avalanche diode
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transient-imaging">
+   Transient imaging
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#forward-model-of-transient-imaging">
+     Forward model of transient imaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reconstruction-of-transient-images">
+     Reconstruction of transient images
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#results">
+     Results
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#non-line-of-sight-imaging">
+   Non-line-of-sight imaging
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <p><span class="math notranslate nohighlight">\(\begin{align}
+  \newcommand{transp}{^\intercal}
+  \newcommand{F}{\mathcal{F}}
+  \newcommand{Fi}{\mathcal{F}^{-1}}
+  \newcommand{inv}{^{-1}}
+  \newcommand{stochvec}[1]{\mathbf{\tilde{#1}}}
+  \newcommand{argmax}[1]{\underset{#1}{\mathrm{arg\, max}}\,}
+  \newcommand{argmin}[1]{\underset{#1}{\mathrm{arg\, min}}\,}
+\end{align}\)</span></p>
+<p><font size="7"> Computational Imaging </font><br><br><br></p>
+<section class="tex2jax_ignore mathjax_ignore" id="time-of-flight-imaging">
+<h1>Time-Of-Flight Imaging<a class="headerlink" href="#time-of-flight-imaging" title="Permalink to this headline">#</a></h1>
+<section id="content">
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Introduction</p></li>
+<li><p>Transient imaging</p></li>
+<li><p>Non-line-of-sight imaging</p></li>
+<li><p>TBC.</p></li>
+</ul>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>Time-of-flight imaging techniques try to capture light while it is in motion or they try to measure the light’s travel time inside a scene with extreme accuracy.</p>
+<p>The resulting information can be exploited to enable several novel applications in various fields, e.g., in robotic vision, remote sensing, medical imaging, autonomous driving, etc.</p>
+<p>Key enablers for these approaches are ultrashort pulse lasers and high-sensitive light detectors.</p>
+<section id="ultrashort-pulse-lasers">
+<h3>Ultrashort pulse lasers<a class="headerlink" href="#ultrashort-pulse-lasers" title="Permalink to this headline">#</a></h3>
+<p><strong>Ultrashort pulse lasers</strong> (UPL) can emit light pulses of very short duration, typically of the order of femtoseconds (<span class="math notranslate nohighlight">\(10^{-15}\)</span>s) to one picosecond (<span class="math notranslate nohighlight">\(10^{-12}\)</span>).</p>
+<p>Common ultrashort pulse lasers are based on Ti:sapphire crystals or dyes.</p>
+</section>
+<section id="single-photon-avalanche-diode">
+<h3>Single-photon avalanche diode<a class="headerlink" href="#single-photon-avalanche-diode" title="Permalink to this headline">#</a></h3>
+<p>So-called <strong>single-photon avalanche diodes</strong> (SPADs) are semiconductors that are similar to common photodiodes.</p>
+<p>In a photodiode, a low bias voltage is used so that, due to the photoelectric effect, arriving photons cause a leakage current that increases linearly with the number of arriving photons. The linearity is exploited to perform quantitative measurements of the incident light’s intensity.</p>
+<p>In a SPAD, the bias voltage is set so high, that even a single arriving photon can cause an avalanche of electrons to be released from the surrounding bulk material leading to a corresponding current.</p>
+<p>The auxiliary electronics working along with a SPAD have to correctly sense the increasing current, generate a synchronous output signal, lower the bias voltage to quench the avalanche and restore the initial operating conditions.</p>
+<p>As this takes some time, the SPAD is not sensitive for further photons for a so-called <em>dead time</em> of tens to hundreds of nanoseconds.</p>
+<p>When properly synchronized, ultrashort pulse lasers and SPADs can be employed to precisely measure the time light travels inside the observed scene. Via the speed of light <span class="math notranslate nohighlight">\(c\)</span>, this time can be converted into a geometric distance.</p>
+<p>This is also the principle used in so-called <strong>light detection and ranging</strong> (lidar) devices to capture a point cloud of the observed scene containing the distances to the measured points.</p>
+<p>The typical output value of a SPAD synchronized with an UPL is a time value corresponding to the duration between the emission of the laser pulse and the detection of a photon by the SPAD.</p>
+<p>As SPADs usually only measure the travel time of one photon for one emitted laser pulse due to the comparatively long dead time, usually millions of laser pulses are emitted (at MHz rates) and the corresponding measured travel times are collected in a histogram <span class="math notranslate nohighlight">\(h\)</span>.</p>
+<p>When emitting a laser pulse into the scene, a highly precise timer is started that is stopped as soon as the SPAD registers an event. The measured time is then converted into a digital number by a so-called <em>time-to-digital converter</em> (TDC).</p>
+<p>SPADs are commercially available as:</p>
+<ul class="simple">
+<li><p>Single pixel sensors <br> A full image is obtained via a two-dimensional scanning of the scene or by optical coding.</p></li>
+<li><p>One-dimensional arrays <br> Only a one-dimensional scanning is required scan a volume of the scene.</p></li>
+<li><p>Two-dimensional arrays <br> No additional scanning is required. Unfortunately, the large footprint of currently available SPADs severely limits the spatial resolution when used in a two-dimensional array without optical scanning.</p></li>
+</ul>
+</section>
+</section>
+<section id="transient-imaging">
+<h2>Transient imaging<a class="headerlink" href="#transient-imaging" title="Permalink to this headline">#</a></h2>
+<p>So-called <em>transient images</em> are images of a scene captured at certain points in time while a pulse of light is still traveling through the scene. Typical cameras integrate over all transient images that are created by a scene due to their comparatively long exposure time when compared to the speed of light.</p>
+<p>Transient imaging techniques employ SPADs and UPLs in concert to reconstruct transient images at different time steps. Transient images can reveal interesting properties (i.e., different events of scattering and light redirections) of the scene.</p>
+<p>The values <span class="math notranslate nohighlight">\(\tau\)</span> of a pixel of a set of transient images corresponding to some time duration can be imagined as a time impulse response function, i.e., the temporal intensity response of the scene to a pulse of light.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/11/transient_imaging_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">5</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "681182d80a8844289ed81570a9da3044"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="forward-model-of-transient-imaging">
+<h3>Forward model of transient imaging<a class="headerlink" href="#forward-model-of-transient-imaging" title="Permalink to this headline">#</a></h3>
+<p>After emitting a laser pulse into the scene, the amount of light scattered back to the detector is a temporally varying distribution of photons <span class="math notranslate nohighlight">\(g\)</span>. The photon flux <span class="math notranslate nohighlight">\(r\)</span> incident on the detector during time interval <span class="math notranslate nohighlight">\(t\)</span> is given by:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   r(t) = (\tau * g)(t) + a(t) \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\tau\)</span> denoting the temporal impulse response of the scene and with the ambient photon flux <span class="math notranslate nohighlight">\(a(t)\)</span>.</p>
+<p>The temporal impulse response <span class="math notranslate nohighlight">\(\tau\)</span> incorporates all optical effects of the scene that influence the travel paths / time of the laser pulse (e.g., reflectance, scattering, etc.).</p>
+<p>Assume a scene where light would bounce only once before reaching the detector, i.e., with only direct light transport. In this case, <span class="math notranslate nohighlight">\(\tau\)</span> would be a Dirac delta function.</p>
+<p>Conversely, for global light transport (i.e., with caustics, complex scattering events, interreflections etc.), <span class="math notranslate nohighlight">\(\tau\)</span> models the corresponding temporal impulse response of the scene.</p>
+<p>The ideal photon counter would sample the rate function</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \lambda (t) = \eta \left( r * f \right) (t) + d \,,
+\end{align}\)</span></p>
+<p>with <span class="math notranslate nohighlight">\(\eta \in [0,1]\)</span> representing the sensor’s quantum efficiency and the avalanche probability of the SPAD, <span class="math notranslate nohighlight">\(d\)</span> denoting the dark count rate (number of false detections) in Hz and <span class="math notranslate nohighlight">\(f\)</span> being the temporal jitter (about tens or a few hundreds of ps for state-of-the-art SPADs).</p>
+<p>An event registered by the SPAD does not necessarily have to be the first arriving photon. Whether a photon is detected within a short time window is a Bernoulli trail with the two possible outcomes of photon detected and no photon detected.</p>
+<p>By repeating this Bernoulli trial for <span class="math notranslate nohighlight">\(N\)</span> times by emitting <span class="math notranslate nohighlight">\(N\)</span> laser pulses, the histogram <span class="math notranslate nohighlight">\(h\)</span> of the photon travel times is built up.</p>
+<p>The probability of detecting <span class="math notranslate nohighlight">\(h(t)\)</span> photons can be modeled as a Poisson distribution:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   h(t) \sim \mathcal{P} (N \lambda(t))\,,
+\end{align}\)</span></p>
+<p>with the expected number of photons <span class="math notranslate nohighlight">\(\lambda(t)\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+</section>
+<section id="reconstruction-of-transient-images">
+<h3>Reconstruction of transient images<a class="headerlink" href="#reconstruction-of-transient-images" title="Permalink to this headline">#</a></h3>
+<p>The reconstruction of transient images from the measured noisy and blurry histograms can be modeled as a deconvolution problem in the presence of Poisson noise.</p>
+<p>For this means, we vectorize the involved quantities as follows:</p>
+<ul class="simple">
+<li><p>the temporal impulse response <span class="math notranslate nohighlight">\(\boldsymbol{\tau} \in \mathbb{R}^{n_x n_y n_t}\)</span>, i.e., the sought latent transient image,</p></li>
+<li><p>the measured histogram <span class="math notranslate nohighlight">\(\mathbf{h}\in \mathbb{R}^{n_x n_y n_t}\)</span> and</p></li>
+<li><p>the dark count <span class="math notranslate nohighlight">\(\mathbf{d} \in \mathbb{R}^{n_x n_y n_t}\)</span>.</p></li>
+</ul>
+<p>With the measurement matrix <span class="math notranslate nohighlight">\(\mathbf{A} \in \mathbb{R}^{n_x n_y n_t \times n_x n_y n_t}\)</span> encoding the convolution of the transient image with the laser pulse <span class="math notranslate nohighlight">\(g\)</span> and the SPAD jitter <span class="math notranslate nohighlight">\(f\)</span>, we can express</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   h \sim \mathcal{P}(\mathbf{A} \boldsymbol{\tau} + \mathbf{d}) \,.
+\end{align}\)</span></p>
+<p>The transient images have spatial resolution of <span class="math notranslate nohighlight">\(n_x \times n_y\)</span> and for each pixel there are <span class="math notranslate nohighlight">\(n_t\)</span> time bins in the histogram.</p>
+<p>The reconstruction problem can be formulated as a maximum likelihood estimation with the constraint of non-negative solutions:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   \boldsymbol{\tau}^* = \argmin{\boldsymbol{\tau}} -\log \left( p(\mathbf{h} \vert \mathbf{A} \boldsymbol{\tau}) \right) + \Psi (\boldsymbol{\tau}) \,, \\
+   \text{subject to } \, \boldsymbol{\tau} \geq \mathbf{0} \,,
+\end{align}\)</span></p>
+<p>with the likelihood <span class="math notranslate nohighlight">\(p(\mathbf{h} \vert \mathbf{A} \boldsymbol{\tau})\)</span> of measuring the histogram <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> for a given transient image <span class="math notranslate nohighlight">\(\boldsymbol{\tau}\)</span> and <span class="math notranslate nohighlight">\( \Psi (\boldsymbol{\tau})\)</span> representing a suitable regularizer.</p>
+<p>In order to solve this optimization problem with ADMM, first the optimization objectives are split into independent terms via slack variables <span class="math notranslate nohighlight">\(\mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3 \in \mathbb{R} ^{n_x n_y n_t}\)</span> and the corresponding constraints are added:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \boldsymbol{\tau}^* = \argmin{\boldsymbol{\tau}, \mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3} -\log \left( p(\mathbf{h} \vert \mathbf{z}_1) \right) + \mathrm{pos}(\mathbf{z}_2) + \Psi (\mathbf{z}_3) \,, \\
+  \text{subject to } \, \mathbf{A}\boldsymbol{\tau} = \mathbf{z}_1, \boldsymbol{\tau} = \mathbf{z}_2, \boldsymbol{\tau} = \mathbf{z}_3 \,,
+\end{align}\)</span></p>
+<p>with</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+  \mathrm{pos}(\mathbf{x})=
+  \begin{cases}    
+    +\infty \quad &amp;\text{if } x_i &lt; 0 \text{ for any } i\\
+    0 &amp;\text{otherwise.}
+  \end{cases}   
+\end{align}\)</span></p>
+<p>Then, the augmented Lagrangian in scaled form of the objective can be expressed with the Lagrange multipliers <span class="math notranslate nohighlight">\(\mathbf{u}_1, \mathbf{u}_2, \mathbf{u}_3\)</span> corresponding to the three constraints and with the corresponding scalar weights <span class="math notranslate nohighlight">\(\mu_1, \mu_2, \mu_3\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align} 
+   L(\boldsymbol{\tau}, \mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3, \mathbf{u}_1, \mathbf{u}_2, \mathbf{u}_3) = &amp;-\log \left( p(\mathbf{h} \vert \mathbf{z}_1) \right) + \mathrm{pos}(\mathbf{z}_2) + \Psi (\mathbf{z}_3) \\
+   &amp; + \frac{\mu_1}{2} \left\|\mathbf{A}\boldsymbol{\tau} - \mathbf{z}_1 + \mathbf{u}_1  \right\| ^2_2 - \frac{\mu_1}{2} \left\| \mathbf{u}_1 \right\| ^2_2  \\
+   &amp; + \frac{\mu _2}{2} \left\| \boldsymbol{\tau} - \mathbf{z}_2 + \mathbf{u}_2 \right\| ^2_2 - \frac{\mu _2}{2} \left\| \mathbf{u}_2 \right\| ^2_2 \\
+   &amp; + \frac{\mu _3}{2} \left\| \boldsymbol{\tau} - \mathbf{z}_3 + \mathbf{u}_3 \right\| ^2_2 - \frac{\mu _3}{2} \left\| \mathbf{u}_3 \right\| ^2_2 \\
+\end{align}\)</span></p>
+</section>
+<section id="results">
+<h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">#</a></h3>
+<p>Experimental results achieved with the described approach are reported in the corresponding paper <a class="reference external" href="https://www.computationalimaging.org/publications/reconstructing-transient-images-from-single-photon-sensors-cvpr-2017/">Reconstructing Transient Images from Single-Photon Sensors</a> by Matthew O’Toole et al.</p>
+</section>
+</section>
+<section id="non-line-of-sight-imaging">
+<h2>Non-line-of-sight imaging<a class="headerlink" href="#non-line-of-sight-imaging" title="Permalink to this headline">#</a></h2>
+<p>As mentioned in the introduction, many applications like robotics, medicine, autonomous driving, etc. could greatly benefit from knowing in advance what is behind a corner or other structure blocking the direct line of sight.</p>
+<p>Non-line-of-sight imaging methods can provide that information by emitting ultra short laser pulses into the scene and by measuring the time elapsed until corresponding photons return from the scene.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/11/nlos_task_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">6</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "6076c77199034ee1abb0de9f43600f67"}
+</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"9c0dad606a7d40219575f29ef6e1ee4a": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "5c8409bd1b414273a321eb51aa4f33d0": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "32fc76a306f54d08a40636fee006695f": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_9c0dad606a7d40219575f29ef6e1ee4a", "max": 5, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_5c8409bd1b414273a321eb51aa4f33d0", "value": 5}}, "7bfad8cf997c44e6a1e565258295bd71": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "681182d80a8844289ed81570a9da3044": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_32fc76a306f54d08a40636fee006695f", "IPY_MODEL_fbc7a77b31c24f06a817e36197dc8097"], "layout": "IPY_MODEL_7bfad8cf997c44e6a1e565258295bd71"}}, "aa6d81fdf8864b07b77434b362a26fd0": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "fbc7a77b31c24f06a817e36197dc8097": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_aa6d81fdf8864b07b77434b362a26fd0", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/11/transient_imaging_5.svg\" style=\"max-height:50vh\"/>"}}]}}, "6d7fa6fe608c4c13af50ab14b63bb600": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d3a2d8210843438088b462936bdcf6aa": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "1777f1efe94f421185d155c93fc732b0": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_6d7fa6fe608c4c13af50ab14b63bb600", "max": 6, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_d3a2d8210843438088b462936bdcf6aa", "value": 6}}, "918a181a508f43419cb0d4ea474e5097": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6076c77199034ee1abb0de9f43600f67": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_1777f1efe94f421185d155c93fc732b0", "IPY_MODEL_4c1e8a6bb5fa4d41820b5133a31ade78"], "layout": "IPY_MODEL_918a181a508f43419cb0d4ea474e5097"}}, "b53b833212304a74a4cddb966c730397": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4c1e8a6bb5fa4d41820b5133a31ade78": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_b53b833212304a74a4cddb966c730397", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/11/nlos_task_6.svg\" style=\"max-height:50vh\"/>"}}]}}}, "version_major": 2, "version_minor": 0}
+</script>
+
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "compimg"
+        },
+        kernelOptions: {
+            kernelName: "compimg",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'compimg'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="10_SpectralSnapshotImaging.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Coded Aperture Spectral Snapshot Imaging</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr.-Ing. Johannes Meyer<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
