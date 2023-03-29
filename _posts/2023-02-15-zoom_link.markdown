@@ -1,0 +1,8 @@
+---
+layout: post
+title:  "Zoom link for today's lecture"
+date:   2023-02-15 10:00:00 +0200
+categories: jekyll update
+---
+
+[Zoom link](https://us04web.zoom.us/j/77355543629?pwd=LsdHCRhqjyv2ZXg3wmcnwbjgltULXa.1)

@@ -27,3 +27,4 @@ Here you can find the recordings of the lectures.
 | 01.02.2023 | [Lecture 12](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2022_VL12.mp4) |
 | 08.02.2023 | [Lecture 13](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2022_VL13.mp4) |
 | 08.02.2023 | [Exercise 6](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2022_EX06.mp4) |
+| 15.02.2023 | [Lecture 14](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2022_VL14.mp4) |
