@@ -43,6 +43,7 @@ from ipywidgets import interact, interactive, fixed, interact_manual
 import ipywidgets as widgets
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 import cv2
 import scipy.signal as sig
 from scipy.integrate import simpson
@@ -341,7 +342,7 @@ In batch processing, the result of a batch of data processed by a linear layer, 
 :init_cell: true
 :tags: [delete-cell]
 
-xs = torch.linspace(-3,3,100)
+xs = torch.linspace(-3,3,1000)
 ys_softplus = torch.nn.Softplus()(xs)
 ys_leakyrelu = torch.nn.LeakyReLU(negative_slope=0.1)(xs)
 ys_elu = torch.nn.ELU()(xs)
@@ -369,9 +370,73 @@ slideshow:
 plt.figure()
 plt.plot(xs, ys_sigm)
 plt.title("Sigmoid")
-plt.axhline(0, color='k')
-plt.axvline(0, color='k')
-plt.grid()
+plt.ylim(-0.01, 1.01)
+#plt.axhline(0, color='k', linewidth=0.8)
+#plt.axvline(0, color='k', linewidth=0.8)
+#plt.gca().spines['top'].set_visible(False)
+#plt.gca().spines['right'].set_visible(False)
+#plt.gca().spines['bottom'].set_visible(False)
+#plt.gca().spines['left'].set_visible(False)
+#plt.grid()
+#plt.savefig("sigmoid.pdf")
+```
+
+```{code-cell} ipython3
+plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'STIXGeneral'
+#plt.rcParams['font.size'] = 9
+plt.xlim(-3,3)
+plt.xticks([-3.0,0,3])
+plt.yticks([0,0.5,1], ['0', '0.5', '1'])
+plt.tick_params(axis="y", direction='in', length=3)
+plt.tick_params(axis="x", direction='in', length=3)
+
+ax2 = plt.twiny()
+plt.xticks([-3.0,0,3], [])
+plt.tick_params(axis="y", direction='in', length=3)
+plt.tick_params(axis="x", direction='in', length=3)
+
+
+ax3 = plt.twinx()
+plt.yticks([0,0.5,1], [])
+
+plt.tick_params(axis="y", direction='in', length=3)
+plt.tick_params(axis="x", direction='in', length=3)
+plt.savefig("sigmoid.pdf")
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+plt.figure()
+plt.plot(xs, ys_relu)
+plt.ylim(-0.1, 0.6)
+plt.xlim(-0.5, 0.5)
+plt.title("ReLU (rectified linear unit)")
+plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'STIXGeneral'
+#plt.rcParams['font.size'] = 9
+
+plt.xticks([-0.5,  0.  ,  0.5 ], [-1, 0, 1])
+plt.yticks([0, 0.5], ['0', '1'])
+plt.tick_params(axis="y", direction='in', length=3)
+plt.tick_params(axis="x", direction='in', length=3)
+
+ax2 = plt.twiny()
+plt.xticks([-1, 0, 1], [])
+plt.tick_params(axis="y", direction='in', length=3)
+plt.tick_params(axis="x", direction='in', length=3)
+
+
+ax3 = plt.twinx()
+plt.yticks([0,1], [])
+
+plt.tick_params(axis="y", direction='in', length=3)
+plt.tick_params(axis="x", direction='in', length=3)
+plt.savefig("relu.pdf")
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -388,10 +453,18 @@ slideshow:
 ---
 plt.figure()
 plt.plot(xs, ys_relu)
+plt.ylim(-0.01, 1.01)
+plt.xlim(-1, 1)
 plt.title("ReLU (rectified linear unit)")
-plt.axhline(0, color='k')
-plt.axvline(0, color='k')
+plt.axhline(0, color='k', linewidth=0.8)
+plt.axvline(0, color='k', linewidth=0.8)
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(False)
+plt.gca().spines['left'].set_visible(False)
 plt.grid()
+plt.xticks([-0.75, -0.5 , -0.25,  0.  ,  0.25,  0.5 ,  0.75,  1.  , 1.25], [-0.6, -0.4 , -0.2,  0.  ,  0.2,  0.4 ,  0.6, 0.8,  1. ] )
+plt.savefig("relu.pdf")
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}

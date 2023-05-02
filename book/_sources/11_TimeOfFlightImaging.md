@@ -151,7 +151,7 @@ $\begin{align}
 * Introduction
 * Transient imaging
 * Non-line-of-sight imaging
-* TBC.
+* Imaging through scattering media with confocal diffuse tomography
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
@@ -326,7 +326,7 @@ The transient images have spatial resolution of $n_x \times n_y$ and for each pi
 The reconstruction problem can be formulated as a maximum likelihood estimation with the constraint of non-negative solutions:
 
 $\begin{align} 
-   \boldsymbol{\tau}^* = \argmin{\boldsymbol{\tau}} -\log \left( p(\mathbf{h} \vert \mathbf{A} \boldsymbol{\tau}) \right) + \Psi (\boldsymbol{\tau}) \,, \\
+  \hat{\boldsymbol{\tau}} = \argmin{\boldsymbol{\tau}} -\log \left( p(\mathbf{h} \vert \mathbf{A} \boldsymbol{\tau}) \right) + \Psi (\boldsymbol{\tau}) \,, \\
    \text{subject to } \, \boldsymbol{\tau} \geq \mathbf{0} \,,
 \end{align}$
 
@@ -337,7 +337,7 @@ with the likelihood $p(\mathbf{h} \vert \mathbf{A} \boldsymbol{\tau})$ of measur
 In order to solve this optimization problem with ADMM, first the optimization objectives are split into independent terms via slack variables $\mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3 \in \mathbb{R} ^{n_x n_y n_t}$ and the corresponding constraints are added:
 
 $\begin{align} 
-  \boldsymbol{\tau}^* = \argmin{\boldsymbol{\tau}, \mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3} -\log \left( p(\mathbf{h} \vert \mathbf{z}_1) \right) + \mathrm{pos}(\mathbf{z}_2) + \Psi (\mathbf{z}_3) \,, \\
+  \hat{\boldsymbol{\tau}} = \argmin{\boldsymbol{\tau}, \mathbf{z}_1, \mathbf{z}_2, \mathbf{z}_3} -\log \left( p(\mathbf{h} \vert \mathbf{z}_1) \right) + \mathrm{pos}(\mathbf{z}_2) + \Psi (\mathbf{z}_3) \,, \\
   \text{subject to } \, \mathbf{A}\boldsymbol{\tau} = \mathbf{z}_1, \boldsymbol{\tau} = \mathbf{z}_2, \boldsymbol{\tau} = \mathbf{z}_3 \,,
 \end{align}$
 
@@ -469,7 +469,7 @@ with $\mathbf{H}\in \mathbb{R} ^{n_x n_y n_h \times n_x n_y n_h}_+$ encoding the
 The reconstruction can now be solved in closed-form by inverting the discretized forward model and by using the Wiener filter for the deconvolution part:
 
 $\begin{align} 
-  \boldsymbol{\rho}^* = \mathbf{R}^{-1}_z \mathbf{F}^{-1} \left( \frac{\mathbf{\hat{H}}^*}{\left| \mathbf{\hat{H}} \right|^2+ \frac{1}{SNR} } \right) \mathbf{F} \mathbf{R}_t \boldsymbol{\tau} \,,
+  \hat{\boldsymbol{\rho}} = \mathbf{R}^{-1}_z \mathbf{F}^{-1} \left( \frac{\mathbf{\hat{H}}^*}{\left| \mathbf{\hat{H}} \right|^2+ \frac{1}{SNR} } \right) \mathbf{F} \mathbf{R}_t \boldsymbol{\tau} \,,
 \end{align}$
 
 with $\mathbf{F}$ and $\mathbf{F}^{-1}$ denoting the 3D discrete Fourier transform, respectively, the inverse Fourier transform, $\mathbf{\hat{H}}$ representing a diagonal matrix with the Fourier coefficients of the 3D convolution kernel and $SNR$ denoting the frequency-dependent signal-to-noise ratio.
@@ -481,3 +481,88 @@ with $\mathbf{F}$ and $\mathbf{F}^{-1}$ denoting the 3D discrete Fourier transfo
 +++
 
 Experimental results achieved with the described approach are reported in the corresponding paper [Confocal Non-Line-of-Sight Imaging Based on the Light-Cone Transform](http://www.computationalimaging.org/publications/confocal-non-line-of-sight-imaging-based-on-the-light-cone-transform/) by Matthew O'Toole et al.
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+## Imaging through scattering media with confocal diffuse tomography
+
++++
+
+Scattering media (i.e., fog, dust, murky water, scattering tissue) poses fundamental limits on various optical imaging applications like lidar scanning for autonomous driving, underwater vision and medical imaging. 
+
+Imaging through scattering media is challenging as the image reconstruction involves solving a highly ill-posed inverse problem.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+The technique *confocal diffuse tomography* (CDT) represents one possible approach to image through thick scatterers. 
+
+The basic idea is 
+* to model the light transport in the scattering medium as a diffusion process, 
+* incorporate it in the image formation forward model, 
+* approximate it as a convolution operation and
+* directly solve it using a Wiener filter approach.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+The following figure shows the optical concept of CDT:
+
+<img src="figures/11/cdt_setup.svg" style="max-height:40vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+### Image formation model
+
++++
+
+Solving the diffusion equation yields $\phi (t, \mathbf{r}_0, \mathbf{r}_1)$, which denotes the power transmitted through the scattering medium with $\mathbf{r}_0$ representing the position illuminated by the laser, $\mathbf{r}_1$ being the position on the far side of the scatterer and $t$ denoting the time. 
+
+The function $\phi$ involves parameters describing the scattering properties of the scattering medium which have to be calibrated w.r.t. the actual medium.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+The complete transient image stack for position $\mathbf{r}_0$ is the result of light diffusion through the scattering medium, free-space propagation to and back from the point $\mathbf{x}$ on the hidden object and diffusion back through the scattering medium. 
+
+Due to the confocal nature of the setup (i.e., the same point on the scatterer is illuminated and observed) and since the thickness of the scattered is small compared to the distance between the scatterer and the hidden object, we can assume that $\mathbf{r}_1 \approx \mathbf{r}_2$, leading to 
+
+$\begin{align} 
+   \tau (t, \mathbf{r}_0) &= \underbrace{\phi (t, \mathbf{r}_0, \mathbf{r}_1) * \phi (t, \mathbf{r}_0, \mathbf{r}_1)}_{\bar{\phi}} * I(t, \mathbf{r}_1, \mathbf{r}_1) \\
+   &= \bar{\phi }*I \,,
+\end{align}$
+
+with $I(t, \mathbf{r}_1, \mathbf{r}_1)$ denoting the free-space propagation from $\mathbf{r}_1$ to the hidden object and back to $\mathbf{r}_1$.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Notice that $I$ is essentially the same as for non-line-of-sight imaging and can thus be handled via the light cone transform.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+The image formation process can now be expressed in matrix notation:
+
+$\begin{align} 
+   \boldsymbol{\tau} = \bar{\Phi} \mathbf{A} \boldsymbol{\rho} \,,
+\end{align}$
+
+with observed measurements $\boldsymbol{\tau}$, the convolutional diffusion operator $\bar{\Phi}$, the free-space propagation operator $\mathbf{A}$ and the albedo $\boldsymbol{\rho}$ of the hidden object.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+### Reconstruction
+
++++
+
+The sought albedo $\boldsymbol{\rho}$ of the hidden object can be recovered by means of a Wiener filter-based approach from the observed measurements $\boldsymbol{\tau}$:
+
+$\begin{align} 
+   \hat{\boldsymbol{\rho}} = \mathbf{A} ^{-1} \mathbf{F}^{-1} \frac{\hat{\bar{\Phi}}^*}{\left| \hat{\bar{\Phi}} \right|^2 + \frac{1}{SNR} } \mathbf{F} \boldsymbol{\tau} \,,
+\end{align}$
+
+with Fourier transform operator $\mathbf{F}$ and inverse Fourier transform operator $\mathbf{F}^{-1}$, the Fourier transform $\hat{\bar{\Phi}}$ of $\bar{\Phi}$ and its complex conjugate $\hat{\bar{\Phi}}^*$, the signal-to-noise ratio $SNR$ and the light cone transform-based inversion $\mathbf{A}^{-1}$ of the free-space operator $\mathbf{A}$.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+### Experimental results
+
++++
+
+Experimental results achieved with the described approach are reported in the corresponding paper [Three-dimensional imaging through scattering media based on confocal diffuse tomography](https://www.computationalimaging.org/publications/confocal-diffuse-tomography/) by David B. Lindell and Gordon Wetzstein.
