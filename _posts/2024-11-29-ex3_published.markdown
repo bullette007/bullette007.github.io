@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Exercise 3 and solutions of exercises 1 and 2 published"
-date:   2022-11-29 09:40:00 +0200
+date:   2024-11-29 09:40:00 +0200
 categories: jekyll update
 ---
 

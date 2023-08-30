@@ -4,7 +4,7 @@ title: Recordings
 permalink: /recordings/
 ---
 
-Here you can find the recordings of the lectures.
+Here you can find the recordings of the lectures from winter term 2022 / 2023.
 
 | Date | Recording |
 |:-----:|:----------:|

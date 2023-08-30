@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Lecture continues"
-date:   2022-10-31 12:01:00 +0200
+date:   2024-10-31 12:01:00 +0200
 categories: jekyll update
 ---
 

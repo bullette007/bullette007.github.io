@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "No lecture on December 7"
-date:   2022-12-05 06:00:00 +0200
+date:   2024-12-05 06:00:00 +0200
 categories: jekyll update
 ---
 

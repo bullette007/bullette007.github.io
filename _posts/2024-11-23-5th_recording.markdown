@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Recording of lecture 5 and exercise 2"
-date:   2022-11-23 17:30:00 +0200
+date:   2024-11-23 17:30:00 +0200
 categories: jekyll update
 ---
 

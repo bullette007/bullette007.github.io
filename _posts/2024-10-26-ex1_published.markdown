@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Exercise 1 published"
-date:   2022-10-26 12:00:00 +0200
+date:   2024-10-26 12:00:00 +0200
 categories: jekyll update
 ---
 
