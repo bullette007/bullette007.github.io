@@ -643,7 +643,16 @@ The visible structures are caused by the diffuser that focuses the incident ligh
 
 When the single illuminating point source is moved laterally, the PSF is also shifted laterally on the sensor. When the point source is moved axially, the PSF is scaled (getting larger for a decreasing distance to the modulator and larger for increasing distance).
 
-+++ {"slideshow": {"slide_type": "fragment"}}
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+interact(lambda i: showFig('figures/7/diffuser_cam_shift_invaraince_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=6), step=1, value=(max_i if book else min_i)))
+```
+
++++ {"slideshow": {"slide_type": "subslide"}}
 
 The forward model can be represented by a linear model
 

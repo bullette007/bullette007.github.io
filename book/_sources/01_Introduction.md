@@ -319,23 +319,23 @@ Both opaque and transparent test objects can be illuminated with specifically ad
 
 Tentative course schedule:
 
-| Nr. |    Date    |          Lecture (14:00 - 15:30)          |                Exercise (15:45 - 17:15)               |
-|-----|:----------:|:-----------------------------------------:|:-----------------------------------------------------:|
-| 1   | 26.10.2022 |          Introduction<br> Basics          |                                                       |
-| 2   | 02.11.2022 |                   Basics                  |                                                       |
-| 3   | 09.11.2022 |            Light field methods            |        Fourier transforms<br> Mitsuba renderer        |
-| 4   | 16.11.2022 |            Light field methods            |                                                       |
-| 5   | 23.11.2022 |          Light transport analysis         | Light field calculations<br> Mitsuba for light fields |
-| 6   | 30.11.2022 | Neural networks for computational imaging |                                                       |
-| 7   | 07.12.2022 | Inverse problems in computational imaging |    Light transport calculations<br>Neural networks    |
-| 8   | 14.12.2022 | Inverse problems in computational imaging |                                                       |
-| 9   | 21.12.2022 | Inverse problems in computational imaging |                    Inverse problems                   |
-| 10  | 11.01.2023 |           Coded aperture imaging          |                                                       |
-| 11  | 18.01.2023 |                Diffusor Cam               |                    Inverse problems                   |
-| 12  | 25.01.2023 |              Lensless imaging             |                                                       |
-| 13  | 01.02.2023 |              Flutter shutter              |                      Diffusor Cam                     |
-| 14  | 08.02.2023 |               Phase imaging               |                                                       |
-| 15  | 15.02.2023 |   Non-line-of-sight imaging<br> Round up  |                    Lensless imaging                   |
+| Nr. |    Date    |          Lecture (14:00 - 15:30)                          |                Exercise (15:45 - 17:15)               |
+|-----|:----------:|:---------------------------------------------------------:|:-----------------------------------------------------:|
+| 1   | 25.10.2023 |          Introduction<br> Basics                          |                                                       |
+| 2   | 01.11.2023 |	No lecture - public holiday                            |                                                       |
+| 3   | 08.11.2023 |                   Basics                                  |                                                       |
+| 4   | 17.11.2023 |            Light field methods                            |        Fourier transforms<br> Mitsuba renderer        |
+| 5   | 22.11.2023 |            Light field methods                            |                                                       |
+| 6   | 29.11.2023 |            Light field methods                            | Light field calculations<br> Mitsuba for light fields |
+| 7   | 06.12.2023 |          Light transport analysis                         |                                                       |
+| 8   | 13.12.2023 | Neural networks for computational imaging                 |              Light transport calculations             |
+| 9   | 20.12.2023 | Inverse problems in computational imaging                 |                                                       |
+| 10  | 10.01.2024 | Inverse problems in computational imaging                 |    Inverse problems                                   |
+| 11  | 17.01.2024 | Inverse problems in computational imaging                 |                                                       |
+| 12  | 24.01.2024 |             Lensless imaging                              |    Inverse problems                                   |
+| 13  | 31.01.2024 |Coded exposure photography <br> Quantitative phase imaging |                                                       |
+| 14  | 07.02.2024 |  Coded spectral snapshot imaging                          |          DiffuserCam                                  |
+| 15  | 14.02.2024 |      Time of flight imaging<br> Round up                  |                                                       |
 
 +++ {"tags": ["remove-cell"]}
 
@@ -394,16 +394,16 @@ The following topics will be covered in the remaining classes of this course:
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-##### Christmas?
+##### Christmas
 
-Who will (still) be there on 21.12.2022? <br> $\Rightarrow$ We might skip that lecture.
+Last lecture before christmas brake on 20.12.2022.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Exam
 
 Can be oral or written (depends a bit on number of participants).<br>
-Any preferences?
+Date for potential written exam: Monday 11.03.2024 11:00 - 12:00. NTI Hörsaal (Nachrichtentechnik)
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 

@@ -611,9 +611,10 @@ with $\varepsilon$ denoting the width of the impulse.
 For $\varepsilon \rightarrow 0$ it holds:
 
 $\begin{align}
- \lim_{\varepsilon \rightarrow 0} \int\limits^\infty_{-\infty} \delta_\varepsilon(x-x_0)f(x)\mathrm{d}x=f(x_0)=\int\limits^\infty_{-\infty} \delta(x-x_0)f(x) \mathrm{d}x \quad \mathrm{with}\, f(x)\, \mathrm{continuous\, at}\, x_0\,,
+ \lim_{\varepsilon \rightarrow 0} \int\limits^\infty_{-\infty} \delta_\varepsilon(x-x_0)f(x)\mathrm{d}x=f(x_0)=\int\limits^\infty_{-\infty} \delta(x-x_0)f(x) \mathrm{d}x \quad 
 \end{align}$
 <br>
+$\mathrm{with}\, f(x)\, \mathrm{continuous\, at}\, x_0\,,$<br>
 since $f(x) \approx f(x_0)$ for a sufficiently small neighborhood of $\varepsilon$ around $x_0$ because of the continuity of $f(x)$ in $x_0$, leading to<br><br>
 
 $\begin{align}
