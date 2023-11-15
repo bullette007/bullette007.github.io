@@ -324,7 +324,7 @@ Tentative course schedule:
 | 1   | 25.10.2023 |          Introduction<br> Basics                          |                                                       |
 | 2   | 01.11.2023 |	No lecture - public holiday                            |                                                       |
 | 3   | 08.11.2023 |                   Basics                                  |                                                       |
-| 4   | 17.11.2023 |            Light field methods                            |        Fourier transforms<br> Mitsuba renderer        |
+| 4   | 15.11.2023 |            Light field methods                            |        Fourier transforms<br> Mitsuba renderer        |
 | 5   | 22.11.2023 |            Light field methods                            |                                                       |
 | 6   | 29.11.2023 |            Light field methods                            | Light field calculations<br> Mitsuba for light fields |
 | 7   | 06.12.2023 |          Light transport analysis                         |                                                       |

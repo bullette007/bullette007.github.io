@@ -44,6 +44,7 @@ import ipywidgets as widgets
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+from scipy import ndimage
 import scipy.signal as sig
 from scipy.integrate import simpson
 from IPython.display import SVG, display, IFrame, HTML
@@ -833,7 +834,7 @@ slideshow:
 ---
 def defocusExample(r):
     psf, _, _ = createPillobxResponse(r)
-    res = sig.convolve2d(img, psf, mode='same', boundary='fill')
+    res = ndimage.convolve(img, psf, mode='constant', cval=0.0)
     imshow(res, cmap='gray')
 ```
 
