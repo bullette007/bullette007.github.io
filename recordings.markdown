@@ -4,6 +4,16 @@ title: Recordings
 permalink: /recordings/
 ---
 
+Recordings of the current winter semester 2023 / 2024:
+
+| Date | Recording |
+|:-----:|:----------:|
+| 25.10.2023 | [Lecture 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL01.mkv) |
+| 08.11.2023 | [Lecture 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL02.mkv) |
+| 15.11.2023 | [Lecture 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL03.mkv) |
+| 15.11.2022 | [Exercise 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_EX01.mkv) |
+
+
 Here you can find the recordings of the lectures from winter term 2022 / 2023.
 
 | Date | Recording |
