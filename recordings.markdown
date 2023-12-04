@@ -6,13 +6,15 @@ permalink: /recordings/
 
 Recordings of the current winter semester 2023 / 2024:
 
-| Date | Recording |
-|:-----:|:----------:|
-| 25.10.2023 | [Lecture 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL01.mkv) |
-| 08.11.2023 | [Lecture 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL02.mkv) |
-| 15.11.2023 | [Lecture 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL03.mkv) |
-| 15.11.2022 | [Exercise 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_EX01.mkv) |
-| 22.11.2023 | [Lecture 4](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL04.mkv) |
+| Date | Recording | Notes |
+|:----:|:---------:|:-----:|
+| 25.10.2023 | [Lecture 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL01.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_VL_01.pdf) |
+| 08.11.2023 | [Lecture 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL02.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_VL_02.pdf) |
+| 15.11.2023 | [Lecture 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL03.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_VL_03.pdf) |
+| 15.11.2022 | [Exercise 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_EX01.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_EX_01.pdf) |
+| 22.11.2023 | [Lecture 4](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL04.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_VL_04.pdf) |
+| 29.11.2023 | [Lecture 5](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_VL05.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_VL_05.pdf) |
+| 29.11.2022 | [Exercise 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_EX02.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2023_EX_02.pdf) |
 
 
 Here you can find the recordings of the lectures from winter term 2022 / 2023.
