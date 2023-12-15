@@ -371,17 +371,19 @@ plt.figure()
 plt.plot(xs, ys_sigm)
 plt.title("Sigmoid")
 plt.ylim(-0.01, 1.01)
-#plt.axhline(0, color='k', linewidth=0.8)
-#plt.axvline(0, color='k', linewidth=0.8)
-#plt.gca().spines['top'].set_visible(False)
-#plt.gca().spines['right'].set_visible(False)
-#plt.gca().spines['bottom'].set_visible(False)
-#plt.gca().spines['left'].set_visible(False)
-#plt.grid()
-#plt.savefig("sigmoid.pdf")
+plt.axhline(0, color='k', linewidth=0.8)
+plt.axvline(0, color='k', linewidth=0.8)
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.gca().spines['bottom'].set_visible(False)
+plt.gca().spines['left'].set_visible(False)
+plt.grid()
+plt.savefig("sigmoid.pdf")
 ```
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 plt.rcParams['mathtext.fontset'] = 'stix'
 plt.rcParams['font.family'] = 'STIXGeneral'
 #plt.rcParams['font.size'] = 9
@@ -410,6 +412,7 @@ plt.savefig("sigmoid.pdf")
 init_cell: true
 slideshow:
   slide_type: subslide
+tags: [remove-cell]
 ---
 plt.figure()
 plt.plot(xs, ys_relu)
