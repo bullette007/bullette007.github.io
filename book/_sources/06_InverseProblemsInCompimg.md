@@ -539,7 +539,7 @@ In order to obtain a noise-free image, one would need to obtain $\lambda$ by mea
 Since the joint probability of two independent events is the product of their individual probabilities, the joint probability of recording the intensities $g$ of a whole image can expressed via:
 
 $\begin{align} 
-   P(g) = \prod_{(x,y)\in \Omega_g} \mathrm{e}^{-\Lambda_{x,y}} \cdot \frac{\Lambda_{x,y}^{b_{x,y}}}{g_{x,y}!} \,,
+   P(g) = \prod_{(x,y)\in \Omega_g} \mathrm{e}^{-\Lambda_{x,y}} \cdot \frac{\Lambda_{x,y}^{g_{x,y}}}{g_{x,y}!} \,,
 \end{align}$
 
 with $\Omega_g$ denoting the spatial support of the image $g$, $\Lambda_{x,y}$ denoting the value of the sought noise-free image $\Lambda$ at position $(x,y)$ and $g_{x,y}$ denoting the pixel value of the image $g$ at position $(x,y)$. All operations are considered element-wise. 
@@ -692,7 +692,7 @@ $
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
- The data fidelity term ensures that the sought solution $\mathbf{\hat{x}}$ matches the observed data $\mathbf{b}$ when fed through the image formation process (modelled by $\mathbf{A}$). The regularization operator $\Psi : \mathbb{R}^{N} \rightarrow \mathbb{R}^M$ models prior knowledge about the unknown original data $\mathbf{x}$. The scalar parameter $\lambda $ balances between the data fidelity term and the regularization term and hence $\lambda \in [ 0,1 ]$.
+ The data fidelity term ensures that the sought solution $\mathbf{\hat{x}}$ matches the observed data $\mathbf{b}$ when fed through the image formation process (modelled by $\mathbf{A}$). The regularization operator $\Psi : \mathbb{R}^{N} \rightarrow \mathbb{R}$ models prior knowledge about the unknown original data $\mathbf{x}$. The scalar parameter $\lambda $ balances between the data fidelity term and the regularization term and hence $\lambda \in [ 0,1 ]$.
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
@@ -795,29 +795,29 @@ Similar to calculating the gradient of the target function $f$ in gradient desce
 Assume $f:\mathbb{R} ^n \rightarrow  \mathbb{R} \cup \left\{ +\infty \right\} $ to be a closed proper convex function, i.e., with its *epigraph*
 
 $\begin{align} 
-   \mathrm{epi}_t f := \left\{ (x,t) \in \mathbb{R} ^n \times \mathbb{R} \vert f(x) \leq  t  \right\}
+   \mathrm{epi}_t f := \left\{ (\mathbf{x},t) \in \mathbb{R} ^n \times \mathbb{R} \vert f(\mathbf{x}) \leq  t  \right\}
 \end{align}$
 
 being a nonempty closed convex set.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-The proximal operator $\mathrm{prox}_f (v):\mathbb{R} ^n \rightarrow \mathbb{R}^n$ of $f$ is defined as
+The proximal operator $\mathrm{prox}_f (\mathbf{v}):\mathbb{R} ^n \rightarrow \mathbb{R}^n$ of $f$ is defined as
 
 $\begin{align} 
-   \mathrm{prox}_f (v) = \argmin{x}\, \left( f(x) + \frac{1}{2} \left\| x-v \right\|^2_2  \right)  \,.
+   \mathrm{prox}_f (\mathbf{v}) = \argmin{\mathbf{x}}\, \left( f(\mathbf{x}) + \frac{1}{2} \left\| \mathbf{x}-\mathbf{v} \right\|^2_2  \right)  \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-The minimized term on the right-hand side is strongly convex and not infinite everywhere, so it has a unique solution for every $v\in \mathbb{R} ^n$.
+The minimized term on the right-hand side is strongly convex and not infinite everywhere, so it has a unique solution for every $\mathbf{v}\in \mathbb{R} ^n$.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 Often the proximal operator for the scaled function $\lambda f$, with $\lambda > 0$, is of interested, which we denote as:
 
 $\begin{align} 
-  \mathrm{prox}_{f,\lambda} (v) = \argmin{x}\, \left( f(x) + \frac{1}{2} \lambda \left\| x-v \right\|^2_2  \right)  \,.   
+  \mathrm{prox}_{f,\lambda} (\mathbf{v}) = \argmin{\mathbf{x}}\, \left( f(\mathbf{x}) + \frac{1}{2} \lambda \left\| \mathbf{x-v} \right\|^2_2  \right)  \,.   
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -826,9 +826,9 @@ $\begin{align}
 
 +++
 
-Intuitively, a proximal operator $\mathrm{prox}_f (v)$ yields a point that is a compromise between minimizing $f$ and being  near to $v$. 
+Intuitively, a proximal operator $\mathrm{prox}_f (\mathbf{v})$ yields a point that is a compromise between minimizing $f$ and being  near to $\mathbf{v}$. 
 
-In the scaled version $\mathrm{prox}_{f,\lambda} (v)$, $\lambda$ acts like a relative weight between the two terms.
+In the scaled version $\mathrm{prox}_{f,\lambda} (\mathbf{v})$, $\lambda$ acts like a relative weight between the two terms.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -838,16 +838,16 @@ The effect of a proximal operator can be visualized as follows:
 
 +++
 
-Points $v$ inside the domain of $f$ are moved by the proximal operator so that they stay in the domain and get closer to the minimum of $f$. 
+Points $\mathbf{v}$ inside the domain of $f$ are moved by the proximal operator so that they stay in the domain and get closer to the minimum of $f$. 
 
-Points $v$ outside the domain of $f$ are moved onto the boundary of $f$ and in the direction of the minimum of $f$.
+Points $\mathbf{v}$ outside the domain of $f$ are moved onto the boundary of $f$ and in the direction of the minimum of $f$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Proximal operators can also be interpreted as a kind of gradient descent step in the sense that 
 
 $\begin{align} 
-   \mathrm{prox}_{f, \lambda}(v) \approx v - \lambda \nabla f(v) \,,
+   \mathrm{prox}_{f, \lambda}(\mathbf{v}) \approx \mathbf{v} - \lambda \nabla f(\mathbf{v}) \,,
 \end{align}$
 
 when $\lambda$ is small and $f$ is differentiable.

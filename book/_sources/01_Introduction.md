@@ -329,7 +329,7 @@ Tentative course schedule:
 | 6   | 29.11.2023 | Light field methods                                                                  | Light field calculations  Mitsuba for light fields |
 | 7   | 06.12.2023 | Light transport analysis                                                             |                                                    |
 | 8   | 13.12.2023 | Neural networks for computational imaging                                            |                                                    |
-| 9   | 20.12.2023 | Neural networks for computational imaging  Inverse problems in computational imaging | Light transport calculations                       |
+| 9   | 20.12.2023 | Neural networks for computational imaging <br> Inverse problems in computational imaging | Light transport calculations                       |
 | 10  | 10.01.2024 | Inverse problems in computational imaging                                            |                                                    |
 | 11  | 17.01.2024 | Inverse problems in computational imaging                                            | Inverse problems                                   |
 | 12  | 24.01.2024 | Lensless imaging                                                                     |                                                    |
