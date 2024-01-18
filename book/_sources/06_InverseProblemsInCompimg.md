@@ -610,7 +610,7 @@ with element-wise multiplication and division.
 For an initial guess of $\hat{s}_0 := g$, the gradient descent iteration for the Richardson-Lucy algorithm is
 
 $\begin{align} 
-  \hat{s}_{i+1} = \hat{s}_i - \eta \nabla J(s_i) = \hat{s}_i - \eta \left( 1 - \frac{g}{s_i*h} \right) * h\transp \,.
+  \hat{s}_{i+1} = \hat{s}_i - \eta \nabla J(\hat{s}_i) = \hat{s}_i - \eta \left( 1 - \frac{g}{\hat{s}_i*h} \right) * h\transp \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -648,7 +648,7 @@ $\begin{align}
 We use this expression to substitute $1$ in the equation before and arrive at the sought multiplicative formulation of the RL-algorithm:
 
 $\begin{align} 
-  \frac{\hat{s}_{i+1}}{\hat{s}_i} &= \frac{g}{s*h}*h\transp \quad \Leftrightarrow \\
+  \frac{\hat{s}_{i+1}}{\hat{s}_i} &= \frac{g}{\hat{s}*h}*h\transp \quad \Leftrightarrow \\
   \hat{s}_{i+1} &= \hat{s}_i \frac{g}{\hat{s}_i*h}*h\transp \,.
 \end{align}$
 
