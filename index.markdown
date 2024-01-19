@@ -17,5 +17,6 @@ Organizational information:
 * Lecture start: 25th of October.
 * Times: Every wednesday 2pm - 3:30pm, every other week 2pm - 5:15pm (with exercise)
 * Location: Building 50.34 room -119
+* Examination: **oral**, please arrange an appointment with me
 
 The lecutre notes (work in progress!) can be accessed [here](book/index.html)
