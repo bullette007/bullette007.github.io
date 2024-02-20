@@ -12,6 +12,8 @@ Here you can find the exercises and their solutions (after discussion in the exe
 | [Exercise 2](Ex2-unsolved.zip) | [Solution 2](Ex2.zip) |
 | [Exercise 3](Ex3-unsolved.zip) | [Solution 3](Ex3.zip) |
 | [Exercise 4](Ex4-unsolved.ipynb) | [Solution 4](Ex4.ipynb) |
+| [Exercise 5](Ex5-unsolved.ipynb) | [Solution 5](Ex5.ipynb) |
+| [Exercise 6](Ex6-unsolved.zip) | [Solution 6](Ex6.zip) |
 
 <!-- 
 | [Exercise 1](Ex1-unsolved.ipynb) | [Solution 1](Ex1.zip) |
