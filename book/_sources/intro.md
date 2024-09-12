@@ -1,4 +1,4 @@
-# Computational Imaging - Course Notes for Winter Term 2023 / 2024
+# Computational Imaging - Course Notes
 
 Here are the course notes for the currently running lecture **Computational Imaging** taught at Karlsruhe Institute of Technology (see https://computational-imaging.de).
 

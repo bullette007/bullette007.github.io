@@ -649,7 +649,7 @@ init_cell: true
 slideshow:
   slide_type: subslide
 ---
-interact(lambda i: showFig('figures/7/diffuser_cam_shift_invaraince_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=6), step=1, value=(max_i if book else min_i)))
+interact(lambda i: showFig('figures/7/diffuser_cam_shift_invaraince_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=7), step=1, value=(max_i if book else min_i)))
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
