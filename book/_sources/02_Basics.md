@@ -1286,3 +1286,142 @@ plt.plot(xs,gs)
 
 ##### Note
 In practice, one would employ one of the existing, highly optimized libraries to perform the DFT calculation, e.g., the `numpy.fft` module.
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+### Analysis of optical systems in Fourier space
+
++++
+
+We learnt: The effect of an LSI on an input signal $g(x)$ can be obtained via convolution with the system's PSF $h(x)$:
+
+$\begin{align}
+  k(x) = \mathscr{S} \left\{ g(x) \right\} = g(x) * h(x)
+\end{align}$
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+According to the convolution theorem of the Fourier transform it is:
+
+$\begin{align} 
+  \F \left\{ k(x) \right\} = K(f) = G(f) \cdot H(f) \,.
+\end{align}$
+
+So the Fourier transform of the PSF determines to what extent every spatial frequency is propagated through the LSI.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+#### Optical transfer function
+
+The optical transfer function $\mathrm{OTF}(f)$ is defined as the Fourier transform of the PSF $h(x)$:
+
+$\begin{align} 
+   \mathrm{OTF}(f) := \F \left\{ h(x) \right\} \,.
+\end{align}$
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+#### Modulation transfer function
+
+Since the $\mathrm{OTF}$ is typically complex-valued and hence hard to visualize, one often relies on the modulation transfer function $\mathrm{MTF}(f)$ which is the absolute value of the $\mathrm{OTF}$:
+
+$\begin{align} 
+   \mathrm{MTF}(f) := \left| \mathrm{OTF} (f) \right| \,.
+\end{align}$
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+For visualizations the MTF is often also normalized w.r.t. the direct component (i.e., $\mathrm{MTF}(0)$).
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+#### Example modulation transfer functions
+
+{"slideshow": {"slide_type": "subslide"}}
+
+##### In-focus optical system
+
+The PSF of an optical system producing a sharp image is just $\delta(x)$, i.e., it is
+
+$\begin{align} 
+   \mathscr{S}\left\{ g(x) \right\} = g(x) \,.
+\end{align}$
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Hence, the OTF has to be equal to one, i.e., $\mathrm{OTF}(f) \equiv 1$, since the input signal is left untouched by the system.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+This implies $\mathrm{MTF}(f) \equiv  1$.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Defocused optical system
+
+```{code-cell} ipython3
+:init_cell: true
+:tags: [remove-cell]
+
+def pad_like(inp : np.ndarray, like : np.ndarray):
+    to_pad = tuple(np.int32((np.array(like.shape) - np.array(inp.shape))/2))
+    return np.pad(inp, ((to_pad[0], to_pad[0]), (to_pad[1], to_pad[1])))
+def make_odd_shapes(inp : np.ndarray) -> np.ndarray:
+    if (inp.shape[0] % 2 == 0):
+        inp = inp[0:-1,:]
+    if (inp.shape[1] % 2 == 0):
+        inp = inp[:,0:-1]
+    return inp
+```
+
+```{code-cell} ipython3
+:init_cell: true
+:tags: [remove-cell]
+
+img2 = make_odd_shapes(img)
+```
+
+```{code-cell} ipython3
+:init_cell: true
+:tags: [remove-cell]
+
+def defocusMTF(r):
+    psf, _, _ = createPillobxResponse(r)
+    psf = make_odd_shapes(psf)
+    psf2 = pad_like(psf, img2)
+    mtf = np.abs(np.fft.fft2(np.fft.ifftshift(psf2)))
+    mtf = mtf / mtf[int(mtf.shape[0]/2), int(mtf.shape[1]/2)]
+    res = ndimage.convolve(img2, psf, mode='constant', cval=0.0)
+    
+    rows = 3
+    
+    xs = np.arange(0, mtf.shape[1]) - int(mtf.shape[1]/2)
+    
+    plt.figure(figsize=(8, 5))
+    
+    plt.subplot(rows,2,1)
+    plt.plot(xs, psf2[int(psf2.shape[0]/2), :])
+    ax = plt.gca()
+    ax.set_ylabel("$\mathrm{PSF}(x)$")
+    ax.set_xlabel("$x$")
+    ax.spines['bottom'].set_position('zero')
+
+    plt.subplot(rows,2,2)
+    plt.plot(xs, mtf[int(mtf.shape[0]/2), :])
+    ax = plt.gca()
+    cur_min = ax.get_ylim()
+    
+    ax.set_ylim((0,cur_min[1]))
+    ax.set_ylabel("$\mathrm{MTF}(f_x) / \mathrm{MTF}(\mathbf{0})$")
+    ax.set_xlabel("$f_x$")
+    ax.spines['bottom'].set_position('zero')
+    plt.subplot(rows,2,(3,6))
+    plt.imshow(res, cmap='gray')
+    plt.tight_layout()
+```
+
+```{code-cell} ipython3
+:init_cell: true
+
+interact(lambda i: defocusMTF(i), i=widgets.IntSlider(min=(min_i:=0),max=(max_i:=10), step=1, value=(3 if book else min_i)))
+

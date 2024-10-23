@@ -319,67 +319,23 @@ Both opaque and transparent test objects can be illuminated with specifically ad
 
 Tentative course schedule:
 
-| Nr. | Date       | Lecture (14:00 - 15:30)                                                              | Exercise (15:45 - 17:15)                           |
-|-----|------------|--------------------------------------------------------------------------------------|----------------------------------------------------|
-| 1   | 25.10.2023 | Introduction  Basics                                                                 |                                                    |
-| 2   | 01.11.2023 | No lecture - public holiday                                                          |                                                    |
-| 3   | 08.11.2023 | Basics                                                                               |                                                    |
-| 4   | 15.11.2023 | Light field methods                                                                  | Fourier transforms  Mitsuba renderer               |
-| 5   | 22.11.2023 | Light field methods                                                                  |                                                    |
-| 6   | 29.11.2023 | Light field methods                                                                  | Light field calculations  Mitsuba for light fields |
-| 7   | 06.12.2023 | Light transport analysis                                                             |                                                    |
-| 8   | 13.12.2023 | Neural networks for computational imaging                                            |                                                    |
-| 9   | 20.12.2023 | Neural networks for computational imaging <br> Inverse problems in computational imaging | Light transport calculations                       |
-| 10  | 10.01.2024 | Inverse problems in computational imaging                                            |                                                    |
-| 11  | 17.01.2024 | Inverse problems in computational imaging                                            | Inverse problems                                   |
-| 12  | 24.01.2024 | Lensless imaging                                                                     |                                                    |
-| 13  | 31.01.2024 | Coded exposure photography   Quantitative phase imaging                              | Inverse problems                                   |
-| 14  | 07.02.2024 | Coded spectral snapshot imaging                                                      |                                                    |
-| 15  | 14.02.2024 | Time of flight imaging  Round up                                                     | DiffuserCam                                        |
-
-+++ {"tags": ["remove-cell"]}
-
-The following topics will be covered in the remaining classes of this course:
-* Introduction
-    * What is computational photography?
-    * Motivating example applications (photography, medical imaging, visual inspection)
-    * Course roadmap
-* Fundamental basics
-    * Optics
-    * Illumination
-    * Image acquisition and image formation process (including basic system theory)
-    * Digital image representation
-* Light field methods
-    * Introduction into light fields
-    * Photography applications
-        * Light field camera
-        * Digital refocusing
-        * Visualizing refractive phenomena in transparent media
-            * Schlieren imaging
-            * Light field illumination (directional light field probes)
-    * Visual inspection applications
-    * Light field laser scanning
-    * Light deflection map processing
-    * Inverse illumination (work by Dr. Gruna)
-    * Inverse light field illumination
-* Light transport analysis
-    * Optical power iterations
-    * Light transport matrices
-    * Indirect light imaging
-* Holistic optical design
-    * Deconvolution / inverse problems
-    * Closed-form methods (inverse filter, Wiener filter)
-    * Iterative methods
-        * ADMM (alternating direction method of multipliers)
-    * Compressed sensing
-    * Coded aperture imaging
-        * Transmission masks
-        * Phase masks
-        * Hadamard codes
-        * Lensless imaging
-•	Further topics
-    * Phase imaging
-    * Fourier Ptychography
+| Nr. 	| Date       	| Lecture (14:00 - 15:30)                                                                  	| Exercise (15:45 - 17:15)                             	|
+|-----	|:------------	|:------------------------------------------------------------------------------------------	|:------------------------------------------------------	|
+| 1   	| 23.10.2024 	| Introduction <br> Basics                                                                 	|                                                      	|
+| 2   	| 30.10.2024 	| Basics                                                                                   	|                                                      	|
+| 3   	| 06.11.2024 	| Light field methods                                                                      	| Fourier transforms<br>Mitsuba renderer               	|
+| 4   	| 13.11.2024 	| Light field methods                                                                      	|                                                      	|
+| 5   	| 20.11.2024 	| Light field methods                                                                      	| Light field calculations<br>Mitsuba for light fields 	|
+| 6   	| 27.11.2024 	| Light transport analysis                                                                 	|                                                      	|
+| 7   	| 04.12.2024 	| Neural networks for computational imaging                                                	| Light transport calculations                         	|
+| 8   	| 11.12.2024 	| Neural networks for computational imaging <br> Inverse problems in computational imaging 	|                                                      	|
+| 9   	| 18.12.2024 	| Inverse problems in computational imaging                                                	| Inverse problems                                     	|
+| 10  	| 08.01.2025 	| Inverse problems in computational imaging                                                	|                                                      	|
+| 11  	| 15.01.2025 	| Lensless imaging                                                                         	| Inverse problems                                     	|
+| 12  	| 22.01.2025 	| Coded exposure photography <br> Quantitative phase imaging                               	|                                                      	|
+| 13  	| 29.01.2025 	| Coded spectral snapshot imaging <br> Fourier ptychography                                	| DiffuserCam                                          	|
+| 14  	| 05.02.2025 	| End-to-end optimization of computational imaging system                                  	|                                                      	|
+| 15  	| 12.02.2025 	| Time of flight imaging <br> Round up                                                     	| End-to-end optimization                              	|                        |
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
@@ -396,14 +352,13 @@ The following topics will be covered in the remaining classes of this course:
 
 ##### Christmas
 
-Last lecture before christmas brake on 20.12.2022.
+Last lecture before christmas brake on 18.12.2024.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Exam
 
-Can be oral or written (depends a bit on number of participants).<br>
-Date for potential written exam: Monday 11.03.2024 11:00 - 12:00. NTI Hörsaal (Nachrichtentechnik)
+Will be oral - contact me for an examination appointment.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
