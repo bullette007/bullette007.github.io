@@ -100,6 +100,21 @@ def imshow(img, cmap=None):
     plt.show()
 ```
 
+```{code-cell} ipython3
+:init_cell: true
+:tags: [remove-cell]
+
+def pad_like(inp : np.ndarray, like : np.ndarray):
+    to_pad = tuple(np.int32((np.array(like.shape) - np.array(inp.shape))/2))
+    return np.pad(inp, ((to_pad[0], to_pad[0]), (to_pad[1], to_pad[1])))
+def make_odd_shapes(inp : np.ndarray) -> np.ndarray:
+    if (inp.shape[0] % 2 == 0):
+        inp = inp[0:-1,:]
+    if (inp.shape[1] % 2 == 0):
+        inp = inp[:,0:-1]
+    return inp
+```
+
 +++ {"slideshow": {"slide_type": "slide"}}
 
 $\begin{align}
@@ -1287,11 +1302,96 @@ plt.plot(xs,gs)
 ##### Note
 In practice, one would employ one of the existing, highly optimized libraries to perform the DFT calculation, e.g., the `numpy.fft` module.
 
++++ {"slideshow": {"slide_type": "subslide"}}
+
+#### Example Fourier transform-based image filtering
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+plt.figure()
+plt.imshow(img, cmap='gray')
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+img_fft = np.fft.fft2(make_odd_shapes(img))
+plt.figure()
+img_fft = np.fft.fftshift(img_fft)
+plt.imshow(np.log(np.abs(img_fft)))
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+r = 10
+psf, _, _ = createPillobxResponse(r)
+psf = pad_like(psf, img_fft)
+plt.figure()
+plt.imshow(psf)
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+img_filtered_fft = img_fft * psf
+plt.figure()
+plt.imshow(np.log(np.abs(img_filtered_fft)))
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+res_img = np.fft.ifft2(np.fft.ifftshift(img_filtered_fft))
+plt.figure()
+plt.imshow(np.real(res_img), cmap='gray')
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+def fourier_filtering(r):
+    psf, _, _ = createPillobxResponse(int(r*img_fft.shape[0]/2))
+    psf = pad_like(psf, img_fft)
+    img_filtered_fft = img_fft * psf
+    res_img = np.fft.ifft2(np.fft.ifftshift(img_filtered_fft))
+    plt.figure()
+    plt.imshow(np.real(res_img), cmap='gray')
+```
+
+```{code-cell} ipython3
+---
+init_cell: true
+slideshow:
+  slide_type: subslide
+---
+interact(lambda i: fourier_filtering(i), i=widgets.FloatSlider(min=(min_i:=0.02),max=(max_i:=0.5), step=0.02, value=(0.08 if book else min_i)))
+```
+
 +++ {"slideshow": {"slide_type": "slide"}}
 
 ### Analysis of optical systems in Fourier space
 
-+++
++++ {"slideshow": {"slide_type": "fragment"}}
 
 We learnt: The effect of an LSI on an input signal $g(x)$ can be obtained via convolution with the system's PSF $h(x)$:
 
@@ -1337,7 +1437,7 @@ For visualizations the MTF is often also normalized w.r.t. the direct component 
 
 #### Example modulation transfer functions
 
-{"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### In-focus optical system
 
@@ -1358,21 +1458,6 @@ This implies $\mathrm{MTF}(f) \equiv  1$.
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Defocused optical system
-
-```{code-cell} ipython3
-:init_cell: true
-:tags: [remove-cell]
-
-def pad_like(inp : np.ndarray, like : np.ndarray):
-    to_pad = tuple(np.int32((np.array(like.shape) - np.array(inp.shape))/2))
-    return np.pad(inp, ((to_pad[0], to_pad[0]), (to_pad[1], to_pad[1])))
-def make_odd_shapes(inp : np.ndarray) -> np.ndarray:
-    if (inp.shape[0] % 2 == 0):
-        inp = inp[0:-1,:]
-    if (inp.shape[1] % 2 == 0):
-        inp = inp[:,0:-1]
-    return inp
-```
 
 ```{code-cell} ipython3
 :init_cell: true
@@ -1424,4 +1509,4 @@ def defocusMTF(r):
 :init_cell: true
 
 interact(lambda i: defocusMTF(i), i=widgets.IntSlider(min=(min_i:=0),max=(max_i:=10), step=1, value=(3 if book else min_i)))
-
+```
