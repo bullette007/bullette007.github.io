@@ -1102,6 +1102,8 @@ plt.figure()
 interact(reconstrExpFourier, terms=widgets.IntSlider(min=(min_i:=1),max=(max_i:=100), step=1, value=(max_i if book else min_i)))
 ```
 
+Here you can find a great applet to play around with Fourier series: https://www.falstad.com/fourier/
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 #### Fourier transform
@@ -1336,7 +1338,7 @@ slideshow:
 ---
 r = 10
 psf, _, _ = createPillobxResponse(r)
-psf = pad_like(psf, img_fft)
+psf = pad_like(psf, img_fft) 
 plt.figure()
 plt.imshow(psf)
 ```
