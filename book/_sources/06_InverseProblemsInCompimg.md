@@ -915,7 +915,7 @@ $
 \end{align}
 $
 
-Here the matrix $D$ represents the identity matrix which is why it can be omitted.
+Here the matrix $\mathbf{D}$ represents the identity matrix which is why it can be omitted.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1104,7 +1104,7 @@ $\begin{align}\label{eq:hqs_z_2}
   \end{cases} \,.
 \end{align}$
 
-For $z\neq 0$, the absolute function is differentiable which is why its subdifferentials for those positions contains only one element ($\lambda$ or $-\lambda$ respectively). For $z=0$ there infinitely many possible slope values inside the interval $[-\lambda, \lambda]$ (note: the value $0$ is also contained in that interval, indicating that the global minimum must be at position $0$). 
+For $z\neq 0$, the absolute function is differentiable which is why its subdifferentials for those positions contain only one element ($\lambda$ or $-\lambda$ respectively). For $z=0$ there infinitely many possible slope values inside the interval $[-\lambda, \lambda]$ (note: the value $0$ is also contained in that interval, indicating that the global minimum must be at position $0$). 
 
 Combining \eqref{eq:hqs_z_1} and \eqref{eq:hqs_z_2} yields:
 
@@ -1327,7 +1327,7 @@ $\begin{align}
   \left\| \mathbf{v} \right\|_2 &> \frac{\lambda }{\rho } \,.
 \end{align}$
 
-For $\mathbf{z} = \mathbf{0}$, there is no well-defined gradient for $\left\| \mathbf{z} \right\|_2$, so we make use of the concept of subdifferentials again and derive the subdifferential of $h(\mathbf{z})$ with respect to position $\mathbf{z} = \mathbf{0}$:
+For $\mathbf{z} = \mathbf{0}$, there is no well-defined gradient for $\left\| \mathbf{z} \right\|_2$, so we make use of the concept of subdifferentials again and derive the subdifferential of $b(\mathbf{z})$ with respect to position $\mathbf{z} = \mathbf{0}$:
 
 $\begin{align} 
   b(\mathbf{z}) &= \lambda \left\| \mathbf{z} \right\|_2 + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2 \\
