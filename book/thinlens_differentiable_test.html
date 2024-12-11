@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Archive &#8212; Computational Imaging - Course Notes</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Computational Imaging - Course Notes
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Basics.html">
+   Fundamental Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_LightFieldMethods.html">
+   Light Field Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_LightTransportAnalysis.html">
+   Light Transport Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
+   Neural Networks for Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
+   Inverse Problems in Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_LenslessImaging.html">
+   Lensless Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_CodedExposurePhotography.html">
+   Coded Exposure Photography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_QuantitativePhaseImaging.html">
+   Quantitative Phase Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_SpectralSnapshotImaging.html">
+   Coded Aperture Spectral Snapshot Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_TimeOfFlightImaging.html">
+   Time-Of-Flight Imaging
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/thinlens_differentiable_test.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Archive</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mitsuba</span> <span class="k">as</span> <span class="nn">mi</span>
+<span class="kn">import</span> <span class="nn">drjit</span> <span class="k">as</span> <span class="nn">dr</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">mi</span><span class="o">.</span><span class="n">set_variant</span><span class="p">(</span><span class="s1">&#39;cuda_ad_rgb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba\__init__.py</span> in <span class="ni">__getattribute__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>                     <span class="n">_import</span><span class="p">(</span><span class="s1">&#39;mitsuba.mitsuba_ext&#39;</span><span class="p">),</span>
+<span class="ne">--&gt; </span><span class="mi">127</span>                     <span class="n">_import</span><span class="p">(</span><span class="s1">&#39;mitsuba.mitsuba_&#39;</span> <span class="o">+</span> <span class="n">variant</span> <span class="o">+</span> <span class="s1">&#39;_ext&#39;</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>                 <span class="p">)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\__init__.py</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>             <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">127</span>     <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span> 
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_load_unlocked</span><span class="nt">(spec)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">module_from_spec</span><span class="nt">(spec)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap_external.py</span> in <span class="ni">create_module</span><span class="nt">(self, spec)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_call_with_frames_removed</span><span class="nt">(f, *args, **kwds)</span>
+
+<span class="ne">ImportError</span>: jit_init_thread_state(): the CUDA backend is inactive because it has not been initialized via jit_init(), or because the CUDA driver library (&quot;nvcuda.dll&quot;) could not be found! Set the DRJIT_LIBCUDA_PATH environment variable to specify its path.
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">24</span><span class="n">b18350307f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">mi</span><span class="o">.</span><span class="n">set_variant</span><span class="p">(</span><span class="s1">&#39;cuda_ad_rgb&#39;</span><span class="p">)</span>
+
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba\__init__.py</span> in <span class="ni">set_variant</span><span class="nt">(self, *args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">341</span>                 <span class="n">_reload</span><span class="p">(</span><span class="n">_sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;mitsuba.ad.integrators&#39;</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">342</span>             <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">343</span>                 <span class="n">_import</span><span class="p">(</span><span class="s1">&#39;mitsuba.ad.integrators&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">344</span>             <span class="k">del</span> <span class="n">sys</span>
+<span class="g g-Whitespace">    </span><span class="mi">345</span> 
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\__init__.py</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>                 <span class="k">break</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>             <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">127</span>     <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span> 
+<span class="g g-Whitespace">    </span><span class="mi">129</span> 
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_call_with_frames_removed</span><span class="nt">(f, *args, **kwds)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_gcd_import</span><span class="nt">(name, package, level)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_find_and_load</span><span class="nt">(name, import_)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_find_and_load_unlocked</span><span class="nt">(name, import_)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_load_unlocked</span><span class="nt">(spec)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap_external.py</span> in <span class="ni">exec_module</span><span class="nt">(self, module)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\_bootstrap.py</span> in <span class="ni">_call_with_frames_removed</span><span class="nt">(f, *args, **kwds)</span>
+
+<span class="ne">c</span>:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba/python\ad\__init__.py in &lt;module&gt;
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">.integrators</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">.optimizers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.reparam</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="ne">c</span>:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba/python\ad\integrators\__init__.py in &lt;module&gt;
+<span class="g g-Whitespace">     </span><span class="mi">23</span>             <span class="n">importlib</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="nb">globals</span><span class="p">()[</span><span class="n">name</span><span class="p">])</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">25</span>             <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;mitsuba.ad.integrators.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> 
+<span class="g g-Whitespace">     </span><span class="mi">27</span>         <span class="k">del</span> <span class="n">name</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python38\lib\importlib\__init__.py</span> in <span class="ni">import_module</span><span class="nt">(name, package)</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>                 <span class="k">break</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>             <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">127</span>     <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span> 
+<span class="g g-Whitespace">    </span><span class="mi">129</span> 
+
+<span class="ne">c</span>:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba/python\ad\integrators\common.py in &lt;module&gt;
+<span class="g g-Whitespace">      </span><span class="mi">6</span> 
+<span class="g g-Whitespace">      </span><span class="mi">7</span> 
+<span class="ne">----&gt; </span><span class="mi">8</span> <span class="k">class</span> <span class="nc">ADIntegrator</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">CppADIntegrator</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span><span class="s2">     Abstract base class of numerous differentiable integrators in Mitsuba</span>
+
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba\__init__.py</span> in <span class="ni">__getattribute__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span><span class="s2">             sub_suffix = &#39;&#39; if submodule is None else f&#39;.</span><span class="si">{submodule}</span><span class="s2">&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">278</span><span class="s2">             module = _sys.modules[f&#39;mitsuba.</span><span class="si">{variant}{sub_suffix}</span><span class="s2">&#39;]</span>
+<span class="ne">--&gt; </span><span class="mi">279</span><span class="s2">             result = module.__getattribute__(key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">280</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">281</span><span class="s2">         # Add set_variant(), variant() and variant modules to the __dict__</span>
+
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\mitsuba\__init__.py</span> in <span class="ni">__getattribute__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">136</span><span class="s2">                     raise AttributeError(&#39;Mitsuba variant &quot;</span><span class="si">%s</span><span class="s2">&quot; not found.&#39; % variant)</span>
+<span class="g g-Whitespace">    </span><span class="mi">137</span><span class="s2">                 else:</span>
+<span class="ne">--&gt; </span><span class="mi">138</span><span class="s2">                     raise AttributeError(e)</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span><span class="s2">             finally:</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span><span class="s2">                 # Remove those modules from _sys.modules as only the</span>
+
+<span class="ne">AttributeError</span>: jit_init_thread_state(): the CUDA backend is inactive because it has not been initialized via jit_init(), or because the CUDA driver library (&quot;nvcuda.dll&quot;) could not be found! Set the DRJIT_LIBCUDA_PATH environment variable to specify its path.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">thin_lens_sensor</span> <span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Sensor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
+        <span class="n">mi</span><span class="o">.</span><span class="n">Sensor</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;to_world&#39;</span><span class="p">]</span>
+        <span class="c1">#print(type(t))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Transform4d</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="c1">#print(type(self.to_world))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span>  <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;foc_len&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;img_dist&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;sen_size&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;lens_rad&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">)</span>
+            
+    <span class="k">def</span> <span class="nf">sample_ray_differential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">sample3</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        
+        <span class="c1">#print(type(sample3))</span>
+        <span class="n">p_a_2d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span> <span class="o">*</span> <span class="n">mi</span><span class="o">.</span><span class="n">warp</span><span class="o">.</span><span class="n">square_to_uniform_disk_concentric</span><span class="p">(</span><span class="n">sample3</span><span class="p">)</span>
+        <span class="c1">#print(type(p_a_2d))</span>
+        <span class="n">p_a</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">(</span><span class="n">p_a_2d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_a_2d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mi</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+        
+        <span class="n">p_s</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">((</span><span class="n">sample2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">sample2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">)</span>
+        
+        <span class="n">p_o</span> <span class="o">=</span> <span class="n">p_s</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">)</span>
+        
+        <span class="n">rayd</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">RayDifferential3f</span><span class="p">()</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">has_differentials</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="n">d</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Vector3f</span><span class="p">(</span><span class="n">p_o</span> <span class="o">-</span> <span class="n">p_a</span><span class="p">))</span>
+        <span class="c1">#print(f&quot;d: {type(d)}&quot;)</span>
+        <span class="c1">#print(f&quot;p_a: {type(p_a)}&quot;)</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">@</span> <span class="n">d</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span><span class="o">.</span><span class="n">transform_affine</span><span class="p">(</span><span class="n">p_a</span><span class="p">)</span><span class="c1">#p_a</span>
+        
+        
+        <span class="c1">#rayd.d = dr.normalize(rayd.d)</span>
+        <span class="c1">#rayd.d = self.to_world.transform_affine(rayd.d)</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="n">rayd</span><span class="p">,</span> <span class="n">mi</span><span class="o">.</span><span class="n">Color3f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="n">callback</span><span class="o">.</span><span class="n">put_parameter</span><span class="p">(</span><span class="s1">&#39;focal_length&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span><span class="p">,</span> <span class="n">mi</span><span class="o">.</span><span class="n">ParamFlags</span><span class="o">.</span><span class="n">Differentiable</span><span class="p">)</span>
+
+   
+    
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;thin_lens_sensor[</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    foc_len=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    img_dist=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    sen_size=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    lens_rad=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span><span class="p">))</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mi</span><span class="o">.</span><span class="n">register_sensor</span><span class="p">(</span><span class="s2">&quot;thin_lens_sensor&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">props</span><span class="p">:</span> <span class="n">thin_lens_sensor</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">g</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">V</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">f</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">load_dict</span><span class="p">({</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;scene&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;integrator&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;prb_projective&#39;</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;sphere&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;emitter&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;area&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;radiance&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">g</span><span class="o">+</span><span class="mi">4</span><span class="p">],</span>
+    <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        
+    <span class="p">},</span>
+    <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;thin_lens_sensor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;to_world&#39;</span><span class="p">:</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarTransform4f</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                 <span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                 <span class="n">up</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+        <span class="s1">&#39;foc_len&#39;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span>
+        <span class="s1">&#39;img_dist&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+        <span class="s1">&#39;sen_size&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s1">&#39;lens_rad&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="s1">&#39;film&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;hdrfilm&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+      <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+      <span class="s1">&#39;rfilter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">},</span>
+      <span class="s1">&#39;pixel_format&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;component_format&#39;</span><span class="p">:</span> <span class="s1">&#39;float32&#39;</span><span class="p">},</span>
+     <span class="s1">&#39;sampler&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;independent&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">512</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref_image</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ref_image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x235a5c30880&gt;
+</pre></div>
+</div>
+<img alt="_images/thinlens_differentiable_test_6_2.png" src="_images/thinlens_differentiable_test_6_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SceneParameters[
+  ----------------------------------------------------------------------------------------
+  Name                                 Flags    Type        Parent
+  ----------------------------------------------------------------------------------------
+  sensor.focal_length                  ∂        Float       Sensor
+  sphere.bsdf.reflectance.value        ∂        Float       UniformSpectrum
+  sphere.emitter.sampling_weight                float       AreaLight
+  sphere.emitter.radiance.value        ∂        Color3f     SRGBReflectanceSpectrum
+  sphere.silhouette_sampling_weight             float       Sphere
+  sphere.to_world                      ∂, D     Transform4f Sphere
+]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;sensor.focal_length&#39;</span>
+<span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[5.333333492279053]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.0</span>
+<span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(thin_lens_sensor[
+      foc_len=[4.0],
+      img_dist=[16.0],
+      sen_size=10.0,
+      lens_rad=[1.0],
+  ],
+  {&#39;focal_length&#39;}),
+ (Scene[
+    children = [
+      DirectProjectiveIntegrator[max_depth = 2, rr_depth = 2],
+      thin_lens_sensor[
+          foc_len=[4.0],
+          img_dist=[16.0],
+          sen_size=10.0,
+          lens_rad=[1.0],
+      ],
+      Sphere[
+        to_world = [[1, 0, 0, 0],
+                    [0, 1, 0, 0],
+                    [0, 0, 1, 12],
+                    [0, 0, 0, 1]],
+        center = [0, 0, 12],
+        radius = 1,
+        surface_area = [12.5664],
+        bsdf = SmoothDiffuse[
+          reflectance = UniformSpectrum[value=[0]]
+        ],
+        emitter = AreaLight[
+          radiance = SRGBReflectanceSpectrum[
+            value = [[1, 1, 1]]
+          ],
+          surface_area = [12.5664],
+          &lt;no medium attached!&gt;
+        ]
+      ]
+    ]
+  ],
+  {&#39;sensor&#39;})]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x235a5ce9850&gt;
+</pre></div>
+</div>
+<img alt="_images/thinlens_differentiable_test_12_1.png" src="_images/thinlens_differentiable_test_12_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">opt</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">ad</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">opt</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">opt</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dr</span><span class="o">.</span><span class="n">grad_enabled</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">dr</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">sqr</span><span class="p">(</span><span class="n">image</span> <span class="o">-</span> <span class="n">ref_image</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iteration_count</span> <span class="o">=</span> <span class="mi">50</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iteration_count</span><span class="p">):</span>
+    <span class="c1"># Perform a (noisy) differentiable rendering of the scene</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">spp</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+    <span class="c1"># Evaluate the objective function from the current rendered image</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">mse</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;loss: </span><span class="si">{</span><span class="n">loss</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> f: </span><span class="si">{</span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Backpropagate through the rendering process</span>
+    <span class="n">dr</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+    <span class="c1"># Optimizer: take a gradient descent step</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Post-process the optimized parameters to ensure legal color values.</span>
+    <span class="c1">#opt[key] = dr.clamp(opt[key], 0.0, 1.0)</span>
+
+    <span class="c1"># Update the scene state to the new optimized values</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+
+    <span class="c1"># Track the difference between the current color and the true value</span>
+    <span class="c1">#err_ref = dr.sum(dr.sqr(param_ref - params[key]))</span>
+    <span class="c1">#print(f&quot;Iteration {it:02d}: parameter error = {err_ref[0]:6f}&quot;, end=&#39;\r&#39;)</span>
+    <span class="c1">#errors.append(err_ref)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Optimization complete.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216403424739838] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216403424739838] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216403424739838] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+loss: [0.008216402493417263] 
+ f: [4.0]
+
+Optimization complete.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[5.0]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="archive">
+<h1>Archive<a class="headerlink" href="#archive" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarTransform4d</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">up</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">tf2</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Transform4d</span><span class="p">(</span><span class="n">tf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">tf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mitsuba.cuda_ad_rgb.ChainScalarTransform4f
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">tf2</span> <span class="o">@</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mitsuba.cuda_ad_rgb.Point3d
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr.-Ing. Johannes Meyer<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

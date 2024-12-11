@@ -276,10 +276,10 @@ $\begin{align}
 For the general linear inverse problem, the vectorized image formation process is given by:
 
 $\begin{align} 
-   \mathbf{b} = \mathbf{Ax} + \mathbf{n} \,,
+   \mathbf{g} = \mathbf{Hs} + \mathbf{n} \,,
 \end{align}$
 
-where $\mathbf{b} \in \mathbb{R} ^M$ denotes the $M$ observations or measurements which are the result of the matrix-vector multiplication of the sought latent image $\mathbf{x} \in \mathbb{R} ^N$ with the so-called *measurement matrix* $\mathbf{A} \in \mathbb{R} ^{M \times N}$ and the term $\mathbf{n} \in \mathbb{R} ^M$ represents additive, signal-independent noise.
+where $\mathbf{g} \in \mathbb{R} ^M$ denotes the $M$ observations or measurements which are the result of the matrix-vector multiplication of the sought latent image $\mathbf{s} \in \mathbb{R} ^N$ with the so-called *measurement matrix* $\mathbf{H} \in \mathbb{R} ^{M \times N}$ and the term $\mathbf{n} \in \mathbb{R} ^M$ represents additive, signal-independent noise.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -288,16 +288,16 @@ where $\mathbf{b} \in \mathbb{R} ^M$ denotes the $M$ observations or measurement
 +++
 
 Interpret as random vectors:<br>
-$\stochvec{x}\sim \mathcal{N}(\mathbf{x},0)$,<br>
+$\stochvec{s}\sim \mathcal{N}(\mathbf{s},0)$,<br>
 $\stochvec{n}\sim \mathcal{N}(0,\sigma^2)$,<br>
-$ \stochvec{b}\sim \mathcal{N}((\mathbf{Ax}),\sigma^2)$
+$ \stochvec{g}\sim \mathcal{N}((\mathbf{Hs}),\sigma^2)$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 For probability of observation $ \mathbf{b}$ it holds:
 
 $\begin{align}
-    p( \mathbf{b}\vert \mathbf{x}, \sigma) \propto \exp \left( - \frac{\Vert \mathbf{b} - \mathbf{Ax} \Vert^2_2}{2\sigma^2} \right)
+    p( \mathbf{g}\vert \mathbf{s}, \sigma) \propto \exp \left( - \frac{\Vert \mathbf{g} - \mathbf{Hs} \Vert^2_2}{2\sigma^2} \right)
 \end{align}
 $
 
@@ -306,7 +306,7 @@ $
 According to Bayes' rule:
 
 $\begin{align}
-    \underbrace{p(\mathbf{x}\vert \mathbf{b},\sigma)}_{\mathrm{posterior}} = \frac{p( \mathbf{b}\vert \mathbf{x}, \sigma)\cdot p( \mathbf{x})}{p( \mathbf{b})} \propto \underbrace{p( \mathbf{b} \vert \mathbf{x}, \sigma)}_{\mathrm{image\ formation\ model}} \cdot \underbrace{p( \mathbf{x})}_\mathrm{prior}\,.
+    \underbrace{p(\mathbf{s}\vert \mathbf{g},\sigma)}_{\mathrm{posterior}} = \frac{p( \mathbf{g}\vert \mathbf{s}, \sigma)\cdot p( \mathbf{s})}{p( \mathbf{g})} \propto \underbrace{p( \mathbf{g} \vert \mathbf{s}, \sigma)}_{\mathrm{image\ formation\ model}} \cdot \underbrace{p( \mathbf{s})}_\mathrm{prior}\,.
 \end{align}
 $
 
@@ -315,20 +315,20 @@ $
 Maximum-a-posteriori (MAP) solution:
 
 $\begin{align}
-  \hat{x}_\mathrm{MAP} &= \argmax{\mathbf{x}}\, p(\mathbf{x}\vert \mathbf{b},\sigma) \\
-                         &= \argmax{\mathbf{x}}\, \log p(\mathbf{x}\vert \mathbf{b},\sigma) \\
-                         &= \argmin{ \mathbf{x}}\, - \log p(\mathbf{x}\vert \mathbf{b},\sigma) \\
-                         &= \argmin{ \mathbf{x}}\, - \log p( \mathbf{b} \vert \mathbf{x}, \sigma) - \log p( \mathbf{x}) \\
-                         \label{eq:map_solution}&= \argmin{ \mathbf{x}}\, \underbrace{\frac{\Vert \mathbf{b} - \mathbf{Ax} \Vert^2_2}{2\sigma^2}}_{\mathrm{data\, fidelity\, term}} + \underbrace{\Psi(\mathbf{x})}_{ \mathrm{regularizer}}\,.                         
+  \hat{x}_\mathrm{MAP} &= \argmax{\mathbf{s}}\, p(\mathbf{s}\vert \mathbf{g},\sigma) \\
+                         &= \argmax{\mathbf{s}}\, \log p(\mathbf{s}\vert \mathbf{g},\sigma) \\
+                         &= \argmin{ \mathbf{s}}\, - \log p(\mathbf{s}\vert \mathbf{g},\sigma) \\
+                         &= \argmin{ \mathbf{s}}\, - \log p( \mathbf{g} \vert \mathbf{s}, \sigma) - \log p( \mathbf{s}) \\
+                         \label{eq:map_solution}&= \argmin{ \mathbf{s}}\, \underbrace{\frac{\Vert \mathbf{g} - \mathbf{Hs} \Vert^2_2}{2\sigma^2}}_{\mathrm{data\, fidelity\, term}} + \underbrace{\Psi(\mathbf{s})}_{ \mathrm{regularizer}}\,.                         
 \end{align}
 $
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 The choice of image priors / regularizers depends on the imaging task, i.e., the nature of the images that are to be recovered. Examples are:
-* Blurry imges $\rightarrow$ promote smoothness $\Psi (\mathbf{x}) = \left\| \underbrace{\Delta}_{\text{Laplace operator}} \mathbf{x} \right\|_2 $
-* Sparse images (e.g., stars) $\rightarrow$ promote sparsity $\Psi (\mathbf{x}) = \left\| \mathbf{x} \right\|_1$
-* Natural images $\rightarrow$ promote sparse gradients $\mathrm{TV}(\mathbf{x})$
+* Blurry imges $\rightarrow$ promote smoothness $\Psi (\mathbf{s}) = \left\| \underbrace{\Delta}_{\text{Laplace operator}} \mathbf{s} \right\|_2 $
+* Sparse images (e.g., stars) $\rightarrow$ promote sparsity $\Psi (\mathbf{s}) = \left\| \mathbf{s} \right\|_1$
+* Natural images $\rightarrow$ promote sparse gradients $\mathrm{TV}(\mathbf{s})$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -338,25 +338,25 @@ The intuition behind total variation is that in natural images, regions of almos
 
 The gradient is calculated by means of convolutions with the finite difference operators in $x$- and $y$-direction:
 
-* Finite difference in $x$-direction: $d_x * x = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 1 \\ 0 & 0 & 0  \end{pmatrix} * x = \mathbf{D}_x \mathbf{x}$
-* Finite difference in $y$-direction: $d_y * x = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 1 & 0  \end{pmatrix} * x = \mathbf{D}_y \mathbf{x}$
+* Finite difference in $x$-direction: $d_x * s = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 1 \\ 0 & 0 & 0  \end{pmatrix} * s = \mathbf{D}_x \mathbf{s}$
+* Finite difference in $y$-direction: $d_y * s = \begin{pmatrix} 0 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 1 & 0  \end{pmatrix} * s = \mathbf{D}_y \mathbf{s}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 * Anisotropic: 
 
 $\begin{align} 
-  \mathrm{TV}(\mathbf{x}) &= \left\| \mathbf{D}_x \mathbf{x} \right\|_1 + \left\| \mathbf{D}_y \mathbf{x} \right\|_1 \\ 
-  &=  \sum\limits^N_{i=1}  \left| (\mathbf{D}_x \mathbf{x})_i \right| + \left| (\mathbf{D}_y \mathbf{x})_i \right| = \sum\limits^N_{i=1} \sqrt[]{(\mathbf{D}_x \mathbf{x})^2_i} + \sum\limits^N_{i=1} \sqrt[]{(\mathbf{D}_y \mathbf{x})^2_i} 
+  \mathrm{TV}(\mathbf{s}) &= \left\| \mathbf{D}_x \mathbf{s} \right\|_1 + \left\| \mathbf{D}_y \mathbf{s} \right\|_1 \\ 
+  &=  \sum\limits^N_{i=1}  \left| (\mathbf{D}_x \mathbf{s})_i \right| + \left| (\mathbf{D}_y \mathbf{s})_i \right| = \sum\limits^N_{i=1} \sqrt[]{(\mathbf{D}_x \mathbf{s})^2_i} + \sum\limits^N_{i=1} \sqrt[]{(\mathbf{D}_y \mathbf{s})^2_i} 
 \end{align}$
   
 * Isotropic:
 
 $\begin{align} 
-  \mathrm{TV}(\mathbf{x}) = \sum\limits^N_{i=1}\left\| \begin{bmatrix} (\mathbf{D}_x \mathbf{x})_i \\ (\mathbf{D}_y \mathbf{x})_i \end{bmatrix} \right\|_2 = \sum\limits^N_{i=1}  \sqrt[]{(\mathbf{D}_x \mathbf{x})^2_i + (\mathbf{D}_y \mathbf{x})^2_i}
+  \mathrm{TV}(\mathbf{s}) = \sum\limits^N_{i=1}\left\| \begin{bmatrix} (\mathbf{D}_x \mathbf{s})_i \\ (\mathbf{D}_y \mathbf{s})_i \end{bmatrix} \right\|_2 = \sum\limits^N_{i=1}  \sqrt[]{(\mathbf{D}_x \mathbf{s})^2_i + (\mathbf{D}_y \mathbf{s})^2_i}
 \end{align}\,,$
 
-with $\begin{bmatrix} \mathbf{a} \\ \mathbf{b} \end{bmatrix}$ denoting a concatenation of the vectors $\mathbf{a}$ and $\mathbf{b}$ and $(\mathbf{D_\mathrm{x} \mathbf{x}})_i$ denoting the $i$-th element of the vector resulting from $\mathbf{D}_\mathrm{x} \mathbf{x}$.
+with $\begin{bmatrix} \mathbf{a} \\ \mathbf{b} \end{bmatrix}$ denoting a concatenation of the vectors $\mathbf{a}$ and $\mathbf{b}$ and $(\mathbf{D_\mathrm{x} \mathbf{s}})_i$ denoting the $i$-th element of the vector resulting from $\mathbf{D}_\mathrm{x} \mathbf{s}$.
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
@@ -675,10 +675,10 @@ We start with some general considerations and then apply HQS to the inverse prob
 We assume the following image formation model:
 
 $\begin{align} 
-  \mathbf{b} = \mathbf{Ax} + \mathbf{\eta},
+  \mathbf{g} = \mathbf{Hs} + \mathbf{n},
 \end{align}$
 
-with $\mathbf{x}\in \mathbb{R}^{N}$ denoting the unknown vector, $\mathbf{b}\in \mathbb{R}^{M}$ representing the observations, the additive noise $\mathbf{\eta}\in \mathbb{R}^{M}$ and the matrix $\mathbf{A}\in \mathbb{R}^{M\times N}$ encoding the linear image formation model.
+with $\mathbf{s}\in \mathbb{R}^{N}$ denoting the unknown vector, $\mathbf{g}\in \mathbb{R}^{M}$ representing the observations, the additive noise $\mathbf{n}\in \mathbb{R}^{M}$ and the matrix $\mathbf{H}\in \mathbb{R}^{M\times N}$ encoding the linear image formation model.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -686,13 +686,13 @@ Equation \eqref{eq:map_solution} leads us to the general formulation of regulari
 
 $
 \begin{align}\label{eq:general_inverse_problem} 
-  \hat{\mathbf{x}} = \argmin{\mathbf{x}} \, \underbrace{\frac{1}{2} \left\| \mathbf{Ax-b} \right\|^2_2}_{\text{data fidelity term}} + \underbrace{\lambda \Psi (\mathbf{x}) }_{\text{regularizer}}\,.
+  \hat{\mathbf{s}} = \argmin{\mathbf{s}} \, \underbrace{\frac{1}{2} \left\| \mathbf{Hs-g} \right\|^2_2}_{\text{data fidelity term}} + \underbrace{\lambda \Psi (\mathbf{s}) }_{\text{regularizer}}\,.
 \end{align}
 $
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
- The data fidelity term ensures that the sought solution $\mathbf{\hat{x}}$ matches the observed data $\mathbf{b}$ when fed through the image formation process (modelled by $\mathbf{A}$). The regularization operator $\Psi : \mathbb{R}^{N} \rightarrow \mathbb{R}$ models prior knowledge about the unknown original data $\mathbf{x}$. The scalar parameter $\lambda $ balances between the data fidelity term and the regularization term and hence $\lambda \in [ 0,1 ]$.
+ The data fidelity term ensures that the sought solution $\mathbf{\hat{s}}$ matches the observed data $\mathbf{g}$ when fed through the image formation process (modelled by $\mathbf{H}$). The regularization operator $\Psi : \mathbb{R}^{N} \rightarrow \mathbb{R}$ models prior knowledge about the unknown original data $\mathbf{s}$. The scalar parameter $\lambda $ balances between the data fidelity term and the regularization term and hence $\lambda \in [ 0,1 ]$.
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
@@ -708,18 +708,29 @@ Disadvantages of directly solving \eqref{eq:general_inverse_problem} with, e.g.,
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-Hence, rewrite \eqref{eq:general_inverse_problem} to:
+Hence, we rewrite \eqref{eq:general_inverse_problem} to:
 
 $
 \begin{align} \label{eq:hqs_1}
-  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Ax-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda \Psi (\mathbf{z})}_{=:g(\mathbf{z})} \\
-  \text{subject to}\quad &\mathbf{Dx-z} = \mathbf{0} \,.
+  \argmin{\mathbf{s}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Hs-g} \right\|^2_2 }_{=:f(\mathbf{s})} + \underbrace{\lambda \Psi (\mathbf{z})}_{=:r(\mathbf{z})} \\
+  \text{subject to}\quad &\mathbf{s-z} = \mathbf{0} \,.
+\end{align}
+$
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+By directly passing the derivative $\mathbf{Ds}$ to the regularizer, we get:
+
+$
+\begin{align} 
+  \argmin{\mathbf{s}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Hs-g} \right\|^2_2 }_{=:f(\mathbf{s})} + \underbrace{\lambda \Psi (\mathbf{z})}_{=:r(\mathbf{z})} \\
+  \text{subject to}\quad &\mathbf{Ds-z} = \mathbf{0} \,.
 \end{align}
 $
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
-We introduced a so-called *slack variable* $\mathbf{z}\in \mathbb{R}^O$ which allows us to separate the data fidelity term and the regularization term so that they do not depend on the same variable anymore. Obviously, $\mathbf{x}$ and $\mathbf{z}$ are still linked by the constraint $\mathbf{Dx-z=0}$.
+We introduced a so-called *slack variable* $\mathbf{z}\in \mathbb{R}^O$ which allows us to separate the data fidelity term and the regularization term so that they do not depend on the same variable anymore. Obviously, $\mathbf{s}$ and $\mathbf{z}$ are still linked by the constraint $\mathbf{Ds-z=0}$.
 
 For now, we assume $\mathbf{D}\in \mathbb{R}^{O\times N}$ to represent the identity matrix (i.e., it does not introduce any changes and can be ignored for now) - it will come back into play later on.
 
@@ -735,38 +746,38 @@ We now include the constraint of \eqref{eq:hqs_1} directly in the main optimizat
 
 $
 \begin{align}\label{eq:hqs_2}
- L_\rho (\mathbf{x}, \mathbf{z}) = f(\mathbf{x}) + g(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,, \qquad \text{with }\rho > 0\,.
+ L_\rho (\mathbf{s}, \mathbf{z}) = f(\mathbf{s}) + r(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\|^2_2\,, \qquad \text{with }\rho > 0\,.
 \end{align}
 $
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
  
- Intuitively, setting $\rho$ to a large value leads to the same results for minimizing \eqref{eq:hqs_1} and \eqref{eq:hqs_2}. The benefit of this reformulation is that we can perform gradient descent for $\mathbf{x}$ and $\mathbf{z}$ in an alternating fashion.
+ Intuitively, setting $\rho$ to a large value leads to the same results for minimizing \eqref{eq:hqs_1} and \eqref{eq:hqs_2}. The benefit of this reformulation is that we can perform gradient descent for $\mathbf{s}$ and $\mathbf{z}$ in an alternating fashion.
 
 +++ {"tags": ["presentation_only", "remove-cell"], "slideshow": {"slide_type": "subslide"}}
 
  
- $\Rightarrow$ Variables $\mathbf{x}$ and $\mathbf{z}$ can now be iteratively optimized via gradient descent in an alternating fashion:
+ $\Rightarrow$ Variables $\mathbf{s}$ and $\mathbf{z}$ can now be iteratively optimized via gradient descent in an alternating fashion:
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 $
 \begin{align} 
-   &\mathbf{x} \leftarrow \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}}\, L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{x}}\, f(\mathbf{x}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,, \\
-   &\mathbf{z} \leftarrow \mathrm{prox}_{g,\rho} (\mathbf{Dx}) = \argmin{\mathbf{z}}\, L_\rho (\mathbf{x}, \mathbf{z}) = \argmin{\mathbf{z}}\, g(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2\,.
+   &\mathbf{s} \leftarrow \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{s}}\, L_\rho (\mathbf{s}, \mathbf{z}) = \argmin{\mathbf{s}}\, f(\mathbf{s}) + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\|^2_2\,, \\
+   &\mathbf{z} \leftarrow \mathrm{prox}_{r,\rho} (\mathbf{Ds}) = \argmin{\mathbf{z}}\, L_\rho (\mathbf{s}, \mathbf{z}) = \argmin{\mathbf{z}}\, r(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\|^2_2\,.
 \end{align}
 $
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
-Again, the important benefit of this formulation is that we can update $\mathbf{x}$ and $\mathbf{z}$ separately. We will see that this approach allows us to easily experiment with different regularizers (this is sometimes also referred to as a *plug-and-play* formulation).
+Again, the important benefit of this formulation is that we can update $\mathbf{s}$ and $\mathbf{z}$ separately. We will see that this approach allows us to easily experiment with different regularizers (this is sometimes also referred to as a *plug-and-play* formulation).
 
 +++ {"tags": ["presentation_only", "remove-cell"], "slideshow": {"slide_type": "subslide"}}
 
 Advantages of this formulation:
 
-* Separate updates of $\mathbf{x}$ and $\mathbf{z}$,
+* Separate updates of $\mathbf{s}$ and $\mathbf{z}$,
 * allows to easily experiment with different regularizers,
 * many proximal operators can be implemented efficiently, often in closed form.
 
@@ -856,7 +867,7 @@ when $\lambda$ is small and $f$ is differentiable.
 
 ### HQS for deconvolution
 
-We now again consider the inverse problem of deconvolution with circual boundary conditions. Here, the matrix $\mathbf{A}$ is the square circulant Toeplitz matrix $\mathbf{C} \in \mathbb{R}^{N\times N}$ representing a 2D-convolution of the input image $x$ with the convolution kernel $c$.
+We now again consider the inverse problem of deconvolution with circual boundary conditions. Here, the matrix $\mathbf{H}$ is the square circulant Toeplitz matrix $\mathbf{H} \in \mathbb{R}^{N\times N}$ representing a 2D-convolution of the input image $s$ with the convolution kernel $h$.
 
 +++
 
@@ -864,9 +875,9 @@ Revise the duality between the signal processing formulation and the algebraic f
 
 $
 \begin{align} 
-   c*x = \Fi \left\{ \F \left\{ c \right\} \cdot \F \left\{ x \right\}  \right\} &\Leftrightarrow \mathbf{Cx} \,, \\
-   \Fi \left\{ \F \left\{ c \right\}^* \cdot \F \left\{ x \right\}   \right\} &\Leftrightarrow \mathbf{C}\transp \mathbf{x}\,, \\
-   \Fi \left\{ \frac{\F \left\{ b \right\} }{\F \left\{ c \right\} } \right\} &\Leftrightarrow \mathbf{C}^{-1} \mathbf{b}\,.
+   h*s = \Fi \left\{ \F \left\{ h \right\} \cdot \F \left\{ s \right\}  \right\} &\Leftrightarrow \mathbf{Hs} \,, \\
+   \Fi \left\{ \F \left\{ h \right\}^* \cdot \F \left\{ s \right\}   \right\} &\Leftrightarrow \mathbf{H}\transp \mathbf{s}\,, \\
+   \Fi \left\{ \frac{\F \left\{ g \right\} }{\F \left\{ h \right\} } \right\} &\Leftrightarrow \mathbf{H}^{-1} \mathbf{g}\,.
 \end{align}
 $
 
@@ -880,17 +891,17 @@ For total variation this is:
 
 $
 \begin{align} 
-  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Cx-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda \left\| \mathbf{z} \right\|_1 }_{=:g(\mathbf{z})} \\
-  \text{subject to}\quad &\mathbf{Dx-z} = \mathbf{0} \,,
+  \argmin{\mathbf{s}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Hs-g} \right\|^2_2 }_{=:f(\mathbf{s})} + \underbrace{\lambda \left\| \mathbf{z} \right\|_1 }_{=:r(\mathbf{z})} \\
+  \text{subject to}\quad &\mathbf{Ds-z} = \mathbf{0} \,,
 \end{align}
 $
 
-with $\mathbf{D} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y \right]\transp \in \mathbb{R}^{2N \times N}$ representing the finite difference operator for calculating the gradients of $\mathbf{x}$ in $x$- and $y$-direction.
+with $\mathbf{D} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y \right]\transp \in \mathbb{R}^{2N \times N}$ representing the finite difference operator for calculating the gradients of $\mathbf{s}$ in $x$- and $y$-direction.
 
 +++ {"tags": ["book_only"]}
 
 ```{note}
-  The vector $\mathbf{z}\in \mathbb{R}^{2N}$ has to be twice as large as $\mathbf{x}\in \mathbb{R}^{N} $ in order to store the two gradient values in $x$- and $y$-direction for every input pixel.
+  The vector $\mathbf{z}\in \mathbb{R}^{2N}$ has to be twice as large as $\mathbf{s}\in \mathbb{R}^{N} $ in order to store the two gradient values in $x$- and $y$-direction for every input pixel.
 ```
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -899,8 +910,8 @@ In the more general case, we use a regularizer $\Psi $ projecting an image onto 
 
 $
 \begin{align} 
-  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Cx-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda  \Psi (\mathbf{z})}_{=:g(\mathbf{z})} \\
-  \text{subject to}\quad &\mathbf{x-z} = \mathbf{0} \,.
+  \argmin{\mathbf{s}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Hs-g} \right\|^2_2 }_{=:f(\mathbf{s})} + \underbrace{\lambda  \Psi (\mathbf{z})}_{=:r(\mathbf{z})} \\
+  \text{subject to}\quad &\mathbf{s-z} = \mathbf{0} \,.
 \end{align}
 $
 
@@ -908,17 +919,17 @@ Here the matrix $D$ represents the identity matrix which is why it can be omitte
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-##### Efficient implementation of $x$-update
+##### Efficient implementation of $s$-update
 
-For obtaining the $x$-update, we have to derive the proximal operator $\mathrm{prox}_{f,\rho}$:
+For obtaining the $s$-update, we have to derive the proximal operator $\mathrm{prox}_{f,\rho}$:
 
 $
 \begin{align} 
-  \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{x}}\, f(\mathbf{x}) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 = \argmin{\mathbf{x}}\, \frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 \,.
+  \mathrm{prox}_{f,\rho} (\mathbf{z}) = \argmin{\mathbf{s}}\, f(\mathbf{s}) + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\|^2_2 = \argmin{\mathbf{s}}\, \frac{1}{2} \left\| \mathbf{Hs-g} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\|^2_2 \,.
 \end{align}
 $
 
-Hence, we have to derive the gradient of that equation with respect to $\mathbf{x}$.
+Hence, we have to derive the gradient of that equation with respect to $\mathbf{s}$.
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
 
@@ -926,9 +937,9 @@ We iteratively expand that equation as follows:
 
 $
 \begin{align} 
-  &\frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\|^2_2 \\
-  =&\frac{1}{2} (\mathbf{Cx-b})\transp (\mathbf{Cx-b}) + \frac{\rho}{2} (\mathbf{Dx-z})\transp (\mathbf{Dx-z}) \\
-  =&\frac{1}{2} (\mathbf{x}\transp \mathbf{C}\transp \mathbf{Cx} - 2\mathbf{x}\transp \mathbf{C}\transp \mathbf{b} + \mathbf{b}\transp \mathbf{b}) + \frac{\rho}{2} (\mathbf{x}\transp \mathbf{D}\transp \mathbf{D} \mathbf{x} - 2 \mathbf{x}\transp \mathbf{D}\transp \mathbf{z} + \mathbf{z}\transp\mathbf{z}) \,.
+  &\frac{1}{2} \left\| \mathbf{Hs-g} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\|^2_2 \\
+  =&\frac{1}{2} (\mathbf{Hs-g})\transp (\mathbf{Hs-g}) + \frac{\rho}{2} (\mathbf{Ds-z})\transp (\mathbf{Ds-z}) \\
+  =&\frac{1}{2} (\mathbf{s}\transp \mathbf{H}\transp \mathbf{Hs} - 2\mathbf{s}\transp \mathbf{H}\transp \mathbf{g} + \mathbf{g}\transp \mathbf{g}) + \frac{\rho}{2} (\mathbf{s}\transp \mathbf{D}\transp \mathbf{D} \mathbf{s} - 2 \mathbf{s}\transp \mathbf{D}\transp \mathbf{z} + \mathbf{z}\transp\mathbf{z}) \,.
 \end{align}
 $
 
@@ -938,11 +949,11 @@ The sought gradient is
 
 $
 \begin{align} 
-   \mathbf{C}\transp \mathbf{Cx} - \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{Dx} - \rho \mathbf{D}\transp \mathbf{z} \,.
+   \mathbf{H}\transp \mathbf{Hs} - \mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{Ds} - \rho \mathbf{D}\transp \mathbf{z} \,.
 \end{align}
 $
 
-This expression can now be equated to zero and solved for $\mathbf{x}$.
+This expression can now be equated to zero and solved for $\mathbf{s}$.
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
 
@@ -950,12 +961,12 @@ The single steps are:
 
 $
 \begin{align} 
-  \mathbf{C}\transp \mathbf{Cx} - \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{Dx} - \rho \mathbf{D}\transp \mathbf{z}\quad &\overset{!}{=} \quad \mathbf{0} \\
-  \mathbf{C}\transp \mathbf{Cx} + \rho \mathbf{D}\transp \mathbf{Dx}
-  &\overset{!}{=} \quad \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z} \\
-  (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D})\mathbf{x}
-  &\overset{!}{=} \quad \mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z} \\
-  \mathbf{x} &\overset{!}{=} (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D})^{-1}(\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) \,.
+  \mathbf{H}\transp \mathbf{Hs} - \mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{Ds} - \rho \mathbf{D}\transp \mathbf{z}\quad &\overset{!}{=} \quad \mathbf{0} \\
+  \mathbf{H}\transp \mathbf{Hs} + \rho \mathbf{D}\transp \mathbf{Ds}
+  &\overset{!}{=} \quad \mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{z} \\
+  (\mathbf{H}\transp \mathbf{H} + \rho \mathbf{D}\transp \mathbf{D})\mathbf{s}
+  &\overset{!}{=} \quad \mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{z} \\
+  \mathbf{s} &\overset{!}{=} (\mathbf{H}\transp \mathbf{H} + \rho \mathbf{D}\transp \mathbf{D})^{-1}(\mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{z}) \,.
 \end{align}
 $
 
@@ -964,7 +975,7 @@ $
 This yields a first formulation for the sought proximal operator:
 
 $\begin{align}\label{eq:hqs_tv_1} 
-  \mathrm{prox}_{f,\rho} (\mathbf{z}) = (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D})^{-1}(\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) \,.
+  \mathrm{prox}_{f,\rho} (\mathbf{z}) = (\mathbf{H}\transp \mathbf{H} + \rho \mathbf{D}\transp \mathbf{D})^{-1}(\mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{z}) \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -973,15 +984,15 @@ $\begin{align}\label{eq:hqs_tv_1}
 
 +++ {"tags": ["book_only"]}
 
-For the TV regularizer, the matrix $\mathbf{D}$ represents the finite difference operator.  The matrix-vector multiplications involved in the proximal operator, i.e., $\mathbf{Cx}$ and $\mathbf{Dx} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right]\transp \mathbf{x}$ (and also their adjoint correspondencies $\mathbf{C}\transp \mathbf{b}$ and $\mathbf{D}\transp \mathbf{z} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right] \mathbf{z} = \mathbf{D}_x\transp\mathbf{z}_1 + \mathbf{D}_y\transp\mathbf{z}_2$, with $\mathbf{z}_1, \mathbf{z}_2$ denoting the first and second half of $\mathbf{z}$.) all encode 2D-convolutions with circular boundary conditions.
+For the TV regularizer, the matrix $\mathbf{D}$ represents the finite difference operator.  The matrix-vector multiplications involved in the proximal operator, i.e., $\mathbf{Hs}$ and $\mathbf{Ds} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right]\transp \mathbf{s}$ (and also their adjoint correspondencies $\mathbf{H}\transp \mathbf{g}$ and $\mathbf{D}\transp \mathbf{z} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right] \mathbf{z} = \mathbf{D}_x\transp\mathbf{z}_1 + \mathbf{D}_y\transp\mathbf{z}_2$, with $\mathbf{z}_1, \mathbf{z}_2$ denoting the first and second half of $\mathbf{z}$.) all encode 2D-convolutions with circular boundary conditions.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 Exploiting the duality of the signal-processing perspective and the algebraic perspective yields the following reforumlations of the denominator, respectively, of the nominator of \eqref{eq:hqs_tv_1}:
 
 $\begin{align} 
-  (\mathbf{C}\transp \mathbf{C} + \rho \mathbf{D}\transp \mathbf{D}) &\Leftrightarrow \Fi \left\{ \F \left\{ c \right\}^* \cdot \F \left\{ c \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)   \right\} \, , \\
-  (\mathbf{C}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}) &\Leftrightarrow \Fi \left\{ \F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z_1 \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z_2 \right\}  	  \right)   \right\} \,,
+  (\mathbf{H}\transp \mathbf{H} + \rho \mathbf{D}\transp \mathbf{D}) &\Leftrightarrow \Fi \left\{ \F \left\{ h \right\}^* \cdot \F \left\{ h \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)   \right\} \, , \\
+  (\mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{z}) &\Leftrightarrow \Fi \left\{ \F \left\{ h \right\}^* \cdot \F \left\{ g \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z_1 \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z_2 \right\}  	  \right)   \right\} \,,
 \end{align}$
 
 with $(\cdot)^*$ denoting the element-wise complex conjugate.
@@ -991,12 +1002,12 @@ with $(\cdot)^*$ denoting the element-wise complex conjugate.
 Combining both terms in the original fraction yields the sought proximal operator:
 
 $\begin{align} 
-  \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{  \frac{\F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z_1 \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z_2 \right\}  	  \right)}{\F \left\{ c \right\}^* \cdot \F \left\{ c \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)} \right\} \,.
+  \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{  \frac{\F \left\{ h \right\}^* \cdot \F \left\{ g \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ z_1 \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  z_2 \right\}  	  \right)}{\F \left\{ h \right\}^* \cdot \F \left\{ h \right\} + \rho \left( \F \left\{ d_x \right\}^* \cdot \F \left\{ d_x \right\} + \F \left\{ d_y \right\}^* \cdot \F \left\{  d_y \right\}     \right)} \right\} \,.
 \end{align}$
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "subslide"}}
 
-As for the inverse filer introduced before, this proximal operator is also unstable with respect to noise and zeros in the involved Fourier transforms. However, the integration into the HQS iterations will mitigate these effects so that the resulting estimate $\mathbf{\hat{x}}$ will not be affected.
+As for the inverse filer introduced before, this proximal operator is also unstable with respect to noise and zeros in the involved Fourier transforms. However, the integration into the HQS iterations will mitigate these effects so that the resulting estimate $\mathbf{\hat{s}}$ will not be affected.
 
 ```{note}
    All terms of the proximal operator that do not depend on $z$ only have to be computed once and can then be reused.
@@ -1009,7 +1020,7 @@ As for the inverse filer introduced before, this proximal operator is also unsta
 For a general regularizer, we assume $\mathbf{D}$ to be the identity matrix so that it can be ignored. The proximal operator can then be written as:
 
 $\begin{align} 
-  \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{ \frac{\F \left\{ c \right\}^* \cdot \F \left\{ b \right\} + \rho \F \left\{ z \right\}  }{\F \left\{ c \right\}^* \cdot \F \left\{ c \right\} + \rho}  \right\} \,.
+  \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{ \frac{\F \left\{ h \right\}^* \cdot \F \left\{ g \right\} + \rho \F \left\{ z \right\}  }{\F \left\{ h \right\}^* \cdot \F \left\{ h \right\} + \rho}  \right\} \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1019,10 +1030,10 @@ $\begin{align}
 For the $z$-update, we need to find a solution for the proximal operator
 
 $\begin{align} 
-   \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{Dx}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\|^2_2 \,.  
+   \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{Ds}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{Ds-z} \right\|^2_2 \,.  
 \end{align}$
 
-To simplify the writing, we substitute $\mathbf{v} = \mathbf{Dx}$:
+To simplify the writing, we substitute $\mathbf{v} = \mathbf{Ds}$:
 
 $\begin{align} 
   \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{v-z} \right\|^2_2 \,.  
@@ -1033,13 +1044,13 @@ $\begin{align}
 We now have to calculate the gradient of that expression with respect to $\mathbf{z}$. To easily follow the derivation, we will work on a single element of the gradient, i.e., we consider the scalar function
 
 $\begin{align} 
-   h(z) = \frac{\rho}{2}(v-z)^2 + \lambda \vert z \vert \,.
+   b(z) = \frac{\rho}{2}(v-z)^2 + \lambda \vert z \vert \,.
 \end{align}$
 
-In order to calculate the gradient $h'(z)$ of $h(z)$, we can work on the two terms of the addition separately. The derivative of the first term $\frac{\rho}{2}(v-z)^2$ is 
+In order to calculate the gradient $b'(z)$ of $b(z)$, we can work on the two terms of the addition separately. The derivative of the first term $\frac{\rho}{2}(v-z)^2$ is 
 
 $\begin{align} 
-   \frac{\mathrm{d}}{\mathrm{d}z}\,\, \frac{\rho}{2}(v-z)^2 = \rho (-v + z) \,.
+   \frac{\partial}{\partial z}\,\, \frac{\rho}{2}(v-z)^2 = \rho (-v + z) \,.
 \end{align}$
 
 Unfortunately, the absolute value function $\vert \cdot \vert$ (i.e., the 1-norm $\left\| \cdot \right\|_1$) is not differentiable and we have to take a detour to solve that problem.
@@ -1069,18 +1080,18 @@ Subdifferentials have the following useful properties (w.r.t a convex function $
 * A point $a$ is a global minimum of $f$ if and only if $0 \in \partial_a f(x)$.
 * Let $k(x)$ be another convex function like $f$. With the subdifferentials $\partial_a f(x), \partial_a k(x)$ for some position $a$, the subdifferential of $f+k$ for position $a$ is then $\partial_a (f+k)(x) = \partial_a f(x) \oplus \partial_a k(x)$ with $\oplus$ denoting the so-called Minkowski sum (i.e., the set of all possible sums between all elements of the two input sets).
 
-We will now derive the subdifferential of $h(z) = \frac{\rho}{2}(v-z)^2 + \lambda \vert z \vert $ (neglecting the position $a$ for simplicity) and look for subgradients of $0$, which correspond to the sought minimum.
+We will now derive the subdifferential of $b(z) = \frac{\rho}{2}(v-z)^2 + \lambda \vert z \vert $ (neglecting the position $a$ for simplicity) and look for subgradients of $0$, which correspond to the sought minimum.
 
 According to the third property introduced before, it is:
 
 $\begin{align} 
-   \partial h(z) = \partial \frac{\rho}{2}(v-z)^2 \oplus  \partial \lambda \vert z \vert \,.
+   \partial b(z) = \partial \frac{\rho}{2}(v-z)^2 \oplus  \partial \lambda \vert z \vert \,.
 \end{align}$
 
 Of course, the true gradient $f'(a)$ of a function $f(x)$ at position $a$ is also a valid subgradient at position $a$, i.e.:
 
 $\begin{align}\label{eq:hqs_z_1} 
-  \partial h(z) = \lbrace \rho(-v+z) \rbrace \oplus  \partial \lambda \vert z \vert \,.   
+  \partial b(z) = \lbrace \rho(-v+z) \rbrace \oplus  \partial \lambda \vert z \vert \,.   
 \end{align}$
 
 The subdifferentials for the absolute value function are:
@@ -1098,7 +1109,7 @@ For $z\neq 0$, the absolute function is differentiable which is why its subdiffe
 Combining \eqref{eq:hqs_z_1} and \eqref{eq:hqs_z_2} yields:
 
 $\begin{align}
-  \partial h(z) =  \begin{cases}
+  \partial b(z) =  \begin{cases}
     &\rho(-v+z) - \lambda &\text{ if } z < 0\\
     &[-\rho v-\lambda, -\rho v + \lambda] &\text{ if } z = 0\\
     &\rho(-v+z) + \lambda &\text{ if } z > 0
@@ -1210,8 +1221,8 @@ For the isotropic case, the $l_2$-norm of the finite differences approximation o
 
 $\begin{align} 
    \lambda \left\| \mathbf{z} \right\|_{2,1}  = \lambda \sum\limits^N_{i=1} \left\|  \begin{bmatrix} 
-      (\mathbf{D}_x \mathbf{x})_i \\ (\mathbf{D}_y \mathbf{x})_i
-   \end{bmatrix}  \right\|_2 = \lambda \sum\limits^N_{i=1} \sqrt{(\mathbf{D}_x \mathbf{x})^2_i + (\mathbf{D}_y \mathbf{x})^2_i } \,.
+      (\mathbf{D}_x \mathbf{s})_i \\ (\mathbf{D}_y \mathbf{s})_i
+   \end{bmatrix}  \right\|_2 = \lambda \sum\limits^N_{i=1} \sqrt{(\mathbf{D}_x \mathbf{s})^2_i + (\mathbf{D}_y \mathbf{s})^2_i } \,.
 \end{align}$
 
 This expression is also called the *group lasso*.
@@ -1221,24 +1232,24 @@ This expression is also called the *group lasso*.
 Accordingly, the whole deconvolution problem for the isotropic TV regularizer is
 
 $\begin{align} 
-   &\argmin{\mathbf{x}}\, \underbrace{\frac{1}{2} \left\| \mathbf{Cx-b} \right\|^2_2}_{=:f(\mathbf{x})} + \underbrace{\lambda \sum\limits^N_{i=1} \left\|  \begin{bmatrix} 
+   &\argmin{\mathbf{s}}\, \underbrace{\frac{1}{2} \left\| \mathbf{Hs-g} \right\|^2_2}_{=:f(\mathbf{s})} + \underbrace{\lambda \sum\limits^N_{i=1} \left\|  \begin{bmatrix} 
       z_i \\ z_{i+N}
-   \end{bmatrix}   \right\|_2 }_{=:g(\mathbf{z})} \\
-   &\text{subject to } \mathbf{Dx-z=\mathbf{0}}\,.
+   \end{bmatrix}   \right\|_2 }_{=:r(\mathbf{z})} \\
+   &\text{subject to } \mathbf{Ds-z=\mathbf{0}}\,.
 \end{align}$
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "fragment"}}
 
-Again, the vector $\mathbf{z} \in \mathbb{R}^{2\times N}$ so that its first, respectively, second half can hold the image gradients in $x$-direction, respectively, in $y$-direction, i.e., $\mathbf{z} = \left[ \mathbf{D}_x \mathbf{x}\,\, \mathbf{D}_y \mathbf{x}   \right]\transp $.
+Again, the vector $\mathbf{z} \in \mathbb{R}^{2\times N}$ so that its first, respectively, second half can hold the image gradients in $x$-direction, respectively, in $y$-direction, i.e., $\mathbf{z} = \left[ \mathbf{D}_x \mathbf{s}\,\, \mathbf{D}_y \mathbf{s}   \right]\transp $.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-As only the regularization term $g(\mathbf{z})$ has changed, we only have to derive a corresponding $\mathbf{z}$-update rule, i.e., we have to find a solution for the proximal operator
+As only the regularization term $r(\mathbf{z})$ has changed, we only have to derive a corresponding $\mathbf{z}$-update rule, i.e., we have to find a solution for the proximal operator
 
 $\begin{align} 
    \mathbf{z} \leftarrow \mathbf{prox}_{\left\| \cdot \right\|_{2,1},\rho } (\mathbf{v}) = \argmin{\mathbf{z}}\,\, \lambda \sum\limits^N_{i=1} \left\| \begin{bmatrix} 
     z_i \\ z_{i+N}
- \end{bmatrix}   \right\|_2  + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2, \quad \mathbf{v=Dx} \,.
+ \end{bmatrix}   \right\|_2  + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2, \quad \mathbf{v=Ds} \,.
 \end{align}$
 
 +++ {"tags": ["book_only"], "slideshow": {"slide_type": "skip"}}
@@ -1246,10 +1257,10 @@ $\begin{align}
 Therefore, we again extract the term we have to minimize:
 
 $\begin{align}\label{eq:hqs:iso:1}
-   h(\mathbf{z}) := \lambda \left\| \mathbf{z} \right\|_2 + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2 \,.
+   b(\mathbf{z}) := \lambda \left\| \mathbf{z} \right\|_2 + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2 \,.
 \end{align}$
 
-We follow the approach of calculating the gradient of $h(\mathbf{z})$, equating it to $\mathbf{0}$ and solving for $\mathbf{z}$.
+We follow the approach of calculating the gradient of $b(\mathbf{z})$, equating it to $\mathbf{0}$ and solving for $\mathbf{z}$.
 
 The gradient of the second term with respect to $\mathbf{z}$ can be calculated straight forward:
 
@@ -1269,7 +1280,7 @@ $\begin{align}
    \nabla_\mathbf{z} \lambda \left\| \mathbf{z} \right\| _2 = \lambda \frac{\mathbf{z}}{\left\| \mathbf{z} \right\|_2 } \quad \text{for } \mathbf{z} \neq \mathbf{0} \,.
 \end{align}$
 
-So for $\mathbf{z} \neq \mathbf{0}$, we will find a $\hat{\mathbf{z}}$ with $  \nabla_\mathbf{z} \lbrace h(\mathbf{z}) \rbrace (\hat{\mathbf{z}}) = \mathbf{0}$:
+So for $\mathbf{z} \neq \mathbf{0}$, we will find a $\hat{\mathbf{z}}$ with $  \nabla_\mathbf{z} \lbrace b(\mathbf{z}) \rbrace (\hat{\mathbf{z}}) = \mathbf{0}$:
 
 $\begin{align} 
   \lambda \frac{\mathbf{z}}{\left\| \mathbf{z} \right\|_2 } +  \rho (-\mathbf{v} + \mathbf{z}) &\overset{!}{=} \mathbf{0} \\
@@ -1319,15 +1330,15 @@ $\begin{align}
 For $\mathbf{z} = \mathbf{0}$, there is no well-defined gradient for $\left\| \mathbf{z} \right\|_2$, so we make use of the concept of subdifferentials again and derive the subdifferential of $h(\mathbf{z})$ with respect to position $\mathbf{z} = \mathbf{0}$:
 
 $\begin{align} 
-  h(\mathbf{z}) &= \lambda \left\| \mathbf{z} \right\|_2 + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2 \\
-  \frac{h(\mathbf{z})}{\rho} &= \frac{\lambda}{\rho } \left\| \mathbf{z} \right\|_2 + \frac{1}{2} \left\| \mathbf{v-z} \right\|^2_2  \\
-  \partial_\mathbf{0} \frac{h(\mathbf{z})}{\rho} &= \partial_\mathbf{0} \frac{\lambda}{\rho } \left\| \mathbf{z} \right\|_2 \oplus  \partial_\mathbf{0}\frac{1}{2} \left\| \mathbf{v-z} \right\|^2_2 \,.
+  b(\mathbf{z}) &= \lambda \left\| \mathbf{z} \right\|_2 + \frac{\rho}{2} \left\| \mathbf{v-z} \right\| ^2_2 \\
+  \frac{b(\mathbf{z})}{\rho} &= \frac{\lambda}{\rho } \left\| \mathbf{z} \right\|_2 + \frac{1}{2} \left\| \mathbf{v-z} \right\|^2_2  \\
+  \partial_\mathbf{0} \frac{b(\mathbf{z})}{\rho} &= \partial_\mathbf{0} \frac{\lambda}{\rho } \left\| \mathbf{z} \right\|_2 \oplus  \partial_\mathbf{0}\frac{1}{2} \left\| \mathbf{v-z} \right\|^2_2 \,.
 \end{align}$
 
 As before, we can replace the second subdifferential on the right side of the equation with the true gradient:
 
 $\begin{align} 
-  \partial_\mathbf{0} \frac{h(\mathbf{z})}{\rho} &= \partial_\mathbf{0} \frac{\lambda}{\rho } \left\| \mathbf{z} \right\|_2 \oplus  \lbrace - \mathbf{v} \rbrace \,.
+  \partial_\mathbf{0} \frac{b(\mathbf{z})}{\rho} &= \partial_\mathbf{0} \frac{\lambda}{\rho } \left\| \mathbf{z} \right\|_2 \oplus  \lbrace - \mathbf{v} \rbrace \,.
 \end{align}$
 
 For the first term, i.e., $\partial_\mathbf{0}\frac{\lambda}{\rho} \left\| \mathbf{z} \right\|_2$, we employ the definition of subdifferentials:
@@ -1345,13 +1356,13 @@ $\begin{align}
   &= \left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\} \,.
 \end{align}$
 
-The resulting combined expression for the subdifferential of $\frac{h(\mathbf{z})}{\rho} $ is:
+The resulting combined expression for the subdifferential of $\frac{b(\mathbf{z})}{\rho} $ is:
 
 $\begin{align} 
-   \partial_\mathbf{0}\frac{h(\mathbf{z})}{\rho} = \left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\} \oplus \lbrace -\mathbf{v} \rbrace \,.
+   \partial_\mathbf{0}\frac{b(\mathbf{z})}{\rho} = \left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\} \oplus \lbrace -\mathbf{v} \rbrace \,.
 \end{align}$ 
 
-For $\mathbf{z} = \mathbf{0}$ we want to return $\mathbf{0}$ if possible since that would correspond to the sought minimum. A subgradient $\mathbf{0}$ is contained in $\partial_\mathbf{0}\frac{h(\mathbf{z})}{\rho}$ if the first subdifferential $\left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\}$ contains a vector $\mathbf{g}$ with $\mathbf{g} = \mathbf{v}$ because then the Minkowski sum $\left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\} \oplus \lbrace -\mathbf{v} \rbrace$ would contain $\mathbf{0}$. This is only possible for any vectors $\mathbf{v}$ with $\left\| \mathbf{v} \right\|_2 \leq \frac{\lambda}{\rho}  $.
+For $\mathbf{z} = \mathbf{0}$ we want to return $\mathbf{0}$ if possible since that would correspond to the sought minimum. A subgradient $\mathbf{0}$ is contained in $\partial_\mathbf{0}\frac{b(\mathbf{z})}{\rho}$ if the first subdifferential $\left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\}$ contains a vector $\mathbf{g}$ with $\mathbf{g} = \mathbf{v}$ because then the Minkowski sum $\left\{ \mathbf{g} \in \mathbb{R}^{2N} : \frac{\lambda}{\rho}  \geq \left\| \mathbf{g} \right\|_2      \right\} \oplus \lbrace -\mathbf{v} \rbrace$ would contain $\mathbf{0}$. This is only possible for any vectors $\mathbf{v}$ with $\left\| \mathbf{v} \right\|_2 \leq \frac{\lambda}{\rho}  $.
 
 With these results, the final $\mathbf{z}$-update rule is given by:
 
@@ -1384,9 +1395,9 @@ This expression (i.e., $\mathcal{S}_{\lambda / \rho}$) is also known as the vect
 In the general case, i.e., with $\mathbf{D} = \mathbf{I}$, we want to solve
 
 $\begin{align} 
-   \mathbf{z} \leftarrow &\argmin{\mathbf{z}}\, g(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{x} - \mathbf{z} \right\| ^2_2 \,, \\
-   &\argmin{\mathbf{z}}\, \lambda \Psi(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{x-z} \right\|^2_2 \,, \\
-   &\argmin{\mathbf{z}}\,  \Psi(\mathbf{z}) + \frac{\rho}{2\lambda} \left\| \mathbf{x-z} \right\| ^2_2 \,.
+   \mathbf{z} \leftarrow &\argmin{\mathbf{z}}\, r(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{s} - \mathbf{z} \right\| ^2_2 \,, \\
+   &\argmin{\mathbf{z}}\, \lambda \Psi(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{s-z} \right\|^2_2 \,, \\
+   &\argmin{\mathbf{z}}\,  \Psi(\mathbf{z}) + \frac{\rho}{2\lambda} \left\| \mathbf{s-z} \right\| ^2_2 \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "fragment"}}
@@ -1404,7 +1415,7 @@ This means that we can use any Gaussian denoiser $\mathcal{D}: \mathbb{R} ^N \ri
 $\rightarrow$ Any Gaussian denoiser suitable for a noise variance of $\sigma^2$ can be used as a general image prior:
 
 $\begin{align} 
-   \mathbf{z} \leftarrow \mathrm{prox}_{\mathcal{D}, \rho} (\mathbf{x}) =\mathcal{D}\left( \mathbf{x}, \sigma^2 = \frac{\lambda}{\rho}  \right)  \,.
+   \mathbf{z} \leftarrow \mathrm{prox}_{\mathcal{D}, \rho} (\mathbf{s}) =\mathcal{D}\left( \mathbf{s}, \sigma^2 = \frac{\lambda}{\rho}  \right)  \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1413,32 +1424,32 @@ $\begin{align}
 
 +++
 
-HQS can also be applied to linear inverse problems, i.e., $\mathbf{b} = \mathbf{Ax} + \mathbf{n}$.
+HQS can also be applied to linear inverse problems, i.e., $\mathbf{g} = \mathbf{Hs} + \mathbf{n}$.
 
 Depending on the prior, we can use the $\mathbf{z}$-updates already derived for the deconvolution problem (i.e., total variation or a general Gaussian denoiser).
 
-However, we have to look again at the $\mathbf{x}$-update, as the matrix-vector multiplication $\mathbf{Ax}$ does not (necessarily) encode a convolution anymore.
+However, we have to look again at the $\mathbf{s}$-update, as the matrix-vector multiplication $\mathbf{Hs}$ does not (necessarily) encode a convolution anymore.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-##### Derivation of $\mathbf{x}$-update for HQS for general linear inverse problems
+##### Derivation of $\mathbf{s}$-update for HQS for general linear inverse problems
 
 +++
 
-For the $\mathbf{x}$-update, we use the following solution:
+For the $\mathbf{s}$-update, we use the following solution:
 
 $\begin{align} 
-   \mathbf{x} \leftarrow \mathrm{prox}_{\left\| \cdot \right\| _2, \rho} (\mathbf{v}) &= \argmin{\mathbf{x}}\, \frac{1}{2} \left\| \mathbf{Ax-b} \right\| ^2_2 + \frac{\rho}{2}\left\| \mathbf{Dx-z} \right\| ^2_2  \\
-   &= \left( \underbrace{\mathbf{A}\transp \mathbf{A} + \rho  \mathbf{D}\transp \mathbf{D}}_{\tilde{\mathbf{A}}} \right)^{-1}  \left( \underbrace{\mathbf{A}\transp \mathbf{b} + \rho \mathbf{D}\transp \mathbf{z}}_{\tilde{\mathbf{b}}} \right) \,,
+   \mathbf{s} \leftarrow \mathrm{prox}_{\left\| \cdot \right\| _2, \rho} (\mathbf{v}) &= \argmin{\mathbf{s}}\, \frac{1}{2} \left\| \mathbf{Hs-g} \right\| ^2_2 + \frac{\rho}{2}\left\| \mathbf{Ds-z} \right\| ^2_2  \\
+   &= \left( \underbrace{\mathbf{H}\transp \mathbf{H} + \rho  \mathbf{D}\transp \mathbf{D}}_{\tilde{\mathbf{H}}} \right)^{-1}  \left( \underbrace{\mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp \mathbf{z}}_{\tilde{\mathbf{g}}} \right) \,,
 \end{align}$
 
 whose derivation is equivalent to the deconvolution problem.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-Unfortunately, for the case of a general matrix $\mathbf{A}$, there is no elegant closed-form solution as for the case of deconvolution. 
+Unfortunately, for the case of a general matrix $\mathbf{H}$, there is no elegant closed-form solution as for the case of deconvolution. 
 
-$\rightarrow$ Use an iterative solver to solve $\tilde{\mathbf{A}} \mathbf{x} = \tilde{\mathbf{b}}$ for $\mathbf{x}$. Since $\tilde{\mathbf{A}}$ is symmetric and positive semi-definite, the so-called *conjugate gradient* method is a good choice.
+$\rightarrow$ Use an iterative solver to solve $\tilde{\mathbf{H}} \mathbf{s} = \tilde{\mathbf{g}}$ for $\mathbf{s}$. Since $\tilde{\mathbf{H}}$ is symmetric and positive semi-definite, the so-called *conjugate gradient* method is a good choice.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1448,7 +1459,7 @@ $\rightarrow$ Use an iterative solver to solve $\tilde{\mathbf{A}} \mathbf{x} = 
 
 The HQS method works well for inverse problems where the number of available measurements $M$ is in the range of the number of unknowns $N$. For the case of deconvolution, it is $M=N$ and hence HQS represents a suitable choice.
 
-However, for severely under-determined problems, the penalty $\frac{\rho}{2}\left\| \mathbf{Dx-z} \right\|^2_2 $ linking data fidelity and the prior terms can be too weak so that the algorithm does not converge well.
+However, for severely under-determined problems, the penalty $\frac{\rho}{2}\left\| \mathbf{Ds-z} \right\|^2_2 $ linking data fidelity and the prior terms can be too weak so that the algorithm does not converge well.
 
 We will now get to know a method that mitigates that problem.
 
@@ -1462,8 +1473,8 @@ Similar to the HQS approach, the so-called *alternating direction method of mult
 
 $
 \begin{align} 
-  \argmin{\mathbf{x}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Ax-b} \right\|^2_2 }_{=:f(\mathbf{x})} + \underbrace{\lambda \Psi (\mathbf{z})}_{=:g(\mathbf{z})} \\
-  \text{subject to}\quad &\mathbf{Dx-z} = \mathbf{0} \,.
+  \argmin{\mathbf{s}}\quad &\underbrace{\frac{1}{2}\left\| \mathbf{Hs-g} \right\|^2_2 }_{=:f(\mathbf{s})} + \underbrace{\lambda \Psi (\mathbf{z})}_{=:r(\mathbf{z})} \\
+  \text{subject to}\quad &\mathbf{Ds-z} = \mathbf{0} \,.
 \end{align}
 $
 
@@ -1471,10 +1482,10 @@ into multiple terms and optimizes it in an alternating fashion.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-But instead of transforming the constraint $\mathbf{Dx-z} = \mathbf{0}$ into a penalty term, it employs the so-called *augmented Lagrangian* of the objective function:
+But instead of transforming the constraint $\mathbf{Ds-z} = \mathbf{0}$ into a penalty term, it employs the so-called *augmented Lagrangian* of the objective function:
 
 $\begin{align} 
-   L^\mathrm{(ADMM)}_\rho (\mathbf{x,z,y}) = f(\mathbf{x}) + g(\mathbf{z}) + \mathbf{y}\transp \left( \mathbf{Dx-z} \right) + \frac{\rho}{2} \left\| \mathbf{Dx-z} \right\| ^2_2 \,,
+   L^\mathrm{(ADMM)}_\rho (\mathbf{s,z,y}) = f(\mathbf{s}) + r(\mathbf{z}) + \mathbf{y}\transp \left( \mathbf{Ds-z} \right) + \frac{\rho}{2} \left\| \mathbf{Ds-z} \right\| ^2_2 \,,
 \end{align}$
 
 with the Lagrange multiplier $\mathbf{y}$.
@@ -1484,7 +1495,7 @@ with the Lagrange multiplier $\mathbf{y}$.
 The so-called *scaled form* of the augmented Lagrangian is given by
 
 $\begin{align} 
-  L^\mathrm{(ADMM)}_\rho (\mathbf{x,z,u}) = f(\mathbf{x}) + g(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Dx-z+u} \right\|^2_2 - \frac{\rho}{2} \left\| \mathbf{u} \right\| ^2_2  \,,
+  L^\mathrm{(ADMM)}_\rho (\mathbf{s,z,u}) = f(\mathbf{s}) + r(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Ds-z+u} \right\|^2_2 - \frac{\rho}{2} \left\| \mathbf{u} \right\| ^2_2  \,,
 \end{align}$
 
 with the scaled Lagrangian multiplier $\mathbf{u} = \frac{1}{\rho} \mathbf{y}$.
@@ -1497,17 +1508,17 @@ with the scaled Lagrangian multiplier $\mathbf{u} = \frac{1}{\rho} \mathbf{y}$.
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-The update rules for the variables $\mathbf{x,z,u}$ are given by
+The update rules for the variables $\mathbf{s,z,u}$ are given by
 
 $\begin{align} 
-   \mathbf{x} &\leftarrow \mathrm{prox}_{\left\| \cdot \right\|_2, \rho } (\mathbf{v}) =\argmin{\mathbf{x}}\, L^{\mathrm{(ADMM)}}_\rho (\mathbf{x,z,u}) = \argmin{\mathbf{x}}\, \frac{1}{2} \left\| \mathbf{Ax-b} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Dx-z+u} \right\|^2_2 \,, \\
-   \mathbf{z} &\leftarrow  \mathrm{prox}_{\Psi, \rho}(\mathbf{v}) = \argmin{\mathbf{z}}\, L^{\mathrm{(ADMM)}}_\rho (\mathbf{x,z,u}) = \argmin{\mathbf{z}}\, \lambda \Psi (\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Dx-z+u} \right\|^2_2 \,, \\
-   \mathbf{u} &\leftarrow \mathbf{u} + \mathbf{Dx-z}
+   \mathbf{s} &\leftarrow \mathrm{prox}_{\left\| \cdot \right\|_2, \rho } (\mathbf{v}) =\argmin{\mathbf{s}}\, L^{\mathrm{(ADMM)}}_\rho (\mathbf{s,z,u}) = \argmin{\mathbf{s}}\, \frac{1}{2} \left\| \mathbf{Hs-g} \right\|^2_2 + \frac{\rho}{2} \left\| \mathbf{Ds-z+u} \right\|^2_2 \,, \\
+   \mathbf{z} &\leftarrow  \mathrm{prox}_{\Psi, \rho}(\mathbf{v}) = \argmin{\mathbf{z}}\, L^{\mathrm{(ADMM)}}_\rho (\mathbf{s,z,u}) = \argmin{\mathbf{z}}\, \lambda \Psi (\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{Ds-z+u} \right\|^2_2 \,, \\
+   \mathbf{u} &\leftarrow \mathbf{u} + \mathbf{Ds-z}
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
-For the $\mathbf{x}$- and $\mathbf{z}$-updates we can again use proximal operators. The $\mathbf{u}$-update is a straightforward sum of vectors (for its derivation see the article [Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers](https://web.stanford.edu/~boyd/papers/pdf/admm_distr_stats.pdf) by Stephen Boyd et al.).
+For the $\mathbf{s}$- and $\mathbf{z}$-updates we can again use proximal operators. The $\mathbf{u}$-update is a straightforward sum of vectors (for its derivation see the article [Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers](https://web.stanford.edu/~boyd/papers/pdf/admm_distr_stats.pdf) by Stephen Boyd et al.).
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1515,10 +1526,10 @@ For the $\mathbf{x}$- and $\mathbf{z}$-updates we can again use proximal operato
 
 +++
 
-The $\mathbf{x}$-update within ADMM is quite similar to that of HQS, we just have to adequately account for $\mathbf{u}$, i.e.,
+The $\mathbf{s}$-update within ADMM is quite similar to that of HQS, we just have to adequately account for $\mathbf{u}$, i.e.,
 
 $\begin{align} 
-  \mathrm{prox}_{\left\| \cdot \right\|_2, \rho } (\mathbf{\mathbf{z-u}}) = \left( \underbrace{\mathbf{A}\transp \mathbf{A} + \rho  \mathbf{D}\transp D}_{\tilde{\mathbf{A}}} \right)^{-1}  \left( \underbrace{\mathbf{A}\transp \mathbf{b} + \rho \mathbf{D}\transp (\mathbf{z-u})}_{\tilde{\mathbf{b}}} \right) \,.
+  \mathrm{prox}_{\left\| \cdot \right\|_2, \rho } (\mathbf{\mathbf{z-u}}) = \left( \underbrace{\mathbf{H}\transp \mathbf{H} + \rho  \mathbf{D}\transp D}_{\tilde{\mathbf{H}}} \right)^{-1}  \left( \underbrace{\mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp (\mathbf{z-u})}_{\tilde{\mathbf{g}}} \right) \,.
 \end{align}$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
@@ -1535,7 +1546,7 @@ $\begin{align}
   \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{v}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{v-z} \right\|^2_2 = \mathcal{S}_{\lambda / \rho} (\mathbf{v})\,.  
 \end{align}$
 
-Since for HQS it is $\mathbf{v} = \mathbf{Dx}$, we again have to account for $\mathbf{u}$ as $\mathbf{v} = \mathbf{Dx} + \mathbf{u}$.
+Since for HQS it is $\mathbf{v} = \mathbf{Ds}$, we again have to account for $\mathbf{u}$ as $\mathbf{v} = \mathbf{Ds} + \mathbf{u}$.
 
 +++
 
@@ -1545,7 +1556,7 @@ $\begin{align}
    \mathrm{prox}_{\mathcal{D}, \rho} (\mathbf{v}) = \mathcal{D} \left( \mathbf{v}, \sigma^2=\frac{\lambda }{\rho} \right) \,,
 \end{align}$
 
-with $\mathbf{v = x + u}$.
+with $\mathbf{v = s + u}$.
 
 +++ {"slideshow": {"slide_type": "slide"}}
 

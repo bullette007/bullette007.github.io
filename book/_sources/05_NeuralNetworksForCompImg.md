@@ -1405,6 +1405,10 @@ See the paper [Deep Optics for Single-shot High-dynamic-range Imaging](https://o
 * [PyTorch](https://pytorch.org/) famous Python library for neural network development.
 * [FastAI](https://www.fast.ai/) high-level API for PyTorch, very informative free online course, book.
 
++++
+
+## Example: Automatic differentiation for inverse Rendering
+
 +++ {"tags": ["remove-cell"]}
 
 ##### Archive
