@@ -294,7 +294,7 @@ $ \stochvec{g}\sim \mathcal{N}((\mathbf{Hs}),\sigma^2)$
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-For probability of observation $ \mathbf{b}$ it holds:
+For probability of observation $ \mathbf{g}$ it holds:
 
 $\begin{align}
     p( \mathbf{g}\vert \mathbf{s}, \sigma) \propto \exp \left( - \frac{\Vert \mathbf{g} - \mathbf{Hs} \Vert^2_2}{2\sigma^2} \right)
@@ -1284,29 +1284,38 @@ So for $\mathbf{z} \neq \mathbf{0}$, we will find a $\hat{\mathbf{z}}$ with $  \
 
 $\begin{align} 
   \lambda \frac{\mathbf{z}}{\left\| \mathbf{z} \right\|_2 } +  \rho (-\mathbf{v} + \mathbf{z}) &\overset{!}{=} \mathbf{0} \\
-  \mathbf{z}\left( \frac{\lambda}{\left\| \mathbf{z} \right\|_2 } + \rho \right) &= \rho \mathbf{v} \,. \label{eq:hqs:iso:2}
+  \mathbf{z}\left( \frac{\lambda}{\left\| \mathbf{z} \right\|_2 } + \rho \right) &= \rho \mathbf{v} \\
+  \mathbf{z} \left( \frac{\lambda }{\left\| \mathbf{z} \right\|_2 \, \rho } + 1 \right)  &= \mathbf{v}
+  \,. \label{eq:hqs:iso:2}
 \end{align}$
 
 We now apply the $l_2$-norm to both sides of the equation:
 
 $\begin{align}  \label{eq:hqs:iso:3}
-   \left| \frac{\lambda}{\left\| \mathbf{z} \right\|_2 }  + \rho\right| \cdot \left\| \mathbf{z} \right\|_2 = \left| \rho \right|  \left\| \mathbf{v} \right\|_2 \,.
+   \left| \frac{\lambda}{\left\| \mathbf{z} \right\|_2 \, \rho }  + 1 \right| \cdot \left\| \mathbf{z} \right\|_2 =   \left\| \mathbf{v} \right\|_2 \,.
 \end{align}$
 
-The last step introduced two absolute values for each of which the two possible cases, .i.e, $>0$, $<0$ have to be considered. Regarding the term $\left| \rho \right| $ on the right side of the equation, only the positive case has to be considered since $\rho > 0$ by definition.
-
-The first absolute term $\left| \frac{\lambda}{\left\| \mathbf{z} \right\|_2 }  + \rho\right|$ is positive if
+The last step introduced an absolute value term for which the two possible cases, .i.e, $>0$, $<0$ would have to be considered in principle. However, since the whole equation represents a relation between two vector norms like $\Vert \mathbf{a} \Vert_2 \cdot \alpha = \Vert \mathbf{b} \Vert_2$ where $\alpha \geq 0$ always because $\Vert \cdot \Vert_2 \geq 0$ always, we can conclude that
 
 $\begin{align} 
-  \frac{\lambda}{\left\| \mathbf{z} \right\|_2 }  + \rho &> 0 \\  - \frac{\lambda}{\rho} &< \left\| \mathbf{z} \right\| _2 \,,
+  \frac{\lambda}{\left\| \mathbf{z} \right\|_2 \, \rho }  + 1 > 0 \,,
 \end{align}$
 
-what always holds since due to $\lambda > 0$ and $\rho > 0$ it follows $-\frac{\lambda}{\rho} < 0$ and since  $\left\| \mathbf{z} \right\| _2 > 0$ as $\left\| \cdot \right\| \geq 0$ for any norm and $\mathbf{z} \neq \mathbf{0}$ by definition of the considered case. Hence, the negative case is impossible.
+leading to
+
+$\begin{align} 
+  \frac{\lambda}{\left\| \mathbf{z} \right\|_2 \, \rho }   + 1 &> 0 \\
+  \frac{\lambda}{\left\| \mathbf{z} \right\|_2 } &> -\rho \\
+  \frac{1}{\left\| \mathbf{z} \right\|_2 } &> - \frac{\rho}{\lambda} \\
+  -\frac{\lambda}{\rho} &<  \Vert \mathbf{z} \Vert_2 \,,
+\end{align}$
+
+which we need again later.
 
 We continue to solve \eqref{eq:hqs:iso:3} for $\left\| \mathbf{z} \right\| _2$:
 
 $\begin{align} 
-  \left( \frac{\lambda}{\left\| \mathbf{z} \right\|_2 }  + \rho\right) \cdot \left\| \mathbf{z} \right\|_2 &= \rho  \left\| \mathbf{v} \right\|_2  \\
+  \left( \frac{\lambda}{\left\| \mathbf{z} \right\|_2 }  + \rho\right) \cdot \left\| \mathbf{z} \right\|_2 &= \rho  \left\| \mathbf{v} \right\|_2  \label{eq:hqs:ios:11}\\
   \lambda + \rho \left\| \mathbf{z} \right\| _2 &= \rho \left\| \mathbf{v} \right\| _2 \\
   \left\| \mathbf{z} \right\| _2 &= \frac{\rho \left\| \mathbf{v} \right\|_2 - \lambda  }{\rho} \,,
 \end{align}$
@@ -1320,10 +1329,32 @@ $\begin{align}
    \mathbf{z} &= \mathbf{v} \cdot \left( 1 - \frac{\lambda }{\rho \left\| \mathbf{v} \right\|_2 } \right) \,.
 \end{align}$
 
-In order to make sure that $\mathbf{z} \overset{!}{\neq} \mathbf{0}$, we have to check for which conditions $\left( 1 - \frac{\lambda }{\rho \left\| \mathbf{v} \right\|_2 } \right) > 0$ holds (we do not have to check for $<0$ as this is impossible as we showed when inspecting the absolute terms before):
+In order to make sure that $\mathbf{z} \overset{!}{\neq} \mathbf{0}$, we have to check for which conditions $\left( 1 - \frac{\lambda }{\rho \left\| \mathbf{v} \right\|_2 } \right)$ is greater or less than $0$. Let's assume that is less than zero and perform some manipulations:
 
 $\begin{align} 
-  \left( 1 - \frac{\lambda }{\rho \left\| \mathbf{v} \right\|_2 } \right) &> 0 \\
+   1 - \frac{\lambda}{\rho \Vert \mathbf{v} \Vert_2} &< 0 \\ - \frac{\lambda}{\rho \Vert \mathbf{v} \Vert_2} &< -1 \\
+    \frac{\lambda}{\rho \Vert \mathbf{v} \Vert_2} &> 1 \\
+    \frac{\lambda}{\rho } &> \Vert \mathbf{v} \Vert_2 \,.
+\end{align}$
+
+From \eqref{eq:hqs:ios:11} we know that $\Vert \mathbf{v} \Vert_2$ can be expressed as 
+
+$\begin{align} 
+   \Vert \mathbf{v} \Vert_2 = \Vert \mathbf{z} \Vert_2 \left( \frac{\lambda}{\Vert \mathbf{z} \Vert_2 \, \rho } + 1 \right) = \frac{\lambda}{\rho} + \Vert \mathbf{z} \Vert_2 \,,
+\end{align}$
+
+we can continue our previous thoughts
+
+$\begin{align} 
+   \frac{\lambda}{\rho } &> \Vert \mathbf{v} \Vert_2 \\
+   \frac{\lambda}{\rho } &> \frac{\lambda}{\rho} + \Vert \mathbf{z} \Vert_2 \\
+   0 &> \Vert \mathbf{z} \Vert_2 \,,
+\end{align}$
+
+what is impossible since $\Vert \cdot \Vert_2 > 0$ always. Hence, we can focus on the other case:
+
+$\begin{align} 
+  1 - \frac{\lambda }{\rho \left\| \mathbf{v} \right\|_2 }  &> 0 \\
   \left\| \mathbf{v} \right\|_2 &> \frac{\lambda }{\rho } \,.
 \end{align}$
 
@@ -1522,7 +1553,7 @@ For the $\mathbf{s}$- and $\mathbf{z}$-updates we can again use proximal operato
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-##### The $\mathbf{x}$-update:
+##### The $\mathbf{s}$-update:
 
 +++
 
@@ -1557,6 +1588,35 @@ $\begin{align}
 \end{align}$
 
 with $\mathbf{v = s + u}$.
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+## Unrolled optimization
+
++++
+
+For traditional HQS and ADMM implementations, the values of the hyperparameters $\lambda$ and $\rho$ are chosen once and remain fix while performing the optimization.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Although this works well in many cases, it can be beneficial to set the number $i$ of iterations to a fixed value and replicate the parameter update routines $i$ times, each with individual hyperparameters $\lambda_i, \rho_i$.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+The resulting structure can be interpreted and dealt with like a neural network (especially if some deep denoising prior is included). Then, the hyperparameters $\lambda_i, \rho_i$ and the parameters of a potentially included neural network can be learned (i.e., optimized) in an end-to-end fashion in a joint training procedure.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/6/unrolled_opt.svg" style="max-height:40vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+Advantages of unrolled optimization:
+
+* Whole method becomes end-to-end differentiable.
+* Hyperparameters $\lambda_i, \rho_i$ can be learned and optimized allowing to realize a hyperparameter-schedule (e.g., increasing the $\rho_i$ over time).
+* The denoising neural network can adapt to the actual matrix $\mathbf{A}$ or the convolution kernel (even with respect to every individual iteration).
+* Skip connections from earlier iterations to later iterations can be realized.
 
 +++ {"slideshow": {"slide_type": "slide"}}
 
@@ -1683,28 +1743,3 @@ The reconstruction results are numerically compared against the ground truths by
   </tr>
 </tbody>
 </table>
-
-+++ {"slideshow": {"slide_type": "slide"}}
-
-## Unrolled optimization
-
-+++
-
-For traditional HQS and ADMM implementations, the values of the hyperparameters $\lambda$ and $\rho$ are chosen once and remain fix while performing the optimization.
-
-+++ {"slideshow": {"slide_type": "fragment"}}
-
-Although this works well in many cases, it can be beneficial to set the number $i$ of iterations to a fixed value and replicate the parameter update routines $i$ times, each with individual hyperparameters $\lambda_i, \rho_i$.
-
-+++ {"slideshow": {"slide_type": "fragment"}}
-
-The resulting structure can be interpreted and dealt with like a neural network (especially if some deep denoising prior is included). Then, the hyperparameters $\lambda_i, \rho_i$ and the parameters of a potentially included neural network can be learned (i.e., optimized) in an end-to-end fashion in a joint training procedure.
-
-+++ {"slideshow": {"slide_type": "subslide"}}
-
-Advantages of unrolled optimization:
-
-* Whole method becomes end-to-end differentiable.
-* Hyperparameters $\lambda_i, \rho_i$ can be learned and optimized allowing to realize a hyperparameter-schedule (e.g., increasing the $\rho_i$ over time).
-* The denoising neural network can adapt to the actual matrix $\mathbf{A}$ or the convolution kernel (even with respect to every individual iteration).
-* Skip connections from earlier iterations to later iterations can be realized.
