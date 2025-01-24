@@ -108,7 +108,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    Computational Imaging - Course Notes for Winter Term 2022 / 2023
+                    Computational Imaging - Course Notes
                 </a>
             </li>
         </ul>
@@ -474,7 +474,7 @@ title="Print to PDF"
 <h2>Conventional RGB-camera<a class="headerlink" href="#conventional-rgb-camera" title="Permalink to this headline">#</a></h2>
 <p>The following figure shows the sampling scheme of a conventional RGB-camera for a single spatial coordinate <span class="math notranslate nohighlight">\(x\)</span> and the spectral coordinate <span class="math notranslate nohighlight">\(\lambda\)</span>:</p>
 <img src="figures/10/sampling_rgb_camera.svg" style="max-height:40vh"><p>The modulation is performed by the RGB Bayer filter pattern on the sensor and the projection along the spectral dimension is performed by the sensor elements which integrate over the modulated spectra.</p>
-<p>Let <span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{S\times N}\)</span> contain the spectra with length <span class="math notranslate nohighlight">\(S\)</span> as columns for each of the <span class="math notranslate nohighlight">\(N\)</span> spatial positions and let <span class="math notranslate nohighlight">\(\mathbf{x}\in \mathbb{R} ^{S\cdot N}\)</span> denote its vectorized form.</p>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{X}\in\mathbb{R}^{N\times S}\)</span> contain the spectra with length <span class="math notranslate nohighlight">\(S\)</span> as rows for each of the <span class="math notranslate nohighlight">\(N\)</span> spatial positions and let <span class="math notranslate nohighlight">\(\mathbf{x}\in \mathbb{R} ^{S\cdot N}\)</span> denote its vectorized form.</p>
 <p>The modulation can be modeled via a diagonal matrix <span class="math notranslate nohighlight">\(\mathrm{diag}(\mathbf{p})\in \mathbb{R} ^{S\cdot N \times S\cdot N}\)</span> with the modulation pattern <span class="math notranslate nohighlight">\(\mathbf{p}\in \mathbb{R}^{S\cdot N} \)</span> containing the spectral filter coefficients for every spatial and spectral sampling point.</p>
 <p>The modulated spectra are then given by <span class="math notranslate nohighlight">\(\mathrm{diag}(\mathbf{p})\mathbf{x}\)</span>.</p>
 <p>The projection along the spectral dimension can be modeled via a matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\in \mathbb{R} ^{N\times S\cdot N}\)</span> containing blocks of ones of length <span class="math notranslate nohighlight">\(S\)</span> in every row that are shifted by <span class="math notranslate nohighlight">\(S\)</span> from row to row.</p>

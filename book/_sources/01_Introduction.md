@@ -331,11 +331,11 @@ Tentative course schedule:
 | 8   	| 11.12.2024 	| Neural networks for computational imaging <br> Inverse problems in computational imaging 	|                                                      	|
 | 9   	| 18.12.2024 	| Inverse problems in computational imaging                                                	| Inverse problems                                     	|
 | 10  	| 08.01.2025 	| Inverse problems in computational imaging                                                	|                                                      	|
-| 11  	| 15.01.2025 	| Lensless imaging                                                                         	| Inverse problems                                     	|
-| 12  	| 22.01.2025 	| Coded exposure photography <br> Quantitative phase imaging                               	|                                                      	|
-| 13  	| 29.01.2025 	| Coded spectral snapshot imaging <br> Fourier ptychography                                	| DiffuserCam                                          	|
-| 14  	| 05.02.2025 	| End-to-end optimization of computational imaging system                                  	|                                                      	|
-| 15  	| 12.02.2025 	| Time of flight imaging <br> Round up                                                     	| End-to-end optimization                              	|                        |
+| 11  	| 15.01.2025 	| Lensless imaging  <br> Coded exposure photography                                                                       	|                                      	|
+| 12  	| 22.01.2025 	|  Coded spectral snapshot imaging <br>    Time of flight imaging                           	|                          Inverse problems                           	|
+| 13  	| 29.01.2025 	|  End-to-end optimization of computational imaging system                                	|                                           	|
+| 14  	| 05.02.2025 	|    Round up                               	|            Diffuser cam                                          	|
+| 15  	| 12.02.2025 	|                                                  	|                              	|                        |
 
 +++ {"slideshow": {"slide_type": "slide"}}
 

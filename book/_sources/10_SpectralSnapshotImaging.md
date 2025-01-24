@@ -213,7 +213,7 @@ The modulation is performed by the RGB Bayer filter pattern on the sensor and th
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
-Let $\mathbf{X}\in\mathbb{R}^{S\times N}$ contain the spectra with length $S$ as columns for each of the $N$ spatial positions and let $\mathbf{x}\in \mathbb{R} ^{S\cdot N}$ denote its vectorized form.
+Let $\mathbf{X}\in\mathbb{R}^{N\times S}$ contain the spectra with length $S$ as rows for each of the $N$ spatial positions and let $\mathbf{x}\in \mathbb{R} ^{S\cdot N}$ denote its vectorized form.
 
 +++ {"slideshow": {"slide_type": "fragment"}}
 
