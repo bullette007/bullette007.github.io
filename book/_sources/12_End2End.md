@@ -181,7 +181,7 @@ Think again about the definition of computational imaging systems we gave in the
 
 <img src="figures/1/computational_imaging.svg" style="max-height:40vh">
 
-+++
++++ {"slideshow": {"slide_type": "subslide"}}
 
 We elaborated, that the joint optimization of all major components (illumination, image acquisition and image processing algorithms) of an artificial vision system should lead to increased performance or other advantages compared to the classical approach of separately optimizing all those components.
 
@@ -212,7 +212,7 @@ init_cell: true
 slideshow:
   slide_type: subslide
 ---
-display(HTML('<img id=\"selaci\" src=\"figures/12/selaci_1.svg\" width=80% />'))
+display(HTML('<img id=\"selaci\" src=\"figures/12/selaci_1.svg\" style=\"max-height:80vh\" />'))
 f_dft = lambda i: Javascript(f'let image = document.getElementById(\"selaci\"); image.src = \"http://localhost:8888/files/figures/12/selaci_{i}.svg?_xsrf=\" + globalThis.myxsrf')
 interact(lambda i: f_dft(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=7), step=1, value=(max_i if book else min_i)))
 ```
@@ -220,7 +220,7 @@ interact(lambda i: f_dft(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=7), 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 The following figure shows the optical setup of the defocused imaging in detail:
-<img src="figures/12/selaci_opt_setup.svg" style="max-height:40vh">
+<img src="figures/12/selaci_opt_setup.svg" style="max-height:80vh">
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -333,7 +333,7 @@ $\begin{align}
 ```{code-cell} ipython3
 :init_cell: true
 
-display(HTML('<img id=\"selaci_optPipe\" src=\"figures/12/selaci_optPipeline_1.svg\" width=80% />'))
+display(HTML('<img id=\"selaci_optPipe\" src=\"figures/12/selaci_optPipeline_1.svg\" style=\"max-height:80vh\" />'))
 f_optPipe = lambda i: Javascript(f'let image = document.getElementById(\"selaci_optPipe\"); image.src = \"http://localhost:8888/files/figures/12/selaci_optPipeline_{i}.svg?_xsrf=\" + globalThis.myxsrf')
 interact(lambda i: f_optPipe(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=6), step=1, value=(max_i if book else min_i)))
 ```
@@ -462,7 +462,7 @@ About 1,600 times more robust, i.e., a potential increase of laser power of 350 
 ```{code-cell} ipython3
 :init_cell: true
 
-display(HTML('<img id=\"deflecto\" src=\"figures/12/deflecto_1.svg\" width=80% />'))
+display(HTML('<img id=\"deflecto\" src=\"figures/12/deflecto_1.svg\" style=\"max-height:80vh\" />'))
 f_deflecto = lambda i: Javascript(f'let image = document.getElementById(\"deflecto\"); image.src = \"http://localhost:8888/files/figures/12/deflecto_{i}.svg?_xsrf=\" + globalThis.myxsrf')
 interact(lambda i: f_deflecto(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=6), step=1, value=(max_i if book else min_i)))
 ```
@@ -482,7 +482,7 @@ interact(lambda i: f_deflecto(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:
 ```{code-cell} ipython3
 :init_cell: true
 
-display(HTML('<img id=\"deflecto_defects\" src=\"figures/12/deflecto_defects_1.svg\" width=80% />'))
+display(HTML('<img id=\"deflecto_defects\" src=\"figures/12/deflecto_defects_1.svg\" style=\"max-height:80vh\" />'))
 f_deflecto_defects = lambda i: Javascript(f'let image = document.getElementById(\"deflecto_defects\"); image.src = \"http://localhost:8888/files/figures/12/deflecto_defects_{i}.svg?_xsrf=\" + globalThis.myxsrf')
 interact(lambda i: f_deflecto_defects(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=3), step=1, value=(max_i if book else min_i)))
 ```
@@ -494,7 +494,7 @@ interact(lambda i: f_deflecto_defects(i), i=widgets.IntSlider(min=(min_i:=1),max
 ```{code-cell} ipython3
 :init_cell: true
 
-display(HTML('<img id=\"deflecto_opt_pipeline\" src=\"figures/12/deflecto_opt_pipeline_1.svg\" width=80% />'))
+display(HTML('<img id=\"deflecto_opt_pipeline\" src=\"figures/12/deflecto_opt_pipeline_1.svg\" style=\"max-height:80vh\" />'))
 f_deflecto_opt_pipeline = lambda i: Javascript(f'let image = document.getElementById(\"deflecto_opt_pipeline\"); image.src = \"http://localhost:8888/files/figures/12/deflecto_opt_pipeline_{i}.svg?_xsrf=\" + globalThis.myxsrf')
 interact(lambda i: f_deflecto_opt_pipeline(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=7), step=1, value=(max_i if book else min_i)))
 ```
@@ -507,9 +507,9 @@ interact(lambda i: f_deflecto_opt_pipeline(i), i=widgets.IntSlider(min=(min_i:=1
 :init_cell: true
 
 if book:
-  display(HTML('<img id=\"deflecto_pat_res\" src=\"figures/12/deflecto_pat_res_2.svg\" width=80% />'))
+  display(HTML('<img id=\"deflecto_pat_res\" src=\"figures/12/deflecto_pat_res_2.svg\" style=\"max-height:80vh\" />'))
 else:
-  display(HTML('<img id=\"deflecto_pat_res\" src=\"figures/12/deflecto_pat_res_1.svg\" width=80% />'))
+  display(HTML('<img id=\"deflecto_pat_res\" src=\"figures/12/deflecto_pat_res_1.svg\" style=\"max-height:80vh\" />'))
   f_deflecto_pat_res = lambda i: Javascript(f'let image = document.getElementById(\"deflecto_pat_res\"); image.src = \"http://localhost:8888/files/figures/12/deflecto_pat_res_{i}.svg?_xsrf=\" + globalThis.myxsrf')
   interact(lambda i: f_deflecto_pat_res(i), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=2), step=1, value=(max_i if book else min_i)))
 ```

@@ -877,3 +877,97 @@ Example results for only indirect light transport imaging and for enhancing the 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 <img src="figures/4/example_indirect_etc_2.svg" style="max-width:30vw">
+
++++ {"slideshow": {"slide_type": "slide"}}
+
+## Example application: Scanning-free BRDF approximation
+
+Credits to M.Sc. Alexander Wokurek (former student of this lecture)
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+### What is a BRDF?
+
+<img src="figures/4/brdf.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+**Conventional BRDF measurement setup (Fraunhofer IOSB Ettlingen)**
+
+<img src="figures/4/brdf_meas_et.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+### Example BRDFs
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+❓ **Question**
+
+What do you expect the BRDF of a mirror would look like?
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/brdf_example_mirror.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+❓ **Question**
+
+What do you expect the BRDF of a diffuse surface would look like?
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/brdf_example_diffuse.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+❓ **Question**
+
+What do you expect the BRDF of a piece of brushed aluminum would look like?
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/brdf_example_aniso.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+**Another way of visualization**
+
+<img src="figures/4/brdf_multiplexing.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+**Proposed optical setup**
+
++++
+
+<img src="figures/4/brdf_lt_concept.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+❓ **Question**
+
+How is this related to the light transport matrix?
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/brdf_lt_concept_2.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+### Experimental results
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/brdf_comparison.svg" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+<img src="figures/4/brdf_lt_approx_anim.gif" style="max-height:80vh">
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+**Quantitative results**
+
+<img src="figures/4/brdf_quant_res.svg" style="max-height:80vh">
