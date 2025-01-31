@@ -882,7 +882,7 @@ Example results for only indirect light transport imaging and for enhancing the 
 
 ## Example application: Scanning-free BRDF approximation
 
-Credits to M.Sc. TBD (former student of this lecture)
+Credits to M. Sc. Alexander Wokurek (former student of this lecture).
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
