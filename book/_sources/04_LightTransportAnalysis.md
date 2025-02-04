@@ -888,7 +888,9 @@ Credits to M. Sc. Alexander Wokurek (former student of this lecture).
 
 ### What is a BRDF?
 
-<img src="figures/4/brdf.svg" style="max-height:80vh">
+<video style="max-width:45vw" src="figures/4/BRDF2D.mp4"  
+       controls>
+</video>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -942,7 +944,9 @@ What do you expect the BRDF of a piece of brushed aluminum would look like?
 
 +++
 
-<img src="figures/4/brdf_lt_concept.svg" style="max-height:80vh">
+<video style="max-width:40vw" src="figures/4/camProj.mp4"  
+       controls>
+</video>
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
