@@ -63,6 +63,12 @@ $\begin{align}
 
 Imaging is the process of acquiring an image of a scene of interest that containes details of interest of the scene.
 
++++
+
+<video style="max-width:40vw" src="https://github.com/bullette007/bullette007.github.io/raw/refs/heads/pre-built/book/figures/1/GrundIdee.mp4"  
+       controls>
+</video>
+
 +++ {"slideshow": {"slide_type": "subslide"}}
 
 ##### Example: Conventional optical imaging
