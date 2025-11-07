@@ -26,6 +26,8 @@ baseurl: / # the subpath of your site, e.g. /blog
 url: https://computational-imaging.de # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jojomey87
 github_username:  bullette007
+twitch_username: deinTwitchName
+discord_username: deinDiscordName
 
 # Build settings
 theme: minima

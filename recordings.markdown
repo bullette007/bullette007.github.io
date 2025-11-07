@@ -4,7 +4,39 @@ title: Recordings
 permalink: /recordings/
 ---
 
-Recordings of the current winter semester 2023 / 2024:
+Recordings of the current winter semester 2025 / 2026:
+
+| Date | Recording | Notes |
+|:----:|:---------:|:-----:|
+| 29.10.2025 | [Lecture 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL01.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_01.pdf) |
+| 05.11.2025 | [Lecture 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL02.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_02.pdf) |
+
+Recordings of the winter semester 2024 / 2025 (Please note that the covered topics might change from year to year).:
+
+| Date | Recording | Notes |
+|:----:|:---------:|:-----:|
+| 23.10.2024 | [Lecture 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL01.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_01.pdf) |
+| 30.10.2024 | [Lecture 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL02.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_02.pdf) |
+| 06.11.2024 | [Lecture 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL03.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_03.pdf) |
+| 06.11.2024 | [Exercise 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_EX01.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_EX_01.pdf) |
+| 13.11.2024 | [Lecture 4](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL04.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_04.pdf) |
+| 20.11.2024 | [Lecture 5](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL05.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_05.pdf) |
+| 20.11.2024 | [Exercise 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_EX02.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_EX_02.pdf) |
+| 27.11.2024 | [Lecture 6](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL06.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_06.pdf) |
+| 04.12.2024 | [Lecture 7](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL07.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_07.pdf) |
+| 04.12.2024 | [Exercise 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2023_EX03.mkv) | No notes |
+| 11.12.2024 | [Lecture 8](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL08.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_08.pdf) |
+| 18.12.2024 | [Lecture 9](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL09.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_09.pdf) |
+| 08.01.2025 | [Lecture 10](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL10.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_10.pdf) |
+| 08.01.2025 | [Exercise 4](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_EX04.mkv) | No notes |
+| 15.01.2025 | [Lecture 11](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL11.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_11.pdf) |
+| 22.01.2025 | [Lecture 12](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL12.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_12.pdf) |
+| 22.01.2025 | [Exercise 5](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_EX05.mkv) | No notes |
+| 29.01.2025 | [Lecture 13](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL13.mkv) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2024_VL_13.pdf) |
+| 05.02.2025 | [Lecture 14](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_VL14.mkv) | No notes |
+| 05.02.2025 | [Exercise 6](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2024_EX06.mkv) | No notes |
+
+Here you can find the recordings of the lectures from winter term 2023 / 2024. (Please note that the covered topics might change from year to year).
 
 | Date | Recording | Notes |
 |:----:|:---------:|:-----:|
