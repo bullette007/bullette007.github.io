@@ -1,0 +1,73 @@
+Traceback (most recent call last):
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\meyjoh\AppData\Local\Programs\Python\Python38\lib\asyncio\base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+img = np.float32(misc.face(gray=True))[0:-1, 0:-1]
+kernel = np.ones((51,51))
+
+res_fourier = fourier_conv(img, kernel)
+res_spatial = ndimage.convolve(img, kernel, mode='???') ## Which mode do you have to use?
+
+print(f"Is your solution correct: {np.allclose(res_fourier, res_spatial)}")
+
+plt.subplot(1,3,1)
+plt.imshow(img, cmap='gray')
+plt.subplot(1,3,2)
+plt.imshow(res_spatial, cmap='gray')
+plt.subplot(1,3,3)
+plt.imshow(res_fourier, cmap='gray')
+
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mRuntimeError[0m                              Traceback (most recent call last)
+Cell [1;32mIn[41], line 5[0m
+[0;32m      2[0m kernel [38;5;241m=[39m np[38;5;241m.[39mones(([38;5;241m51[39m,[38;5;241m51[39m))
+[0;32m      4[0m res_fourier [38;5;241m=[39m fourier_conv(img, kernel)
+[1;32m----> 5[0m res_spatial [38;5;241m=[39m [43mndimage[49m[38;5;241;43m.[39;49m[43mconvolve[49m[43m([49m[43mimg[49m[43m,[49m[43m [49m[43mkernel[49m[43m,[49m[43m [49m[43mmode[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43m???[39;49m[38;5;124;43m'[39;49m[43m)[49m [38;5;66;03m## Which mode do you have to use?[39;00m
+[0;32m      7[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mIs your solution correct: [39m[38;5;132;01m{[39;00mnp[38;5;241m.[39mallclose(res_fourier,[38;5;250m [39mres_spatial)[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[0;32m      9[0m plt[38;5;241m.[39msubplot([38;5;241m1[39m,[38;5;241m3[39m,[38;5;241m1[39m)
+
+File [1;32m~\repos\ltm_4_ti\env_ltm_4_ti\lib\site-packages\scipy\ndimage\_filters.py:890[0m, in [0;36mconvolve[1;34m(input, weights, output, mode, cval, origin)[0m
+[0;32m    783[0m [38;5;129m@_ni_docstrings[39m[38;5;241m.[39mdocfiller
+[0;32m    784[0m [38;5;28;01mdef[39;00m [38;5;21mconvolve[39m([38;5;28minput[39m, weights, output[38;5;241m=[39m[38;5;28;01mNone[39;00m, mode[38;5;241m=[39m[38;5;124m'[39m[38;5;124mreflect[39m[38;5;124m'[39m, cval[38;5;241m=[39m[38;5;241m0.0[39m,
+[0;32m    785[0m              origin[38;5;241m=[39m[38;5;241m0[39m):
+[0;32m    786[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[0;32m    787[0m [38;5;124;03m    Multidimensional convolution.[39;00m
+[0;32m    788[0m 
+[1;32m   (...)[0m
+[0;32m    888[0m 
+[0;32m    889[0m [38;5;124;03m    """[39;00m
+[1;32m--> 890[0m     [38;5;28;01mreturn[39;00m [43m_correlate_or_convolve[49m[43m([49m[38;5;28;43minput[39;49m[43m,[49m[43m [49m[43mweights[49m[43m,[49m[43m [49m[43moutput[49m[43m,[49m[43m [49m[43mmode[49m[43m,[49m[43m [49m[43mcval[49m[43m,[49m
+[0;32m    891[0m [43m                                  [49m[43morigin[49m[43m,[49m[43m [49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+
+File [1;32m~\repos\ltm_4_ti\env_ltm_4_ti\lib\site-packages\scipy\ndimage\_filters.py:711[0m, in [0;36m_correlate_or_convolve[1;34m(input, weights, output, mode, cval, origin, convolution)[0m
+[0;32m    709[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28misinstance[39m(mode, [38;5;28mstr[39m) [38;5;129;01mand[39;00m [38;5;28misinstance[39m(mode, Iterable):
+[0;32m    710[0m     [38;5;28;01mraise[39;00m [38;5;167;01mRuntimeError[39;00m([38;5;124m"[39m[38;5;124mA sequence of modes is not supported[39m[38;5;124m"[39m)
+[1;32m--> 711[0m mode [38;5;241m=[39m [43m_ni_support[49m[38;5;241;43m.[39;49m[43m_extend_mode_to_code[49m[43m([49m[43mmode[49m[43m)[49m
+[0;32m    712[0m _nd_image[38;5;241m.[39mcorrelate([38;5;28minput[39m, weights, output, mode, cval, origins)
+[0;32m    713[0m [38;5;28;01mif[39;00m temp_needed:
+
+File [1;32m~\repos\ltm_4_ti\env_ltm_4_ti\lib\site-packages\scipy\ndimage\_ni_support.py:54[0m, in [0;36m_extend_mode_to_code[1;34m(mode)[0m
+[0;32m     52[0m     [38;5;28;01mreturn[39;00m [38;5;241m6[39m
+[0;32m     53[0m [38;5;28;01melse[39;00m:
+[1;32m---> 54[0m     [38;5;28;01mraise[39;00m [38;5;167;01mRuntimeError[39;00m([38;5;124m'[39m[38;5;124mboundary mode not supported[39m[38;5;124m'[39m)
+
+[1;31mRuntimeError[0m: boundary mode not supported
+RuntimeError: boundary mode not supported
+

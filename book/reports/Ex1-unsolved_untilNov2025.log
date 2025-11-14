@@ -1,0 +1,72 @@
+Traceback (most recent call last):
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\meyjoh\AppData\Local\Programs\Python\Python38\lib\asyncio\base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+image = mi.render(scene)
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mZeroDivisionError[0m                         Traceback (most recent call last)
+[1;32m<ipython-input-6-353ddf86b26c>[0m in [0;36m<module>[1;34m[0m
+[1;32m----> 1[1;33m [0mimage[0m [1;33m=[0m [0mmi[0m[1;33m.[0m[0mrender[0m[1;33m([0m[0mscene[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m
+[1;32m~\repos\vlcompimg\compimg\lib\site-packages\mitsuba\python\util.py[0m in [0;36mrender[1;34m(scene, params, sensor, integrator, seed, seed_grad, spp, spp_grad)[0m
+[0;32m    505[0m                         'to ensure unbiased gradient computation!')
+[0;32m    506[0m [1;33m[0m[0m
+[1;32m--> 507[1;33m     return dr.custom(_RenderOp, scene, sensor, params, integrator,
+[0m[0;32m    508[0m                      (seed, seed_grad), (spp, spp_grad))
+[0;32m    509[0m [1;33m[0m[0m
+
+[1;32m~\repos\vlcompimg\compimg\lib\site-packages\drjit\router.py[0m in [0;36mcustom[1;34m(cls, *args, **kwargs)[0m
+[0;32m   5612[0m         [0moutput[0m [1;33m=[0m [0minst[0m[1;33m.[0m[0meval[0m[1;33m([0m[1;33m*[0m[0m_dr[0m[1;33m.[0m[0mdetach[0m[1;33m([0m[0mkwargs[0m[1;33m[[0m[1;34m'args'[0m[1;33m][0m[1;33m)[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   5613[0m     [1;32melse[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m-> 5614[1;33m         [0moutput[0m [1;33m=[0m [0minst[0m[1;33m.[0m[0meval[0m[1;33m([0m[1;33m**[0m[1;33m{[0m [0mk[0m[1;33m:[0m [0m_dr[0m[1;33m.[0m[0mdetach[0m[1;33m([0m[0mv[0m[1;33m)[0m [1;32mfor[0m [0mk[0m[1;33m,[0m [0mv[0m [1;32min[0m [0mkwargs[0m[1;33m.[0m[0mitems[0m[1;33m([0m[1;33m)[0m [1;33m}[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   5615[0m     [1;32mif[0m [0m_dr[0m[1;33m.[0m[0mgrad_enabled[0m[1;33m([0m[0moutput[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   5616[0m         raise RuntimeError("drjit.custom(): the return value of CustomOp.eval() "
+
+[1;32m~\repos\vlcompimg\compimg\lib\site-packages\mitsuba\python\util.py[0m in [0;36meval[1;34m(self, scene, sensor, params, integrator, seed, spp)[0m
+[0;32m    360[0m [1;33m[0m[0m
+[0;32m    361[0m         [1;32mwith[0m [0mdr[0m[1;33m.[0m[0msuspend_grad[0m[1;33m([0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m--> 362[1;33m             return self.integrator.render(
+[0m[0;32m    363[0m                 [0mscene[0m[1;33m=[0m[0mself[0m[1;33m.[0m[0mscene[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+[0;32m    364[0m                 [0msensor[0m[1;33m=[0m[0msensor[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m<ipython-input-3-ea768550454d>[0m in [0;36msample_ray_differential[1;34m(self, time, sample1, sample2, sample3, active)[0m
+[0;32m     16[0m         [1;31m#INSERT CODE HERE[0m[1;33m[0m[1;33m[0m[1;33m[0m[0m
+[0;32m     17[0m [1;33m[0m[0m
+[1;32m---> 18[1;33m         [0mrayd[0m[1;33m.[0m[0md[0m [1;33m=[0m [0mdr[0m[1;33m.[0m[0mnormalize[0m[1;33m([0m[0mrayd[0m[1;33m.[0m[0md[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m     19[0m         [0mrayd[0m[1;33m.[0m[0md[0m [1;33m=[0m [0mself[0m[1;33m.[0m[0mto_world[0m[1;33m.[0m[0mtransform_affine[0m[1;33m([0m[0mrayd[0m[1;33m.[0m[0md[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m     20[0m [1;33m[0m[0m
+
+[1;32m~\repos\vlcompimg\compimg\lib\site-packages\drjit\router.py[0m in [0;36mnormalize[1;34m(arg)[0m
+[0;32m   3771[0m         [0mNormalized[0m [0minput[0m [0marray[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   3772[0m     '''
+[1;32m-> 3773[1;33m     [1;32mreturn[0m [0marg[0m [1;33m*[0m [0m_dr[0m[1;33m.[0m[0mrsqrt[0m[1;33m([0m[0m_dr[0m[1;33m.[0m[0msquared_norm[0m[1;33m([0m[0marg[0m[1;33m)[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   3774[0m [1;33m[0m[0m
+[0;32m   3775[0m [1;33m[0m[0m
+
+[1;32m~\repos\vlcompimg\compimg\lib\site-packages\drjit\router.py[0m in [0;36mrsqrt[1;34m(arg)[0m
+[0;32m   1771[0m         [1;32mreturn[0m [0marg[0m[1;33m.[0m[0mrsqrt_[0m[1;33m([0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m   1772[0m     [1;32melse[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m-> 1773[1;33m         [1;32mreturn[0m [1;36m1.0[0m [1;33m/[0m [0m_math[0m[1;33m.[0m[0msqrt[0m[1;33m([0m[0marg[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m   1774[0m [1;33m[0m[0m
+[0;32m   1775[0m [1;33m[0m[0m
+
+[1;31mZeroDivisionError[0m: float division by zero
+ZeroDivisionError: float division by zero
+

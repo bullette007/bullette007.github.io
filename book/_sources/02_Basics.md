@@ -386,6 +386,14 @@ By this means, the magnification $V$ of the system is independent of the distanc
 
 Important: Since the opening of the telecentric stop allows ray bundles of a certain size to reach the sensor, the system is also affected by defocus effects.
 
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Let's play around with optics
+
+https://phydemo.app/ray-optics/simulator/?en
+
+Or in short: https://s.fhg.de/optics-simulator
+
 +++ {"slideshow": {"slide_type": "slide"}}
 
 ## Illumination
@@ -584,6 +592,22 @@ The effect of an LSI system on a signal can be comfortably studied by means of i
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
+##### Example 
+
+Consider a spatial modulation, i.e., the system $\mathscr{S}\lbrace g(x) \rbrace = g(x) \cdot m(x) = k(x)$.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Then $k(x-x_0) = g(x-x_0) \cdot m(x-x_0)$ but 
+
+$ \mathscr{S}\lbrace g(x-x_0) \rbrace = g(x-x_0) \cdot m(x)$.
+
++++ {"slideshow": {"slide_type": "fragment"}}
+
+Hence, $\mathscr{S}\lbrace \cdot \rbrace$ is not shift invariant and therefore not an LSI system.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
 #### Dirac delta function
 
 +++ {"tags": ["book_only"]}
@@ -730,6 +754,14 @@ The two-dimensional convolution of two functions $f(\mathbf{x}), h(\mathbf{x})$ 
 $\begin{align}
     f(\mathbf{x})**h(\mathbf{x}) := \int\limits^\infty_{-\infty}\int\limits^\infty_{-\infty} f\left((\alpha,\beta)^\intercal\right)h\left( (x-\alpha, y-\beta)^\intercal \right)\mathrm{d}\alpha\, \mathrm{d}\beta\,.
 \end{align}$
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Play around with convolutions
+
+https://lpsa.swarthmore.edu/Convolution/CI.html
+
+In short: https://s.fhg.de/convolution
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
@@ -1106,6 +1138,14 @@ Here you can find a great applet to play around with Fourier series: https://www
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
+##### Let's play the wave game!
+
+https://phet.colorado.edu/sims/html/fourier-making-waves/latest/fourier-making-waves_all.html
+
+In short: https://s.fhg.de/wave-game
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
 #### Fourier transform
 
 +++
@@ -1303,6 +1343,14 @@ plt.plot(xs,gs)
 
 ##### Note
 In practice, one would employ one of the existing, highly optimized libraries to perform the DFT calculation, e.g., the `numpy.fft` module.
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
+##### Let's play around with Fourier transforms
+
+https://monman53.github.io/2dfft/
+
+Or in short: https://s.fhg.de/fourier
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
