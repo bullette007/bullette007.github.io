@@ -10,6 +10,10 @@ Recordings of the current winter semester 2025 / 2026:
 |:----:|:---------:|:-----:|
 | 29.10.2025 | [Lecture 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL01.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_01.pdf) |
 | 05.11.2025 | [Lecture 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL02.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_02.pdf) |
+| 12.11.2025 | [Lecture 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL03.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_03.pdf) |
+| 12.11.2025 | [Exercise 1](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_EX01.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_EX_01.pdf) |
+| 19.11.2025 | [Lecture 4](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL04.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_04.pdf) |
+
 
 Recordings of the winter semester 2024 / 2025 (Please note that the covered topics might change from year to year).:
 

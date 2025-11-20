@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Exercise 1 published"
-date:   2025-11-05 07:40:00 +0200
+title:  "Exercise 2 published"
+date:   2025-11-20 07:40:00 +0200
 categories: jekyll update
 ---
 
-The 1st exercise has been published and can be downloaded via the exercises-page.
+The 2nd exercise has been published and can be downloaded via the exercises-page or if you have an KIT affiliation, you can access it via [Jupyter Hub](https://hub.bwjupyter.de/services/profilemanagement/add?profile=a1a49a6d-ffcc-4f8e-8d1b-e8a56901c85a).
 
 To view it, you need a local Jupyter notebook installation with Python >= 3.8.

@@ -5,11 +5,12 @@ permalink: /exercises/
 ---
 
 Here you can find the exercises and their solutions (after discussion in the exercises session).
+If you have an KIT affiliation, you can also access the exercise via [Jupyter Hub](https://hub.bwjupyter.de/services/profilemanagement/add?profile=a1a49a6d-ffcc-4f8e-8d1b-e8a56901c85a).
 
 | Exercise | Solution |
 |:-----:|:----------:|
-| [Exercise 1](Ex1_unsolved.zip)   |  |
-
+| [Exercise 1](Ex1_unsolved.zip)   | [Solution 1](Ex1.zip) |
+| [Exercise 2](Ex2-unsolved.zip) | TBD |
 
 
 <!-- | Exercise | Solution |
