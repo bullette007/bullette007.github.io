@@ -10,7 +10,7 @@ If you have an KIT affiliation, you can also access the exercise via [Jupyter Hu
 | Exercise | Solution |
 |:-----:|:----------:|
 | [Exercise 1](Ex1_unsolved.zip)   | [Solution 1](Ex1.zip) |
-| [Exercise 2](Ex2-unsolved.zip) | TBD |
+| [Exercise 2](Ex2-unsolved.zip) | [Solution 2](Ex2.zip) |
 
 
 <!-- | Exercise | Solution |
