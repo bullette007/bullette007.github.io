@@ -332,15 +332,15 @@ Tentative course schedule:
 | 3   	| 12.11.2025 	| Light field methods                                                                      	| Fourier transforms<br>Mitsuba renderer               	|
 | 4   	| 19.11.2025 	| Light field methods                                                                      	|                                                      	|
 | 5   	| 26.11.2025 	| Light field methods                                                                      	| Light field calculations<br>Mitsuba for light fields 	|
-| 6   	| 03.12.2025 	| Light transport analysis                                                                 	|                                                      	|
-| 7   	| 10.12.2025 	| Neural networks for computational imaging                                                	| Light transport calculations                         	|
-| 8   	| 17.12.2025 	| Neural networks for computational imaging <br> Inverse problems in computational imaging 	|                                                      	|
-| 9   	| 07.01.2026 	| Inverse problems in computational imaging                                                	| Inverse problems                                     	|
-| 10  	| 14.01.2026 	| Inverse problems in computational imaging                                                	|                                                      	|
-| 11  	| 21.01.2026 	| Lensless imaging  <br> Coded exposure photography                                                                       	|                                      	|
-| 12  	| 28.01.2026 	|  Coded spectral snapshot imaging <br>    Time of flight imaging                           	|                          Inverse problems                           	|
+| 6   	| 03.12.2025 	| Light field methods <br> Light transport analysis                                          	|                                                      	|
+| 7   	| 10.12.2025 	| Light transport analysis                                                 			|                          				|
+| 8   	| 17.12.2025 	| Neural networks for computational imaging 						 	|  Light transport calculations                         |
+| 9   	| 07.01.2026 	| Inverse problems in computational imaging                                                	|                               		      	|
+| 10  	| 14.01.2026 	| Inverse problems in computational imaging                                                	| Inverse problems 		                      	|
+| 11  	| 21.01.2026 	| Lensless imaging  <br> Coded exposure photography                                             |	                                      		|
+| 12  	| 28.01.2026 	|  Coded spectral snapshot imaging <br>    Time of flight imaging                           	|                          Inverse problems         	|
 | 13  	| 04.02.2026 	|  End-to-end optimization of computational imaging system                                	|                                           	|
-| 14  	| 11.02.2026 	|    Round up                               	|            Diffuser cam                                          	|
+| 14  	| 11.02.2026 	|  **On-site lecture** <br>  Round up                               	|            Diffuser cam                                          	|
 | 15  	| 18.02.2026 	|                                                  	|                              	|                        |
 
 +++ {"slideshow": {"slide_type": "slide"}}

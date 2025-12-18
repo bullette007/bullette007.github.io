@@ -1409,11 +1409,12 @@ See the paper [Deep Optics for Single-shot High-dynamic-range Imaging](https://o
 
 ## Example: Automatic differentiation for inverse Rendering
 
-+++ {"tags": ["remove-cell"]}
++++ {"tags": ["remove-cell"], "heading_collapsed": true}
 
 ##### Archive
 
 ```{code-cell} ipython3
+:hidden: true
 :tags: [remove-cell]
 
 def normalize(img):
@@ -1421,6 +1422,7 @@ def normalize(img):
 ```
 
 ```{code-cell} ipython3
+:hidden: true
 :tags: [remove-cell]
 
 img = cv2.resize(a:=misc.face(gray=True), (int((f:=0.25) * a.shape[1]), int(f*a.shape[0])))
@@ -1432,4 +1434,10 @@ plt.imshow(normalize(img), cmap='gray')
 plt.imsave("noisy.png", img+noise, cmap='gray')
 plt.imsave("noise.png", noise, cmap='gray')
 plt.imsave("img.png", img, cmap='gray')
+```
+
+```{code-cell} ipython3
+:hidden: true
+
+
 ```
