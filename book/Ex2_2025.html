@@ -1,0 +1,1655 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Fourier transform &#8212; Computational Imaging - Course Notes</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Computational Imaging - Course Notes
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Basics.html">
+   Fundamental Basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_LightFieldMethods.html">
+   Light Field Methods
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_LightTransportAnalysis.html">
+   Light Transport Analysis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
+   Neural Networks for Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
+   Inverse Problems in Computational Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_LenslessImaging.html">
+   Lensless Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_CodedExposurePhotography.html">
+   Coded Exposure Photography
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_QuantitativePhaseImaging.html">
+   Quantitative Phase Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_SpectralSnapshotImaging.html">
+   Coded Aperture Spectral Snapshot Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_TimeOfFlightImaging.html">
+   Time-Of-Flight Imaging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_End2End.html">
+   End-to-End Optimization
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/Ex2_2025.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download notebook file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="_sources/Ex2_2025.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Fourier transform
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolution-in-the-fourier-domain">
+     Convolution in the Fourier domain
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hybrid-images">
+     Hybrid images
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#light-field-methods">
+   Light Field Methods
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reading-and-displaying-light-fields">
+     Reading and displaying light fields
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#get-light-field-data">
+       Get light field data
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-the-light-field">
+       Reading the light field
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#displaying-the-center-sub-aperture-image-sai">
+       Displaying the center sub aperture image (SAI)
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#display-different-sais">
+       Display different SAIs
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#synthesize-a-full-aperture-image">
+       Synthesize a full aperture image
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#refocusing-with-light-fields">
+     Refocusing with light fields
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#focus-stack">
+     Focus stack
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mitsuba-plugin-for-light-field-camera">
+     Mitsuba plugin for light field camera
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#schlieren-imaging">
+     Schlieren imaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#quantitative-measurement-of-deflection-angles">
+       Quantitative measurement of deflection angles
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mitsuba-plugin-for-schlieren-sensor">
+       Mitsuba plugin for schlieren sensor
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Fourier transform</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Fourier transform
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolution-in-the-fourier-domain">
+     Convolution in the Fourier domain
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hybrid-images">
+     Hybrid images
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#light-field-methods">
+   Light Field Methods
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reading-and-displaying-light-fields">
+     Reading and displaying light fields
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#get-light-field-data">
+       Get light field data
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#reading-the-light-field">
+       Reading the light field
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#displaying-the-center-sub-aperture-image-sai">
+       Displaying the center sub aperture image (SAI)
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#display-different-sais">
+       Display different SAIs
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#synthesize-a-full-aperture-image">
+       Synthesize a full aperture image
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#refocusing-with-light-fields">
+     Refocusing with light fields
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#focus-stack">
+     Focus stack
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mitsuba-plugin-for-light-field-camera">
+     Mitsuba plugin for light field camera
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#schlieren-imaging">
+     Schlieren imaging
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#quantitative-measurement-of-deflection-angles">
+       Quantitative measurement of deflection angles
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mitsuba-plugin-for-schlieren-sensor">
+       Mitsuba plugin for schlieren sensor
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Table of Contents<span class="tocSkip"></span></h1>
+<div class="toc"><ul class="toc-item"><li><ul class="toc-item"><li><span><a href="#Fourier-transform" data-toc-modified-id="Fourier-transform-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Fourier transform</a></span><ul class="toc-item"><li><span><a href="#Convolution-in-the-Fourier-domain" data-toc-modified-id="Convolution-in-the-Fourier-domain-1.1.1"><span class="toc-item-num">1.1.1&nbsp;&nbsp;</span>Convolution in the Fourier domain</a></span></li><li><span><a href="#Hybrid-images" data-toc-modified-id="Hybrid-images-1.1.2"><span class="toc-item-num">1.1.2&nbsp;&nbsp;</span>Hybrid images</a></span></li></ul></li></ul></li><li><span><a href="#Light-Field-Methods" data-toc-modified-id="Light-Field-Methods-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Light Field Methods</a></span><ul class="toc-item"><li><span><a href="#Reading-and-displaying-light-fields" data-toc-modified-id="Reading-and-displaying-light-fields-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Reading and displaying light fields</a></span><ul class="toc-item"><li><span><a href="#Get-light-field-data" data-toc-modified-id="Get-light-field-data-2.1.1"><span class="toc-item-num">2.1.1&nbsp;&nbsp;</span>Get light field data</a></span></li><li><span><a href="#Reading-the-light-field" data-toc-modified-id="Reading-the-light-field-2.1.2"><span class="toc-item-num">2.1.2&nbsp;&nbsp;</span>Reading the light field</a></span></li><li><span><a href="#Displaying-the-center-sub-aperture-image-(SAI)" data-toc-modified-id="Displaying-the-center-sub-aperture-image-(SAI)-2.1.3"><span class="toc-item-num">2.1.3&nbsp;&nbsp;</span>Displaying the center sub aperture image (SAI)</a></span></li><li><span><a href="#Display-different-SAIs" data-toc-modified-id="Display-different-SAIs-2.1.4"><span class="toc-item-num">2.1.4&nbsp;&nbsp;</span>Display different SAIs</a></span></li><li><span><a href="#Synthesize-a-full-aperture-image" data-toc-modified-id="Synthesize-a-full-aperture-image-2.1.5"><span class="toc-item-num">2.1.5&nbsp;&nbsp;</span>Synthesize a full aperture image</a></span></li></ul></li><li><span><a href="#Refocusing-with-light-fields" data-toc-modified-id="Refocusing-with-light-fields-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>Refocusing with light fields</a></span></li><li><span><a href="#Focus-stack" data-toc-modified-id="Focus-stack-2.3"><span class="toc-item-num">2.3&nbsp;&nbsp;</span>Focus stack</a></span></li><li><span><a href="#Mitsuba-plugin-for-light-field-camera" data-toc-modified-id="Mitsuba-plugin-for-light-field-camera-2.4"><span class="toc-item-num">2.4&nbsp;&nbsp;</span>Mitsuba plugin for light field camera</a></span></li><li><span><a href="#Schlieren-imaging" data-toc-modified-id="Schlieren-imaging-2.5"><span class="toc-item-num">2.5&nbsp;&nbsp;</span>Schlieren imaging</a></span><ul class="toc-item"><li><span><a href="#Quantitative-measurement-of-deflection-angles" data-toc-modified-id="Quantitative-measurement-of-deflection-angles-2.5.1"><span class="toc-item-num">2.5.1&nbsp;&nbsp;</span>Quantitative measurement of deflection angles</a></span></li><li><span><a href="#Mitsuba-plugin-for-schlieren-sensor" data-toc-modified-id="Mitsuba-plugin-for-schlieren-sensor-2.5.2"><span class="toc-item-num">2.5.2&nbsp;&nbsp;</span>Mitsuba plugin for schlieren sensor</a></span></li></ul></li><li><span><a href="#Light-field-displays" data-toc-modified-id="Light-field-displays-2.6"><span class="toc-item-num">2.6&nbsp;&nbsp;</span>Light field displays</a></span></li></ul></li></ul></div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">fixed</span><span class="p">,</span> <span class="n">interact_manual</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">scipy.signal</span> <span class="k">as</span> <span class="nn">sig</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">simpson</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">SVG</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="c1">#%matplotlib notebook</span>
+<span class="o">%</span><span class="k">matplotlib</span> widget
+<span class="n">book</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">ndimage</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">misc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="fourier-transform">
+<h1>Fourier transform<a class="headerlink" href="#fourier-transform" title="Permalink to this headline">#</a></h1>
+<section id="convolution-in-the-fourier-domain">
+<h2>Convolution in the Fourier domain<a class="headerlink" href="#convolution-in-the-fourier-domain" title="Permalink to this headline">#</a></h2>
+<p>Implement a function <code class="docutils literal notranslate"><span class="pre">fourier_conv(img:np.ndarray,</span> <span class="pre">kernel:np.ndarray)</span> <span class="pre">-&gt;</span> <span class="pre">np.ndarray</span></code> that performs a 2D-convolution of the input image <code class="docutils literal notranslate"><span class="pre">img</span></code> with the convolution kernel <code class="docutils literal notranslate"><span class="pre">kernel</span></code> in the Fourier domain.</p>
+<p>Validate via the function <code class="docutils literal notranslate"><span class="pre">np.allclose</span></code> and an example image that your result is equal to the result when performing the convolution in the spatial domain with <code class="docutils literal notranslate"><span class="pre">scipy.ndimage.convolve</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pad_like</span><span class="p">(</span><span class="n">inp</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">like</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="n">to_pad</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">like</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="p">((</span><span class="n">to_pad</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">to_pad</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">to_pad</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">to_pad</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fourier_conv</span><span class="p">(</span><span class="n">img</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    
+    <span class="n">img_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    
+    <span class="n">kernel_padded</span> <span class="o">=</span> <span class="n">pad_like</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+    <span class="n">kernel_padded_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">kernel_padded</span><span class="p">))</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="n">img_fft</span> <span class="o">*</span> <span class="n">kernel_padded_fft</span><span class="p">))</span>
+    
+        
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fourier_conv</span><span class="p">(</span><span class="n">img</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="c1">## replace with your solution</span>
+    
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Test your function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">misc</span><span class="o">.</span><span class="n">face</span><span class="p">(</span><span class="n">gray</span><span class="o">=</span><span class="kc">True</span><span class="p">))[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">51</span><span class="p">,</span><span class="mi">51</span><span class="p">))</span>
+
+<span class="n">res_fourier</span> <span class="o">=</span> <span class="n">fourier_conv</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="n">res_spatial</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wrap&#39;</span><span class="p">)</span> <span class="c1">## Which mode do you have to use?</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Is your solution correct: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">res_fourier</span><span class="p">,</span> <span class="n">res_spatial</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res_spatial</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res_fourier</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-5-bac6696ebc26&gt;:1: DeprecationWarning: scipy.misc.face has been deprecated in SciPy v1.10.0; and will be completely removed in SciPy v1.12.0. Dataset methods have moved into the scipy.datasets module. Use scipy.datasets.face instead.
+  img = np.float32(misc.face(gray=True))[0:-1, 0:-1]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Is your solution correct: False
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x17174887550&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major": 2, "version_minor": 0, "model_id": "ca662fe5d91646fe945ea43b8ba7f8f1"}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">misc</span><span class="o">.</span><span class="n">face</span><span class="p">(</span><span class="n">gray</span><span class="o">=</span><span class="kc">True</span><span class="p">))[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">51</span><span class="p">,</span><span class="mi">51</span><span class="p">))</span>
+
+<span class="n">res_fourier</span> <span class="o">=</span> <span class="n">fourier_conv</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="n">res_spatial</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;???&#39;</span><span class="p">)</span> <span class="c1">## Which mode do you have to use?</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Is your solution correct: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">res_fourier</span><span class="p">,</span> <span class="n">res_spatial</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res_spatial</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res_fourier</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-6-2e2f87a661ce&gt;:1: DeprecationWarning: scipy.misc.face has been deprecated in SciPy v1.10.0; and will be completely removed in SciPy v1.12.0. Dataset methods have moved into the scipy.datasets module. Use scipy.datasets.face instead.
+  img = np.float32(misc.face(gray=True))[0:-1, 0:-1]
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="mf">2e2</span><span class="n">f87a661ce</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">res_fourier</span> <span class="o">=</span> <span class="n">fourier_conv</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">res_spatial</span> <span class="o">=</span> <span class="n">ndimage</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;???&#39;</span><span class="p">)</span> <span class="c1">## Which mode do you have to use?</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> 
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Is your solution correct: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">res_fourier</span><span class="p">,</span> <span class="n">res_spatial</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\scipy\ndimage\_filters.py</span> in <span class="ni">convolve</span><span class="nt">(input, weights, output, mode, cval, origin)</span>
+<span class="g g-Whitespace">    </span><span class="mi">888</span> 
+<span class="g g-Whitespace">    </span><span class="mi">889</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">890</span><span class="s2">     return _correlate_or_convolve(input, weights, output, mode, cval,</span>
+<span class="g g-Whitespace">    </span><span class="mi">891</span><span class="s2">                                   origin, True)</span>
+<span class="g g-Whitespace">    </span><span class="mi">892</span><span class="s2"> </span>
+
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\scipy\ndimage\_filters.py</span> in <span class="ni">_correlate_or_convolve</span><span class="nt">(input, weights, output, mode, cval, origin, convolution)</span>
+<span class="g g-Whitespace">    </span><span class="mi">709</span><span class="s2">     if not isinstance(mode, str) and isinstance(mode, Iterable):</span>
+<span class="g g-Whitespace">    </span><span class="mi">710</span><span class="s2">         raise RuntimeError(&quot;A sequence of modes is not supported&quot;)</span>
+<span class="ne">--&gt; </span><span class="mi">711</span><span class="s2">     mode = _ni_support._extend_mode_to_code(mode)</span>
+<span class="g g-Whitespace">    </span><span class="mi">712</span><span class="s2">     _nd_image.correlate(input, weights, output, mode, cval, origins)</span>
+<span class="g g-Whitespace">    </span><span class="mi">713</span><span class="s2">     if temp_needed:</span>
+
+<span class="nn">c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\scipy\ndimage\_ni_support.py</span> in <span class="ni">_extend_mode_to_code</span><span class="nt">(mode)</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span><span class="s2">         return 6</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span><span class="s2">     else:</span>
+<span class="ne">---&gt; </span><span class="mi">54</span><span class="s2">         raise RuntimeError(&#39;boundary mode not supported&#39;)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span><span class="s2"> </span>
+
+<span class="ne">RuntimeError</span>: boundary mode not supported
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hybrid-images">
+<h2>Hybrid images<a class="headerlink" href="#hybrid-images" title="Permalink to this headline">#</a></h2>
+<p>Read the paper</p>
+<p><em>Hybrid images</em> by Aude Oliva et al. (<a class="reference external" href="https://dl.acm.org/doi/abs/10.1145/1141911.1141919">https://dl.acm.org/doi/abs/10.1145/1141911.1141919</a>).</p>
+<p>Implement a function that takes two input images and combines them by high pass-filtering the first one and low pass-filtering the second one, so that in the resulting images, the first original image can be seen when viewing from a close distance and the second original image can be seen from a far distance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_odd_shapes</span><span class="p">(</span><span class="n">inp</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">inp</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">inp</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">inp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img1</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">face</span><span class="p">(</span><span class="n">gray</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">img2</span> <span class="o">=</span> <span class="n">pad_like</span><span class="p">(</span><span class="n">make_odd_shapes</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;figures/ex1/Hund.jpg&quot;</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)),</span> <span class="n">img1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">img2</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">createPillobxResponse</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">x_size</span><span class="p">,</span> <span class="n">y_size</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_size</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y_size</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">y_size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">psf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">psf</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">psf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_hybrid_image</span><span class="p">(</span><span class="n">ratio</span><span class="p">):</span>
+    
+    <span class="n">kernel</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">createPillobxResponse</span><span class="p">(</span><span class="n">ratio</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="n">img1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">img1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">img1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">img1_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">img1</span><span class="p">))</span>
+    <span class="n">img2_fft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft2</span><span class="p">(</span><span class="n">img2</span><span class="p">))</span>
+
+    <span class="n">kernel_padded</span> <span class="o">=</span> <span class="n">pad_like</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">img1_fft</span><span class="p">)</span>
+
+    <span class="n">img_res_fft</span> <span class="o">=</span> <span class="n">kernel_padded</span> <span class="o">*</span> <span class="n">img1_fft</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">kernel_padded</span><span class="p">)</span> <span class="o">-</span> <span class="n">kernel_padded</span><span class="p">)</span> <span class="o">*</span> <span class="n">img2_fft</span>
+
+    <span class="n">img_res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">img_res_fft</span><span class="p">)))</span>
+    
+    <span class="c1">#plt.imshow(kernel_padded)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_res</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">create_hybrid_image</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="light-field-methods">
+<h1>Light Field Methods<a class="headerlink" href="#light-field-methods" title="Permalink to this headline">#</a></h1>
+<section id="reading-and-displaying-light-fields">
+<h2>Reading and displaying light fields<a class="headerlink" href="#reading-and-displaying-light-fields" title="Permalink to this headline">#</a></h2>
+<section id="get-light-field-data">
+<h3>Get light field data<a class="headerlink" href="#get-light-field-data" title="Permalink to this headline">#</a></h3>
+<p>Download the HCI light field dataset (see ‘A dataset and evaluation methodology for depth estimation on 4D light fields’ by Honauer et al.) from <a class="reference external" href="https://lightfield-analysis.uni-konstanz.de/">https://lightfield-analysis.uni-konstanz.de/</a></p>
+</section>
+<section id="reading-the-light-field">
+<h3>Reading the light field<a class="headerlink" href="#reading-the-light-field" title="Permalink to this headline">#</a></h3>
+<p>Read light field from the bedroom scene from the HCI dataset and convert it into a 4D-structure <code class="docutils literal notranslate"><span class="pre">lf(m,n,j,k)</span></code> with <code class="docutils literal notranslate"><span class="pre">(m,n)</span></code> denoting the spatial coordinates and <code class="docutils literal notranslate"><span class="pre">(j,k)</span></code> denoting the angular coordinates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">input_Cam000.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">test</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">test</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;figures/3/bedroom/&#39;</span>
+
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">input_Cam000.png&quot;</span><span class="p">)),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+<span class="n">lf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">tmp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tmp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">imgStr</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="mi">9</span><span class="o">+</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">imgStr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">imgStr</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;0</span><span class="si">{</span><span class="n">imgStr</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">curImg</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="mi">255</span><span class="o">*</span><span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">input_Cam</span><span class="si">{</span><span class="n">imgStr</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+        <span class="n">lf</span><span class="p">[:,:,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">curImg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">imshow2</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1">#plt.close(&#39;all&#39;)</span>
+    <span class="c1">#plt.figure()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+    <span class="c1">#plt.show()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="displaying-the-center-sub-aperture-image-sai">
+<h3>Displaying the center sub aperture image (SAI)<a class="headerlink" href="#displaying-the-center-sub-aperture-image-sai" title="Permalink to this headline">#</a></h3>
+<p>Show center SAI for <span class="math notranslate nohighlight">\(\mathbf{j}=(4,4)^\intercal\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">lf</span><span class="p">[:,:,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="display-different-sais">
+<h3>Display different SAIs<a class="headerlink" href="#display-different-sais" title="Permalink to this headline">#</a></h3>
+<p>Visualize how the perspective changes when the horizontal angular coordinate is changed continuosly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lf_tmp</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">j</span><span class="p">:</span> <span class="n">imshow2</span><span class="p">(</span><span class="n">lf</span><span class="p">[:,:,</span><span class="mi">4</span><span class="p">,</span><span class="n">j</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">),</span> <span class="n">j</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="synthesize-a-full-aperture-image">
+<h3>Synthesize a full aperture image<a class="headerlink" href="#synthesize-a-full-aperture-image" title="Permalink to this headline">#</a></h3>
+<p>Synthesize full aperture image, i.e., <span class="math notranslate nohighlight">\(g(\mathbf{m})=\sum\limits_{\mathbf{j}\in\Omega_\mathrm{a}} L(\mathbf{m},\mathbf{j})\,\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lf</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="refocusing-with-light-fields">
+<h2>Refocusing with light fields<a class="headerlink" href="#refocusing-with-light-fields" title="Permalink to this headline">#</a></h2>
+<p>Define a refocus function <code class="docutils literal notranslate"><span class="pre">refocus(alpha)</span></code> by means of the shift and add-method as shown in the lecture.</p>
+<p>Hint: To realize the shift-operation, have a look at OpenCV whether there is a suitable function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">refocus</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+    <span class="n">refocused</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">lf</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">refocused</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">refocused</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]):</span>
+            <span class="n">curShift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">)],</span>
+                                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">v</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">alpha</span><span class="p">)]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">curSAI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">lf</span><span class="p">[:,:,</span><span class="n">v</span><span class="p">,</span><span class="n">u</span><span class="p">])</span>
+            <span class="n">curSAIShifted</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">warpAffine</span><span class="p">(</span><span class="n">curSAI</span><span class="p">,</span> <span class="n">curShift</span><span class="p">,</span> <span class="p">(</span><span class="n">curSAI</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">curSAI</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+            <span class="n">refocused</span> <span class="o">=</span> <span class="n">refocused</span> <span class="o">+</span> <span class="n">curSAIShifted</span>
+    
+    <span class="k">return</span> <span class="n">refocused</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualize the refocusing results for different <span class="math notranslate nohighlight">\(\alpha\)</span>, e.g., for <span class="math notranslate nohighlight">\(\alpha \in \)</span> <code class="docutils literal notranslate"><span class="pre">np.arange(0.4,3.0,0.2)</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">alpha</span><span class="p">:</span> <span class="n">imshow2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">refocus</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="mi">81</span><span class="p">),</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="nb">max</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="focus-stack">
+<h2>Focus stack<a class="headerlink" href="#focus-stack" title="Permalink to this headline">#</a></h2>
+<p>We will now calculate a single all-in-focus image of the observed scene.<br>
+For that purpose, first create a stack of refocused images for the <span class="math notranslate nohighlight">\(\alpha\)</span>-values used above. Then try to filter each image of this series with a filter, that highlights sharp image regions, i.e., image regions with high spatial frequencies. For every pixel position, find the image inside the stack that is most sharp at that position. Eventually, extract for every pixel position the pixel value of the focal stack image that exhibits the highest sharpness for that position in order to obtain the all-in-focus image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">steps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">focus_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">lf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+    <span class="n">focus_stack</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">refocus</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ndimage</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">refocus</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span> <span class="n">log</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_stack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">focus_stack</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">focus_stack</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="n">log_stack</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ndimage</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">focus_stack</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">],</span> <span class="n">log</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fusion_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">log_stack</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">fusion_map</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fused_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">focus_stack</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+    <span class="n">fused_image</span><span class="p">[</span><span class="n">fusion_map</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">focus_stack</span><span class="p">[</span><span class="n">fusion_map</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">fused_image</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mitsuba-plugin-for-light-field-camera">
+<h2>Mitsuba plugin for light field camera<a class="headerlink" href="#mitsuba-plugin-for-light-field-camera" title="Permalink to this headline">#</a></h2>
+<p>Implement a Mitsuba plugin that realizes a light field camera based on a micro-lens array as introduced in the lecture. Assume circular lenses and no crosstalk. Save the light field as a single spatially multiplexed image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#variant = &quot;scalar_rgb&quot;</span>
+<span class="c1">#variant = &quot;cuda_ad_rgb&quot;</span>
+<span class="n">variant</span> <span class="o">=</span> <span class="s2">&quot;llvm_ad_rgb&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span> <span class="k">as</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MI_DEFAULT_VARIANT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">variant</span>
+
+<span class="kn">import</span> <span class="nn">mitsuba</span> <span class="k">as</span> <span class="nn">mi</span>
+<span class="kn">import</span> <span class="nn">drjit</span> <span class="k">as</span> <span class="nn">dr</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">mi</span><span class="o">.</span><span class="n">set_variant</span><span class="p">(</span><span class="n">variant</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">light_field_sensor</span> <span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Sensor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
+        <span class="n">mi</span><span class="o">.</span><span class="n">Sensor</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;to_world&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span>  <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;foc_len&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_l</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;img_dist_l&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_ml</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;img_dist_ml&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;sen_size&#39;</span><span class="p">]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">ang_res</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;ang_res&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">spat_res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">film</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ang_res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">spat_res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ml_rad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Transform4d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_world</span><span class="p">)</span>
+
+            
+    <span class="k">def</span> <span class="nf">sample_ray_differential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">sample3</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="mf">1.0</span>
+        
+        
+        <span class="n">p_s</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">((</span><span class="n">sample2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">sample2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_ml</span><span class="p">)</span>
+                
+        <span class="c1"># Which micro lens? --&gt; determine index ml = (j,k) of corresponding micro lens</span>
+        <span class="n">ml</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">sample2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span><span class="p">)</span>
+                    
+        <span class="c1"># Determine coords of center of corresponding micro lens</span>
+        <span class="n">p_ml</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">(</span><span class="n">ml</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spat_res</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> \
+                          <span class="n">ml</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spat_res</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_diam</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> \
+                          <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_l</span><span class="p">)</span>
+        
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">((</span><span class="n">dr</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">p_ml</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">p_s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">p_ml</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">p_s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_rad</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+        
+        <span class="c1">#if dr.sqrt((p_ml[0]-p_s[0])**2 + (p_ml[1]-p_s[1])**2) &gt; self.ml_rad:</span>
+        <span class="c1">#    weight = 0.0</span>
+                
+        
+        <span class="c1"># Determine point on main lens corresponding to center of micro lens</span>
+        <span class="n">p_l_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_ml</span> <span class="o">-</span> <span class="n">p_s</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_ml</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_l</span> <span class="o">+</span> <span class="n">p_ml</span>
+        <span class="n">p_l_1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+
+        <span class="c1"># Determine point on main lens corresponding to aperture sample on micro lens</span>
+        <span class="n">p_a_2d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ml_rad</span> <span class="o">*</span> <span class="n">mi</span><span class="o">.</span><span class="n">warp</span><span class="o">.</span><span class="n">square_to_uniform_disk_concentric</span><span class="p">(</span><span class="n">sample3</span><span class="p">)</span>
+        <span class="n">p_a_offset</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">(</span><span class="n">p_a_2d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_a_2d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">p_l_2</span> <span class="o">=</span> <span class="n">p_l_1</span> <span class="o">+</span> <span class="n">p_a_offset</span>
+        
+                        
+        <span class="c1"># Determine focused world point w.r.t. center of determined micro lens</span>
+        <span class="n">p_o</span> <span class="o">=</span> <span class="n">p_ml</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist_l</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">img_dist_l</span><span class="p">)</span>
+        
+        
+        <span class="n">rayd</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">RayDifferential3f</span><span class="p">()</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">has_differentials</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        
+        
+        <span class="n">d</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Vector3f</span><span class="p">(</span><span class="n">p_o</span> <span class="o">-</span> <span class="n">p_l_2</span><span class="p">))</span>
+                
+        <span class="n">rayd</span><span class="o">.</span><span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span><span class="o">.</span><span class="n">transform_affine</span><span class="p">(</span><span class="n">p_l_2</span><span class="p">)</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">@</span> <span class="n">d</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="n">rayd</span><span class="p">,</span> <span class="n">mi</span><span class="o">.</span><span class="n">Color3f</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">weight</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mi</span><span class="o">.</span><span class="n">register_sensor</span><span class="p">(</span><span class="s2">&quot;light_field_sensor&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">props</span><span class="p">:</span> <span class="n">light_field_sensor</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">b_ml</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="n">g</span><span class="p">)</span>
+<span class="c1">#f,b,g,V</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">load_dict</span><span class="p">({</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;scene&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;integrator&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;path&#39;</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;sphere&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;emitter&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;area&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;radiance&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span>
+    <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+        
+    <span class="p">},</span>
+    <span class="s1">&#39;sphere2&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;emitter&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;area&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;radiance&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">g</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+        
+    <span class="p">},</span>
+ 
+    <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;light_field_sensor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;to_world&#39;</span><span class="p">:</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarTransform4f</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                 <span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                 <span class="n">up</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+        <span class="s1">&#39;foc_len&#39;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span>
+        <span class="s1">&#39;img_dist_l&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+        <span class="s1">&#39;img_dist_ml&#39;</span><span class="p">:</span> <span class="n">b_ml</span><span class="p">,</span>
+        <span class="s1">&#39;sen_size&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s1">&#39;ang_res&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="s1">&#39;film&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;hdrfilm&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span>
+      <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span>
+      <span class="s1">&#39;rfilter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">},</span>
+      <span class="s1">&#39;pixel_format&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;component_format&#39;</span><span class="p">:</span> <span class="s1">&#39;float32&#39;</span><span class="p">},</span>
+     <span class="s1">&#39;sampler&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;independent&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">load_dict</span><span class="p">({</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;scene&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;integrator&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;path&#39;</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;sphere&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bsdf&#39;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;plastic&#39;</span><span class="p">,</span>
+<span class="s1">&#39;diffuse_reflectance&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.27</span><span class="p">,</span> <span class="mf">0.36</span><span class="p">]</span>
+<span class="p">},</span>
+<span class="s1">&#39;int_ior&#39;</span><span class="p">:</span> <span class="mf">1.9</span>
+<span class="p">},</span>
+    <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span>
+    <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+        
+    <span class="p">},</span>
+    <span class="s1">&#39;sphere2&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bsdf&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;thindielectric&#39;</span><span class="p">,</span>
+<span class="s1">&#39;int_ior&#39;</span><span class="p">:</span> <span class="s1">&#39;bk7&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ext_ior&#39;</span><span class="p">:</span> <span class="s1">&#39;air&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span>
+    <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>
+        
+    <span class="p">},</span>
+    <span class="s1">&#39;emit&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;envmap&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="s1">&#39;textures/envmap.exr&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;light_field_sensor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;to_world&#39;</span><span class="p">:</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarTransform4f</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                 <span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                 <span class="n">up</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+        <span class="s1">&#39;foc_len&#39;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span>
+        <span class="s1">&#39;img_dist_l&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+        <span class="s1">&#39;img_dist_ml&#39;</span><span class="p">:</span> <span class="n">b_ml</span><span class="p">,</span>
+        <span class="s1">&#39;sen_size&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s1">&#39;ang_res&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="s1">&#39;film&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;hdrfilm&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span>
+      <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span>
+      <span class="s1">&#39;rfilter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">},</span>
+      <span class="s1">&#39;pixel_format&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;component_format&#39;</span><span class="p">:</span> <span class="s1">&#39;float32&#39;</span><span class="p">},</span>
+     <span class="s1">&#39;sampler&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;independent&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">128</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;ex02_lf_image&quot;</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;ex02_lf_image.npy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+<span class="n">lf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="mi">15</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="mi">15</span><span class="p">),</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">):</span>
+        <span class="n">curImg</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="mi">15</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="mi">15</span><span class="p">]</span>
+        <span class="n">lf</span><span class="p">[:,:,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">curImg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="n">lf</span><span class="p">[:,:,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="schlieren-imaging">
+<h2>Schlieren imaging<a class="headerlink" href="#schlieren-imaging" title="Permalink to this headline">#</a></h2>
+<section id="quantitative-measurement-of-deflection-angles">
+<h3>Quantitative measurement of deflection angles<a class="headerlink" href="#quantitative-measurement-of-deflection-angles" title="Permalink to this headline">#</a></h3>
+<p>In the lecture we learned:</p>
+<p>Quantitative measurements of the deflection angle <span class="math notranslate nohighlight">\(\alpha\)</span> are only possible if</p>
+<div class="math notranslate nohighlight">
+\[ \delta_\alpha &gt; \frac{1}{2}\varepsilon\,, \]</div>
+<p>with <span class="math notranslate nohighlight">\(\varepsilon\)</span> denoting the diameter of the image of the light source.</p>
+<p>Explain why this is true.</p>
+<p><strong>Answer</strong>:<br>Since in practice, the light source can not be an ideal point light source, it will lead to light rays which do not propagate parallel to the optical axis in the measurement field. As a result, the image of the light source on the plane of the Schlieren stop also does not resemble an ideal point but some non-zero area. Any rays which are deflected by an angle <span class="math notranslate nohighlight">\(\alpha\)</span> in the measurement field which results in a displacement <span class="math notranslate nohighlight">\(\delta_\alpha\)</span> on the Schlieren stop, which does not exceed the area covered by the image of the light source, i.e., for which <span class="math notranslate nohighlight">\(\delta_\alpha \leq \frac{1}{2}\varepsilon\)</span> can not be distinguished from light rays which are deflected because of the spatial extent of the light source and not because of an refractive effect in the measurement field.</p>
+</section>
+<section id="mitsuba-plugin-for-schlieren-sensor">
+<h3>Mitsuba plugin for schlieren sensor<a class="headerlink" href="#mitsuba-plugin-for-schlieren-sensor" title="Permalink to this headline">#</a></h3>
+<p>Implement a color-coded Schlieren setup in the Mitsuba rendering framework.</p>
+<p>Encode the color-wheel via the HSI color space as follows:</p>
+<ul class="simple">
+<li><p>The angle is encoded via the hue value and</p></li>
+<li><p>the radius is encoded via the intensity value.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">drjit.llvm</span> <span class="kn">import</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Array3f</span><span class="p">,</span> <span class="n">UInt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">drjit</span> <span class="k">as</span> <span class="nn">dr</span>
+
+<span class="k">def</span> <span class="nf">hsi_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="c1"># h: hue in [0, 2*pi], s: saturation in [0,1], i: intensity in [0,1]</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="n">dr</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
+
+    <span class="c1"># Sector 0: 0 &lt;= h &lt; 2*pi/3</span>
+    <span class="n">cond0</span> <span class="o">=</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="c1"># Sector 1: 2*pi/3 &lt;= h &lt; 4*pi/3</span>
+    <span class="n">cond1</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">h</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="c1"># Sector 2: 4*pi/3 &lt;= h &lt; 2*pi</span>
+    <span class="n">cond2</span> <span class="o">=</span> <span class="n">h</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span>
+
+    <span class="c1"># Sector 0</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">h</span><span class="p">))</span>
+    <span class="n">g0</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">h</span><span class="p">)))</span>
+    <span class="n">b0</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond0</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond0</span><span class="p">,</span> <span class="n">g0</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond0</span><span class="p">,</span> <span class="n">b0</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="c1"># Sector 1</span>
+    <span class="n">h1</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">g1</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h1</span><span class="p">)</span> <span class="o">/</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">h1</span><span class="p">))</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h1</span><span class="p">)</span> <span class="o">/</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">h1</span><span class="p">)))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond1</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond1</span><span class="p">,</span> <span class="n">g1</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="c1"># Sector 2</span>
+    <span class="n">h2</span> <span class="o">=</span> <span class="n">h</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h2</span><span class="p">)</span> <span class="o">/</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">h2</span><span class="p">)))</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h2</span><span class="p">)</span> <span class="o">/</span> <span class="n">dr</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">h2</span><span class="p">))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond2</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond2</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cond2</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">color_schlieren_sensor</span> <span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Sensor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
+        <span class="n">mi</span><span class="o">.</span><span class="n">Sensor</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;to_world&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span>  <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;foc_len&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;img_dist&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;sen_size&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span> <span class="o">=</span> <span class="n">props</span><span class="p">[</span><span class="s1">&#39;lens_rad&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rad_max</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Transform4d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_world</span><span class="p">)</span>
+
+        
+    <span class="k">def</span> <span class="nf">sample_ray_differential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">sample1</span><span class="p">,</span> <span class="n">sample2</span><span class="p">,</span> <span class="n">sample3</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        
+        <span class="n">p_a_2d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span> <span class="o">*</span> <span class="n">mi</span><span class="o">.</span><span class="n">warp</span><span class="o">.</span><span class="n">square_to_uniform_disk_concentric</span><span class="p">(</span><span class="n">sample3</span><span class="p">)</span>
+        <span class="n">p_a</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">(</span><span class="n">p_a_2d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p_a_2d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">)</span>
+        
+        <span class="n">p_s</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Point3f</span><span class="p">((</span><span class="n">sample2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">sample2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filmsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">)</span>
+        
+        <span class="n">p_o</span> <span class="o">=</span> <span class="n">p_s</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">)</span>
+        
+        <span class="n">rayd</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">RayDifferential3f</span><span class="p">()</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">has_differentials</span> <span class="o">=</span> <span class="kc">False</span>
+        
+                
+        <span class="n">d</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Vector3f</span><span class="p">(</span><span class="n">p_o</span> <span class="o">-</span> <span class="n">p_a</span><span class="p">))</span>
+                
+        <span class="n">rayd</span><span class="o">.</span><span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span><span class="o">.</span><span class="n">transform_affine</span><span class="p">(</span><span class="n">p_a</span><span class="p">)</span>
+        <span class="n">rayd</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_world</span> <span class="o">@</span> <span class="n">d</span>
+        
+        <span class="c1">### Calculate color wheel influence</span>
+        <span class="n">p_f</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_a</span> <span class="o">-</span> <span class="n">p_s</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span><span class="p">)</span> <span class="o">+</span> <span class="n">p_s</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p_f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">p_f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">p_f</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        
+        
+        
+        <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">dr</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">radius</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">rad_max</span><span class="p">)</span>
+        
+        <span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">hsi_to_rgb</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+        
+        
+        
+        <span class="k">return</span> <span class="p">(</span><span class="n">rayd</span><span class="p">,</span> <span class="n">mi</span><span class="o">.</span><span class="n">Color3f</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+    
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;thin_lens_sensor[</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    foc_len=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    img_dist=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    sen_size=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    lens_rad=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">foc_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_dist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sen_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lens_rad</span><span class="p">))</span>
+        
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mi</span><span class="o">.</span><span class="n">register_sensor</span><span class="p">(</span><span class="s2">&quot;color_schlieren_sensor&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">props</span><span class="p">:</span> <span class="n">color_schlieren_sensor</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">telecentric_area_light</span> <span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">Emitter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
+        <span class="n">mi</span><span class="o">.</span><span class="n">Emitter</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acc_angle</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;acc_angle&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radiance</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">Color3f</span><span class="p">(</span><span class="n">props</span><span class="p">[</span><span class="s1">&#39;radiance&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">EmitterFlags</span><span class="o">.</span><span class="n">Surface</span> <span class="o">|</span> <span class="n">mi</span><span class="o">.</span><span class="n">EmitterFlags</span><span class="o">.</span><span class="n">SpatiallyVarying</span>
+    
+    <span class="k">def</span> <span class="nf">angleBetweenVectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span><span class="n">mi</span><span class="o">.</span><span class="n">Vector3f</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span><span class="n">mi</span><span class="o">.</span><span class="n">Vector3f</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">dr</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">dr</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
+    
+    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">si</span><span class="p">:</span><span class="n">mi</span><span class="o">.</span><span class="n">SurfaceInteraction3f</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        
+        <span class="c1">#res = mi.Color3f(0.0, 0.0, 0.0)</span>
+        
+        <span class="k">return</span> <span class="n">dr</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angleBetweenVectors</span><span class="p">(</span><span class="n">si</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">si</span><span class="o">.</span><span class="n">wi</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc_angle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radiance</span><span class="p">,</span> <span class="n">mi</span><span class="o">.</span><span class="n">Color3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">))</span>
+
+        <span class="c1"># if self.angleBetweenVectors(si.n, si.wi * -1.0) &lt;= self.acc_angle:</span>
+        <span class="c1">#     res = self.radiance</span>
+        
+        <span class="c1"># return res</span>
+
+    <span class="k">def</span> <span class="nf">pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">si</span><span class="p">,</span> <span class="n">wo</span><span class="p">,</span> <span class="n">active</span><span class="p">):</span>
+        <span class="c1"># Not needed.</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+
+    <span class="k">def</span> <span class="nf">eval_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctxe</span><span class="p">,</span> <span class="n">si</span><span class="p">,</span> <span class="n">wo</span><span class="p">,</span> <span class="n">active</span><span class="p">):</span>
+        <span class="c1"># Not needed.</span>
+        <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span> 
+
+    <span class="k">def</span> <span class="nf">pdf_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">active</span><span class="p">):</span>
+        <span class="c1"># Not needed.</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    
+    <span class="k">def</span> <span class="nf">eval_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">active</span><span class="p">):</span>
+    
+        <span class="k">return</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sample_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">it</span><span class="p">,</span> <span class="n">sample</span><span class="p">,</span> <span class="n">active</span><span class="p">):</span>
+        <span class="c1"># We need some dummy entries for the function to work.</span>
+
+        <span class="n">ds</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">DirectionSample3f</span><span class="p">()</span>
+    
+        <span class="n">ds</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarPoint3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarVector3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">uv</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ds</span><span class="o">.</span> <span class="n">time</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">time</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">pdf</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">delta</span> <span class="o">=</span> <span class="kc">False</span>
+        
+        <span class="n">ds</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">p</span> <span class="o">-</span> <span class="n">it</span><span class="o">.</span><span class="n">p</span>
+        <span class="n">ds</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">squared_norm</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">d</span><span class="p">))</span>
+                
+        
+        <span class="k">return</span> <span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarColor3f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+
+    <span class="c1"># def sample_direction(self, it:mi.Interaction3f, sample, active=True):</span>
+    <span class="c1">#     dirsam = mi.DirectionSample3f()</span>
+    <span class="c1">#     return (mi.DirectionSample3f(), mi.Color3f())</span>
+    
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;telecentric_area_light[</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    acc_angle=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;    radiance=</span><span class="si">%s</span><span class="s1">,</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;]&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acc_angle</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">radiance</span><span class="p">))</span>
+        
+<span class="n">mi</span><span class="o">.</span><span class="n">register_emitter</span><span class="p">(</span><span class="s2">&quot;telecentric_area_light&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">props</span><span class="p">:</span> <span class="n">telecentric_area_light</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">8.0</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">g</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">V</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">f</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">g</span><span class="p">)</span>
+<span class="n">f</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">V</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scene</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">load_dict</span><span class="p">({</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;scene&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;integrator&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;path&#39;</span>
+    <span class="p">},</span>
+
+    <span class="s1">&#39;rect&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;rectangle&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;emitter&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;telecentric_area_light&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;radiance&#39;</span><span class="p">:</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarColor3f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">),</span>
+            <span class="s1">&#39;acc_angle&#39;</span><span class="p">:</span> <span class="mf">25.0</span>
+    <span class="p">},</span>
+        <span class="s1">&#39;flip_normals&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;to_world&#39;</span><span class="p">:</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarTransform4f</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">ScalarPoint3f</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">g</span><span class="o">+</span><span class="mi">4</span><span class="p">))</span><span class="nd">@mi</span><span class="o">.</span><span class="n">ScalarTransform4f</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">ScalarPoint3f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        
+    <span class="p">},</span>
+    
+    
+          <span class="s1">&#39;sphere&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sphere&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;bsdf&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span> <span class="p">:</span> <span class="s1">&#39;dielectric&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span>
+    <span class="s1">&#39;radius&#39;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+        
+    <span class="p">},</span>
+    
+    
+    <span class="s1">&#39;sensor&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;color_schlieren_sensor&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;to_world&#39;</span><span class="p">:</span> <span class="n">mi</span><span class="o">.</span><span class="n">ScalarTransform4f</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                 <span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                 <span class="n">up</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+        <span class="s1">&#39;foc_len&#39;</span> <span class="p">:</span> <span class="n">f</span><span class="p">,</span>
+        <span class="s1">&#39;img_dist&#39;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+        <span class="s1">&#39;sen_size&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s1">&#39;lens_rad&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="s1">&#39;film&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;hdrfilm&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+      <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+      <span class="s1">&#39;rfilter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">},</span>
+      <span class="s1">&#39;pixel_format&#39;</span><span class="p">:</span> <span class="s1">&#39;rgb&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;component_format&#39;</span><span class="p">:</span> <span class="s1">&#39;float32&#39;</span><span class="p">},</span>
+     <span class="s1">&#39;sampler&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;independent&#39;</span><span class="p">,</span> <span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">1024</span><span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image2</span> <span class="o">=</span> <span class="n">mi</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">scene</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;ex02_color_schlieren&quot;</span><span class="p">,</span> <span class="n">image2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;ex02_color_schlieren.npy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imshow</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">image2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Dr.-Ing. Johannes Meyer<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\meyjoh\AppData\Local\Programs\Python\Python38\lib\asyncio\base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "c:\users\meyjoh\repos\vlcompimg\compimg\lib\site-packages\nbclient\client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+image = project_and_acquire(np.ones((256,256)))
+imshow(100*image)
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mRuntimeError[0m                              Traceback (most recent call last)
+[1;32m<ipython-input-4-e68a806c1aa8>[0m in [0;36m<module>[1;34m[0m
+[1;32m----> 1[1;33m [0mimage[0m [1;33m=[0m [0mproject_and_acquire[0m[1;33m([0m[0mnp[0m[1;33m.[0m[0mones[0m[1;33m([0m[1;33m([0m[1;36m256[0m[1;33m,[0m[1;36m256[0m[1;33m)[0m[1;33m)[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m      2[0m [0mimshow[0m[1;33m([0m[1;36m100[0m[1;33m*[0m[0mimage[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+
+[1;32m<ipython-input-3-33a710a8c0fa>[0m in [0;36mproject_and_acquire[1;34m(texture)[0m
+[0;32m      1[0m [1;32mdef[0m [0mproject_and_acquire[0m[1;33m([0m[0mtexture[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[1;32m----> 2[1;33m     scene = mi.load_dict({
+[0m[0;32m      3[0m     [1;34m'type'[0m[1;33m:[0m [1;34m'scene'[0m[1;33m,[0m[1;33m[0m[1;33m[0m[0m
+[0;32m      4[0m     'integrator': {
+[0;32m      5[0m         [1;34m'type'[0m[1;33m:[0m [1;34m'path'[0m[1;33m[0m[1;33m[0m[0m
+
+[1;31mRuntimeError[0m: ​[PLYMesh] Error while loading PLY file "bunny.ply": file not found!
+RuntimeError: ​[PLYMesh] Error while loading PLY file "bunny.ply": file not found!
+
