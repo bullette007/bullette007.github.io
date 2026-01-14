@@ -15,6 +15,14 @@ Recordings of the current winter semester 2025 / 2026:
 | 19.11.2025 | [Lecture 4](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL04.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_04.pdf) |
 | 26.11.2025 | [Lecture 5](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL05.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_05.pdf) |
 | 26.11.2025 | [Exercise 2](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_EX02.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_EX_02.pdf) |
+| 03.12.2025 | [Lecture 6](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL06.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_06.pdf) |
+| 10.12.2025 | [Lecture 7](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL07.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_07.pdf) |
+| 17.12.2025 | [Lecture 8](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL08.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_08.pdf) |
+| 17.12.2025 | [Exercise 3](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_EX03.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_EX_03.pdf) |
+| 07.01.2026 | [Lecture 9](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=CompImg_2025_VL09.mp4) | [Notes](https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=Notes_2025_VL_09.pdf) |
+
+
+
 
 
 Recordings of the winter semester 2024 / 2025 (Please note that the covered topics might change from year to year).:
