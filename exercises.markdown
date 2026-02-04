@@ -11,8 +11,9 @@ If you have an KIT affiliation, you can also access the exercise via [Jupyter Hu
 |:-----:|:----------:|
 | [Exercise 1](Ex1_unsolved.zip)   | [Solution 1](Ex1.zip) |
 | [Exercise 2](Ex2-unsolved.zip) | [Solution 2](Ex2.zip) |
-| [Exercise 3](Ex3-unsolved.zip) | TBD |
-
+| [Exercise 3](Ex3-unsolved.zip) | [Solution 3](Ex3.zip) |
+| [Exercise 4](Ex4-unsolved.zip) | [Solution 4](Ex4.zip) |
+| [Exercise 5](Ex5-unsolved.ipynb) | [Solution 5](Ex5.ipynb) |
 
 
 <!-- | Exercise | Solution |
