@@ -190,7 +190,7 @@ $\begin{align}
 interact(lambda i: showFig('figures/4/desk_lightsources_example_',i,'.svg',800,50), i=widgets.IntSlider(min=(min_i:=1),max=(max_i:=5), step=1, value=(max_i if book else min_i)))
 ```
 
-(Several images in this chapter are kindly provided by Matthew O'Toole).
+(All images in this chapter are kindly provided by Matthew O'Toole).
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
