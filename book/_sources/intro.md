@@ -2,7 +2,7 @@
 
 Here are the course notes for the currently running lecture **Computational Imaging** taught at Karlsruhe Institute of Technology (see https://computational-imaging.de).
 
-```{attention} The presented content is always under construction and will be continuously update during the course of the lecture.
+```{attention} The presented content is always under construction and will be continuously updated during the course of the lecture.
 ```
 
 

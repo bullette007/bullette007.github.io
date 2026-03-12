@@ -433,6 +433,12 @@ How could we get a more system-theoretical insight about what those PSFs are cap
 
 +++ {"slideshow": {"slide_type": "subslide"}}
 
+MTF of unoptimized, random PSF             |  MTF of optimized PSF
+:-------------------------:|:-------------------------:
+![image-5.png](attachment:image-5.png)  |  ![image-6.png](attachment:image-6.png)
+
++++ {"slideshow": {"slide_type": "subslide"}}
+
 ### Results on real data
 
 +++ {"slideshow": {"slide_type": "subslide"}}

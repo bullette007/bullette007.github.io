@@ -623,7 +623,7 @@ The most implemented version of the RL-algorithm is the so-called *multiplicativ
 
 It relies on the convolution kernel $h$ being normalized, i.e., $\sum_{(i,j)} h_{i,j} = 1$.
 
-+++ {"slideshow": {"slide_type": "fragment"}}
++++ {"slideshow": {"slide_type": "fragment"}, "tags": ["delete"]}
 
 This also implies that $1*h\transp=1$.
 
@@ -1690,6 +1690,10 @@ To quantify the deconvolution performance of the proposed method, the [dataset p
 
 The reconstruction results are numerically compared against the ground truths by means of the so-called *peak signal-to-noise ratio PSNR* (logarithmic scale, no maximum value) and the so-called *structural similarity index SSIM* (mimics the human perception of image similarity, maximum value of 1.0 for full equality).
 
++++
+
+![image.png](attachment:image.png)
+
 +++ {"slideshow": {"slide_type": "fragment"}}
 
 <table>
@@ -1743,3 +1747,7 @@ The reconstruction results are numerically compared against the ground truths by
   </tr>
 </tbody>
 </table>
+
+```{code-cell} ipython3
+
+```

@@ -878,13 +878,13 @@ Example results for only indirect light transport imaging and for enhancing the 
 
 <img src="figures/4/example_indirect_etc_2.svg" style="max-width:30vw">
 
-+++ {"slideshow": {"slide_type": "slide"}}
++++ {"slideshow": {"slide_type": "slide"}, "tags": ["remove-cell"]}
 
 ## Example application: Scanning-free BRDF approximation
 
 Credits to M. Sc. Alexander Wokurek (former student of this lecture).
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ### What is a BRDF?
 
@@ -892,85 +892,85 @@ Credits to M. Sc. Alexander Wokurek (former student of this lecture).
        controls>
 </video>
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 **Conventional BRDF measurement setup (Fraunhofer IOSB Ettlingen)**
 
 <img src="figures/4/brdf_meas_et.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ### Example BRDFs
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ❓ **Question**
 
 What do you expect the BRDF of a mirror would look like?
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 <img src="figures/4/brdf_example_mirror.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ❓ **Question**
 
 What do you expect the BRDF of a diffuse surface would look like?
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 <img src="figures/4/brdf_example_diffuse.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ❓ **Question**
 
 What do you expect the BRDF of a piece of brushed aluminum would look like?
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 <img src="figures/4/brdf_example_aniso.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 **Another way of visualization**
 
 <img src="figures/4/brdf_multiplexing.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 **Proposed optical setup**
 
-+++
++++ {"tags": ["remove-cell"]}
 
 <video style="max-width:40vw" src="https://github.com/bullette007/bullette007.github.io/raw/refs/heads/pre-built/book/figures/4/camProj.mp4"  
        controls>
 </video>
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ❓ **Question**
 
 How is this related to the light transport matrix?
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 <img src="figures/4/brdf_lt_concept_2.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 ### Experimental results
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 <img src="figures/4/brdf_comparison.svg" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 <img src="figures/4/brdf_lt_approx_anim.gif" style="max-height:80vh">
 
-+++ {"slideshow": {"slide_type": "subslide"}}
++++ {"slideshow": {"slide_type": "subslide"}, "tags": ["remove-cell"]}
 
 **Quantitative results**
 
