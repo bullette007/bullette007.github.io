@@ -24,18 +24,22 @@ Organizational information:
 
 The lecutre notes (work in progress!) can be accessed [here](book/index.html)
 
-<!--<p style="color:red; font-size: 26px" > Lecture finished. <br> Today (5th of February) was our last meeting. <br> Thank you to everyone for attending and contributing!
-</p>
--->
-<br>
-
-<p style="color:red; font-size: 40px" > On-site lecture! <br> Next week, i.e., on February 11th 2026, the lecture will take place at Fraunhofer IOSB, Fraunhoferstr. 1, 76131 Karlsruhe. If you have registered for participating on site, please be at the institute at 13:50.
+<p style="color:red; font-size: 26px" > Lecture finished. <br> Today (18th of February) was our last meeting. <br> Thank you to everyone for attending and contributing!
 </p>
 
 <br>
 
-<p style="color:red; font-size: 26px" > Evaluation! <br> Please everyone participate in the online evaluation of the lecture which is available via the following link until February 14th 2026:<br>
+<!-- <p style="color:red; font-size: 40px" > On-site lecture! <br> Next week, i.e., on February 11th 2026, the lecture will take place at Fraunhofer IOSB, Fraunhoferstr. 1, 76131 Karlsruhe. If you have registered for participating on site, please be at the institute at 13:50.
+</p> -->
+
+<br>
+
+<p  > 
+<a href="https://owncloud.fraunhofer.de/index.php/s/w7GJKnYbFJsVkMN/download?path=%2F&files=WS25_26-Computational_Imaging.pdf">Evaluation results for winter term 2025 / 2026</a>
+</p>
+
+<!-- <p style="color:red; font-size: 26px" > Evaluation! <br> Please everyone participate in the online evaluation of the lecture which is available via the following link until February 14th 2026:<br>
 <a href="https://onlineumfrage.kit.edu/evasys/online.php?p=VR3XR">Online evaluation</a>
-</p>
+</p> -->
 
 <!-- Thank you! -->

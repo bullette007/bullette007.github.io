@@ -14,7 +14,7 @@ If you have an KIT affiliation, you can also access the exercise via [Jupyter Hu
 | [Exercise 3](Ex3-unsolved.zip) | [Solution 3](Ex3.zip) |
 | [Exercise 4](Ex4-unsolved.zip) | [Solution 4](Ex4.zip) |
 | [Exercise 5](Ex5-unsolved.ipynb) | [Solution 5](Ex5.ipynb) |
-
+| [Exercise 6](Ex6-unsolved.zip) | [Solution 6](Ex6.zip) | 
 
 <!-- | Exercise | Solution |
 |:-----:|:----------:|
