@@ -8,4 +8,14 @@
     flex-grow: 1;
     width: 100%;
   }
+  @media (min-width: 992px) {
+    #pst-primary-sidebar.ci-sidebar-hidden { display: none; }
+  }
+  @media (min-width: 1200px) {
+    .bd-header-article button.sidebar-toggle.secondary-toggle { display: inline-flex; }
+    #pst-secondary-sidebar.ci-sidebar-hidden { display: none; }
+    .bd-content:has(#pst-secondary-sidebar.ci-sidebar-hidden) .bd-article-container {
+      max-width: 100%;
+    }
+  }
 }
