@@ -1,109 +1,213 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Inverse Problems in Computational Imaging &#8212; Computational Imaging - Course Notes</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d62c15bf" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '06_InverseProblemsInCompimg';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Lensless Imaging" href="07_LenslessImaging.html" />
     <link rel="prev" title="Neural Networks for Computational Imaging" href="05_NeuralNetworksForCompImg.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
     
-
-    <!-- Google Analytics -->
-    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
     
-    <div class="container-fluid" id="banner"></div>
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
     
-
-    <div class="container-xl">
-      <div class="row">
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
           
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
       
       
-      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computational Imaging - Course Notes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -113,757 +217,241 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="01_Introduction.html">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="02_Basics.html">
-   Fundamental Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="03_LightFieldMethods.html">
-   Light Field Methods
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="04_LightTransportAnalysis.html">
-   Light Transport Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
-   Neural Networks for Computational Imaging
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Inverse Problems in Computational Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="07_LenslessImaging.html">
-   Lensless Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_CodedExposurePhotography.html">
-   Coded Exposure Photography
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="09_QuantitativePhaseImaging.html">
-   Quantitative Phase Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_SpectralSnapshotImaging.html">
-   Coded Aperture Spectral Snapshot Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_TimeOfFlightImaging.html">
-   Time-Of-Flight Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_End2End.html">
-   End-to-End Optimization
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Basics.html">Fundamental Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_LightFieldMethods.html">Light Field Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_LightTransportAnalysis.html">Light Transport Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_NeuralNetworksForCompImg.html">Neural Networks for Computational Imaging</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Inverse Problems in Computational Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_LenslessImaging.html">Lensless Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_CodedExposurePhotography.html">Coded Exposure Photography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_QuantitativePhaseImaging.html">Quantitative Phase Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_SpectralSnapshotImaging.html">Coded Aperture Spectral Snapshot Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_TimeOfFlightImaging.html">Time-Of-Flight Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_End2End.html">End-to-End Optimization</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
 
 
 
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/06_InverseProblemsInCompimg.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
   </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
 
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-    </ul>
-  </div>
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
 </div>
+
+
+
 
 <button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/06_InverseProblemsInCompimg.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download notebook file"
->
-  
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-code"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="_sources/06_InverseProblemsInCompimg.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.md</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button>
 
-      </li>
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
       
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
+    </div>
   
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
-
-    </div>
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#content">
-   Content
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction-into-inverse-problems">
-   Introduction into inverse problems
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-denoising">
-   Image denoising
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#maximum-a-posteriori-map-solution">
-     Maximum a-posteriori (MAP) solution
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#general-linear-inverse-problems">
-   General linear inverse problems
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bayesian-perspective-of-inverse-problems">
-     Bayesian perspective of inverse problems
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#total-variation">
-     Total Variation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-deconvolution">
-   Image deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#duality-between-signal-processing-perspective-and-algebraic-perspective">
-     Duality between signal processing perspective and algebraic perspective
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#inverse-filter-for-deconvolution">
-   Inverse filter for deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-inverse-filter-reconstruction-results-for-increasing-noise-levels">
-     Example inverse filter reconstruction results for increasing noise levels
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#wiener-filter-for-deconvolution">
-   Wiener filter for deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics">
-     Example Wiener filter reconstruction results for increasing noise levels with SNR-heuristics
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#richardson-lucy-deconvolution">
-   Richardson-Lucy deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multiplicative-version-of-the-richardson-lucy-algorithm">
-     Multiplicative version of the Richardson-Lucy algorithm
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#comments-on-the-richardson-lucy-algorithm">
-       Comments on the Richardson-Lucy algorithm
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#half-quadratic-splitting-hqs-method">
-   Half-quadratic splitting (HQS) method
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#excursion-on-proximal-operators">
-     Excursion on proximal operators
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#definition-of-a-proximal-operator">
-       Definition of a proximal operator
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#interpretation-of-proximal-operators">
-       Interpretation of proximal operators
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hqs-for-deconvolution">
-     HQS for deconvolution
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#hqs-with-total-variation-and-denoising-regularizers">
-       HQS with total variation and denoising regularizers
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-implementation-of-s-update">
-         Efficient implementation of
-         <span class="math notranslate nohighlight">
-          \(s\)
-         </span>
-         -update
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#special-case-of-total-variation-regularizer">
-         Special case of total variation regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#general-regularizer">
-         General regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-anisotropic-tv-regularizer">
-         Efficient implementation of
-         <span class="math notranslate nohighlight">
-          \(z\)
-         </span>
-         -update for anisotropic TV regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#visualization-of-soft-thresholding-operator">
-         Visualization of soft thresholding operator
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-isotropic-tv-regularizer">
-         Efficient implementation of
-         <span class="math notranslate nohighlight">
-          \(z\)
-         </span>
-         -update for isotropic TV regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-update-of-mathbf-z-in-general-case">
-         Efficient update of
-         <span class="math notranslate nohighlight">
-          \(\mathbf{z}\)
-         </span>
-         in general case
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hqs-for-general-linear-inverse-problems">
-     HQS for general linear inverse problems
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems">
-       Derivation of
-       <span class="math notranslate nohighlight">
-        \(\mathbf{s}\)
-       </span>
-       -update for HQS for general linear inverse problems
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#problems-of-hqs">
-     Problems of HQS
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#alternating-direction-method-of-multipliers-admm">
-   Alternating direction method of multipliers (ADMM)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-mathbf-s-update">
-     The
-     <span class="math notranslate nohighlight">
-      \(\mathbf{s}\)
-     </span>
-     -update:
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-mathbf-z-update">
-     The
-     <span class="math notranslate nohighlight">
-      \(\mathbf{z}\)
-     </span>
-     -update:
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#unrolled-optimization">
-   Unrolled optimization
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#deep-snr-estimation-for-wiener-filtering">
-   Deep SNR-estimation for Wiener filtering
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-with-deep-snr-estimation">
-     Example Wiener filter reconstruction results with deep SNR-estimation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#quantitative-results">
-     Quantitative results
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Inverse Problems in Computational Imaging</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#content">
-   Content
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction-into-inverse-problems">
-   Introduction into inverse problems
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-denoising">
-   Image denoising
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#maximum-a-posteriori-map-solution">
-     Maximum a-posteriori (MAP) solution
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#general-linear-inverse-problems">
-   General linear inverse problems
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bayesian-perspective-of-inverse-problems">
-     Bayesian perspective of inverse problems
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#total-variation">
-     Total Variation
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-deconvolution">
-   Image deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#duality-between-signal-processing-perspective-and-algebraic-perspective">
-     Duality between signal processing perspective and algebraic perspective
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#inverse-filter-for-deconvolution">
-   Inverse filter for deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-inverse-filter-reconstruction-results-for-increasing-noise-levels">
-     Example inverse filter reconstruction results for increasing noise levels
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#wiener-filter-for-deconvolution">
-   Wiener filter for deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics">
-     Example Wiener filter reconstruction results for increasing noise levels with SNR-heuristics
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#richardson-lucy-deconvolution">
-   Richardson-Lucy deconvolution
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multiplicative-version-of-the-richardson-lucy-algorithm">
-     Multiplicative version of the Richardson-Lucy algorithm
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#comments-on-the-richardson-lucy-algorithm">
-       Comments on the Richardson-Lucy algorithm
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#half-quadratic-splitting-hqs-method">
-   Half-quadratic splitting (HQS) method
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#excursion-on-proximal-operators">
-     Excursion on proximal operators
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#definition-of-a-proximal-operator">
-       Definition of a proximal operator
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#interpretation-of-proximal-operators">
-       Interpretation of proximal operators
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hqs-for-deconvolution">
-     HQS for deconvolution
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#hqs-with-total-variation-and-denoising-regularizers">
-       HQS with total variation and denoising regularizers
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-implementation-of-s-update">
-         Efficient implementation of
-         <span class="math notranslate nohighlight">
-          \(s\)
-         </span>
-         -update
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#special-case-of-total-variation-regularizer">
-         Special case of total variation regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#general-regularizer">
-         General regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-anisotropic-tv-regularizer">
-         Efficient implementation of
-         <span class="math notranslate nohighlight">
-          \(z\)
-         </span>
-         -update for anisotropic TV regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#visualization-of-soft-thresholding-operator">
-         Visualization of soft thresholding operator
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-isotropic-tv-regularizer">
-         Efficient implementation of
-         <span class="math notranslate nohighlight">
-          \(z\)
-         </span>
-         -update for isotropic TV regularizer
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#efficient-update-of-mathbf-z-in-general-case">
-         Efficient update of
-         <span class="math notranslate nohighlight">
-          \(\mathbf{z}\)
-         </span>
-         in general case
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hqs-for-general-linear-inverse-problems">
-     HQS for general linear inverse problems
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems">
-       Derivation of
-       <span class="math notranslate nohighlight">
-        \(\mathbf{s}\)
-       </span>
-       -update for HQS for general linear inverse problems
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#problems-of-hqs">
-     Problems of HQS
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#alternating-direction-method-of-multipliers-admm">
-   Alternating direction method of multipliers (ADMM)
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-mathbf-s-update">
-     The
-     <span class="math notranslate nohighlight">
-      \(\mathbf{s}\)
-     </span>
-     -update:
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-mathbf-z-update">
-     The
-     <span class="math notranslate nohighlight">
-      \(\mathbf{z}\)
-     </span>
-     -update:
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#unrolled-optimization">
-   Unrolled optimization
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#deep-snr-estimation-for-wiener-filtering">
-   Deep SNR-estimation for Wiener filtering
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-with-deep-snr-estimation">
-     Example Wiener filter reconstruction results with deep SNR-estimation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#quantitative-results">
-     Quantitative results
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Inverse Problems in Computational Imaging</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-into-inverse-problems">Introduction into inverse problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising">Image denoising</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-a-posteriori-map-solution">Maximum a-posteriori (MAP) solution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-inverse-problems">General linear inverse problems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-perspective-of-inverse-problems">Bayesian perspective of inverse problems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-variation">Total Variation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-deconvolution">Image deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#duality-between-signal-processing-perspective-and-algebraic-perspective">Duality between signal processing perspective and algebraic perspective</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-filter-for-deconvolution">Inverse filter for deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-inverse-filter-reconstruction-results-for-increasing-noise-levels">Example inverse filter reconstruction results for increasing noise levels</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wiener-filter-for-deconvolution">Wiener filter for deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics">Example Wiener filter reconstruction results for increasing noise levels with SNR-heuristics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#richardson-lucy-deconvolution">Richardson-Lucy deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplicative-version-of-the-richardson-lucy-algorithm">Multiplicative version of the Richardson-Lucy algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comments-on-the-richardson-lucy-algorithm">Comments on the Richardson-Lucy algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#half-quadratic-splitting-hqs-method">Half-quadratic splitting (HQS) method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excursion-on-proximal-operators">Excursion on proximal operators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-a-proximal-operator">Definition of a proximal operator</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-proximal-operators">Interpretation of proximal operators</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hqs-for-deconvolution">HQS for deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hqs-with-total-variation-and-denoising-regularizers">HQS with total variation and denoising regularizers</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-implementation-of-s-update">Efficient implementation of <span class="math notranslate nohighlight">\(s\)</span>-update</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#special-case-of-total-variation-regularizer">Special case of total variation regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#general-regularizer">General regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-anisotropic-tv-regularizer">Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for anisotropic TV regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-soft-thresholding-operator">Visualization of soft thresholding operator</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-isotropic-tv-regularizer">Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for isotropic TV regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-update-of-mathbf-z-in-general-case">Efficient update of <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> in general case</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hqs-for-general-linear-inverse-problems">HQS for general linear inverse problems</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems">Derivation of <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update for HQS for general linear inverse problems</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problems-of-hqs">Problems of HQS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternating-direction-method-of-multipliers-admm">Alternating direction method of multipliers (ADMM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathbf-s-update">The <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathbf-z-update">The <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-update:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unrolled-optimization">Unrolled optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-snr-estimation-for-wiener-filtering">Deep SNR-estimation for Wiener filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-with-deep-snr-estimation">Example Wiener filter reconstruction results with deep SNR-estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantitative-results">Quantitative results</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <p><span class="math notranslate nohighlight">\(\begin{align}
   \newcommand{transp}{^\intercal}
   \newcommand{F}{\mathcal{F}}
@@ -875,9 +463,9 @@ title="Print to PDF"
 \end{align}\)</span></p>
 <p><font size="7"> Computational Imaging </font><br><br><br></p>
 <section class="tex2jax_ignore mathjax_ignore" id="inverse-problems-in-computational-imaging">
-<h1>Inverse Problems in Computational Imaging<a class="headerlink" href="#inverse-problems-in-computational-imaging" title="Permalink to this headline">#</a></h1>
+<h1>Inverse Problems in Computational Imaging<a class="headerlink" href="#inverse-problems-in-computational-imaging" title="Link to this heading">#</a></h1>
 <section id="content">
-<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
+<h2>Content<a class="headerlink" href="#content" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Introduction into inverse problems</p></li>
 <li><p>Image denoising</p></li>
@@ -893,7 +481,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="introduction-into-inverse-problems">
-<h2>Introduction into inverse problems<a class="headerlink" href="#introduction-into-inverse-problems" title="Permalink to this headline">#</a></h2>
+<h2>Introduction into inverse problems<a class="headerlink" href="#introduction-into-inverse-problems" title="Link to this heading">#</a></h2>
 <p>An <em>inverse problem</em> represents the task of finding the input values to some function or process that produced certain output values which have been observed. Such problems are called <em>inverse</em>, as they start with the output and have the goal of finding the corresponding input.</p>
 <p>Unfortunately, inverse problems often represent so-called <em>ill-posed problems</em>. A problem is considered to be ill-posed if one of the following properties holds:</p>
 <ul class="simple">
@@ -904,7 +492,7 @@ title="Print to PDF"
 <p>A common approach to mitigate the difficulties involved with ill-posed inverse problems is to employ so-called <em>regularization methods</em> which usually use prior knowledge about the sought solution to guide the reconstruction process into the right direction.</p>
 </section>
 <section id="image-denoising">
-<h2>Image denoising<a class="headerlink" href="#image-denoising" title="Permalink to this headline">#</a></h2>
+<h2>Image denoising<a class="headerlink" href="#image-denoising" title="Link to this heading">#</a></h2>
 <p>The goal of image denoising it to recover an original image <span class="math notranslate nohighlight">\(s(\mathbf{x})\)</span> after is has been affected by additive, signal-independent noise <span class="math notranslate nohighlight">\(n(\mathbf{x})\)</span>, which is a common general assumption for noise present in digitally acquired images:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    g(\mathbf{x}) = s(\mathbf{x}) + n(\mathbf{x}) \,.
@@ -933,7 +521,7 @@ title="Print to PDF"
 \end{align}\)</span></p>
 <p>with the a priori probability <span class="math notranslate nohighlight">\(p(\mathbf{s})\)</span> of the sought image <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>.</p>
 <section id="maximum-a-posteriori-map-solution">
-<h3>Maximum a-posteriori (MAP) solution<a class="headerlink" href="#maximum-a-posteriori-map-solution" title="Permalink to this headline">#</a></h3>
+<h3>Maximum a-posteriori (MAP) solution<a class="headerlink" href="#maximum-a-posteriori-map-solution" title="Link to this heading">#</a></h3>
 <p>The maximum a-posteriori (MAP) estimate of <span class="math notranslate nohighlight">\( \mathbf{s}\)</span> can be obtained by maximizing (minimizing) the (negative) natural logarithm of the posterior distribution:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \hat{\mathbf{s}}_\mathrm{MAP} &amp;= \argmin{\mathbf{s}}\, -\log \left( p(\mathbf{s} \vert \mathbf{g}, \sigma) \right) \\
@@ -954,14 +542,14 @@ title="Print to PDF"
 </section>
 </section>
 <section id="general-linear-inverse-problems">
-<h2>General linear inverse problems<a class="headerlink" href="#general-linear-inverse-problems" title="Permalink to this headline">#</a></h2>
+<h2>General linear inverse problems<a class="headerlink" href="#general-linear-inverse-problems" title="Link to this heading">#</a></h2>
 <p>For the general linear inverse problem, the vectorized image formation process is given by:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{g} = \mathbf{Hs} + \mathbf{n} \,,
 \end{align}\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{g} \in \mathbb{R} ^M\)</span> denotes the <span class="math notranslate nohighlight">\(M\)</span> observations or measurements which are the result of the matrix-vector multiplication of the sought latent image <span class="math notranslate nohighlight">\(\mathbf{s} \in \mathbb{R} ^N\)</span> with the so-called <em>measurement matrix</em> <span class="math notranslate nohighlight">\(\mathbf{H} \in \mathbb{R} ^{M \times N}\)</span> and the term <span class="math notranslate nohighlight">\(\mathbf{n} \in \mathbb{R} ^M\)</span> represents additive, signal-independent noise.</p>
 <section id="bayesian-perspective-of-inverse-problems">
-<h3>Bayesian perspective of inverse problems<a class="headerlink" href="#bayesian-perspective-of-inverse-problems" title="Permalink to this headline">#</a></h3>
+<h3>Bayesian perspective of inverse problems<a class="headerlink" href="#bayesian-perspective-of-inverse-problems" title="Link to this heading">#</a></h3>
 <p>Interpret as random vectors:<br>
 <span class="math notranslate nohighlight">\(\stochvec{s}\sim \mathcal{N}(\mathbf{s},0)\)</span>,<br>
 <span class="math notranslate nohighlight">\(\stochvec{n}\sim \mathcal{N}(0,\sigma^2)\)</span>,<br>
@@ -993,7 +581,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="total-variation">
-<h3>Total Variation<a class="headerlink" href="#total-variation" title="Permalink to this headline">#</a></h3>
+<h3>Total Variation<a class="headerlink" href="#total-variation" title="Link to this heading">#</a></h3>
 <p>The intuition behind total variation is that in natural images, regions of almost constant intensities are separated by sharp edges. Hence, the gradient of such images can be assumed to be sparse.</p>
 <p>The gradient is calculated by means of convolutions with the finite difference operators in <span class="math notranslate nohighlight">\(x\)</span>- and <span class="math notranslate nohighlight">\(y\)</span>-direction:</p>
 <ul class="simple">
@@ -1017,7 +605,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="image-deconvolution">
-<h2>Image deconvolution<a class="headerlink" href="#image-deconvolution" title="Permalink to this headline">#</a></h2>
+<h2>Image deconvolution<a class="headerlink" href="#image-deconvolution" title="Link to this heading">#</a></h2>
 <p>Image deconvolution deals with the problem of reconstructing an original image <span class="math notranslate nohighlight">\(s\)</span> after it has been affected by a linear shift-invariant image degradation and additive noise, which together forms the observed image <span class="math notranslate nohighlight">\(g\)</span>.</p>
 <p>With the impulse response <span class="math notranslate nohighlight">\(h\)</span> of the image degradation, the observation can be modeled as</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} \label{eq:img_formation}
@@ -1027,7 +615,7 @@ title="Print to PDF"
 <p>The goal is to define a reconstruction filter <span class="math notranslate nohighlight">\(v\)</span> that, when applied to the observation <span class="math notranslate nohighlight">\(g\)</span>, yields a reconstruction <span class="math notranslate nohighlight">\(\hat{s}\)</span> matching the latent input <span class="math notranslate nohighlight">\(s\)</span> as closely as possible.</p>
 <p>The following figure visualizes the signal model of image deconvolution:</p>
 <img src="figures/6/signalmodel_reconstruction.svg" style="max-height:40vh"><p>Methods and approaches dealing with deconvolution can be divided into two groups:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><em>Blind</em> deconvolution: The kernel <span class="math notranslate nohighlight">\(h\)</span> is assumed to be unknown and also has to be recovered / estimated.</p></li>
 <li><p><em>Non-blind</em> deconvolution: The kernel <span class="math notranslate nohighlight">\(h\)</span> is assumed to be known.</p></li>
 </ol>
@@ -1038,7 +626,7 @@ title="Print to PDF"
 \end{align}\)</span></p>
 <p><strong>Important note:</strong> Equations <span class="math notranslate nohighlight">\(\eqref{eq:img_formation}\)</span> and <span class="math notranslate nohighlight">\(\eqref{eq:img_formation_fourier}\)</span> only result in the same numbers, if the convolution is performed with ciruclar boundary conditions, i.e., when the convolution kernel wraps around the image borders.</p>
 <section id="duality-between-signal-processing-perspective-and-algebraic-perspective">
-<h3>Duality between signal processing perspective and algebraic perspective<a class="headerlink" href="#duality-between-signal-processing-perspective-and-algebraic-perspective" title="Permalink to this headline">#</a></h3>
+<h3>Duality between signal processing perspective and algebraic perspective<a class="headerlink" href="#duality-between-signal-processing-perspective-and-algebraic-perspective" title="Link to this heading">#</a></h3>
 <p>Since the convolution is a linear operator, it can also be expressed in terms of a matrix vector multiplication:
 <span class="math notranslate nohighlight">\(\begin{align}\label{eq:duality}
     g = h*s \Leftrightarrow \mathbf{g} = \mathbf{H}\mathbf{s}\,,
@@ -1047,7 +635,7 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
 </section>
 </section>
 <section id="inverse-filter-for-deconvolution">
-<h2>Inverse filter for deconvolution<a class="headerlink" href="#inverse-filter-for-deconvolution" title="Permalink to this headline">#</a></h2>
+<h2>Inverse filter for deconvolution<a class="headerlink" href="#inverse-filter-for-deconvolution" title="Link to this heading">#</a></h2>
 <p>The inverse filter represents the straightforward approach of solving equation <span class="math notranslate nohighlight">\(\eqref{eq:img_formation_fourier}\)</span> for <span class="math notranslate nohighlight">\(s\)</span> while neglecting the noise <span class="math notranslate nohighlight">\(n\)</span>:
 <span class="math notranslate nohighlight">\(\begin{align}\label{eq:inv_filter}
         \hat{s}_{\mathrm{inv}}=\Fi\left\lbrace \frac{\F\lbrace g \rbrace}{\F\lbrace h \rbrace } \right\rbrace \,.
@@ -1059,17 +647,10 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
 </ul>
 <p>Unfortunately, the second point is true for most practically relevant point spread functions.</p>
 <section id="example-inverse-filter-reconstruction-results-for-increasing-noise-levels">
-<h3>Example inverse filter reconstruction results for increasing noise levels<a class="headerlink" href="#example-inverse-filter-reconstruction-results-for-increasing-noise-levels" title="Permalink to this headline">#</a></h3>
+<h3>Example inverse filter reconstruction results for increasing noise levels<a class="headerlink" href="#example-inverse-filter-reconstruction-results-for-increasing-noise-levels" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/6/inv_filter_res_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">6</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "95ad4a97606c499481159007c38ff4fb"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
 </pre></div>
 </div>
 </div>
@@ -1077,7 +658,7 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
 </section>
 </section>
 <section id="wiener-filter-for-deconvolution">
-<h2>Wiener filter for deconvolution<a class="headerlink" href="#wiener-filter-for-deconvolution" title="Permalink to this headline">#</a></h2>
+<h2>Wiener filter for deconvolution<a class="headerlink" href="#wiener-filter-for-deconvolution" title="Link to this heading">#</a></h2>
 <p>The Wiener filter has been proposed by Norbert Wiener in 1949 and minimizes the mean squared error between the original image <span class="math notranslate nohighlight">\(s\)</span> and the reconstruction <span class="math notranslate nohighlight">\(\hat{s}\)</span>.</p>
 <p>The filter is obtained by assuming the involved images to be weakly stationary stochastic processes so that they can be described via their power spectral densities (not covered here).</p>
 <p>In the Fourier-domain, the Wiener filter is given by</p>
@@ -1094,17 +675,10 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
 <p>i.e., to steadily decrease the filtering for higher spatial frequencies as noise is typically dominated by high spatial frequencies.</p>
 <p>Later we will see another method for estimating the signal-to-noise ratio that takes the actual processed image <span class="math notranslate nohighlight">\(g\)</span> into account.</p>
 <section id="example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics">
-<h3>Example Wiener filter reconstruction results for increasing noise levels with SNR-heuristics<a class="headerlink" href="#example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics" title="Permalink to this headline">#</a></h3>
+<h3>Example Wiener filter reconstruction results for increasing noise levels with SNR-heuristics<a class="headerlink" href="#example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/6/wiener_filter_res_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">6</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "c6a68a42172d4f348204c4b25a605a40"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
 </pre></div>
 </div>
 </div>
@@ -1112,7 +686,7 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
 </section>
 </section>
 <section id="richardson-lucy-deconvolution">
-<h2>Richardson-Lucy deconvolution<a class="headerlink" href="#richardson-lucy-deconvolution" title="Permalink to this headline">#</a></h2>
+<h2>Richardson-Lucy deconvolution<a class="headerlink" href="#richardson-lucy-deconvolution" title="Link to this heading">#</a></h2>
 <p>The Richardson-Lucy deconvolution algorithm (RL-algorithm) has been simultaneously and independently proposed by William Richardson and Leon Lucy in the 1970s.</p>
 <p>It is based on the assumption that the noise affecting digitally acquired images is dominated by the so-called <em>shot noise</em> caused by the stochastic nature of the number of arriving photons.</p>
 <p>We again consider the image formation process</p>
@@ -1167,7 +741,7 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
   \hat{s}_{i+1} = \hat{s}_i - \eta \nabla J(\hat{s}_i) = \hat{s}_i - \eta \left( 1 - \frac{g}{\hat{s}_i*h} \right) * h\transp \,.
 \end{align}\)</span></p>
 <section id="multiplicative-version-of-the-richardson-lucy-algorithm">
-<h3>Multiplicative version of the Richardson-Lucy algorithm<a class="headerlink" href="#multiplicative-version-of-the-richardson-lucy-algorithm" title="Permalink to this headline">#</a></h3>
+<h3>Multiplicative version of the Richardson-Lucy algorithm<a class="headerlink" href="#multiplicative-version-of-the-richardson-lucy-algorithm" title="Link to this heading">#</a></h3>
 <p>The most implemented version of the RL-algorithm is the so-called <em>multiplicative RL-algorithm</em>.</p>
 <p>It relies on the convolution kernel <span class="math notranslate nohighlight">\(h\)</span> being normalized, i.e., <span class="math notranslate nohighlight">\(\sum_{(i,j)} h_{i,j} = 1\)</span>.</p>
 <p>This also implies that <span class="math notranslate nohighlight">\(1*h\transp=1\)</span>.</p>
@@ -1185,14 +759,14 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
   \hat{s}_{i+1} &amp;= \hat{s}_i \frac{g}{\hat{s}_i*h}*h\transp \,.
 \end{align}\)</span></p>
 <section id="comments-on-the-richardson-lucy-algorithm">
-<h4>Comments on the Richardson-Lucy algorithm<a class="headerlink" href="#comments-on-the-richardson-lucy-algorithm" title="Permalink to this headline">#</a></h4>
+<h4>Comments on the Richardson-Lucy algorithm<a class="headerlink" href="#comments-on-the-richardson-lucy-algorithm" title="Link to this heading">#</a></h4>
 <p>The RL-algorithm is implemented in many open source or commercial image processing libraries.</p>
 <p>The main problem of the RL-algorithm is that it starts to amplify noise after its (usually quick) convergence. Hence, the intermediate results have to be continuously inspected or some sort of regularization has to be incorporated into the optimization functional <span class="math notranslate nohighlight">\(J\)</span>.</p>
 </section>
 </section>
 </section>
 <section id="half-quadratic-splitting-hqs-method">
-<h2>Half-quadratic splitting (HQS) method<a class="headerlink" href="#half-quadratic-splitting-hqs-method" title="Permalink to this headline">#</a></h2>
+<h2>Half-quadratic splitting (HQS) method<a class="headerlink" href="#half-quadratic-splitting-hqs-method" title="Link to this heading">#</a></h2>
 <p>This section introduces a flexible, powerful and intuitive iterative approach, the half-quadratic splitting (HQS) method, for solving regularized inverse problems formulated like \eqref{eq:map_solution}.</p>
 <p>We start with some general considerations and then apply HQS to the inverse problem of deconvolution.</p>
 <p>We assume the following image formation model:</p>
@@ -1239,7 +813,7 @@ with a square circulant Toeplitz matrix <span class="math notranslate nohighligh
 \)</span></p>
 <p>Again, the important benefit of this formulation is that we can update <span class="math notranslate nohighlight">\(\mathbf{s}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> separately. We will see that this approach allows us to easily experiment with different regularizers (this is sometimes also referred to as a <em>plug-and-play</em> formulation).</p>
 <section id="excursion-on-proximal-operators">
-<h3>Excursion on proximal operators<a class="headerlink" href="#excursion-on-proximal-operators" title="Permalink to this headline">#</a></h3>
+<h3>Excursion on proximal operators<a class="headerlink" href="#excursion-on-proximal-operators" title="Link to this heading">#</a></h3>
 <p>So-called <em>proximal operators</em> are used in <em>proximal algorithms</em> to solve</p>
 <ul class="simple">
 <li><p>large-scale,</p></li>
@@ -1249,7 +823,7 @@ convex optimization problems.</p></li>
 </ul>
 <p>Similar to calculating the gradient of the target function <span class="math notranslate nohighlight">\(f\)</span> in gradient descent, one evaluates the corresponding proximal operator to take one step into the direction of the sought minimum.</p>
 <section id="definition-of-a-proximal-operator">
-<h4>Definition of a proximal operator<a class="headerlink" href="#definition-of-a-proximal-operator" title="Permalink to this headline">#</a></h4>
+<h4>Definition of a proximal operator<a class="headerlink" href="#definition-of-a-proximal-operator" title="Link to this heading">#</a></h4>
 <p>Assume <span class="math notranslate nohighlight">\(f:\mathbb{R} ^n \rightarrow  \mathbb{R} \cup \left\{ +\infty \right\} \)</span> to be a closed proper convex function, i.e., with its <em>epigraph</em></p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathrm{epi}_t f := \left\{ (\mathbf{x},t) \in \mathbb{R} ^n \times \mathbb{R} \vert f(\mathbf{x}) \leq  t  \right\}
@@ -1266,7 +840,7 @@ convex optimization problems.</p></li>
 \end{align}\)</span></p>
 </section>
 <section id="interpretation-of-proximal-operators">
-<h4>Interpretation of proximal operators<a class="headerlink" href="#interpretation-of-proximal-operators" title="Permalink to this headline">#</a></h4>
+<h4>Interpretation of proximal operators<a class="headerlink" href="#interpretation-of-proximal-operators" title="Link to this heading">#</a></h4>
 <p>Intuitively, a proximal operator <span class="math notranslate nohighlight">\(\mathrm{prox}_f (\mathbf{v})\)</span> yields a point that is a compromise between minimizing <span class="math notranslate nohighlight">\(f\)</span> and being  near to <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>.</p>
 <p>In the scaled version <span class="math notranslate nohighlight">\(\mathrm{prox}_{f,\lambda} (\mathbf{v})\)</span>, <span class="math notranslate nohighlight">\(\lambda\)</span> acts like a relative weight between the two terms.</p>
 <p>The effect of a proximal operator can be visualized as follows:</p>
@@ -1280,7 +854,7 @@ convex optimization problems.</p></li>
 </section>
 </section>
 <section id="hqs-for-deconvolution">
-<h3>HQS for deconvolution<a class="headerlink" href="#hqs-for-deconvolution" title="Permalink to this headline">#</a></h3>
+<h3>HQS for deconvolution<a class="headerlink" href="#hqs-for-deconvolution" title="Link to this heading">#</a></h3>
 <p>We now again consider the inverse problem of deconvolution with circual boundary conditions. Here, the matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> is the square circulant Toeplitz matrix <span class="math notranslate nohighlight">\(\mathbf{H} \in \mathbb{R}^{N\times N}\)</span> representing a 2D-convolution of the input image <span class="math notranslate nohighlight">\(s\)</span> with the convolution kernel <span class="math notranslate nohighlight">\(h\)</span>.</p>
 <p>Revise the duality between the signal processing formulation and the algebraic formulation:</p>
 <p><span class="math notranslate nohighlight">\(
@@ -1291,7 +865,7 @@ convex optimization problems.</p></li>
 \end{align}
 \)</span></p>
 <section id="hqs-with-total-variation-and-denoising-regularizers">
-<h4>HQS with total variation and denoising regularizers<a class="headerlink" href="#hqs-with-total-variation-and-denoising-regularizers" title="Permalink to this headline">#</a></h4>
+<h4>HQS with total variation and denoising regularizers<a class="headerlink" href="#hqs-with-total-variation-and-denoising-regularizers" title="Link to this heading">#</a></h4>
 <p>The initial formulation \eqref{eq:hqs_1} of HQS depends on which regularizer we employ.</p>
 <p>For total variation this is:</p>
 <p><span class="math notranslate nohighlight">\(
@@ -1314,7 +888,7 @@ convex optimization problems.</p></li>
 \)</span></p>
 <p>Here the matrix <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> represents the identity matrix which is why it can be omitted.</p>
 <section id="efficient-implementation-of-s-update">
-<h5>Efficient implementation of <span class="math notranslate nohighlight">\(s\)</span>-update<a class="headerlink" href="#efficient-implementation-of-s-update" title="Permalink to this headline">#</a></h5>
+<h5>Efficient implementation of <span class="math notranslate nohighlight">\(s\)</span>-update<a class="headerlink" href="#efficient-implementation-of-s-update" title="Link to this heading">#</a></h5>
 <p>For obtaining the <span class="math notranslate nohighlight">\(s\)</span>-update, we have to derive the proximal operator <span class="math notranslate nohighlight">\(\mathrm{prox}_{f,\rho}\)</span>:</p>
 <p><span class="math notranslate nohighlight">\(
 \begin{align} 
@@ -1354,7 +928,7 @@ convex optimization problems.</p></li>
 \end{align}\)</span></p>
 </section>
 <section id="special-case-of-total-variation-regularizer">
-<h5>Special case of total variation regularizer<a class="headerlink" href="#special-case-of-total-variation-regularizer" title="Permalink to this headline">#</a></h5>
+<h5>Special case of total variation regularizer<a class="headerlink" href="#special-case-of-total-variation-regularizer" title="Link to this heading">#</a></h5>
 <p>For the TV regularizer, the matrix <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> represents the finite difference operator.  The matrix-vector multiplications involved in the proximal operator, i.e., <span class="math notranslate nohighlight">\(\mathbf{Hs}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{Ds} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right]\transp \mathbf{s}\)</span> (and also their adjoint correspondencies <span class="math notranslate nohighlight">\(\mathbf{H}\transp \mathbf{g}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{D}\transp \mathbf{z} = \left[ \mathbf{D}\transp_x \mathbf{D}\transp_y  \right] \mathbf{z} = \mathbf{D}_x\transp\mathbf{z}_1 + \mathbf{D}_y\transp\mathbf{z}_2\)</span>, with <span class="math notranslate nohighlight">\(\mathbf{z}_1, \mathbf{z}_2\)</span> denoting the first and second half of <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>.) all encode 2D-convolutions with circular boundary conditions.</p>
 <p>Exploiting the duality of the signal-processing perspective and the algebraic perspective yields the following reforumlations of the denominator, respectively, of the nominator of \eqref{eq:hqs_tv_1}:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
@@ -1373,14 +947,14 @@ convex optimization problems.</p></li>
 </div>
 </section>
 <section id="general-regularizer">
-<h5>General regularizer<a class="headerlink" href="#general-regularizer" title="Permalink to this headline">#</a></h5>
+<h5>General regularizer<a class="headerlink" href="#general-regularizer" title="Link to this heading">#</a></h5>
 <p>For a general regularizer, we assume <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> to be the identity matrix so that it can be ignored. The proximal operator can then be written as:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
   \mathrm{prox}_{\left\| \cdot \right\|_2 ,\rho} (\mathbf{z}) = \Fi \left\{ \frac{\F \left\{ h \right\}^* \cdot \F \left\{ g \right\} + \rho \F \left\{ z \right\}  }{\F \left\{ h \right\}^* \cdot \F \left\{ h \right\} + \rho}  \right\} \,.
 \end{align}\)</span></p>
 </section>
 <section id="efficient-implementation-of-z-update-for-anisotropic-tv-regularizer">
-<h5>Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for anisotropic TV regularizer<a class="headerlink" href="#efficient-implementation-of-z-update-for-anisotropic-tv-regularizer" title="Permalink to this headline">#</a></h5>
+<h5>Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for anisotropic TV regularizer<a class="headerlink" href="#efficient-implementation-of-z-update-for-anisotropic-tv-regularizer" title="Link to this heading">#</a></h5>
 <p>For the <span class="math notranslate nohighlight">\(z\)</span>-update, we need to find a solution for the proximal operator</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathrm{prox}_{\left\| \cdot \right\|_1, \rho } (\mathbf{Ds}) = \argmin{\mathbf{z}}\, \lambda \left\| \mathbf{z} \right\|_1 + \frac{\rho}{2}\left\| \mathbf{Ds-z} \right\|^2_2 \,.  
@@ -1475,10 +1049,10 @@ convex optimization problems.</p></li>
 <p>The operator <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is also called the element-wise <em>soft thresholding operator</em>.</p>
 </section>
 <section id="visualization-of-soft-thresholding-operator">
-<h5>Visualization of soft thresholding operator<a class="headerlink" href="#visualization-of-soft-thresholding-operator" title="Permalink to this headline">#</a></h5>
+<h5>Visualization of soft thresholding operator<a class="headerlink" href="#visualization-of-soft-thresholding-operator" title="Link to this heading">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">y</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">y</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">lam</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">+</span> <span class="n">rho</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="o">-</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 </pre></div>
 </div>
@@ -1486,7 +1060,7 @@ convex optimization problems.</p></li>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">kap</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">s</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">kap</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">kap</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">v</span><span class="o">-</span><span class="n">kap</span>
     <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">kap</span><span class="p">):</span>
@@ -1499,7 +1073,7 @@ convex optimization problems.</p></li>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">soft_thres_visu</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">soft_thres_visu</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
     <span class="n">rho</span> <span class="o">=</span> <span class="mf">0.5</span>
     <span class="n">lam</span> <span class="o">=</span> <span class="mf">0.4</span>
 
@@ -1529,18 +1103,10 @@ convex optimization problems.</p></li>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/06_InverseProblemsInCompimg_136_0.png" src="_images/06_InverseProblemsInCompimg_136_0.png" />
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "f9be2a9bc69d4570aa79477e739d381f"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(v)&gt;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="efficient-implementation-of-z-update-for-isotropic-tv-regularizer">
-<h5>Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for isotropic TV regularizer<a class="headerlink" href="#efficient-implementation-of-z-update-for-isotropic-tv-regularizer" title="Permalink to this headline">#</a></h5>
+<h5>Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for isotropic TV regularizer<a class="headerlink" href="#efficient-implementation-of-z-update-for-isotropic-tv-regularizer" title="Link to this heading">#</a></h5>
 <p>For the isotropic case, the <span class="math notranslate nohighlight">\(l_2\)</span>-norm of the finite differences approximation of the horizontal and vertical image gradients is used as the regularizer instead of the <span class="math notranslate nohighlight">\(l_1\)</span>-norm, i.e.,</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \lambda \left\| \mathbf{z} \right\|_{2,1}  = \lambda \sum\limits^N_{i=1} \left\|  \begin{bmatrix} 
@@ -1677,7 +1243,7 @@ convex optimization problems.</p></li>
 <p>This expression (i.e., <span class="math notranslate nohighlight">\(\mathcal{S}_{\lambda / \rho}\)</span>) is also known as the vector soft-thresholding operator.</p>
 </section>
 <section id="efficient-update-of-mathbf-z-in-general-case">
-<h5>Efficient update of <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> in general case<a class="headerlink" href="#efficient-update-of-mathbf-z-in-general-case" title="Permalink to this headline">#</a></h5>
+<h5>Efficient update of <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> in general case<a class="headerlink" href="#efficient-update-of-mathbf-z-in-general-case" title="Link to this heading">#</a></h5>
 <p>In the general case, i.e., with <span class="math notranslate nohighlight">\(\mathbf{D} = \mathbf{I}\)</span>, we want to solve</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{z} \leftarrow &amp;\argmin{\mathbf{z}}\, r(\mathbf{z}) + \frac{\rho}{2} \left\| \mathbf{s} - \mathbf{z} \right\| ^2_2 \,, \\
@@ -1697,12 +1263,12 @@ convex optimization problems.</p></li>
 </section>
 </section>
 <section id="hqs-for-general-linear-inverse-problems">
-<h3>HQS for general linear inverse problems<a class="headerlink" href="#hqs-for-general-linear-inverse-problems" title="Permalink to this headline">#</a></h3>
+<h3>HQS for general linear inverse problems<a class="headerlink" href="#hqs-for-general-linear-inverse-problems" title="Link to this heading">#</a></h3>
 <p>HQS can also be applied to linear inverse problems, i.e., <span class="math notranslate nohighlight">\(\mathbf{g} = \mathbf{Hs} + \mathbf{n}\)</span>.</p>
 <p>Depending on the prior, we can use the <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-updates already derived for the deconvolution problem (i.e., total variation or a general Gaussian denoiser).</p>
 <p>However, we have to look again at the <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update, as the matrix-vector multiplication <span class="math notranslate nohighlight">\(\mathbf{Hs}\)</span> does not (necessarily) encode a convolution anymore.</p>
 <section id="derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems">
-<h4>Derivation of <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update for HQS for general linear inverse problems<a class="headerlink" href="#derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems" title="Permalink to this headline">#</a></h4>
+<h4>Derivation of <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update for HQS for general linear inverse problems<a class="headerlink" href="#derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems" title="Link to this heading">#</a></h4>
 <p>For the <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update, we use the following solution:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{s} \leftarrow \mathrm{prox}_{\left\| \cdot \right\| _2, \rho} (\mathbf{v}) &amp;= \argmin{\mathbf{s}}\, \frac{1}{2} \left\| \mathbf{Hs-g} \right\| ^2_2 + \frac{\rho}{2}\left\| \mathbf{Ds-z} \right\| ^2_2  \\
@@ -1714,14 +1280,14 @@ convex optimization problems.</p></li>
 </section>
 </section>
 <section id="problems-of-hqs">
-<h3>Problems of HQS<a class="headerlink" href="#problems-of-hqs" title="Permalink to this headline">#</a></h3>
+<h3>Problems of HQS<a class="headerlink" href="#problems-of-hqs" title="Link to this heading">#</a></h3>
 <p>The HQS method works well for inverse problems where the number of available measurements <span class="math notranslate nohighlight">\(M\)</span> is in the range of the number of unknowns <span class="math notranslate nohighlight">\(N\)</span>. For the case of deconvolution, it is <span class="math notranslate nohighlight">\(M=N\)</span> and hence HQS represents a suitable choice.</p>
 <p>However, for severely under-determined problems, the penalty <span class="math notranslate nohighlight">\(\frac{\rho}{2}\left\| \mathbf{Ds-z} \right\|^2_2 \)</span> linking data fidelity and the prior terms can be too weak so that the algorithm does not converge well.</p>
 <p>We will now get to know a method that mitigates that problem.</p>
 </section>
 </section>
 <section id="alternating-direction-method-of-multipliers-admm">
-<h2>Alternating direction method of multipliers (ADMM)<a class="headerlink" href="#alternating-direction-method-of-multipliers-admm" title="Permalink to this headline">#</a></h2>
+<h2>Alternating direction method of multipliers (ADMM)<a class="headerlink" href="#alternating-direction-method-of-multipliers-admm" title="Link to this heading">#</a></h2>
 <p>Similar to the HQS approach, the so-called <em>alternating direction method of multipliers (ADMM)</em> splits the objective function</p>
 <p><span class="math notranslate nohighlight">\(
 \begin{align} 
@@ -1752,14 +1318,14 @@ convex optimization problems.</p></li>
 \end{align}\)</span></p>
 <p>For the <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>- and <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-updates we can again use proximal operators. The <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>-update is a straightforward sum of vectors (for its derivation see the article <a class="reference external" href="https://web.stanford.edu/~boyd/papers/pdf/admm_distr_stats.pdf">Distributed Optimization and Statistical Learning via the Alternating Direction Method of Multipliers</a> by Stephen Boyd et al.).</p>
 <section id="the-mathbf-s-update">
-<h3>The <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update:<a class="headerlink" href="#the-mathbf-s-update" title="Permalink to this headline">#</a></h3>
+<h3>The <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update:<a class="headerlink" href="#the-mathbf-s-update" title="Link to this heading">#</a></h3>
 <p>The <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update within ADMM is quite similar to that of HQS, we just have to adequately account for <span class="math notranslate nohighlight">\(\mathbf{u}\)</span>, i.e.,</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
   \mathrm{prox}_{\left\| \cdot \right\|_2, \rho } (\mathbf{\mathbf{z-u}}) = \left( \underbrace{\mathbf{H}\transp \mathbf{H} + \rho  \mathbf{D}\transp D}_{\tilde{\mathbf{H}}} \right)^{-1}  \left( \underbrace{\mathbf{H}\transp \mathbf{g} + \rho \mathbf{D}\transp (\mathbf{z-u})}_{\tilde{\mathbf{g}}} \right) \,.
 \end{align}\)</span></p>
 </section>
 <section id="the-mathbf-z-update">
-<h3>The <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-update:<a class="headerlink" href="#the-mathbf-z-update" title="Permalink to this headline">#</a></h3>
+<h3>The <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-update:<a class="headerlink" href="#the-mathbf-z-update" title="Link to this heading">#</a></h3>
 <p>For the <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-update, we can rely on the same proximal operators as HQS.</p>
 <p>In the case of the TV regularizer, the proximal operator is the element-wise soft thresholding operator:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
@@ -1774,7 +1340,7 @@ convex optimization problems.</p></li>
 </section>
 </section>
 <section id="unrolled-optimization">
-<h2>Unrolled optimization<a class="headerlink" href="#unrolled-optimization" title="Permalink to this headline">#</a></h2>
+<h2>Unrolled optimization<a class="headerlink" href="#unrolled-optimization" title="Link to this heading">#</a></h2>
 <p>For traditional HQS and ADMM implementations, the values of the hyperparameters <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span> are chosen once and remain fix while performing the optimization.</p>
 <p>Although this works well in many cases, it can be beneficial to set the number <span class="math notranslate nohighlight">\(i\)</span> of iterations to a fixed value and replicate the parameter update routines <span class="math notranslate nohighlight">\(i\)</span> times, each with individual hyperparameters <span class="math notranslate nohighlight">\(\lambda_i, \rho_i\)</span>.</p>
 <p>The resulting structure can be interpreted and dealt with like a neural network (especially if some deep denoising prior is included). Then, the hyperparameters <span class="math notranslate nohighlight">\(\lambda_i, \rho_i\)</span> and the parameters of a potentially included neural network can be learned (i.e., optimized) in an end-to-end fashion in a joint training procedure.</p>
@@ -1787,7 +1353,7 @@ convex optimization problems.</p></li>
 </ul>
 </section>
 <section id="deep-snr-estimation-for-wiener-filtering">
-<h2>Deep SNR-estimation for Wiener filtering<a class="headerlink" href="#deep-snr-estimation-for-wiener-filtering" title="Permalink to this headline">#</a></h2>
+<h2>Deep SNR-estimation for Wiener filtering<a class="headerlink" href="#deep-snr-estimation-for-wiener-filtering" title="Link to this heading">#</a></h2>
 <p>As elaborated before, one main drawback of the Wiener filter is the necessity for the user to correctly estimate the signal-to-noise ratio</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    SNR\,(\mathbf{f}) = \frac{S_{ss}(\mathbf{f})}{S_{nn}(\mathbf{f})} \,, 
@@ -1810,24 +1376,17 @@ convex optimization problems.</p></li>
 <li><p>estimate the undistorted image <span class="math notranslate nohighlight">\(\hat{s}\)</span> by applying the Wiener filter to <span class="math notranslate nohighlight">\(g\)</span> and by using the estimated <span class="math notranslate nohighlight">\(\widehat{SNR}\)</span>.</p></li>
 </ul>
 <section id="example-wiener-filter-reconstruction-results-with-deep-snr-estimation">
-<h3>Example Wiener filter reconstruction results with deep SNR-estimation<a class="headerlink" href="#example-wiener-filter-reconstruction-results-with-deep-snr-estimation" title="Permalink to this headline">#</a></h3>
+<h3>Example Wiener filter reconstruction results with deep SNR-estimation<a class="headerlink" href="#example-wiener-filter-reconstruction-results-with-deep-snr-estimation" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/6/dw_ex_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">8</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "e46874072fa846cc88c6530c5519ed4a"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="quantitative-results">
-<h3>Quantitative results<a class="headerlink" href="#quantitative-results" title="Permalink to this headline">#</a></h3>
+<h3>Quantitative results<a class="headerlink" href="#quantitative-results" title="Link to this heading">#</a></h3>
 <p>To quantify the deconvolution performance of the proposed method, the <a class="reference external" href="http://ieeexplore.ieee.org/document/6528301/">dataset published by Libin Sun et al.</a> has been employed.</p>
 <p>The reconstruction results are numerically compared against the ground truths by means of the so-called <em>peak signal-to-noise ratio PSNR</em> (logarithmic scale, no maximum value) and the so-called <em>structural similarity index SSIM</em> (mimics the human perception of image similarity, maximum value of 1.0 for full equality).</p>
 <p><img alt="image.png" src="attachment:image.png" /></p>
@@ -1883,12 +1442,6 @@ convex optimization problems.</p></li>
 </section>
 </section>
 
-
-<script type="application/vnd.jupyter.widget-state+json">
-{"state": {"a4905ececdae4bc2b674c2fe71fd90c0": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "3170cffdd946476088b550ec382c032b": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "c9d4f16575ce4caa876ecbf179bc7476": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_a4905ececdae4bc2b674c2fe71fd90c0", "max": 6, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_3170cffdd946476088b550ec382c032b", "value": 6}}, "b53cefc3b24c427da7e43715bfc58af2": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "95ad4a97606c499481159007c38ff4fb": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_c9d4f16575ce4caa876ecbf179bc7476", "IPY_MODEL_a1b09f0f130d4438a788ead6dca8fcc4"], "layout": "IPY_MODEL_b53cefc3b24c427da7e43715bfc58af2"}}, "037bd0773ce1477dad3f046709ae794d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a1b09f0f130d4438a788ead6dca8fcc4": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_037bd0773ce1477dad3f046709ae794d", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/6/inv_filter_res_6.svg\" style=\"max-height:50vh\"/>"}}]}}, "b70c10172858434bb7e46c2199b81edf": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "058d83bc21a749868e7b1b5d7655729e": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "50c59fde4e13433eac69b52c1f1d4f0b": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_b70c10172858434bb7e46c2199b81edf", "max": 6, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_058d83bc21a749868e7b1b5d7655729e", "value": 6}}, "bae90101652f4ce8a8ff936ba8444367": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c6a68a42172d4f348204c4b25a605a40": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_50c59fde4e13433eac69b52c1f1d4f0b", "IPY_MODEL_c958802fbd2e4a16822eed8a56614142"], "layout": "IPY_MODEL_bae90101652f4ce8a8ff936ba8444367"}}, "1245dc7614e2411b9cbcda44340e2b77": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c958802fbd2e4a16822eed8a56614142": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_1245dc7614e2411b9cbcda44340e2b77", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/6/wiener_filter_res_6.svg\" style=\"max-height:50vh\"/>"}}]}}, "275bc0a2cd824463aff31a78a5f0fb3e": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6129d09f9c644e4c9e13afd6695b3fc7": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "44cc9c9b6fe14cc287a395d6e734d054": {"model_name": "FloatSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "FloatSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "FloatSliderView", "continuous_update": true, "description": "v", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_275bc0a2cd824463aff31a78a5f0fb3e", "max": 3.0, "min": -3.0, "orientation": "horizontal", "readout": true, "readout_format": ".2f", "step": 0.2, "style": "IPY_MODEL_6129d09f9c644e4c9e13afd6695b3fc7", "value": 0.0}}, "ff1b880a333743048e75646beb7d64a2": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f9be2a9bc69d4570aa79477e739d381f": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_44cc9c9b6fe14cc287a395d6e734d054", "IPY_MODEL_572ad7a1878244f488a9a969ea4dbde9"], "layout": "IPY_MODEL_ff1b880a333743048e75646beb7d64a2"}}, "79e72b95c1ab45cdafcd593918588693": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "572ad7a1878244f488a9a969ea4dbde9": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_79e72b95c1ab45cdafcd593918588693", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {"needs_background": "light"}, "data": {"text/plain": "<Figure size 432x288 with 2 Axes>", "image/png": "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\n"}}]}}, "b912dde006334cbf8aed059f5e0f5e0b": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e4b8777ab5f64095a47a23fd3727f837": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "1d49bc354fcd4216a248cad21a941b91": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_b912dde006334cbf8aed059f5e0f5e0b", "max": 8, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_e4b8777ab5f64095a47a23fd3727f837", "value": 6}}, "3d1b5271594e4cc7a515692108e79a54": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e46874072fa846cc88c6530c5519ed4a": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_1d49bc354fcd4216a248cad21a941b91", "IPY_MODEL_a1c934b5ef0847729588b9c502d5e4b0"], "layout": "IPY_MODEL_3d1b5271594e4cc7a515692108e79a54"}}, "4f3ac20d535e4b8d92ef139f9a4eaab3": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a1c934b5ef0847729588b9c502d5e4b0": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_4f3ac20d535e4b8d92ef139f9a4eaab3", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/6/dw_ex_6.png\" style=\"max-height:50vh\"/>"}}]}}}, "version_major": 2, "version_minor": 0}
-</script>
-
-
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -1898,61 +1451,182 @@ convex optimization problems.</p></li>
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "compimg"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "compimg",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'compimg'</script>
+    <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="05_NeuralNetworksForCompImg.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Neural Networks for Computational Imaging</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05_NeuralNetworksForCompImg.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Neural Networks for Computational Imaging</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="07_LenslessImaging.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="07_LenslessImaging.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Lensless Imaging</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-into-inverse-problems">Introduction into inverse problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-denoising">Image denoising</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-a-posteriori-map-solution">Maximum a-posteriori (MAP) solution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-inverse-problems">General linear inverse problems</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-perspective-of-inverse-problems">Bayesian perspective of inverse problems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-variation">Total Variation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-deconvolution">Image deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#duality-between-signal-processing-perspective-and-algebraic-perspective">Duality between signal processing perspective and algebraic perspective</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-filter-for-deconvolution">Inverse filter for deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-inverse-filter-reconstruction-results-for-increasing-noise-levels">Example inverse filter reconstruction results for increasing noise levels</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wiener-filter-for-deconvolution">Wiener filter for deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-for-increasing-noise-levels-with-snr-heuristics">Example Wiener filter reconstruction results for increasing noise levels with SNR-heuristics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#richardson-lucy-deconvolution">Richardson-Lucy deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplicative-version-of-the-richardson-lucy-algorithm">Multiplicative version of the Richardson-Lucy algorithm</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comments-on-the-richardson-lucy-algorithm">Comments on the Richardson-Lucy algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#half-quadratic-splitting-hqs-method">Half-quadratic splitting (HQS) method</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excursion-on-proximal-operators">Excursion on proximal operators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-a-proximal-operator">Definition of a proximal operator</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-proximal-operators">Interpretation of proximal operators</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hqs-for-deconvolution">HQS for deconvolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hqs-with-total-variation-and-denoising-regularizers">HQS with total variation and denoising regularizers</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-implementation-of-s-update">Efficient implementation of <span class="math notranslate nohighlight">\(s\)</span>-update</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#special-case-of-total-variation-regularizer">Special case of total variation regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#general-regularizer">General regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-anisotropic-tv-regularizer">Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for anisotropic TV regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-soft-thresholding-operator">Visualization of soft thresholding operator</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-implementation-of-z-update-for-isotropic-tv-regularizer">Efficient implementation of <span class="math notranslate nohighlight">\(z\)</span>-update for isotropic TV regularizer</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-update-of-mathbf-z-in-general-case">Efficient update of <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> in general case</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hqs-for-general-linear-inverse-problems">HQS for general linear inverse problems</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-mathbf-s-update-for-hqs-for-general-linear-inverse-problems">Derivation of <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update for HQS for general linear inverse problems</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problems-of-hqs">Problems of HQS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternating-direction-method-of-multipliers-admm">Alternating direction method of multipliers (ADMM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathbf-s-update">The <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>-update:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mathbf-z-update">The <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>-update:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unrolled-optimization">Unrolled optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-snr-estimation-for-wiener-filtering">Deep SNR-estimation for Wiener filtering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-wiener-filter-reconstruction-results-with-deep-snr-estimation">Example Wiener filter reconstruction results with deep SNR-estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantitative-results">Quantitative results</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Dr.-Ing. Johannes Meyer<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Dr.-Ing. Johannes Meyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

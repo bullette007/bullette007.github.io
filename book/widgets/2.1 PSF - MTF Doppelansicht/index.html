@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PSF and MTF - Dual View</title>
+  <style>
+    :root { color-scheme: dark; --bg:#08111f; --card:#101c2d; --line:#2a3b52; --text:#edf4ff; --muted:#9fb0c5; --h:#b58cff; --g:#ffad57; --red:#ff5f6d; --blue:#58a6ff; }
+    :root.light { color-scheme:light; --bg:#eef3f8; --card:#fff; --line:#cbd6e2; --text:#172334; --muted:#5b6b7c; --h:#7048c8; --g:#bf6500; --red:#d21f36; --blue:#1769aa; }
+    * { box-sizing:border-box }
+    html,body { margin:0; min-height:100%; background:var(--bg); color:var(--text); font:18px/1.4 system-ui,Segoe UI,sans-serif }
+    body { padding:clamp(12px,2vw,28px) }
+    .app { max-width:1440px; margin:auto }
+    header { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px }
+    h1 { margin:0; font-size:clamp(1.45rem,3vw,2.35rem); letter-spacing:-.03em }
+    header p { margin:.25rem 0 0; color:var(--muted) }
+    button,select,input { font:inherit }
+    button,select { color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:9px; padding:9px 12px }
+    button { cursor:pointer }
+    .layout { display:grid; grid-template-columns:290px 1fr; gap:16px }
+    aside,.panel { background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:0 16px 40px #0002 }
+    aside { padding:18px; align-self:start }
+    label { display:block; color:var(--muted); margin-bottom:18px }
+    [hidden] { display:none !important }
+    label strong { display:flex; justify-content:space-between; color:var(--text); font-size:.9rem; margin-bottom:7px }
+    select,input[type=range] { width:100% }
+    input[type=range] { accent-color:var(--h) }
+    .hint { border-top:1px solid var(--line); padding-top:14px; color:var(--muted); font-size:.82rem }
+    .actions { display:flex; gap:8px; margin-top:14px }
+    main { display:grid; grid-template-columns:1fr 1fr; gap:16px }
+    .panel { min-width:0; overflow:hidden }
+    .panel.wide { grid-column:1/-1 }
+    .panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 16px; border-bottom:1px solid var(--line) }
+    .panel-head h2 { margin:0; font-size:1rem }
+    .badge { color:var(--red); font-weight:750; font-size:.85rem }
+    .view-toggle { display:flex; gap:4px; margin-left:auto }
+    .view-toggle button { padding:5px 9px; font-size:.78rem }
+    .view-toggle button.active { color:#fff; background:var(--blue); border-color:var(--blue) }
+    canvas { display:block; width:100%; height:auto; touch-action:none; background:#050b14 }
+    .wide canvas { max-height:360px }
+    .formula { text-align:center; color:var(--muted); margin:14px 0 0 }
+    @media(max-width:900px) { .layout { grid-template-columns:1fr } aside { position:static } }
+    @media(max-width:680px) { main { grid-template-columns:1fr } .panel.wide { grid-column:auto } header { align-items:flex-start; flex-direction:column } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header><div><h1 id="title">PSF <span style="color:var(--h)">h(x)</span> and MTF</h1><p id="subtitle">From imaging kernel to visible information loss</p></div><div class="actions"><button id="language">Deutsch</button><button id="theme">Light/Dark</button></div></header>
+  <div class="layout">
+    <aside>
+       <label><strong><span id="typeLabel">PSF type</span></strong><select id="type"><option value="dirac">Dirac (in focus)</option><option value="pillbox" selected>Pillbox (defocus)</option><option value="gauss">Gaussian</option><option value="rect">Rect (motion)</option><option value="coded">Coded rect</option><option value="free">Free aperture shape</option></select></label>
+      <label id="sizeRow"><strong><span id="sizeLabel">Radius r</span><span id="sizeValue">8 px</span></strong><input id="size" type="range" min="1" max="20" value="8"></label>
+       <label id="angleRow"><strong><span id="angleLabel">Angle</span><span id="angleValue">0 deg</span></strong><input id="angle" type="range" min="0" max="175" step="5" value="0"></label>
+       <label><strong><span id="thresholdLabel">Zero threshold</span><span id="thresholdValue">2.0 %</span></strong><input id="threshold" type="range" min="0.5" max="8" step="0.5" value="2"></label>
+      <div class="hint" id="hint">Bei der Pillbox entstehen konzentrische Nullstellen. Sie stehen fuer Frequenzen, die bei der Aufnahme verloren gehen.</div>
+       <div class="actions"><button id="reset">Reset (R)</button><button id="clear" hidden>Clear mask</button></div>
+      <p class="formula">g = h * s<br>MTF = |F{h}|</p>
+    </aside>
+    <main>
+      <section class="panel"><div class="panel-head"><h2>PSF h(x)</h2><span id="drawHint"></span></div><canvas id="psf" width="512" height="400"></canvas></section>
+       <section class="panel"><div class="panel-head"><h2>MTF |F{h}|</h2><div class="view-toggle"><button id="mtf2d" class="active" type="button">2D</button><button id="mtf1d" type="button">1D slice</button></div><span class="badge" id="zeroCount">0 zeros</span></div><canvas id="mtf" width="512" height="400"></canvas></section>
+       <section class="panel wide"><div class="panel-head"><h2 id="testTitle">Test image g = h * s</h2><span id="measurement" style="color:var(--g)">Measurement g</span></div><canvas id="image" width="1040" height="330"></canvas></section>
+    </main>
+  </div>
+</div>
+<script>
+(() => {
+  'use strict';
+  const N=65, SPECTRUM_N=128, PREVIEW_W=512, PREVIEW_H=256, els={}; ['type','typeLabel','size','angle','angleLabel','threshold','thresholdLabel','sizeRow','angleRow','sizeLabel','sizeValue','angleValue','thresholdValue','hint','reset','clear','theme','language','title','subtitle','testTitle','measurement','zeroCount','drawHint','mtf2d','mtf1d'].forEach(id=>els[id]=document.getElementById(id));
+  const canvases={psf:document.getElementById('psf'),mtf:document.getElementById('mtf'),image:document.getElementById('image')};
+  const ctx=Object.fromEntries(Object.entries(canvases).map(([k,c])=>[k,c.getContext('2d')]));
+  const defaults={type:'pillbox',size:8,angle:0,threshold:2}; let free=new Float64Array(N*N), drawing=false;
+  const params=new URLSearchParams(location.search); let mtfView=params.get('view')==='1d'?'1d':'2d',lang=params.get('lang')==='de'?'de':'en'; for(const k in defaults) if(params.has(k)) els[k].value=params.get(k);
+  function kernel(){
+    const a=new Float64Array(N*N), type=els.type.value, size=+els.size.value, ang=+els.angle.value*Math.PI/180, c=(N-1)/2;
+    if(type==='free') a.set(free); else for(let y=0;y<N;y++) for(let x=0;x<N;x++){
+      const dx=x-c,dy=y-c,u=dx*Math.cos(ang)+dy*Math.sin(ang),v=-dx*Math.sin(ang)+dy*Math.cos(ang); let on=false;
+      if(type==='dirac') on=Math.abs(dx)<.6&&Math.abs(dy)<.6;
+      if(type==='pillbox') on=dx*dx+dy*dy<=size*size;
+      if(type==='gauss') a[y*N+x]=Math.exp(-(dx*dx+dy*dy)/(2*size*size));
+      if(type==='rect') on=Math.abs(u)<=size*1.8&&Math.abs(v)<=1.25;
+      if(type==='coded'){ const bit=Math.floor(u+size*2); on=Math.abs(v)<=1.25&&bit>=0&&bit<size*4&&[1,0,1,1,0,1,0,0,1,0,1,1,1,0,0,1,1,0,1,0,1,1,0,1][bit%24]; }
+      if(on) a[y*N+x]=1;
+    }
+    let sum=a.reduce((p,v)=>p+v,0); if(!sum){a[(N>>1)*N+(N>>1)]=1;sum=1} for(let i=0;i<a.length;i++)a[i]/=sum; return a;
+  }
+  function fft(re,im,inverse=false){
+    const n=re.length; for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){[re[i],re[j]]=[re[j],re[i]];[im[i],im[j]]=[im[j],im[i]]}}
+    for(let len=2;len<=n;len<<=1){const ang=(inverse?2:-2)*Math.PI/len,wr0=Math.cos(ang),wi0=Math.sin(ang);for(let i=0;i<n;i+=len){let wr=1,wi=0;for(let j=0;j<len/2;j++){const p=i+j,q=p+len/2,tr=wr*re[q]-wi*im[q],ti=wr*im[q]+wi*re[q];re[q]=re[p]-tr;im[q]=im[p]-ti;re[p]+=tr;im[p]+=ti;const next=wr*wr0-wi*wi0;wi=wr*wi0+wi*wr0;wr=next}}}
+    if(inverse)for(let i=0;i<n;i++){re[i]/=n;im[i]/=n}
+  }
+  function fft2(re,im,w,h,inverse=false){let a=new Float64Array(Math.max(w,h)),b=new Float64Array(Math.max(w,h));for(let y=0;y<h;y++){for(let x=0;x<w;x++){a[x]=re[y*w+x];b[x]=im[y*w+x]}fft(a.subarray(0,w),b.subarray(0,w),inverse);for(let x=0;x<w;x++){re[y*w+x]=a[x];im[y*w+x]=b[x]}}for(let x=0;x<w;x++){for(let y=0;y<h;y++){a[y]=re[y*w+x];b[y]=im[y*w+x]}fft(a.subarray(0,h),b.subarray(0,h),inverse);for(let y=0;y<h;y++){re[y*w+x]=a[y];im[y*w+x]=b[y]}}}
+  function spectrum(k){
+    const re=new Float64Array(SPECTRUM_N*SPECTRUM_N),im=new Float64Array(re.length),out=new Float64Array(N*N);for(let y=0;y<N;y++)re.set(k.subarray(y*N,(y+1)*N),y*SPECTRUM_N);fft2(re,im,SPECTRUM_N,SPECTRUM_N);const half=(N-1)/2,dc=Math.hypot(re[0],im[0])||1;for(let y=0;y<N;y++)for(let x=0;x<N;x++){const fy=(y-half+SPECTRUM_N)%SPECTRUM_N,fx=(x-half+SPECTRUM_N)%SPECTRUM_N;out[y*N+x]=Math.hypot(re[fy*SPECTRUM_N+fx],im[fy*SPECTRUM_N+fx])/dc}return out;
+  }
+  window.__psfDiagnostics=()=>{const s=spectrum(kernel()),c=(N-1)/2;return {size:N,dc:s[c*N+c],slice:Array.from(s.slice(c*N,(c+1)*N))}};
+  function heat(c,data,kind,zeros){
+    const w=c.canvas.width,h=c.canvas.height,img=c.createImageData(w,h), max=Math.max(...data); for(let py=0;py<h;py++)for(let px=0;px<w;px++){
+      const x=Math.min(N-1,px*N/w|0),y=Math.min(N-1,py*N/h|0),v=data[y*N+x]/max,i=(py*w+px)*4; let r,g,b;
+      if(kind==='psf'){const q=Math.pow(v,.3);r=30+155*q;g=20+90*q;b=55+200*q}else{const q=Math.pow(v,.35);r=8+238*q;g=17+190*q;b=32+54*q;if(zeros[y*N+x]){r=255;g=65;b=78}}
+      img.data[i]=r;img.data[i+1]=g;img.data[i+2]=b;img.data[i+3]=255;
+    } c.putImageData(img,0,0); c.strokeStyle='#ffffff33';c.lineWidth=1;c.beginPath();c.moveTo(w/2,0);c.lineTo(w/2,h);c.moveTo(0,h/2);c.lineTo(w,h/2);c.stroke();
+  }
+  function plotSlice(c,data){
+    const w=c.canvas.width,h=c.canvas.height,p={l:58,r:20,t:25,b:46},pw=w-p.l-p.r,ph=h-p.t-p.b,row=N>>1,threshold=+els.threshold.value/100;c.clearRect(0,0,w,h);c.fillStyle='#050b14';c.fillRect(0,0,w,h);c.strokeStyle='#ffffff24';c.lineWidth=1;c.fillStyle='#a9b8ca';c.font='14px system-ui';c.textAlign='right';c.textBaseline='middle';for(let i=0;i<=4;i++){const y=p.t+ph*i/4;c.beginPath();c.moveTo(p.l,y);c.lineTo(w-p.r,y);c.stroke();c.fillText((1-i/4).toFixed(2),p.l-8,y)}for(let i=0;i<=4;i++){const x=p.l+pw*i/4;c.beginPath();c.moveTo(x,p.t);c.lineTo(x,h-p.b);c.stroke();c.textAlign='center';c.textBaseline='top';c.fillText((i/4-.5).toFixed(2),x,h-p.b+9)}c.fillText(lang==='de'?'normierte Ortsfrequenz':'normalized spatial frequency',p.l+pw/2,h-18);c.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--h');c.lineWidth=3;c.beginPath();for(let x=0;x<N;x++){const px=p.l+pw*x/(N-1),py=p.t+ph*(1-data[row*N+x]);if(x)c.lineTo(px,py);else c.moveTo(px,py)}c.stroke();c.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--red');for(let x=1;x<N-1;x++){const v=data[row*N+x];if(v<threshold&&v<=data[row*N+x-1]&&v<=data[row*N+x+1]){const px=p.l+pw*x/(N-1),py=p.t+ph*(1-v);c.beginPath();c.arc(px,py,5,0,Math.PI*2);c.fill()}}
+  }
+  function zeroMask(spec){
+    const z=new Uint8Array(N*N), threshold=+els.threshold.value/100; let components=0,seen=new Uint8Array(N*N); for(let y=2;y<N-2;y++)for(let x=2;x<N-2;x++){const i=y*N+x,r=Math.hypot(x-N/2,y-N/2);if(r>3&&r<N*.46&&spec[i]<threshold)z[i]=1}
+    for(let i=0;i<z.length;i++)if(z[i]&&!seen[i]){components++;const q=[i];seen[i]=1;for(let p=0;p<q.length;p++){const n=q[p],x=n%N,y=n/N|0;for(const d of [-1,1,-N,N]){const m=n+d;if(m>=0&&m<z.length&&z[m]&&!seen[m]&&Math.abs(m%N-x)<=1){seen[m]=1;q.push(m)}}}}
+    return {z,count:components};
+  }
+  function scene(w,h){const a=new Float32Array(w*h),X=v=>Math.round(v*w),Y=v=>Math.round(v*h),T=v=>Math.max(1,Math.round(v*h));const line=(x0,y0,x1,y1,t=T(.009))=>{const dx=x1-x0,dy=y1-y0,L=Math.hypot(dx,dy);for(let s=0;s<=L;s++){const x=Math.round(x0+dx*s/L),y=Math.round(y0+dy*s/L);for(let yy=-t;yy<=t;yy++)for(let xx=-t;xx<=t;xx++)if(x+xx>=0&&x+xx<w&&y+yy>=0&&y+yy<h)a[(y+yy)*w+x+xx]=1}};
+    for(let x=X(.055),n=0;x<X(.225);x+=X(.022),n++)line(x,Y(.25),x,Y(.75),n%2?T(.006):T(.012));line(X(.29),Y(.25),X(.39),Y(.75),T(.012));line(X(.39),Y(.25),X(.29),Y(.75),T(.012));for(let r=Y(.055);r<Y(.245);r+=Y(.038))for(let t=0;t<Math.PI*2;t+=.012){const x=Math.round(X(.52)+r*Math.cos(t)),y=Math.round(Y(.5)+r*Math.sin(t));if(x>=0&&x<w&&y>=0&&y<h)a[y*w+x]=1}const tile=Math.max(5,X(.018));for(let x=X(.64);x<X(.94);x++)for(let y=Y(.27);y<Y(.73);y++)if(((x/tile|0)+(y/tile|0))%2===0)a[y*w+x]=.85;return a;}
+  function convolveAndDraw(k){
+    const w=PREVIEW_W,h=PREVIEW_H,fw=1024,fh=512,re=new Float64Array(fw*fh),im=new Float64Array(fw*fh),kr=new Float64Array(fw*fh),ki=new Float64Array(fw*fh),base=scene(w,h);for(let y=0;y<h;y++)re.set(base.subarray(y*w,(y+1)*w),y*fw);
+    for(let y=0;y<N;y++)for(let x=0;x<N;x++)kr[y*fw+x]=k[y*N+x];fft2(re,im,fw,fh);fft2(kr,ki,fw,fh);for(let i=0;i<re.length;i++){const ar=re[i],ai=im[i];re[i]=ar*kr[i]-ai*ki[i];im[i]=ar*ki[i]+ai*kr[i]}fft2(re,im,fw,fh,true);
+    const off=document.createElement('canvas'),oc=off.getContext('2d');off.width=w;off.height=h;const pixels=oc.createImageData(w,h),ox=N>>1,oy=N>>1;for(let y=0;y<h;y++)for(let x=0;x<w;x++){const v=Math.min(1,Math.max(0,re[(y+oy)*fw+x+ox])*1.45),j=(y*w+x)*4;pixels.data[j]=18+v*237;pixels.data[j+1]=28+v*145;pixels.data[j+2]=45+v*36;pixels.data[j+3]=255}oc.putImageData(pixels,0,0);ctx.image.imageSmoothingEnabled=true;ctx.image.clearRect(0,0,canvases.image.width,canvases.image.height);ctx.image.drawImage(off,0,0,canvases.image.width,canvases.image.height);
+  }
+  const copy={en:{title:'PSF <span style="color:var(--h)">h(x)</span> and MTF',subtitle:'From imaging kernel to visible information loss',type:'PSF type',types:['Dirac (in focus)','Pillbox (defocus)','Gaussian','Rect (motion)','Coded rect','Free aperture shape'],angle:'Angle',threshold:'Zero threshold',theme:'Light/Dark',language:'Deutsch',slice:'1D slice',test:'Test image g = h * s',measurement:'Measurement g',clear:'Clear mask',draw:'Draw here with mouse or touch',radius:'Radius r',sigma:'Sigma',code:'Code length',motion:'Motion length',zero:'zero',zeros:'zeros',free:'Draw an aperture directly in the PSF panel. The MTF responds immediately.',coded:'The binary code distributes spectral energy and reduces deep zeros compared with a continuous rect.',general:'Red areas mark frequencies near zero: an inverse filter cannot recover this image information stably.'},de:{title:'PSF <span style="color:var(--h)">h(x)</span> und MTF',subtitle:'Vom Abbildungskern zum sichtbaren Informationsverlust',type:'PSF-Typ',types:['Dirac (scharf)','Pillbox (Defokus)','Gauß','Rect (Bewegung)','Codiertes Rect','Freie Blendenform'],angle:'Winkel',threshold:'Nullstellen-Schwelle',theme:'Hell/Dunkel',language:'English',slice:'1D-Schnitt',test:'Testbild g = h * s',measurement:'Messung g',clear:'Maske leeren',draw:'Hier mit Maus oder Finger zeichnen',radius:'Radius r',sigma:'Sigma',code:'Codelänge',motion:'Bewegungslänge',zero:'Nullstelle',zeros:'Nullstellen',free:'Zeichnen Sie eine Blende direkt in das PSF-Panel. Die MTF reagiert unmittelbar.',coded:'Der binäre Code verteilt spektrale Energie und reduziert tiefe Nullstellen gegenüber einem durchgehenden Rect.',general:'Rote Bereiche markieren Frequenzen nahe null: Diese Bildinformation kann ein Inversfilter nicht stabil zurückholen.'}};
+  function syncUI(){const t=els.type.value,L=copy[lang];document.documentElement.lang=lang;document.title=lang==='de'?'PSF und MTF - Doppelansicht':'PSF and MTF - Dual View';els.title.innerHTML=L.title;els.subtitle.textContent=L.subtitle;els.typeLabel.textContent=L.type;[...els.type.options].forEach((o,i)=>o.textContent=L.types[i]);els.angleLabel.textContent=L.angle;els.thresholdLabel.textContent=L.threshold;els.theme.textContent=L.theme;els.language.textContent=L.language;els.mtf1d.textContent=L.slice;els.testTitle.textContent=L.test;els.measurement.textContent=L.measurement;els.clear.textContent=L.clear;els.sizeRow.hidden=t==='dirac'||t==='free';els.angleRow.hidden=!['rect','coded'].includes(t);els.clear.hidden=t!=='free';els.drawHint.textContent=t==='free'?L.draw:'';els.sizeLabel.textContent=t==='pillbox'?L.radius:t==='gauss'?L.sigma:t==='coded'?L.code:L.motion;els.sizeValue.textContent=els.size.value+' px';els.angleValue.textContent=els.angle.value+' deg';els.thresholdValue.textContent=(+els.threshold.value).toFixed(1)+' %';els.hint.textContent=t==='free'?L.free:t==='coded'?L.coded:L.general}
+  let frame=0; function render(){frame=0;syncUI();const k=kernel(),s=spectrum(k),zm=zeroMask(s),L=copy[lang];heat(ctx.psf,k,'psf',zm.z);if(mtfView==='1d')plotSlice(ctx.mtf,s);else heat(ctx.mtf,s,'mtf',zm.z);els.mtf2d.classList.toggle('active',mtfView==='2d');els.mtf1d.classList.toggle('active',mtfView==='1d');convolveAndDraw(k);els.zeroCount.textContent=zm.count+' '+(zm.count===1?L.zero:L.zeros);const q=new URLSearchParams({type:els.type.value,size:els.size.value,angle:els.angle.value,threshold:els.threshold.value,view:mtfView,lang});history.replaceState(null,'','?'+q)} function update(){if(!frame)frame=requestAnimationFrame(render)}
+  function paint(e){if(els.type.value!=='free')return;const r=canvases.psf.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*N),y=Math.floor((e.clientY-r.top)/r.height*N);for(let yy=-2;yy<=2;yy++)for(let xx=-2;xx<=2;xx++)if(x+xx>=0&&x+xx<N&&y+yy>=0&&y+yy<N)free[(y+yy)*N+x+xx]=1;update()}
+  canvases.psf.addEventListener('pointerdown',e=>{drawing=true;canvases.psf.setPointerCapture(e.pointerId);paint(e)});canvases.psf.addEventListener('pointermove',e=>{if(drawing)paint(e)});canvases.psf.addEventListener('pointerup',()=>drawing=false);
+  ['type','size','angle','threshold'].forEach(k=>els[k].addEventListener('input',update));els.mtf2d.onclick=()=>{mtfView='2d';update()};els.mtf1d.onclick=()=>{mtfView='1d';update()};els.language.onclick=()=>{lang=lang==='en'?'de':'en';update()};els.clear.onclick=()=>{free.fill(0);update()}; els.reset.onclick=()=>{for(const k in defaults)els[k].value=defaults[k];mtfView='2d';free.fill(0);update()};els.theme.onclick=()=>document.documentElement.classList.toggle('light');document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='r')els.reset.click()});render();
+})();
+</script>
+</body>
+</html>

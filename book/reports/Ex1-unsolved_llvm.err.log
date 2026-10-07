@@ -1,0 +1,71 @@
+Traceback (most recent call last):
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joh89642\AppData\Roaming\uv\python\cpython-3.11.14-windows-x86_64-none\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+image = mi.render(scene)
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mNameError[0m                                 Traceback (most recent call last)
+File [1;32m~\repos\vlcompimg\.venv\Lib\site-packages\mitsuba\python\util.py:366[0m, in [0;36m_RenderOp.eval[1;34m(self, scene, sensor, _, params, integrator, seed, spp)[0m
+[0;32m    365[0m [38;5;28;01mwith[39;00m dr[38;5;241m.[39msuspend_grad():
+[1;32m--> 366[0m     res [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mintegrator[49m[38;5;241;43m.[39;49m[43mrender[49m[43m([49m
+[0;32m    367[0m [43m        [49m[43mscene[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mscene[49m[43m,[49m
+[0;32m    368[0m [43m        [49m[43msensor[49m[38;5;241;43m=[39;49m[43msensor[49m[43m,[49m
+[0;32m    369[0m [43m        [49m[43mseed[49m[38;5;241;43m=[39;49m[43mseed[49m[43m[[49m[38;5;241;43m0[39;49m[43m][49m[43m,[49m
+[0;32m    370[0m [43m        [49m[43mspp[49m[38;5;241;43m=[39;49m[43mspp[49m[43m[[49m[38;5;241;43m0[39;49m[43m][49m[43m,[49m
+[0;32m    371[0m [43m        [49m[43mdevelop[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
+[0;32m    372[0m [43m        [49m[43mevaluate[49m[38;5;241;43m=[39;49m[38;5;28;43;01mFalse[39;49;00m
+[0;32m    373[0m [43m    [49m[43m)[49m
+[0;32m    374[0m     [38;5;66;03m# After rendering an image, the sampler state is dependent on the[39;00m
+[0;32m    375[0m     [38;5;66;03m# rendering loop. When a frozen function is recorded, the sampler[39;00m
+[0;32m    376[0m     [38;5;66;03m# might be evaluated, which causes parts of the rendering loop to[39;00m
+[0;32m    377[0m     [38;5;66;03m# be re-evaluated. To prevent this overhead, we reset the state[39;00m
+[0;32m    378[0m     [38;5;66;03m# of the sampler, by re-seeding it.[39;00m
+
+Cell [1;32mIn[3], line 26[0m, in [0;36mpinhole_sensor.sample_ray_differential[1;34m(self, time, sample1, sample2, sample3, active)[0m
+[0;32m     23[0m rayd[38;5;241m.[39mhas_differentials [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+[1;32m---> 26[0m d [38;5;241m=[39m dr[38;5;241m.[39mnormalize(mi[38;5;241m.[39mVector3f([43mp_a[49m [38;5;241m-[39m p_s))
+[0;32m     28[0m rayd[38;5;241m.[39mo [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mto_world[38;5;241m.[39mtransform_affine(p_a)
+
+[1;31mNameError[0m: name 'p_a' is not defined
+
+The above exception was the direct cause of the following exception:
+
+[1;31mRuntimeError[0m                              Traceback (most recent call last)
+Cell [1;32mIn[6], line 1[0m
+[1;32m----> 1[0m image [38;5;241m=[39m [43mmi[49m[38;5;241;43m.[39;49m[43mrender[49m[43m([49m[43mscene[49m[43m)[49m
+
+File [1;32m~\repos\vlcompimg\.venv\Lib\site-packages\mitsuba\python\util.py:524[0m, in [0;36mrender[1;34m(scene, params, sensor, integrator, seed, seed_grad, spp, spp_grad)[0m
+[0;32m    511[0m     [38;5;28;01mreturn[39;00m integrator[38;5;241m.[39mrender(
+[0;32m    512[0m             scene[38;5;241m=[39mscene,
+[0;32m    513[0m             sensor[38;5;241m=[39msensor,
+[1;32m   (...)[0m
+[0;32m    517[0m             evaluate[38;5;241m=[39m[38;5;28;01mFalse[39;00m
+[0;32m    518[0m         )
+[0;32m    520[0m [38;5;66;03m# Both `dict_params` and `params` are passed. The former is necessary[39;00m
+[0;32m    521[0m [38;5;66;03m# because it allows the custom operation to detect any attached input[39;00m
+[0;32m    522[0m [38;5;66;03m# arguments. The latter is necessary because it will not be automatically[39;00m
+[0;32m    523[0m [38;5;66;03m# detached by the custom operation.[39;00m
+[1;32m--> 524[0m [38;5;28;01mreturn[39;00m [43mdr[49m[38;5;241;43m.[39;49m[43mcustom[49m[43m([49m[43m_RenderOp[49m[43m,[49m[43m [49m[43mscene[49m[43m,[49m[43m [49m[43msensor[49m[43m,[49m[43m [49m[43mdict_params[49m[43m,[49m[43m [49m[43mparams[49m[43m,[49m[43m [49m[43mintegrator[49m[43m,[49m
+[0;32m    525[0m [43m                 [49m[43m([49m[43mseed[49m[43m,[49m[43m [49m[43mseed_grad[49m[43m)[49m[43m,[49m[43m [49m[43m([49m[43mspp[49m[43m,[49m[43m [49m[43mspp_grad[49m[43m)[49m[43m)[49m
+
+[1;31mRuntimeError[0m: drjit.custom(<mitsuba.python.util._RenderOp>): error while performing a custom differentiable operation. (see above).
+

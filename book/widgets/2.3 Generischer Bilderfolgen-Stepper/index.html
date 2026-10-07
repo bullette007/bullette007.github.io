@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Image Sequence Stepper · Computational Imaging</title>
+  <script>
+    if (new URLSearchParams(location.search).get('ui') === 'minimal') {
+      document.documentElement.dataset.ui = 'minimal';
+    }
+    if (new URLSearchParams(location.search).get('resize') === 'auto') {
+      document.documentElement.dataset.resize = 'auto';
+    }
+  </script>
+  <style>
+    :root { color-scheme: light; --bg:#edf2f7; --panel:#fff; --ink:#17283b; --muted:#526579; --line:#c4d0dc; --blue:#175cbb; --soft:#e8f0fb; --error:#a02020; }
+    :root[data-theme="dark"] { color-scheme:dark; --bg:#101923; --panel:#192737; --ink:#eef4fc; --muted:#b1c2d4; --line:#4a6179; --blue:#8dbbff; --soft:#253e5d; --error:#ffaaaa; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.5 system-ui,sans-serif; }
+    main { max-width:1120px; margin:auto; padding:clamp(14px,3vw,32px); }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+    h1 { font-size:clamp(24px,4vw,36px); line-height:1.2; margin:4px 0; }
+    .eyebrow { margin:0; color:var(--muted); font-size:18px; }
+    button, input, textarea { font:inherit; }
+    button, .file-button { min-height:48px; border:1px solid var(--line); border-radius:10px; background:var(--panel); color:var(--ink); padding:8px 16px; cursor:pointer; }
+    button:hover:not(:disabled), .file-button:hover { background:var(--soft); }
+    button:disabled { opacity:.4; cursor:default; }
+    :focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+    .card { border:1px solid var(--line); border-radius:18px; background:var(--panel); overflow:hidden; }
+    .stage { position:relative; height:clamp(260px,48vw,540px); background:var(--panel); }
+    .stage img { position:absolute; width:100%; height:100%; object-fit:contain; padding:12px; opacity:0; }
+    .stage img.active { opacity:1; }
+    .stage.fade img { transition:opacity 240ms ease; }
+    .stage.failed img { opacity:.15; }
+    .error { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:24px; color:var(--error); background:var(--panel); }
+    .error[hidden] { display:none; }
+    .caption { min-height:68px; padding:12px 20px; border-top:1px solid var(--line); overflow-wrap:anywhere; }
+    .controls { padding:16px 20px 20px; border-top:1px solid var(--line); }
+    .navigation { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .count { font-weight:650; font-variant-numeric:tabular-nums; text-align:center; }
+    input[type="range"] { width:100%; min-height:44px; margin:12px 0 0; accent-color:var(--blue); cursor:pointer; }
+    progress { display:block; width:100%; height:6px; accent-color:var(--blue); }
+    .options { display:flex; align-items:center; flex-wrap:wrap; gap:12px 24px; margin-top:18px; }
+    .options label { display:flex; align-items:center; gap:10px; min-height:44px; cursor:pointer; }
+    input[type="checkbox"] { width:22px; height:22px; accent-color:var(--blue); }
+    .hint, #status { color:var(--muted); margin:12px 0; }
+    #status { min-height:27px; }
+    details { margin-top:22px; border:1px solid var(--line); border-radius:12px; padding:14px 18px; background:var(--panel); }
+    summary { cursor:pointer; font-weight:650; min-height:32px; }
+    textarea { display:block; width:100%; margin:8px 0 14px; padding:12px; background:var(--bg); color:var(--ink); border:1px solid var(--line); border-radius:8px; resize:vertical; }
+    .load-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+    .file-button { display:inline-flex; align-items:center; }
+    #local-files { max-width:100%; margin:12px 0; }
+    #config-error { color:var(--error); overflow-wrap:anywhere; }
+    :root[data-ui="minimal"] header,
+    :root[data-ui="minimal"] .caption,
+    :root[data-ui="minimal"] #progress,
+    :root[data-ui="minimal"] .options,
+    :root[data-ui="minimal"] #status,
+    :root[data-ui="minimal"] .hint,
+    :root[data-ui="minimal"] #configuration { display:none; }
+    :root[data-ui="minimal"] main { max-width:none; height:100vh; height:100dvh; display:flex; flex-direction:column; }
+    :root[data-ui="minimal"] .card { flex:1; min-height:0; display:flex; flex-direction:column; }
+    :root[data-ui="minimal"] .stage { flex:1; min-height:0; height:auto; }
+    :root[data-ui="minimal"] .controls { flex-shrink:0; }
+    :root[data-resize="auto"] main { height:auto; display:block; }
+    :root[data-resize="auto"] .card { display:block; }
+    :root[data-resize="auto"] .stage { height:auto; aspect-ratio:var(--image-ratio, 16 / 9); }
+    :root[data-resize="auto"][data-height-limit] main { display:flex; flex-direction:column; max-height:var(--embed-max-height); }
+    :root[data-resize="auto"][data-height-limit] .card { display:flex; flex-direction:column; min-height:0; }
+    :root[data-resize="auto"][data-height-limit] .stage { flex:0 1 auto; min-height:0; }
+    :root[data-resize="auto"][data-height-limit] .controls { flex-shrink:0; }
+    @media(max-width:560px) { header { align-items:flex-start; } .navigation button { padding:8px 12px; } .controls { padding:14px; } .options { gap:8px 16px; } }
+    @media(prefers-reduced-motion:reduce) { .stage.fade img { transition:none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div><p class="eyebrow">Computational Imaging · 2.3</p><h1 id="title">Image Sequence Stepper</h1></div>
+      <button id="theme" type="button" aria-label="Switch to dark theme">Dark</button>
+    </header>
+    <section class="card" aria-label="Image sequence">
+      <div id="stage" class="stage">
+        <img id="image-a" alt="" draggable="false">
+        <img id="image-b" alt="" draggable="false">
+        <div id="image-error" class="error" role="alert" hidden></div>
+      </div>
+      <div id="caption" class="caption"></div>
+      <div class="controls">
+        <div class="navigation">
+          <button id="previous" type="button" aria-label="Previous step">← Previous</button>
+          <output id="count" class="count" aria-live="polite"></output>
+          <button id="next" type="button" aria-label="Next step">Next →</button>
+        </div>
+        <input id="scrubber" type="range" min="1" max="1" value="1" aria-label="Select step">
+        <progress id="progress" max="1" value="1" aria-label="Progress"></progress>
+        <div class="options">
+          <button id="reset" type="button">↺ Reset</button>
+          <label><input id="fade" type="checkbox">Crossfade</label>
+          <button id="share" type="button">Copy link</button>
+        </div>
+      </div>
+    </section>
+    <p id="status" role="status" aria-live="polite"></p>
+    <p class="hint">← / → browse · Home / End jump · R reset</p>
+    <details id="configuration">
+      <summary>Load your own image sequence</summary>
+      <p>One SVG or PNG address per line, relative to this HTML file or as a full URL. Images appear in the order listed.</p>
+      <label for="file-list">Image addresses</label>
+      <textarea id="file-list" rows="4" placeholder="../../figures/imaging_pinhole_lens_0.svg&#10;../../figures/imaging_pinhole_lens_1.svg" spellcheck="false"></textarea>
+      <div class="load-actions">
+        <button id="load-list" type="button">Load list</button>
+        <button id="demo" type="button">Load demo</button>
+      </div>
+      <p><label for="local-files">Or select local SVG/PNG files (sorted by filename):</label><br>
+        <input id="local-files" type="file" accept=".svg,.png,image/svg+xml,image/png" multiple></p>
+      <p id="config-error" role="alert"></p>
+    </details>
+  </main>
+
+  <!-- Hier eine eigene Folge hinterlegen. Leere frames aktivieren die eingebaute Demo.
+       Beispiel: {"title":"Linsenprinzip","frames":[
+         {"src":"../../figures/imaging_pinhole_lens_0.svg","caption":"Lochkamera"},
+         {"src":"../../figures/imaging_pinhole_lens_1.svg","caption":"Linse"}]}
+  -->
+  <script id="sequence-config" type="application/json">{"title":"Image Sequence Stepper","frames":[]}</script>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const params = new URLSearchParams(location.search);
+    const images = [$('image-a'), $('image-b')];
+    const state = { frames:[], index:0, active:-1, request:0, objectURLs:[], source:'demo' };
+    const demoCaptions = [
+      '1 · Scene s: a point emits light.',
+      '2 · The pinhole allows only a narrow cone of rays to pass.',
+      '3 · A lens collects more light and focuses the rays.',
+      '4 · A sharp image g forms in the image plane.',
+      '5 · A displaced sensor produces a circle of confusion: defocus.'
+    ];
+    function demoFrames() {
+      return demoCaptions.map((caption, i) => {
+        const sensor = i === 4 ? 785 : 705;
+        const rays = i === 1
+          ? '<path d="M140 185 L450 250 L705 305 M140 185 L450 240 L705 285" stroke="#e88925"/>'
+          : `<path d="M140 185 L450 135 L${sensor} ${i === 4 ? 350 : 300} M140 185 L450 250 L${sensor} ${i === 4 ? 310 : 300} M140 185 L450 365 L${sensor} ${i === 4 ? 270 : 300}" stroke="#e88925"/>`;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480">
+          <rect width="960" height="480" rx="16" fill="#f6f9fe"/>
+          <text x="40" y="50" font-family="sans-serif" font-size="26" fill="#17283b">From scene to image</text>
+          <path d="M65 250 H885" stroke="#b5c3d3" stroke-dasharray="8 8"/>
+          <path d="M140 340 V185 M122 208 L140 185 L158 208" fill="none" stroke="#175cbb" stroke-width="7"/>
+          <circle cx="140" cy="185" r="9" fill="#175cbb"/>
+          ${i > 0 ? `<g fill="none" stroke-width="4">${rays}</g>` : ''}
+          ${i === 1 ? '<path d="M450 100 V236 M450 254 V400" stroke="#526579" stroke-width="12"/>' : ''}
+          ${i >= 2 ? '<ellipse cx="450" cy="250" rx="22" ry="145" fill="#d9e7ff" fill-opacity=".7" stroke="#7658b0" stroke-width="4"/>' : ''}
+          ${i >= 3 ? `<path d="M${sensor} 100 V400" stroke="#526579" stroke-width="8"/><ellipse cx="${sensor}" cy="300" rx="9" ry="${i === 4 ? 40 : 9}" fill="#e88925"/>` : ''}
+          <g font-family="sans-serif" font-size="24" fill="#17283b"><text x="95" y="440">Scene s</text><text x="382" y="440">${i === 1 ? 'Pinhole' : i >= 2 ? 'Lens' : ''}</text><text x="665" y="440">${i >= 3 ? 'Sensor / image g' : ''}</text></g>
+        </svg>`;
+        return { src:'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg), caption };
+      });
+    }
+    function validateFrames(frames) {
+      if (!Array.isArray(frames) || frames.length === 0) throw new Error('Please provide at least one image address.');
+      return frames.map((frame, i) => {
+        const entry = typeof frame === 'string' ? { src:frame } : frame;
+        if (!entry || typeof entry.src !== 'string' || !entry.src.trim()) throw new Error(`Missing image address for step ${i + 1}.`);
+        const src = entry.src.trim();
+        const url = new URL(src, location.href);
+        if (!['http:', 'https:', 'file:', 'data:', 'blob:'].includes(url.protocol)) throw new Error(`Invalid image address in step ${i + 1}.`);
+        if (url.protocol === 'data:' && !/^data:image\/(svg\+xml|png)[;,]/i.test(src)) throw new Error('Only SVG/PNG image data is supported.');
+        return { src, caption:typeof entry.caption === 'string' ? entry.caption : `Step ${i + 1}`, alt:typeof entry.alt === 'string' ? entry.alt : '' };
+      });
+    }
+    function updateURL() {
+      const url = new URL(location.href);
+      url.searchParams.set('step', String(state.index + 1));
+      url.searchParams.set('fade', $('fade').checked ? '1' : '0');
+      url.searchParams.set('theme', document.documentElement.dataset.theme);
+      try { history.replaceState(null, '', url); } catch { /* Some file:// browsers restrict history. */ }
+    }
+    function show(index, sync = true) {
+      state.index = Math.max(0, Math.min(state.frames.length - 1, index));
+      const frame = state.frames[state.index];
+      const token = ++state.request;
+      $('previous').disabled = state.index === 0;
+      $('next').disabled = state.index === state.frames.length - 1;
+      $('count').textContent = `${state.index + 1} / ${state.frames.length}`;
+      $('scrubber').value = state.index + 1;
+      $('scrubber').setAttribute('aria-valuetext', `${state.index + 1} of ${state.frames.length}: ${frame.caption}`);
+      $('progress').value = state.index + 1;
+      $('caption').textContent = frame.caption;
+      $('stage').setAttribute('aria-busy', 'true');
+      $('stage').classList.remove('failed');
+      $('image-error').hidden = true;
+      $('status').textContent = 'Loading image …';
+      if (sync) updateURL();
+      const loader = new Image();
+      loader.onload = () => {
+        if (token !== state.request) return;
+        const next = state.active === 0 ? 1 : 0;
+        images[next].src = frame.src;
+        images[next].alt = frame.alt || frame.caption;
+        if (loader.naturalWidth && loader.naturalHeight) {
+          $('stage').style.setProperty('--image-ratio', `${loader.naturalWidth} / ${loader.naturalHeight}`);
+        }
+        images[next].classList.add('active');
+        images[next].setAttribute('aria-hidden', 'false');
+        if (state.active >= 0) {
+          images[state.active].classList.remove('active');
+          images[state.active].setAttribute('aria-hidden', 'true');
+        }
+        state.active = next;
+        $('stage').setAttribute('aria-busy', 'false');
+        $('status').textContent = state.source === 'local' ? 'Local sequence · available only in this browser.' : 'Ready.';
+      };
+      loader.onerror = () => {
+        if (token !== state.request) return;
+        $('stage').setAttribute('aria-busy', 'false');
+        $('stage').classList.add('failed');
+        $('image-error').textContent = `Could not load image ${state.index + 1}. Check the filename and path.`;
+        $('image-error').hidden = false;
+        $('status').textContent = 'Loading failed · you can still navigate to the other steps.';
+      };
+      loader.src = frame.src;
+    }
+    function setSequence(frames, source, index = 0) {
+      const checked = validateFrames(frames);
+      ++state.request;
+      for (const url of state.objectURLs) URL.revokeObjectURL(url);
+      state.objectURLs = [];
+      state.frames = checked;
+      state.source = source;
+      state.active = -1;
+      images.forEach(image => { image.classList.remove('active'); image.removeAttribute('src'); image.alt = ''; image.setAttribute('aria-hidden', 'true'); });
+      $('scrubber').max = checked.length;
+      $('progress').max = checked.length;
+      $('config-error').textContent = '';
+      show(index);
+    }
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      $('theme').textContent = theme === 'dark' ? 'Light' : 'Dark';
+      $('theme').setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    }
+    $('previous').onclick = () => show(state.index - 1);
+    $('next').onclick = () => show(state.index + 1);
+    $('reset').onclick = () => show(0);
+    $('scrubber').oninput = event => show(Number(event.target.value) - 1);
+    $('fade').onchange = () => { $('stage').classList.toggle('fade', $('fade').checked); updateURL(); };
+    $('theme').onclick = () => { setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); updateURL(); };
+    document.addEventListener('keydown', event => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+      const actions = { ArrowLeft:() => show(state.index - 1), ArrowRight:() => show(state.index + 1), Home:() => show(0), End:() => show(state.frames.length - 1), r:() => show(0), R:() => show(0) };
+      if (actions[event.key]) { event.preventDefault(); actions[event.key](); }
+    });
+    function clearSourceParams() {
+      const url = new URL(location.href);
+      ['files','prefix','start','end','ext','pad'].forEach(key => url.searchParams.delete(key));
+      try { history.replaceState(null, '', url); } catch { }
+    }
+    $('load-list').onclick = () => {
+      try {
+        const files = $('file-list').value.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+        const frames = validateFrames(files);
+        clearSourceParams();
+        const url = new URL(location.href);
+        url.searchParams.set('files', JSON.stringify(files));
+        try { history.replaceState(null, '', url); } catch { }
+        setSequence(frames, 'list');
+      } catch (error) { $('config-error').textContent = error.message; }
+    };
+    $('demo').onclick = () => { clearSourceParams(); $('title').textContent = 'Image Sequence Stepper'; setSequence(demoFrames(), 'demo'); };
+    $('local-files').onchange = event => {
+      const files = Array.from(event.target.files).sort((a,b) => a.name.localeCompare(b.name, 'en', { numeric:true }));
+      if (!files.length) return;
+      if (files.some(file => !/\.(svg|png)$/i.test(file.name))) { $('config-error').textContent = 'Please select only SVG/PNG files.'; return; }
+      const urls = files.map(file => URL.createObjectURL(file));
+      clearSourceParams();
+      setSequence(files.map((file, i) => ({ src:urls[i], caption:file.name })), 'local');
+      state.objectURLs = urls;
+    };
+    $('share').onclick = async () => {
+      if (state.source === 'local') { $('status').textContent = 'Local files cannot be shared by link. Use image addresses instead.'; return; }
+      try { await navigator.clipboard.writeText(location.href); $('status').textContent = 'Link to the current step copied.'; }
+      catch { $('status').textContent = 'Please copy the URL from your browser’s address bar.'; }
+    };
+    function initialFrames(config) {
+      if (params.has('files')) return { frames:validateFrames(JSON.parse(params.get('files'))), source:'list' };
+      if (params.has('prefix')) {
+        const start = Number(params.get('start') ?? 0);
+        const end = Number(params.get('end'));
+        const pad = Number(params.get('pad') ?? 0);
+        const ext = params.get('ext') || 'svg';
+        if (!params.has('end') || !Number.isSafeInteger(start) || !Number.isSafeInteger(end) || end < start || end - start > 9999 || !Number.isInteger(pad) || pad < 0 || pad > 12 || !/^(svg|png)$/i.test(ext)) throw new Error('Invalid sequence: start/end must be integers (max. 10,000 images), ext svg or png, pad 0–12.');
+        return { frames:Array.from({ length:end - start + 1 }, (_,i) => ({ src:`${params.get('prefix')}${String(start+i).padStart(pad,'0')}.${ext}`, caption:`Step ${i + 1} · Image ${start + i}` })), source:'pattern' };
+      }
+      return config.frames?.length ? { frames:validateFrames(config.frames), source:'config' } : { frames:demoFrames(), source:'demo' };
+    }
+    setTheme(params.get('theme') === 'dark' ? 'dark' : 'light');
+    $('fade').checked = params.get('fade') === '1';
+    $('stage').classList.toggle('fade', $('fade').checked);
+    try {
+      const config = JSON.parse($('sequence-config').textContent);
+      $('title').textContent = params.get('title') || config.title || 'Image Sequence Stepper';
+      const initial = initialFrames(config);
+      const step = Number(params.get('step') || 1);
+      setSequence(initial.frames, initial.source, Number.isInteger(step) ? step - 1 : 0);
+      if (initial.source === 'list') $('file-list').value = initial.frames.map(frame => frame.src).join('\n');
+    } catch (error) {
+      setSequence(demoFrames(), 'demo');
+      $('configuration').open = true;
+      $('config-error').textContent = `Could not load configuration: ${error.message} Showing the demo instead.`;
+    }
+    if (params.get('resize') === 'auto' && window.parent !== window) {
+      let lastHeight = 0;
+      const reportHeight = () => {
+        const height = Math.ceil(document.querySelector('main').getBoundingClientRect().height);
+        if (height > 0 && height !== lastHeight) {
+          lastHeight = height;
+          window.parent.postMessage({ type:'ci-stepper-height', height }, '*');
+        }
+      };
+      new ResizeObserver(reportHeight).observe(document.querySelector('main'));
+      window.addEventListener('message', event => {
+        if (event.source !== window.parent) return;
+        if (event.data?.type === 'ci-stepper-limit') {
+          const height = event.data.height;
+          if (typeof height === 'number' && Number.isFinite(height) && height > 0) {
+            document.documentElement.dataset.heightLimit = '';
+            document.documentElement.style.setProperty('--embed-max-height', `${height}px`);
+          } else {
+            delete document.documentElement.dataset.heightLimit;
+            document.documentElement.style.removeProperty('--embed-max-height');
+          }
+        }
+        if (event.data?.type === 'ci-stepper-measure') {
+          lastHeight = 0;
+          reportHeight();
+        }
+      });
+      reportHeight();
+    }
+  </script>
+</body>
+</html>

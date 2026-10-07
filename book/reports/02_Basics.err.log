@@ -1,0 +1,51 @@
+Traceback (most recent call last):
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joh89642\AppData\Roaming\uv\python\cpython-3.11.14-windows-x86_64-none\Lib\asyncio\base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\joh89642\repos\vlcompimg\.venv\Lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from widgets.stepper import display_stepper
+
+base = "" if book else "http://127.0.0.1:8000/"
+
+display_stepper(
+    base + "widgets/2.3%20Generischer%20Bilderfolgen-Stepper/index.html",
+    step=1,
+    fade=1,
+    theme="light",
+    prefix="../../figures/4/desk_lightsources_example_",
+    start=1,
+    end=5,
+    ext="svg",
+)
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[8], line 1[0m
+[1;32m----> 1[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mwidgets[39;00m[38;5;21;01m.[39;00m[38;5;21;01mstepper[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m display_stepper
+[0;32m      3[0m base [38;5;241m=[39m [38;5;124m"[39m[38;5;124m"[39m [38;5;28;01mif[39;00m book [38;5;28;01melse[39;00m [38;5;124m"[39m[38;5;124mhttp://127.0.0.1:8000/[39m[38;5;124m"[39m
+[0;32m      5[0m display_stepper(
+[0;32m      6[0m     base [38;5;241m+[39m [38;5;124m"[39m[38;5;124mwidgets/2.3[39m[38;5;132;01m%20G[39;00m[38;5;124menerischer[39m[38;5;124m%[39m[38;5;124m20Bilderfolgen-Stepper/index.html[39m[38;5;124m"[39m,
+[0;32m      7[0m     step[38;5;241m=[39m[38;5;241m1[39m,
+[1;32m   (...)[0m
+[0;32m     13[0m     ext[38;5;241m=[39m[38;5;124m"[39m[38;5;124msvg[39m[38;5;124m"[39m,
+[0;32m     14[0m )
+
+[1;31mModuleNotFoundError[0m: No module named 'widgets'
+

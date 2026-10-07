@@ -1,109 +1,213 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Lensless Imaging &#8212; Computational Imaging - Course Notes</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=d62c15bf" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '07_LenslessImaging';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Coded Exposure Photography" href="08_CodedExposurePhotography.html" />
     <link rel="prev" title="Inverse Problems in Computational Imaging" href="06_InverseProblemsInCompimg.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
     
-
-    <!-- Google Analytics -->
-    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
     
-    <div class="container-fluid" id="banner"></div>
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
     
-
-    <div class="container-xl">
-      <div class="row">
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
           
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
       
       
-      <h1 class="site-logo" id="site-title">Computational Imaging - Course Notes</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Computational Imaging - Course Notes</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -113,649 +217,231 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="01_Introduction.html">
-   Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="02_Basics.html">
-   Fundamental Basics
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="03_LightFieldMethods.html">
-   Light Field Methods
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="04_LightTransportAnalysis.html">
-   Light Transport Analysis
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="05_NeuralNetworksForCompImg.html">
-   Neural Networks for Computational Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="06_InverseProblemsInCompimg.html">
-   Inverse Problems in Computational Imaging
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Lensless Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="08_CodedExposurePhotography.html">
-   Coded Exposure Photography
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="09_QuantitativePhaseImaging.html">
-   Quantitative Phase Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="10_SpectralSnapshotImaging.html">
-   Coded Aperture Spectral Snapshot Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="11_TimeOfFlightImaging.html">
-   Time-Of-Flight Imaging
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="12_End2End.html">
-   End-to-End Optimization
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Basics.html">Fundamental Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_LightFieldMethods.html">Light Field Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_LightTransportAnalysis.html">Light Transport Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_NeuralNetworksForCompImg.html">Neural Networks for Computational Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_InverseProblemsInCompimg.html">Inverse Problems in Computational Imaging</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lensless Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_CodedExposurePhotography.html">Coded Exposure Photography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_QuantitativePhaseImaging.html">Quantitative Phase Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_SpectralSnapshotImaging.html">Coded Aperture Spectral Snapshot Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_TimeOfFlightImaging.html">Time-Of-Flight Imaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_End2End.html">End-to-End Optimization</a></li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
 
 
 
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/07_LenslessImaging.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
   </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
 
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-    </ul>
-  </div>
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
 </div>
+
+
+
 
 <button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-expand"></i>
   </span>
 
 </button>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/07_LenslessImaging.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download notebook file"
->
-  
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-code"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
 
-      </li>
-      
-      <li>
-        <a href="_sources/07_LenslessImaging.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.md</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button>
 
-      </li>
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
       
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
+    </div>
   
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
-
-    </div>
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#content">
-   Content
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction-into-lensless-imaging">
-   Introduction into lensless imaging
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#modulating-light-in-a-lensless-imaging-system">
-   Modulating light in a lensless imaging system
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#amplitude-modulators">
-     Amplitude modulators
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#phase-modulators">
-     Phase modulators
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#phase-gratings">
-       Phase gratings
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#diffusers">
-       Diffusers
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#phase-masks">
-       Phase masks
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#programmable-modulators">
-     Programmable modulators
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#liquid-crystal-displays-lcds">
-       Liquid crystal displays (LCDs)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#liquid-crystal-on-silicon-lcos">
-       Liquid crystal on silicon (LCoS)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#digital-micromirror-device-dmd">
-       Digital micromirror device (DMD)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#advantages-and-disadvantage-of-programmable-modulators">
-       Advantages and disadvantage of programmable modulators
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#point-spread-functions-psfs">
-     Point spread functions (PSFs)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-reconstruction">
-   Image reconstruction
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#forward-model-for-2d-imaging">
-     Forward model for 2D imaging
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#general-linear-model">
-       General linear model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#convolutional-model">
-       Convolutional model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#separability-model">
-       Separability model
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#forward-model-for-3d-imaging">
-     Forward model for 3D-imaging
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#general-linear-model-for-3d">
-       General linear model for 3D:
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#convolutional-model-for-3d">
-       Convolutional model for 3D:
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#separability-model-for-3d">
-       Separability model for 3D:
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#calibration">
-     Calibration
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#calibration-of-the-general-linear-model">
-       Calibration of the general linear model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#calibration-of-the-convolutional-model">
-       Calibration of the convolutional model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#calibration-of-the-separability-model">
-       Calibration of the separability model
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#performing-the-reconstruction">
-     Performing the reconstruction
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-diffuser-cam">
-   Example: Diffuser Cam
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#forward-model">
-     Forward model
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Image reconstruction
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#gradient-descent-based-reconstruction">
-       Gradient descent-based reconstruction
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#example-reconstruction">
-         Example reconstruction
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#admm-based-reconstruction">
-       ADMM-based reconstruction
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id2">
-         Example reconstruction
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Lensless Imaging</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#content">
-   Content
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction-into-lensless-imaging">
-   Introduction into lensless imaging
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#modulating-light-in-a-lensless-imaging-system">
-   Modulating light in a lensless imaging system
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#amplitude-modulators">
-     Amplitude modulators
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#phase-modulators">
-     Phase modulators
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#phase-gratings">
-       Phase gratings
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#diffusers">
-       Diffusers
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#phase-masks">
-       Phase masks
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#programmable-modulators">
-     Programmable modulators
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#liquid-crystal-displays-lcds">
-       Liquid crystal displays (LCDs)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#liquid-crystal-on-silicon-lcos">
-       Liquid crystal on silicon (LCoS)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#digital-micromirror-device-dmd">
-       Digital micromirror device (DMD)
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#advantages-and-disadvantage-of-programmable-modulators">
-       Advantages and disadvantage of programmable modulators
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#point-spread-functions-psfs">
-     Point spread functions (PSFs)
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#image-reconstruction">
-   Image reconstruction
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#forward-model-for-2d-imaging">
-     Forward model for 2D imaging
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#general-linear-model">
-       General linear model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#convolutional-model">
-       Convolutional model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#separability-model">
-       Separability model
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#forward-model-for-3d-imaging">
-     Forward model for 3D-imaging
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#general-linear-model-for-3d">
-       General linear model for 3D:
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#convolutional-model-for-3d">
-       Convolutional model for 3D:
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#separability-model-for-3d">
-       Separability model for 3D:
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#calibration">
-     Calibration
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#calibration-of-the-general-linear-model">
-       Calibration of the general linear model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#calibration-of-the-convolutional-model">
-       Calibration of the convolutional model
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#calibration-of-the-separability-model">
-       Calibration of the separability model
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#performing-the-reconstruction">
-     Performing the reconstruction
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-diffuser-cam">
-   Example: Diffuser Cam
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#forward-model">
-     Forward model
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id1">
-     Image reconstruction
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#gradient-descent-based-reconstruction">
-       Gradient descent-based reconstruction
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#example-reconstruction">
-         Example reconstruction
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#admm-based-reconstruction">
-       ADMM-based reconstruction
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id2">
-         Example reconstruction
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lensless Imaging</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-into-lensless-imaging">Introduction into lensless imaging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modulating-light-in-a-lensless-imaging-system">Modulating light in a lensless imaging system</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#amplitude-modulators">Amplitude modulators</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-modulators">Phase modulators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-gratings">Phase gratings</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusers">Diffusers</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-masks">Phase masks</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#programmable-modulators">Programmable modulators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#liquid-crystal-displays-lcds">Liquid crystal displays (LCDs)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#liquid-crystal-on-silicon-lcos">Liquid crystal on silicon (LCoS)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-micromirror-device-dmd">Digital micromirror device (DMD)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantage-of-programmable-modulators">Advantages and disadvantage of programmable modulators</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#point-spread-functions-psfs">Point spread functions (PSFs)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-reconstruction">Image reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-for-2d-imaging">Forward model for 2D imaging</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-model">General linear model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#convolutional-model">Convolutional model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#separability-model">Separability model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-for-3d-imaging">Forward model for 3D-imaging</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-model-for-3d">General linear model for 3D:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#convolutional-model-for-3d">Convolutional model for 3D:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#separability-model-for-3d">Separability model for 3D:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration">Calibration</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration-of-the-general-linear-model">Calibration of the general linear model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration-of-the-convolutional-model">Calibration of the convolutional model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration-of-the-separability-model">Calibration of the separability model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-the-reconstruction">Performing the reconstruction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-diffuser-cam">Example: Diffuser Cam</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model">Forward model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Image reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-based-reconstruction">Gradient descent-based reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#example-reconstruction">Example reconstruction</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#admm-based-reconstruction">ADMM-based reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example reconstruction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <p><span class="math notranslate nohighlight">\(\begin{align}
   \newcommand{transp}{^\intercal}
   \newcommand{F}{\mathcal{F}}
@@ -767,9 +453,9 @@ title="Print to PDF"
 \end{align}\)</span></p>
 <p><font size="7"> Computational Imaging </font><br><br><br></p>
 <section class="tex2jax_ignore mathjax_ignore" id="lensless-imaging">
-<h1>Lensless Imaging<a class="headerlink" href="#lensless-imaging" title="Permalink to this headline">#</a></h1>
+<h1>Lensless Imaging<a class="headerlink" href="#lensless-imaging" title="Link to this heading">#</a></h1>
 <section id="content">
-<h2>Content<a class="headerlink" href="#content" title="Permalink to this headline">#</a></h2>
+<h2>Content<a class="headerlink" href="#content" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Introduction into lensless imaging</p></li>
 <li><p>Modulating light in a lensless imaging system</p></li>
@@ -778,7 +464,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="introduction-into-lensless-imaging">
-<h2>Introduction into lensless imaging<a class="headerlink" href="#introduction-into-lensless-imaging" title="Permalink to this headline">#</a></h2>
+<h2>Introduction into lensless imaging<a class="headerlink" href="#introduction-into-lensless-imaging" title="Link to this heading">#</a></h2>
 <p>As the name suggests, lensless imaging setups capture light on a sensor without focusing it using a lens (system).</p>
 <ul class="simple">
 <li><p>As a direct consequence, the image formed on the sensor is usually not interpretable for the naked human eye.</p></li>
@@ -801,7 +487,7 @@ title="Print to PDF"
 </ul>
 </section>
 <section id="modulating-light-in-a-lensless-imaging-system">
-<h2>Modulating light in a lensless imaging system<a class="headerlink" href="#modulating-light-in-a-lensless-imaging-system" title="Permalink to this headline">#</a></h2>
+<h2>Modulating light in a lensless imaging system<a class="headerlink" href="#modulating-light-in-a-lensless-imaging-system" title="Link to this heading">#</a></h2>
 <p>Instead of using lenses, lensless imaging systems use other techniques to modulate the light so that each point of the observed scene yields a different system response. This is a necessary condition for the reconstruction methods to be able to recover the sought sharp image of the scene.</p>
 <p>The optical effect of relevant modulators is usually modeled via the corresponding point spread function (PSF).</p>
 <p>Just using a sensor without any modulator results in a severely ill-posed problem that can barely be solved, as every scene point approximately leads to the same system response.</p>
@@ -813,15 +499,15 @@ title="Print to PDF"
 <li><p>illumination modulators (controlling, patterning the illumination).</p></li>
 </ul>
 <section id="amplitude-modulators">
-<h3>Amplitude modulators<a class="headerlink" href="#amplitude-modulators" title="Permalink to this headline">#</a></h3>
+<h3>Amplitude modulators<a class="headerlink" href="#amplitude-modulators" title="Link to this heading">#</a></h3>
 <img src="figures/7/amplitude_modulators.svg" style="max-height:40vh"><p>Amplitude modulators are usually produced by photo-lithographically etching a binary pattern of reflective chrome on a glass substrate or by printing a binary pattern with dark ink on a thin transparent film.</p>
 <p>The regions covered with chrome or ink reflect or absorb incident light (i.e., they block it) whereas light is transmitted by the other regions.</p>
 <p>Amplitude modulators have their roots in x-ray imaging where it is difficult to construct lenses.</p>
 <p>Light modulation by amplitude masks is modeled in two ways, depending on the distance <span class="math notranslate nohighlight">\(d\)</span> between the mask and the sensor:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Small <span class="math notranslate nohighlight">\(d\)</span>: The point spread function (PSF) is modeled based on the shadow of the mask cast on the sensor.</p></li>
 </ol>
-<ol class="simple">
+<ol class="arabic simple" start="2">
 <li><p>Large <span class="math notranslate nohighlight">\(d\)</span>: The PSF is modeled based on the diffraction of incident light at the mask.</p></li>
 </ol>
 <p>The so-called <em>Fresnel number</em> <span class="math notranslate nohighlight">\(N_\mathrm{F}\)</span> helps with distinguishing between the two cases and is defined as:</p>
@@ -833,33 +519,33 @@ title="Print to PDF"
 <p>The major disadvantage of amplitude masks is the reduced light efficiency caused by blocking parts of the incident light. This can lead to poor signal-to-noise ratios, especially in low-light applications.</p>
 </section>
 <section id="phase-modulators">
-<h3>Phase modulators<a class="headerlink" href="#phase-modulators" title="Permalink to this headline">#</a></h3>
+<h3>Phase modulators<a class="headerlink" href="#phase-modulators" title="Link to this heading">#</a></h3>
 <p>Phase modulators change the relative optical path length between different light rays reaching the mask. This introduces changes in the direction of propagation of transmitted light rays, so that distributions of spatially varying light intensities arise behind the mask (so-called <em>caustics</em>).</p>
 <p>Hence, phase modulators can yield quite sophisticated intensity patterns varying with respect to the incident light and therefore represent light modulators suitable for lensless imaging.</p>
 <p>Furthermore, they do not block incident light what leads to high signal-to-noise ratios.</p>
 <p>There are three different main kinds of phase modulators: phase gratings, diffusers and phase masks.</p>
 <p>Phase gratings and phase masks and can be produced by photo-lithographically etching structures into glass or by an additively polymerizing photoresist on a transparent substrate. Diffusers can be realized by etching random height structures onto glass or by inexpensively sandblasting a piece of glass.</p>
 <section id="phase-gratings">
-<h4>Phase gratings<a class="headerlink" href="#phase-gratings" title="Permalink to this headline">#</a></h4>
+<h4>Phase gratings<a class="headerlink" href="#phase-gratings" title="Link to this heading">#</a></h4>
 <p>Phase gratings modulate the phase of the incident light by two possible values (e.g., <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(0\)</span>) depending on the surface height at the respective positions.</p>
 <img src="figures/7/phase_gratings.svg" style="max-height:40vh"></section>
 <section id="diffusers">
-<h4>Diffusers<a class="headerlink" href="#diffusers" title="Permalink to this headline">#</a></h4>
+<h4>Diffusers<a class="headerlink" href="#diffusers" title="Link to this heading">#</a></h4>
 <p>Diffusers typically have surface profiles with continuous random heights and hence produce pseudorandom patterns representing their PSF.</p>
 <img src="figures/7/diffuser.svg" style="max-height:40vh"></section>
 <section id="phase-masks">
-<h4>Phase masks<a class="headerlink" href="#phase-masks" title="Permalink to this headline">#</a></h4>
+<h4>Phase masks<a class="headerlink" href="#phase-masks" title="Link to this heading">#</a></h4>
 <p>Phase masks are similar to phase gratings but have many different discrete modulation values (i.e., discrete surface heights). By this means, they can be designed to realize a large range of PSFs at the cost of being more expensive.</p>
 <img src="figures/7/phase_mask.svg" style="max-height:40vh"></section>
 </section>
 <section id="programmable-modulators">
-<h3>Programmable modulators<a class="headerlink" href="#programmable-modulators" title="Permalink to this headline">#</a></h3>
+<h3>Programmable modulators<a class="headerlink" href="#programmable-modulators" title="Link to this heading">#</a></h3>
 <p>By means of so-called <em>spatial light modulators (SLMs)</em>, spatial light modulation patterns can be realized which can be computationally controlled.</p>
 <section id="liquid-crystal-displays-lcds">
-<h4>Liquid crystal displays (LCDs)<a class="headerlink" href="#liquid-crystal-displays-lcds" title="Permalink to this headline">#</a></h4>
+<h4>Liquid crystal displays (LCDs)<a class="headerlink" href="#liquid-crystal-displays-lcds" title="Link to this heading">#</a></h4>
 <p>LCDs represent a cheap form of a programmable transmissive modulator.</p>
 <p>Typical LCDs consist of</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>a linear polarizer for the incident light,</p></li>
 <li><p>a layer of liquid crystals whose orientations can be spatially varied by applying different voltage levels and</p></li>
 <li><p>a linear polarizer (usually oriented at 90<span class="math notranslate nohighlight">\(^\circ\)</span> with respect to the first polarizer) for the transmitted light.</p></li>
@@ -869,17 +555,17 @@ title="Print to PDF"
 <p>By adequately modifying the optical setup of an LCD it is also possible to induce a spatially controllable phase shift to the incident light realizing a computationally controllable phase modulator.</p>
 </section>
 <section id="liquid-crystal-on-silicon-lcos">
-<h4>Liquid crystal on silicon (LCoS)<a class="headerlink" href="#liquid-crystal-on-silicon-lcos" title="Permalink to this headline">#</a></h4>
+<h4>Liquid crystal on silicon (LCoS)<a class="headerlink" href="#liquid-crystal-on-silicon-lcos" title="Link to this heading">#</a></h4>
 <p>LCoS SLMs are quite similar to LCDs however they have to be operated in reflection, i.e., the incident light and the transmitted light are on the same side of the device but with inverse direction of propagation.</p>
 </section>
 <section id="digital-micromirror-device-dmd">
-<h4>Digital micromirror device (DMD)<a class="headerlink" href="#digital-micromirror-device-dmd" title="Permalink to this headline">#</a></h4>
+<h4>Digital micromirror device (DMD)<a class="headerlink" href="#digital-micromirror-device-dmd" title="Link to this heading">#</a></h4>
 <p>A DMD can be imagined as a two-dimensional array of small mirrors (lateral lengths of about <span class="math notranslate nohighlight">\(5\)</span> µm) which can be computationally tilted out of the plane of the array.</p>
 <p>Typical DMDs support two different tilt angles (i.e., a binary operation mode).</p>
 <p>By collecting the reflected light in one of the two possible reflection directions, DMDs can be used to realize a computationally controllable amplitude mask.</p>
 </section>
 <section id="advantages-and-disadvantage-of-programmable-modulators">
-<h4>Advantages and disadvantage of programmable modulators<a class="headerlink" href="#advantages-and-disadvantage-of-programmable-modulators" title="Permalink to this headline">#</a></h4>
+<h4>Advantages and disadvantage of programmable modulators<a class="headerlink" href="#advantages-and-disadvantage-of-programmable-modulators" title="Link to this heading">#</a></h4>
 <p>Advantages:</p>
 <ul class="simple">
 <li><p>Programmable modulators allow to quickly change between different PSFs,</p></li>
@@ -893,7 +579,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="point-spread-functions-psfs">
-<h3>Point spread functions (PSFs)<a class="headerlink" href="#point-spread-functions-psfs" title="Permalink to this headline">#</a></h3>
+<h3>Point spread functions (PSFs)<a class="headerlink" href="#point-spread-functions-psfs" title="Link to this heading">#</a></h3>
 <p>All of the mentioned modulators can be modeled via their PSF, i.e., their optical response to a point light source.</p>
 <p>Typically, the PSF of a modulator used in lensless imaging is designed to have</p>
 <ul class="simple">
@@ -903,16 +589,16 @@ title="Print to PDF"
 </section>
 </section>
 <section id="image-reconstruction">
-<h2>Image reconstruction<a class="headerlink" href="#image-reconstruction" title="Permalink to this headline">#</a></h2>
+<h2>Image reconstruction<a class="headerlink" href="#image-reconstruction" title="Link to this heading">#</a></h2>
 <p>The image formed on the sensor of lensless imaging systems typically looks blurred or completely scrambled, i.e., useless for the naked human eye.</p>
 <p>In most cases, there is a linear relationship between the observed scene and the resulting measurements on the sensor. Suitable reconstruction algorithms try to invert this mapping in order to obtain a sharp image of the scene based on the blurred and scrambled measurements.</p>
 <p><strong>Forward model</strong></p>
 <p>For a given lensless imaging system, the relationship between the observed scene and the corresponding measurements can be formalized in a so-called <em>forward model</em>.</p>
 <p>The forward model calculates the measurements that can be expected given a certain scene. The model has to achieve a trade-off between physical accuracy and tractability of the reconstruction that is adequate for the targeted application.</p>
 <section id="forward-model-for-2d-imaging">
-<h3>Forward model for 2D imaging<a class="headerlink" href="#forward-model-for-2d-imaging" title="Permalink to this headline">#</a></h3>
+<h3>Forward model for 2D imaging<a class="headerlink" href="#forward-model-for-2d-imaging" title="Link to this heading">#</a></h3>
 <section id="general-linear-model">
-<h4>General linear model<a class="headerlink" href="#general-linear-model" title="Permalink to this headline">#</a></h4>
+<h4>General linear model<a class="headerlink" href="#general-linear-model" title="Link to this heading">#</a></h4>
 <p>If the scene is assumed to be a two-dimensional plane located at some distance to the imaging system and being oriented perpendicular to the optical axis, the simplest form of an adequate forward model can be expressed via the following general linear model:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{g} = \mathbf{Hs} \,,
@@ -924,13 +610,13 @@ title="Print to PDF"
 <p>There are two common approaches for alternative models that reduce the computational complexity, convolutional models and separability models.</p>
 </section>
 <section id="convolutional-model">
-<h4>Convolutional model<a class="headerlink" href="#convolutional-model" title="Permalink to this headline">#</a></h4>
+<h4>Convolutional model<a class="headerlink" href="#convolutional-model" title="Link to this heading">#</a></h4>
 <p>The general linear model can be approximated as a linear shift-invariant system via a convolution of the scene intensities <span class="math notranslate nohighlight">\(s(m,n)\)</span> with the PSF <span class="math notranslate nohighlight">\(h(m,n)\)</span>, i.e.,</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    g = s * h \,,
 \end{align}\)</span></p>
 <p>when the following conditions hold:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Narrow field of view,</p></li>
 <li><p>sufficient distance between mask and sensor,</p></li>
 <li><p>far-field approximation.</p></li>
@@ -944,7 +630,7 @@ title="Print to PDF"
 <p>One possible mitigation to this problem is to use different convolution kernels depending on the lateral pixel position on the sensor (so-called <em>local convolutional models</em>).</p>
 </section>
 <section id="separability-model">
-<h4>Separability model<a class="headerlink" href="#separability-model" title="Permalink to this headline">#</a></h4>
+<h4>Separability model<a class="headerlink" href="#separability-model" title="Link to this heading">#</a></h4>
 <p>Another way to reduce the complexity of the general model is to use modulation masks with a spatial pattern that is <em>separable</em>, i.e., that can be represented as the outer product of two vectors <span class="math notranslate nohighlight">\(\Phi_\mathrm{L}, \Phi_\mathrm{R}\)</span>.</p>
 <p>The image formation is then described by:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
@@ -953,7 +639,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="forward-model-for-3d-imaging">
-<h3>Forward model for 3D-imaging<a class="headerlink" href="#forward-model-for-3d-imaging" title="Permalink to this headline">#</a></h3>
+<h3>Forward model for 3D-imaging<a class="headerlink" href="#forward-model-for-3d-imaging" title="Link to this heading">#</a></h3>
 <p>The 2D forward model can easily extended to the case of 3D-imaging since</p>
 <ul class="simple">
 <li><p>the relations between scene intensities and sensor measurements are depth-dependent and</p></li>
@@ -961,26 +647,26 @@ title="Print to PDF"
 </ul>
 <p>Hence, all previously described approaches can be extended to 3D by simply additively iterating over all discrete depths <span class="math notranslate nohighlight">\(z\)</span> of interest. This leads to the following expressions for the 3D case:</p>
 <section id="general-linear-model-for-3d">
-<h4>General linear model for 3D:<a class="headerlink" href="#general-linear-model-for-3d" title="Permalink to this headline">#</a></h4>
+<h4>General linear model for 3D:<a class="headerlink" href="#general-linear-model-for-3d" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{g} = \sum\limits_z \mathbf{H}_z \mathbf{s}_z \,.
 \end{align}\)</span></p>
 </section>
 <section id="convolutional-model-for-3d">
-<h4>Convolutional model for 3D:<a class="headerlink" href="#convolutional-model-for-3d" title="Permalink to this headline">#</a></h4>
+<h4>Convolutional model for 3D:<a class="headerlink" href="#convolutional-model-for-3d" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    g = \sum\limits_z s_z * h_z \,.
 \end{align}\)</span></p>
 </section>
 <section id="separability-model-for-3d">
-<h4>Separability model for 3D:<a class="headerlink" href="#separability-model-for-3d" title="Permalink to this headline">#</a></h4>
+<h4>Separability model for 3D:<a class="headerlink" href="#separability-model-for-3d" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \mathbf{g} = \sum\limits_z \Phi_{\mathrm{L},z}\Phi_{\mathrm{R},z}\transp \mathbf{s}_z \,.
 \end{align}\)</span></p>
 </section>
 </section>
 <section id="calibration">
-<h3>Calibration<a class="headerlink" href="#calibration" title="Permalink to this headline">#</a></h3>
+<h3>Calibration<a class="headerlink" href="#calibration" title="Link to this heading">#</a></h3>
 <p>In order to evaluate the forward model, the actual parameters, i.e., the matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, the kernel <span class="math notranslate nohighlight">\(h\)</span> or <span class="math notranslate nohighlight">\(\Phi_\mathrm{L}, \Phi_\mathrm{R}\)</span> have to be determined.</p>
 <p>There are two possible ways to determine these parameters:</p>
 <p><strong>Model-based calibration</strong></p>
@@ -990,22 +676,22 @@ title="Print to PDF"
 <p><strong>Experimental calibration</strong></p>
 <p>The parameters can also be determined experimentally by acquiring images of a suitable scene. The simplest approach is to acquire measurements of a point source in order to estimate the PSF.</p>
 <section id="calibration-of-the-general-linear-model">
-<h4>Calibration of the general linear model<a class="headerlink" href="#calibration-of-the-general-linear-model" title="Permalink to this headline">#</a></h4>
+<h4>Calibration of the general linear model<a class="headerlink" href="#calibration-of-the-general-linear-model" title="Link to this heading">#</a></h4>
 <p>The general linear model assumes a different system response for each individual scene sampling position. Hence, a calibration measurement has to be acquired for a point source that is positioned at every scene sampling position, what is usually intractable.</p>
 <p>Only if a model-based calibration is possible, calibration of the linear model might be realized in reasonable time.</p>
 </section>
 <section id="calibration-of-the-convolutional-model">
-<h4>Calibration of the convolutional model<a class="headerlink" href="#calibration-of-the-convolutional-model" title="Permalink to this headline">#</a></h4>
+<h4>Calibration of the convolutional model<a class="headerlink" href="#calibration-of-the-convolutional-model" title="Link to this heading">#</a></h4>
 <p>Since the convolutional model assumes a linear shift-invariant system, it is sufficient to estimate (i.e., acquire) one PSF for every discrete scene depth <span class="math notranslate nohighlight">\(z\)</span> of interest (i.e., only one for 2D imaging applications) or to computationally scale one PSF with respect to <span class="math notranslate nohighlight">\(z\)</span>.</p>
 <p>If the PSF is not constant across the field of view, multiple PSFs can be acquired in coarse grid.</p>
 </section>
 <section id="calibration-of-the-separability-model">
-<h4>Calibration of the separability model<a class="headerlink" href="#calibration-of-the-separability-model" title="Permalink to this headline">#</a></h4>
+<h4>Calibration of the separability model<a class="headerlink" href="#calibration-of-the-separability-model" title="Link to this heading">#</a></h4>
 <p>Calibration of the separability model is slightly more challenging than for the convolutional model. Typically, the vectors <span class="math notranslate nohighlight">\(\Phi_\mathrm{L}, \Phi_\mathrm{R}\)</span> can be estimated out of measurements of line images (i.e., bright rows or columns in the scene).</p>
 </section>
 </section>
 <section id="performing-the-reconstruction">
-<h3>Performing the reconstruction<a class="headerlink" href="#performing-the-reconstruction" title="Permalink to this headline">#</a></h3>
+<h3>Performing the reconstruction<a class="headerlink" href="#performing-the-reconstruction" title="Link to this heading">#</a></h3>
 <p>In order to perform the reconstruction of the sought scene intensities <span class="math notranslate nohighlight">\(\mathbf{s}\)</span> for an actual lensless imaging system based on an observation <span class="math notranslate nohighlight">\(\mathbf{g}\)</span>,</p>
 <ul class="simple">
 <li><p>the system’s forward model has to be correctly formulated and</p></li>
@@ -1017,25 +703,18 @@ title="Print to PDF"
 </section>
 </section>
 <section id="example-diffuser-cam">
-<h2>Example: Diffuser Cam<a class="headerlink" href="#example-diffuser-cam" title="Permalink to this headline">#</a></h2>
+<h2>Example: Diffuser Cam<a class="headerlink" href="#example-diffuser-cam" title="Link to this heading">#</a></h2>
 <p>We will now study an example lensless imaging system where a diffuser is used as a modulator and 3D images of the observed scene are reconstructed by means of the ADMM algorithm.</p>
 <p>The following content is based on the publication <a class="reference external" href="https://doi.org/10.1364/OPTICA.5.000001">DiffuserCam: lensless single-exposure 3D imaging</a> by Nick Antipa et al..</p>
 <p>The optical setup of the Diffuser Cam is shown in the following figure:</p>
 <img src="figures/7/diffuser_cam_optical_setup.svg" style="max-height:40vh"><p>The image resulting from illumination with a single point source, the PSF, looks like this:</p>
 <img src="figures/7/diffuser_cam_psf.svg" style="max-height:40vh"><p>The visible structures are caused by the diffuser that focuses the incident light in a pseudo-random pattern, a so-called caustic.</p>
 <section id="forward-model">
-<h3>Forward model<a class="headerlink" href="#forward-model" title="Permalink to this headline">#</a></h3>
+<h3>Forward model<a class="headerlink" href="#forward-model" title="Link to this heading">#</a></h3>
 <p>When the single illuminating point source is moved laterally, the PSF is also shifted laterally on the sensor. When the point source is moved axially, the PSF is scaled (getting larger for a decreasing distance to the modulator and larger for increasing distance).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/7/diffuser_cam_shift_invaraince_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">7</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "209e1b48ed9246d0b0dd1bd20754a068"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
 </pre></div>
 </div>
 </div>
@@ -1053,10 +732,10 @@ title="Print to PDF"
 <p>with <span class="math notranslate nohighlight">\(s_z\)</span> denoting the intensities of scene points at depth <span class="math notranslate nohighlight">\(z\)</span>, <span class="math notranslate nohighlight">\(h_z\)</span> representing the PSF at depth <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> denoting a linear operator that crops the image to actual sensor size.</p>
 </section>
 <section id="id1">
-<h3>Image reconstruction<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<h3>Image reconstruction<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>We will start with a simple gradient descent-based reconstruction approach and then move on to an ADMM-based reconstruction.</p>
 <section id="gradient-descent-based-reconstruction">
-<h4>Gradient descent-based reconstruction<a class="headerlink" href="#gradient-descent-based-reconstruction" title="Permalink to this headline">#</a></h4>
+<h4>Gradient descent-based reconstruction<a class="headerlink" href="#gradient-descent-based-reconstruction" title="Link to this heading">#</a></h4>
 <p>For the first approach, we will not use any prior and just try to find an estimate <span class="math notranslate nohighlight">\(\hat{\mathbf{s}}\)</span> that optimizes the data fidelity term:</p>
 <p><span class="math notranslate nohighlight">\(\begin{align} 
    \hat{\mathbf{s}} &amp;= \argmin{\mathbf{s}} \frac{1}{2} \left\| \underbrace{\mathbf{CH}}_{=:\mathbf{A}}\mathbf{s} - \mathbf{g} \right\|^2_2  \\
@@ -1070,7 +749,7 @@ title="Print to PDF"
 <p>The transpose <span class="math notranslate nohighlight">\(\mathbf{C}\transp\)</span> of the crop operation corresponds to zero padding.</p>
 <p>As the reconstruction should only have positive pixel values, we replace any negative values of <span class="math notranslate nohighlight">\(\hat{\mathbf{s}}\)</span> with 0 during the gradient descent iterations. This is also called <em>projected gradient descent</em> since the calculated estimations are projected on the set of images with only positive pixel values.</p>
 <section id="example-reconstruction">
-<h5>Example reconstruction<a class="headerlink" href="#example-reconstruction" title="Permalink to this headline">#</a></h5>
+<h5>Example reconstruction<a class="headerlink" href="#example-reconstruction" title="Link to this heading">#</a></h5>
 <p>The following image represents a raw image captured with a Diffuser Cam:</p>
 <img src="figures/7/diffuser_cam_raw_image.svg" style="max-height:40vh"><p>Based on this input, the gradient descent-based reconstruction yields the following results:</p>
 <div class="cell docutils container">
@@ -1079,18 +758,11 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "9103eb5a797c433ab8e406087b54ffa4"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
 <section id="admm-based-reconstruction">
-<h4>ADMM-based reconstruction<a class="headerlink" href="#admm-based-reconstruction" title="Permalink to this headline">#</a></h4>
+<h4>ADMM-based reconstruction<a class="headerlink" href="#admm-based-reconstruction" title="Link to this heading">#</a></h4>
 <p>By using the ADMM framework, the reconstruction quality can be increased via additional constraints and the reconstruction speed will increase due to the faster convergence of ADMM.</p>
 <p>In the following, we will iteratively extend the original optimization problem by several constraints.</p>
 <p>First, the composition of the matrix <span class="math notranslate nohighlight">\(\mathbf{A} = \mathbf{CH}\)</span> will be decomposed into two steps via the slack variable <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>:</p>
@@ -1135,7 +807,7 @@ title="Print to PDF"
 \end{align}\)</span></p>
 <p>with <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> denoting the element-wise soft thresholding operator, <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> denoting the identity matrix and <span class="math notranslate nohighlight">\(\mathrm{max}(\mathbf{a,b})\)</span> denoting the element-wise maximum of <span class="math notranslate nohighlight">\(\mathbf{a}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span>.</p>
 <section id="id2">
-<h5>Example reconstruction<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h5>
+<h5>Example reconstruction<a class="headerlink" href="#id2" title="Link to this heading">#</a></h5>
 <p>The ADMM-based reconstruction yields the following results:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1143,25 +815,12 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "a3449a0d716145fcac4385af1ebd9173"}
-</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(i)&gt;
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 </section>
 </section>
 </section>
 </section>
-
-
-<script type="application/vnd.jupyter.widget-state+json">
-{"state": {"1ebea5f3bdc84452804c3fca89c35930": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "05d2b65abcf24b5d8d2c7f54c1fbc808": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "0471182c60fb4c0e881e248e8d2ab8c9": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_1ebea5f3bdc84452804c3fca89c35930", "max": 7, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_05d2b65abcf24b5d8d2c7f54c1fbc808", "value": 7}}, "8adfc2f6a3e14aad8b0baa57a8f5798c": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "209e1b48ed9246d0b0dd1bd20754a068": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_0471182c60fb4c0e881e248e8d2ab8c9", "IPY_MODEL_016fdf2c1fdd45b8882da0191d11f6e4"], "layout": "IPY_MODEL_8adfc2f6a3e14aad8b0baa57a8f5798c"}}, "bb2c8871716a404093c4b608012df11f": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "016fdf2c1fdd45b8882da0191d11f6e4": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_bb2c8871716a404093c4b608012df11f", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/7/diffuser_cam_shift_invaraince_7.svg\" style=\"max-height:50vh\"/>"}}]}}, "0d80d3d2510747d9a1d24600d22c618d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "58e628b1e43a49ceb5638b8100249770": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "bb8a3654f1e84725bcb5c0a1ae874b44": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_0d80d3d2510747d9a1d24600d22c618d", "max": 9, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_58e628b1e43a49ceb5638b8100249770", "value": 9}}, "0f64351e98e14bf48524cd32d9b25fc6": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "9103eb5a797c433ab8e406087b54ffa4": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_bb8a3654f1e84725bcb5c0a1ae874b44", "IPY_MODEL_174b050b64f94c34b2b688261598b0d5"], "layout": "IPY_MODEL_0f64351e98e14bf48524cd32d9b25fc6"}}, "c43019c62a9249ffb348794aca78fceb": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "174b050b64f94c34b2b688261598b0d5": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_c43019c62a9249ffb348794aca78fceb", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/7/diffuser_cam_grad_recon_9.svg\" style=\"max-height:50vh\"/>"}}]}}, "3fab768180ad468cba8b419ea889abb8": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c3f4aff887f344f79facb4690490121b": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "99ef92abd72f4ed7b5c3ae3fcb9e2503": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "i", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_3fab768180ad468cba8b419ea889abb8", "max": 9, "min": 0, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_c3f4aff887f344f79facb4690490121b", "value": 9}}, "8661834e36184b54ad310c44d1cf3a74": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a3449a0d716145fcac4385af1ebd9173": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_99ef92abd72f4ed7b5c3ae3fcb9e2503", "IPY_MODEL_fe284271d3e34ae39066a4b1d2effe3d"], "layout": "IPY_MODEL_8661834e36184b54ad310c44d1cf3a74"}}, "ea55664a218243cab7053ef6ee056555": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "fe284271d3e34ae39066a4b1d2effe3d": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_ea55664a218243cab7053ef6ee056555", "msg_id": "", "outputs": [{"output_type": "display_data", "metadata": {}, "data": {"text/plain": "<IPython.core.display.HTML object>", "text/html": "<img src=\"figures/7/diffuser_cam_ADMM_recon_9.svg\" style=\"max-height:50vh\"/>"}}]}}}, "version_major": 2, "version_minor": 0}
-</script>
-
 
     <script type="text/x-thebe-config">
     {
@@ -1172,61 +831,172 @@ title="Print to PDF"
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "compimg"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "compimg",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'compimg'</script>
+    <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="06_InverseProblemsInCompimg.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Inverse Problems in Computational Imaging</p>
-        </div>
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="06_InverseProblemsInCompimg.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Inverse Problems in Computational Imaging</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="08_CodedExposurePhotography.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="08_CodedExposurePhotography.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Coded Exposure Photography</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#content">Content</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-into-lensless-imaging">Introduction into lensless imaging</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modulating-light-in-a-lensless-imaging-system">Modulating light in a lensless imaging system</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#amplitude-modulators">Amplitude modulators</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-modulators">Phase modulators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-gratings">Phase gratings</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusers">Diffusers</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-masks">Phase masks</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#programmable-modulators">Programmable modulators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#liquid-crystal-displays-lcds">Liquid crystal displays (LCDs)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#liquid-crystal-on-silicon-lcos">Liquid crystal on silicon (LCoS)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#digital-micromirror-device-dmd">Digital micromirror device (DMD)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantage-of-programmable-modulators">Advantages and disadvantage of programmable modulators</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#point-spread-functions-psfs">Point spread functions (PSFs)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#image-reconstruction">Image reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-for-2d-imaging">Forward model for 2D imaging</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-model">General linear model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#convolutional-model">Convolutional model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#separability-model">Separability model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model-for-3d-imaging">Forward model for 3D-imaging</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-model-for-3d">General linear model for 3D:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#convolutional-model-for-3d">Convolutional model for 3D:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#separability-model-for-3d">Separability model for 3D:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration">Calibration</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration-of-the-general-linear-model">Calibration of the general linear model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration-of-the-convolutional-model">Calibration of the convolutional model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calibration-of-the-separability-model">Calibration of the separability model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-the-reconstruction">Performing the reconstruction</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-diffuser-cam">Example: Diffuser Cam</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-model">Forward model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Image reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-based-reconstruction">Gradient descent-based reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#example-reconstruction">Example reconstruction</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#admm-based-reconstruction">ADMM-based reconstruction</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example reconstruction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
-    By Dr.-Ing. Johannes Meyer<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
+<p class="component-author">
+By Dr.-Ing. Johannes Meyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
+          </footer>
+        
 
-
-      </div>
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

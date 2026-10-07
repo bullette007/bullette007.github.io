@@ -1,0 +1,11 @@
+/* Use the available browser width while retaining both navigation sidebars. */
+@media screen {
+  .bd-page-width {
+    max-width: none;
+  }
+
+  .bd-main .bd-article-container {
+    flex-grow: 1;
+    width: 100%;
+  }
+}
