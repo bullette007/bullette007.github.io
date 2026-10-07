@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.5 · 2D-FFT-Malkasten</title>
+  <style>
+    :root { color-scheme:light; --bg:#eef3f8; --card:#fff; --line:#cbd6e2; --text:#172334; --muted:#526579; --blue:#1769aa; --orange:#a95000; --green:#16704d; --purple:#7048c8; }
+    :root.dark { color-scheme:dark; --bg:#08111f; --card:#101c2d; --line:#2a3b52; --text:#edf4ff; --muted:#a8b9ce; --blue:#75baff; --orange:#ffad57; --green:#77deb1; --purple:#bb9aff; }
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+    body { margin:0; padding:clamp(12px,2vw,28px); background:var(--bg); color:var(--text); font:18px/1.45 system-ui,"Segoe UI",sans-serif; }
+    .app { max-width:1500px; margin:auto; }
+    header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:18px; }
+    h1 { margin:0; font-size:clamp(1.6rem,3vw,2.3rem); letter-spacing:-.04em; }
+    header p { margin:5px 0 0; color:var(--muted); }
+    button,select,input { font:inherit; }
+    button,select,.file-button { border:1px solid var(--line); border-radius:9px; background:var(--card); color:var(--text); padding:9px 12px; min-height:44px; }
+    button,.file-button { cursor:pointer; }
+    button:hover,.file-button:hover { border-color:var(--blue); }
+    button:disabled { opacity:.45; cursor:default; }
+    :focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; }
+    .layout { display:grid; grid-template-columns:295px minmax(0,1fr); gap:18px; }
+    aside,.panel,.info { background:var(--card); border:1px solid var(--line); border-radius:15px; }
+    aside { padding:18px; align-self:start; }
+    .control { display:block; margin-bottom:17px; }
+    .control > span { display:flex; justify-content:space-between; gap:8px; margin-bottom:7px; font-weight:650; }
+    output { color:var(--purple); white-space:nowrap; }
+    select,input[type=range] { width:100%; }
+    input[type=range] { accent-color:var(--purple); min-height:26px; margin:0; }
+    input[type=checkbox] { width:21px; height:21px; accent-color:var(--blue); vertical-align:middle; margin:0 8px 0 0; }
+    .check { display:block; margin:12px 0; }
+    hr { border:0; border-top:1px solid var(--line); margin:20px 0; }
+    .tools { display:flex; gap:8px; margin-bottom:15px; }
+    .tools button { flex:1; }
+    .tools .active { background:var(--blue); color:var(--card); border-color:var(--blue); }
+    main { min-width:0; }
+    .views { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; }
+    .panel { overflow:hidden; min-width:0; }
+    .panel-head { padding:13px 16px; border-bottom:1px solid var(--line); }
+    h2 { font-size:1.1rem; margin:0; }
+    .image-title { color:var(--blue); }
+    .spectrum-title { color:var(--orange); }
+    .panel-head p { color:var(--muted); margin:4px 0 0; }
+    .stage { position:relative; background:#000; aspect-ratio:1; overflow:hidden; }
+    canvas { display:block; width:100%; height:100%; image-rendering:pixelated; touch-action:none; cursor:crosshair; }
+    .cursor { pointer-events:none; position:absolute; border:1.5px solid #fff; box-shadow:0 0 0 1px #000; border-radius:50%; transform:translate(-50%,-50%); }
+    .dc { position:absolute; pointer-events:none; color:#fff; background:#08111fbd; border:1px solid #ffffff70; border-radius:5px; padding:1px 6px; transform:translate(5px,5px); }
+    .panel-foot { padding:12px 16px; min-height:80px; color:var(--muted); }
+    .panel-foot p { margin:0; }
+    .info { padding:16px 18px; margin-top:18px; }
+    .formula { text-align:center; color:var(--green); font-weight:650; margin:0 0 10px; }
+    .info p { margin:8px 0; }
+    .muted { color:var(--muted); }
+    .hint { color:var(--muted); margin:12px 0 0; }
+    details { margin-top:14px; }
+    summary { cursor:pointer; font-weight:650; }
+    details li { margin:6px 0; }
+    .file-button { display:inline-block; }
+    .file-button input { position:absolute; width:1px; height:1px; opacity:0; }
+    .file-button:focus-within { outline:3px solid var(--blue); outline-offset:3px; }
+    #status { min-height:1.45em; }
+    @media(max-width:1050px) { .layout { grid-template-columns:1fr; } aside { display:grid; grid-template-columns:1fr 1fr; gap:0 24px; } aside hr { grid-column:1/-1; } .paint-controls { grid-column:2; grid-row:1; } }
+    @media(max-width:680px) { .views,aside { display:block; } .panel + .panel { margin-top:18px; } .paint-controls { margin-top:20px; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div><h1>2D-FFT-Malkasten</h1><p>Im Bild malen. Im Spektrum filtern. Fourier-Zusammenhänge live entdecken.</p></div>
+    <div class="actions"><button id="language" type="button">Deutsch</button><button id="theme" type="button">Hell / Dunkel</button><button id="reset" type="button">Reset (R)</button></div>
+  </header>
+  <div class="layout">
+    <aside aria-label="Einstellungen">
+      <div>
+        <label class="control"><span>Testbild</span><select id="scene">
+          <option value="target">Testmotiv: Kanten &amp; Strukturen</option><option value="stripes">Sinusstreifen</option><option value="checker">Schachbrett</option><option value="points">Punktquellen</option><option value="blank">Leere Zeichenfläche</option><option value="custom" hidden>Eigenes Bild / Zeichnung</option>
+        </select></label>
+        <div class="actions"><label class="file-button">Bild laden<input id="upload" type="file" accept="image/*" aria-label="Eigenes Bild laden"></label><button id="clear" type="button">Bild leeren</button></div>
+        <hr>
+        <label class="control"><span>Filter-Preset H</span><select id="filter">
+          <option value="none">Kein Filter</option><option value="low">Tiefpass (Gauß)</option><option value="high">Hochpass (Gauß)</option><option value="band">Bandpass (Kreisring)</option><option value="direction">Richtungsfilter</option><option value="pillbox">Pillbox (Skript-Beispiel)</option><option value="motion">Bewegungs-Rect (PSF)</option>
+        </select></label>
+        <label class="control" id="radiusRow"><span><span id="radiusLabel">Grenzfrequenz r</span><output id="radiusValue"></output></span><input id="radius" type="range" min="0.02" max="0.5" step="0.01" value="0.12"></label>
+        <label class="control" id="widthRow" hidden><span>Bandbreite Δr<output id="widthValue"></output></span><input id="width" type="range" min="0.02" max="0.4" step="0.01" value="0.08"></label>
+        <label class="control" id="lengthRow" hidden><span>Bewegungslänge<output id="lengthValue"></output></span><input id="length" type="range" min="1" max="48" step="1" value="15"></label>
+        <label class="control" id="angleRow" hidden><span><span id="angleLabel">Frequenzrichtung</span><output id="angleValue"></output></span><input id="angle" type="range" min="0" max="175" step="5" value="0"></label>
+        <button id="restore" type="button">Spektrum wiederherstellen</button>
+      </div>
+      <div class="paint-controls">
+        <label class="control"><span>Frequenzbereich bearbeiten</span><select id="paintMode"><option value="direct">Spektrum direkt malen</option><option value="mask">Filtermaske malen (0 / 1)</option></select></label>
+        <div id="maskControls" hidden>
+          <label class="check"><input id="maskView" type="checkbox"><span>Filtermaske anzeigen</span></label>
+          <div class="actions"><button id="maskOnes" type="button">Maske auf 1</button><button id="maskZeros" type="button">Maske auf 0</button></div>
+          <p id="maskHint" class="hint"></p>
+        </div>
+        <label class="control"><span>Malwerkzeug</span></label>
+        <div class="tools" role="group" aria-label="Malwerkzeug"><button id="brush" type="button" aria-pressed="true" class="active">Pinsel (B)</button><button id="eraser" type="button" aria-pressed="false">Radierer (E)</button></div>
+        <label class="control"><span>Pinselradius<output id="brushValue"></output></span><input id="brushSize" type="range" min="1" max="24" step="1" value="5"></label>
+        <label class="control"><span>Bild-Helligkeit<output id="brightnessValue"></output></span><input id="brightness" type="range" min="0" max="1" step="0.05" value="1"></label>
+        <label class="control" id="amplitudeRow"><span>Spektrale Amplitude<output id="amplitudeValue"></output></span><input id="amplitude" type="range" min="0.001" max="0.03" step="0.001" value="0.008"></label>
+        <label class="check"><input id="shift" type="checkbox" checked>fftshift an</label>
+        <label class="check"><input id="contrast" type="checkbox" checked>Bildkontrast automatisch</label>
+        <div class="actions"><button id="undo" type="button" disabled>Rückgängig (Strg+Z)</button><button id="saveImage" type="button">Bild als PNG</button></div>
+        <p class="hint">Auf beiden Flächen mit Maus, Stift oder Finger malen. Rechtsklick radiert. Gegenfrequenzen werden immer mitbearbeitet.</p>
+      </div>
+    </aside>
+    <main>
+      <div class="views">
+        <section class="panel">
+          <div class="panel-head"><h2 class="image-title">Bild g(x, y)</h2><p>Ortsraum · 256 × 256 Pixel</p></div>
+          <div class="stage"><canvas id="image" width="256" height="256" aria-label="Bild: hier malen oder radieren"></canvas><div class="cursor" id="imageCursor" hidden></div></div>
+          <div class="panel-foot"><p id="imageRange"></p><p id="imageCoordinate">Links zeichnen → FFT rechts.</p></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><h2 class="spectrum-title">Log-Magnitudenspektrum |G(f)|</h2><p>log(1 + |G|) · Phase bleibt erhalten</p></div>
+          <div class="stage"><canvas id="spectrum" width="256" height="256" aria-label="Spektrum: Frequenzen malen oder entfernen"></canvas><span id="dc" class="dc">DC</span><div class="cursor" id="spectrumCursor" hidden></div></div>
+          <div class="panel-foot"><p id="shiftHint"></p><p id="spectrumCoordinate">Rechts zeichnen → inverse FFT links.</p></div>
+        </section>
+      </div>
+      <section class="info" aria-label="Erklärung">
+        <p class="formula">G = F{g} &nbsp; ↔ &nbsp; g = F⁻¹{G} &nbsp; · &nbsp; G<sub>gefiltert</sub> = H · G<sub>Quelle</sub></p>
+        <p id="filterHint"></p>
+        <p id="status" class="muted" role="status" aria-live="polite"></p>
+        <details><summary>So funktioniert der Malkasten</summary>
+          <ul>
+            <li><strong>Bild:</strong> Der Pinsel setzt Pixel auf die gewählte Helligkeit, der Radierer auf 0. Die FFT wird live neu berechnet. Das bearbeitete Bild wird zur neuen Filterquelle.</li>
+            <li><strong>Spektrum:</strong> Der Pinsel hebt |G| mindestens auf die gewählte Amplitude an; der Radierer entfernt Frequenzen. Vorhandene Phasen bleiben erhalten, neue Frequenzen starten mit Phase 0. Jede Änderung gilt auch für G(−f) = G(f)*.</li>
+            <li><strong>Filter:</strong> Preset und Regler werden immer auf die aktuelle Filterquelle angewendet, nicht wiederholt auf das bereits gefilterte Ergebnis. „Spektrum wiederherstellen“ zeigt die ungefilterte Quelle.</li>
+            <li><strong>Skalen:</strong> r ist relativ zur axialen Nyquist-Frequenz (r = 1 entspräche 0,5 Zyklen/Pixel). Die Amplitude ist |G| / 256². Die Log-Anzeige verwendet eine feste Skala, sodass entfernte Frequenzen wirklich dunkler werden.</li>
+            <li><strong>Bildanzeige:</strong> Automatischer Kontrast bildet das aktuelle Minimum und Maximum auf Schwarz und Weiß ab. Ohne Automatik wird nur die Anzeige auf [0, 1] begrenzt; negative Werte und Ringing bleiben intern erhalten. Die FFT nimmt periodische Bildränder an.</li>
+            <li><strong>Tastatur:</strong> B = Pinsel, E = Radierer, S = fftshift, R = Reset, Strg/Cmd+Z = Rückgängig. Fokussierte Regler lassen sich mit Pfeiltasten bedienen.</li>
+          </ul>
+        </details>
+        <details><summary>Speichern &amp; im Skript einbetten</summary>
+          <p>Testbild, Filter und Regler stehen in der URL. Eigene Bilder und Zeichnungen lassen sich mit dem vollständigen Zustand als JSON speichern und wieder laden.</p>
+          <div class="actions"><button id="saveState" type="button">Zustand speichern</button><label class="file-button">Zustand laden<input id="loadState" type="file" accept="application/json,.json" aria-label="Gespeicherten Zustand laden"></label></div>
+        </details>
+      </section>
+    </main>
+  </div>
+</div>
+<script>
+(() => {
+  'use strict';
+  const N = 256, COUNT = N * N, HALF = N / 2;
+  const $ = id => document.getElementById(id);
+  const defaults = {scene:'target', filter:'none', radius:'0.12', width:'0.08', length:'15', angle:'0', brushSize:'5', brightness:'1', amplitude:'0.008', shift:true, contrast:true, paintMode:'direct', maskView:false};
+  let lang = 'en';
+  const translations = {
+    '2D-FFT-Malkasten':'2D FFT Paintbox',
+    'Im Bild malen. Im Spektrum filtern. Fourier-Zusammenhänge live entdecken.':'Paint the image. Filter the spectrum. Explore Fourier relationships live.',
+    'Hell / Dunkel':'Light / Dark', 'Einstellungen':'Settings', 'Testbild':'Test image',
+    'Testmotiv: Kanten & Strukturen':'Test pattern: edges & structures', 'Sinusstreifen':'Sinusoidal stripes', 'Schachbrett':'Checkerboard', 'Punktquellen':'Point sources', 'Leere Zeichenfläche':'Blank canvas', 'Eigenes Bild / Zeichnung':'Custom image / drawing',
+    'Bild laden':'Load image', 'Eigenes Bild laden':'Load a custom image', 'Bild leeren':'Clear image', 'Filter-Preset H':'Filter preset H',
+    'Kein Filter':'No filter', 'Tiefpass (Gauß)':'Low-pass (Gaussian)', 'Hochpass (Gauß)':'High-pass (Gaussian)', 'Bandpass (Kreisring)':'Band-pass (annulus)', 'Richtungsfilter':'Directional filter', 'Pillbox (Skript-Beispiel)':'Pillbox (course example)', 'Bewegungs-Rect (PSF)':'Motion rect (PSF)',
+    'Grenzfrequenz r':'Cutoff frequency r', 'Bandbreite Δr':'Bandwidth Δr', 'Bewegungslänge':'Motion length', 'Frequenzrichtung':'Frequency direction', 'Spektrum wiederherstellen':'Restore spectrum',
+    'Frequenzbereich bearbeiten':'Frequency painting mode', 'Spektrum direkt malen':'Paint spectrum directly', 'Filtermaske malen (0 / 1)':'Paint filter mask (0 / 1)', 'Filtermaske anzeigen':'Show filter mask', 'Maske auf 1':'Fill mask with 1', 'Maske auf 0':'Fill mask with 0',
+    'Malwerkzeug':'Painting tool', 'Pinsel (B)':'Brush (B)', 'Radierer (E)':'Eraser (E)', 'Pinselradius':'Brush radius', 'Bild-Helligkeit':'Image brightness', 'Spektrale Amplitude':'Spectral amplitude', 'fftshift an':'fftshift on', 'Bildkontrast automatisch':'Auto image contrast', 'Rückgängig (Strg+Z)':'Undo (Ctrl+Z)', 'Bild als PNG':'Image as PNG',
+    'Auf beiden Flächen mit Maus, Stift oder Finger malen. Rechtsklick radiert. Gegenfrequenzen werden immer mitbearbeitet.':'Paint on either canvas with a mouse, pen or touch. Right-click erases. Conjugate frequencies are always edited together.',
+    'Bild g(x, y)':'Image g(x, y)', 'Ortsraum · 256 × 256 Pixel':'Spatial domain · 256 × 256 pixels', 'Bild: hier malen oder radieren':'Image: paint or erase here', 'Links zeichnen → FFT rechts.':'Paint on the left → FFT on the right.',
+    'Log-Magnitudenspektrum |G(f)|':'Log-magnitude spectrum |G(f)|', 'log(1 + |G|) · Phase bleibt erhalten':'log(1 + |G|) · phase is preserved', 'Spektrum: Frequenzen malen oder entfernen':'Spectrum: paint or remove frequencies', 'Rechts zeichnen → inverse FFT links.':'Paint on the right → inverse FFT on the left.', 'Erklärung':'Explanation', 'gefiltert':'filtered', 'Quelle':'source',
+    'So funktioniert der Malkasten':'How the paintbox works', 'Bild:':'Image:', 'Spektrum:':'Spectrum:', 'Filter:':'Filter:', 'Skalen:':'Scales:', 'Bildanzeige:':'Image display:', 'Tastatur:':'Keyboard:',
+    'Der Pinsel setzt Pixel auf die gewählte Helligkeit, der Radierer auf 0. Die FFT wird live neu berechnet. Das bearbeitete Bild wird zur neuen Filterquelle.':'The brush sets pixels to the selected brightness; the eraser sets them to 0. The FFT updates live. The edited image becomes the new filter source.',
+    'Der Pinsel hebt |G| mindestens auf die gewählte Amplitude an; der Radierer entfernt Frequenzen. Vorhandene Phasen bleiben erhalten, neue Frequenzen starten mit Phase 0. Jede Änderung gilt auch für G(−f) = G(f)*.':'Direct mode raises |G| to at least the selected amplitude; the eraser removes frequencies. Existing phases are preserved; new frequencies start at phase 0. Every edit also applies to G(−f) = G(f)*. In mask mode, brush = 1 and eraser = 0; the original complex coefficients are multiplied by the mask.',
+    'Preset und Regler werden immer auf die aktuelle Filterquelle angewendet, nicht wiederholt auf das bereits gefilterte Ergebnis. „Spektrum wiederherstellen“ zeigt die ungefilterte Quelle.':'Presets and sliders always use the current filter source, not the already filtered result. In mask mode, the painted mask is applied after the preset and retained when preset parameters change. Restore spectrum clears both filters and the mask.',
+    'r ist relativ zur axialen Nyquist-Frequenz (r = 1 entspräche 0,5 Zyklen/Pixel). Die Amplitude ist |G| / 256². Die Log-Anzeige verwendet eine feste Skala, sodass entfernte Frequenzen wirklich dunkler werden.':'r is relative to the axial Nyquist frequency (r = 1 would mean 0.5 cycles/pixel). Amplitude is |G| / 256². The log display uses a fixed scale, so removed frequencies really become darker.',
+    'Automatischer Kontrast bildet das aktuelle Minimum und Maximum auf Schwarz und Weiß ab. Ohne Automatik wird nur die Anzeige auf [0, 1] begrenzt; negative Werte und Ringing bleiben intern erhalten. Die FFT nimmt periodische Bildränder an.':'Auto contrast maps the current minimum and maximum to black and white. Without it, only the display is clipped to [0, 1]; negative values and ringing are preserved internally. The FFT assumes periodic image boundaries.',
+    'B = Pinsel, E = Radierer, S = fftshift, R = Reset, Strg/Cmd+Z = Rückgängig. Fokussierte Regler lassen sich mit Pfeiltasten bedienen.':'B = brush, E = eraser, S = fftshift, R = reset, Ctrl/Cmd+Z = undo. Use arrow keys to adjust focused sliders.',
+    'Speichern & im Skript einbetten':'Save & embed in the course notes', 'Testbild, Filter und Regler stehen in der URL. Eigene Bilder und Zeichnungen lassen sich mit dem vollständigen Zustand als JSON speichern und wieder laden.':'Test image, filters, language and controls are stored in the URL. Custom images, drawings and painted masks can be saved and restored as a complete JSON state.',
+    'Zustand speichern':'Save state', 'Zustand laden':'Load state', 'Gespeicherten Zustand laden':'Load a saved state',
+    'Breite des Frequenzstreifens':'Frequency strip width', 'Bewegungsrichtung':'Motion direction',
+    'DC in der Mitte · hohe Frequenzen am Rand.':'DC at the center · high frequencies at the edges.', 'DC links oben · höchste axiale Frequenzen in der Mitte der Kanten.':'DC at the top left · highest axial frequencies at the middle of the edges.',
+    'Ungefiltertes Quellspektrum wiederhergestellt.':'Unfiltered source spectrum restored.', 'Testbild geladen. Filterquelle neu gesetzt.':'Test image loaded. Filter source updated.', 'Bild bearbeitet: Es ist jetzt die neue Filterquelle.':'Image edited: it is now the new filter source.', 'Spektrum frei bearbeitet. Neue Filtereinstellungen verwenden wieder die Filterquelle.':'Spectrum edited directly. New filter settings use the filter source again.', 'Filter auf die Quelle angewendet.':'Filter applied to the source.', 'Letzten Schritt rückgängig gemacht.':'Last step undone.',
+    'Bild während des Ladens geändert. Bitte Datei erneut auswählen.':'Image changed while loading. Please select the file again.', 'Eigenes Bild als Graustufen geladen; Seitenverhältnis beibehalten, Ränder schwarz aufgefüllt.':'Custom image loaded in grayscale; aspect ratio preserved and margins filled with black.', 'Das Bild konnte nicht geladen werden. Bitte eine gültige Bilddatei auswählen.':'Could not load the image. Please select a valid image file.',
+    'Vollständiger Zustand einschließlich Zeichnung gespeichert.':'Complete state, including drawing and mask, saved.', 'Zustand während des Ladens geändert. Bitte Datei erneut auswählen.':'State changed while loading. Please select the file again.', 'Vollständigen Zustand geladen.':'Complete state loaded.', 'Ungültige Zustandsdatei. Erwartet wird ein gespeicherter 256 × 256 FFT-Malkasten mit reellem Bild.':'Invalid state file. Expected a saved 256 × 256 FFT paintbox with a real image.',
+    'Filtermaske bearbeitet: Pinsel = 1, Radierer = 0.':'Filter mask edited: brush = 1, eraser = 0.'
+  };
+  const t = (de, en) => lang==='de' ? de : (en || translations[de] || de);
+  // Keep original text nodes, including labels that contain inputs or outputs.
+  const staticNodes = [], staticAttrs = [];
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const node=walker.currentNode, key=node.textContent.trim();
+    if (translations[key] && !node.parentElement.closest('script,style')) staticNodes.push({node,key});
+  }
+  document.querySelectorAll('[aria-label]').forEach(node=>staticAttrs.push({node,key:node.getAttribute('aria-label')}));
+  let statusKey = '';
+  function localize() {
+    document.documentElement.lang=lang; document.title='2.5 · '+t('2D-FFT-Malkasten');
+    for (const {node,key} of staticNodes) {
+      node.textContent=t(key);
+      if(lang==='de'&&key.startsWith('Der Pinsel hebt |G|')) node.textContent=key+' Im Maskenmodus gilt Pinsel = 1, Radierer = 0; die ursprünglichen komplexen Koeffizienten werden mit der Maske multipliziert.';
+      if(lang==='de'&&key.startsWith('Preset und Regler')) node.textContent='Preset und Regler werden auf die aktuelle Filterquelle angewendet. Im Maskenmodus wirkt die gezeichnete Maske nach dem Preset und bleibt bei Regleränderungen erhalten. „Spektrum wiederherstellen“ entfernt Preset und Maske.';
+    }
+    for (const {node,key} of staticAttrs) node.setAttribute('aria-label',t(key));
+    $('language').textContent=lang==='en'?'Deutsch':'English';
+    $('status').textContent=t(statusKey);
+  }
+  const hints = {
+    none:'Kein Filter: Das vollständige Spektrum der Quelle ist sichtbar. Zeichnen Sie ein Frequenzpaar und beobachten Sie die entstehenden Sinusstreifen.',
+    low:'Gauß-Tiefpass: Niedrige Frequenzen bleiben erhalten, feine Strukturen werden weich. r ist die Frequenz mit H = exp(−1/2).',
+    high:'Gauß-Hochpass: Entfernt den Gleichanteil und langsame Helligkeitsänderungen. Kanten bleiben; negative Bildwerte sind dabei normal.',
+    band:'Bandpass: Nur Frequenzen im Kreisring r ± Δr/2 passieren. Harte Filtergrenzen erzeugen Ringing im Bild.',
+    direction:'Richtungsfilter: Ein Frequenzstreifen entlang des gewählten Winkels passiert. Die resultierenden Bildstreifen stehen senkrecht zu dieser Frequenzrichtung.',
+    pillbox:'Pillbox wie fourier_filtering(r): Eine kreisförmige Maske im Frequenzraum entfernt alle Frequenzen außerhalb von r. Das ist ein harter Tiefpass, keine Pillbox-PSF im Ortsraum.',
+    motion:'Bewegungs-Rect: Faltung mit einer normierten linienförmigen PSF. Ihre Fourier-Transformierte dämpft richtungsabhängig und besitzt Nullstellen; der Bewegungswinkel bezieht sich auf das Bild.'
+  };
+  const englishHints = {
+    none:'No preset filter: the complete source spectrum is available. Paint a frequency pair in direct mode to create sinusoidal stripes.',
+    low:'Gaussian low-pass: low frequencies pass; fine structures soften. r is the frequency where H = exp(−1/2).',
+    high:'Gaussian high-pass: removes DC and slow brightness changes. Edges remain; negative image values are normal.',
+    band:'Band-pass: only frequencies in the annulus r ± Δr/2 pass. Hard filter boundaries produce ringing.',
+    direction:'Directional filter: a frequency strip along the selected angle passes. Image stripes are perpendicular to that frequency direction.',
+    pillbox:'Pillbox as in fourier_filtering(r): a circular frequency mask removes all frequencies outside r. This is a hard low-pass, not a spatial pillbox PSF.',
+    motion:'Motion rect: convolution with a normalized line PSF. Its Fourier transform attenuates directionally and has zeros; the motion angle refers to the image.'
+  };
+  let source = new Float64Array(COUNT), re = new Float64Array(COUNT), im = new Float64Array(COUNT), spatial = new Float64Array(COUNT);
+  let sourceRe, sourceIm, tool = 'brush', frame = 0, dirty = '', stroke = null, undoStack = [], revision = 0, renderedConfig = null;
+  let mask = new Uint8Array(COUNT).fill(1), baseRe = new Float64Array(COUNT), baseIm = new Float64Array(COUNT);
+  const masking = () => $('paintMode').value==='mask';
+  function applyMask() {
+    for(let i=0;i<COUNT;i++){re[i]=baseRe[i]*mask[i];im[i]=baseIm[i]*mask[i];}
+  }
+  const contexts = {image:$('image').getContext('2d'), spectrum:$('spectrum').getContext('2d')};
+
+  // Iterative radix-2 FFT; inverse normalization is performed in each dimension.
+  function fft(real, imag, inverse = false) {
+    const n = real.length;
+    for (let i = 1, j = 0; i < n; i++) {
+      let bit = n >> 1;
+      for (; j & bit; bit >>= 1) j ^= bit;
+      j ^= bit;
+      if (i < j) { [real[i], real[j]] = [real[j], real[i]]; [imag[i], imag[j]] = [imag[j], imag[i]]; }
+    }
+    for (let len = 2; len <= n; len <<= 1) {
+      const angle = (inverse ? 2 : -2) * Math.PI / len, cr = Math.cos(angle), ci = Math.sin(angle);
+      for (let offset = 0; offset < n; offset += len) {
+        let wr = 1, wi = 0;
+        for (let j = 0; j < len / 2; j++) {
+          const p = offset + j, q = p + len / 2;
+          const tr = wr * real[q] - wi * imag[q], ti = wr * imag[q] + wi * real[q];
+          real[q] = real[p] - tr; imag[q] = imag[p] - ti;
+          real[p] += tr; imag[p] += ti;
+          const next = wr * cr - wi * ci; wi = wr * ci + wi * cr; wr = next;
+        }
+      }
+    }
+    if (inverse) for (let i = 0; i < n; i++) { real[i] /= n; imag[i] /= n; }
+  }
+  function fft2(real, imag, inverse = false) {
+    const a = new Float64Array(N), b = new Float64Array(N);
+    for (let y = 0; y < N; y++) fft(real.subarray(y*N, (y+1)*N), imag.subarray(y*N, (y+1)*N), inverse);
+    for (let x = 0; x < N; x++) {
+      for (let y = 0; y < N; y++) { a[y] = real[y*N+x]; b[y] = imag[y*N+x]; }
+      fft(a, b, inverse);
+      for (let y = 0; y < N; y++) { real[y*N+x] = a[y]; imag[y*N+x] = b[y]; }
+    }
+  }
+  const signed = k => k < HALF ? k : k - N;
+  const wrap = k => (k % N + N) % N;
+  function partner(i) { return wrap(-(i/N|0))*N + wrap(-(i%N)); }
+  function sourceFFT() { sourceRe = source.slice(); sourceIm = new Float64Array(COUNT); fft2(sourceRe, sourceIm); }
+  function forward() { re = spatial.slice(); im.fill(0); fft2(re, im); }
+  function inverse() { spatial = re.slice(); const imaginary = im.slice(); fft2(spatial, imaginary, true); }
+  function makeScene(name) {
+    const a = new Float64Array(COUNT);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const i = y*N+x;
+      if (name === 'stripes') a[i] = .5 + .45*Math.cos(2*Math.PI*(12*x+6*y)/N);
+      if (name === 'checker') a[i] = ((x/16|0)+(y/16|0))%2 ? .9 : .1;
+      if (name === 'points') a[i] = [[64,64],[128,128],[184,90],[78,182]].some(([px,py]) => Math.hypot(x-px,y-py)<=2) ? 1 : 0;
+      if (name === 'target') {
+        a[i] = .06 + .16*x/N;
+        if (x>18 && x<111 && y>20 && y<108) a[i] = ((x/8|0)+(y/8|0))%2 ? .9 : .12;
+        const radius = Math.hypot(x-182,y-65);
+        if (radius<43) a[i] = (radius/5|0)%2 ? .85 : .15;
+        if (x>20 && x<112 && y>145 && y<224) a[i] = .5+.4*Math.cos(2*Math.PI*(x/13+y/25));
+        if (x>144 && x<225 && y>146 && y<223) a[i] = .85;
+        if (x>158 && x<211 && y>159 && y<210) a[i] = .2;
+        if (Math.abs(x-y)<2 && x>120 && x<235) a[i] = 1;
+      }
+    }
+    return a;
+  }
+  function motionSpectrum() {
+    const kr = new Float64Array(COUNT), ki = new Float64Array(COUNT);
+    const length = +$('length').value, angle = +$('angle').value*Math.PI/180;
+    // Subpixel sampling with bilinear splatting gives a centered, normalized Rect PSF.
+    const steps = Math.max(1, length*8);
+    for (let s = 0; s < steps; s++) {
+      const t = ((s+.5)/steps-.5)*(length-1), x = t*Math.cos(angle), y = t*Math.sin(angle);
+      const x0 = Math.floor(x), y0 = Math.floor(y), dx = x-x0, dy = y-y0;
+      for (let yy=0; yy<2; yy++) for (let xx=0; xx<2; xx++) kr[wrap(y0+yy)*N+wrap(x0+xx)] += (xx?dx:1-dx)*(yy?dy:1-dy)/steps;
+    }
+    fft2(kr, ki); return {kr,ki};
+  }
+  function applyFilter() {
+    const type = $('filter').value, radius = +$('radius').value*HALF, width = +$('width').value*HALF;
+    const angle = +$('angle').value*Math.PI/180, motion = type==='motion' ? motionSpectrum() : null;
+    re = sourceRe.slice(); im = sourceIm.slice();
+    for (let i = 0; i < COUNT; i++) {
+      if (motion) {
+        const ar = re[i], ai = im[i]; re[i] = ar*motion.kr[i]-ai*motion.ki[i]; im[i] = ar*motion.ki[i]+ai*motion.kr[i];
+      } else {
+        const fx = signed(i%N), fy = signed(i/N|0), r = Math.hypot(fx,fy);
+        let h = 1;
+        if (type==='low') h = Math.exp(-.5*(r/radius)**2);
+        if (type==='high') h = 1-Math.exp(-.5*(r/radius)**2);
+        if (type==='pillbox') h = r<=radius ? 1 : 0;
+        if (type==='band') h = Math.abs(r-radius)<=width/2 ? 1 : 0;
+        if (type==='direction') {
+          // Average the Nyquist-boundary pair to keep H(-f) = H(f) even there.
+          const p = partner(i), px = signed(p%N), py = signed(p/N|0);
+          h = (Math.exp(-.5*((-fx*Math.sin(angle)+fy*Math.cos(angle))/radius)**2) + Math.exp(-.5*((-px*Math.sin(angle)+py*Math.cos(angle))/radius)**2))/2;
+        }
+        re[i] *= h; im[i] *= h;
+      }
+    }
+    baseRe=re.slice();baseIm=im.slice();
+    if(masking())applyMask();
+    inverse(); dirty = ''; revision++;
+  }
+  function config() {
+    return Object.fromEntries(Object.keys(defaults).map(k => [k, typeof defaults[k]==='boolean' ? $(k).checked : $(k).value]));
+  }
+  function setConfig(values) {
+    for (const k of Object.keys(defaults)) {
+      if (!(k in values)) continue;
+      const el = $(k), v = values[k];
+      if (typeof defaults[k]==='boolean') el.checked = v===true || v==='1';
+      else if (el.tagName==='SELECT') { if ([...el.options].some(o=>o.value===v)) el.value=v; }
+      else if (Number.isFinite(+v)) el.value = String(Math.max(+el.min,Math.min(+el.max,+v)));
+    }
+  }
+  function remember() {
+    flush(); undoStack.push({source:source.slice(), re:re.slice(), im:im.slice(), mask:mask.slice(), baseRe:baseRe.slice(), baseIm:baseIm.slice(), config:{...(renderedConfig || config())}});
+    if (undoStack.length>12) undoStack.shift(); $('undo').disabled=false;
+  }
+  function flush() {
+    if (dirty==='image') { forward(); source=spatial.slice(); sourceFFT(); baseRe=re.slice();baseIm=im.slice();mask.fill(1); }
+    if (dirty==='mask') {applyMask();inverse();}
+    if (dirty==='spectrum') inverse();
+    dirty='';
+  }
+  function status(text) { statusKey=text; $('status').textContent=t(text); }
+  function syncUI() {
+    localize();
+    const type=$('filter').value;
+    $('radiusRow').hidden=type==='none'||type==='motion'; $('widthRow').hidden=type!=='band';
+    $('lengthRow').hidden=type!=='motion'; $('angleRow').hidden=!['direction','motion'].includes(type);
+    $('radiusLabel').textContent=t(type==='direction'?'Breite des Frequenzstreifens':'Grenzfrequenz r');
+    $('angleLabel').textContent=t(type==='motion'?'Bewegungsrichtung':'Frequenzrichtung');
+    $('radiusValue').textContent=(+$('radius').value).toFixed(2)+' × Nyq.';
+    $('widthValue').textContent=(+$('width').value).toFixed(2)+' × Nyq.';
+    $('lengthValue').textContent=$('length').value+' px'; $('angleValue').textContent=$('angle').value+'°';
+    $('brushValue').textContent=$('brushSize').value+' px'; $('brightnessValue').textContent=(+$('brightness').value).toFixed(2);
+    $('amplitudeValue').textContent=(+$('amplitude').value).toFixed(3);
+    $('filterHint').textContent=lang==='de'?hints[type]:englishHints[type];
+    $('shiftHint').textContent=t($('shift').checked?'DC in der Mitte · hohe Frequenzen am Rand.':'DC links oben · höchste axiale Frequenzen in der Mitte der Kanten.');
+    $('maskControls').hidden=!masking();$('amplitudeRow').hidden=masking();
+    $('maskHint').textContent=t('Pinsel = 1 (durchlassen), Radierer = 0 (sperren). Die Maske wirkt zusätzlich zum Preset.','Brush = 1 (pass), eraser = 0 (block). The mask is applied in addition to the preset.');
+    const showMask=masking()&&$('maskView').checked;
+    document.querySelector('.spectrum-title').textContent=showMask?t('Binäre Filtermaske M(f)','Binary filter mask M(f)'):t('Log-Magnitudenspektrum |G(f)|');
+    document.querySelector('.spectrum-title + p').textContent=showMask?t('Weiß = 1 · Schwarz = 0 · G = M · H · GQuelle','White = 1 · black = 0 · G = M · H · Gsource'):t('log(1 + |G|) · Phase bleibt erhalten');
+    $('imageCoordinate').textContent=t('Links zeichnen → FFT rechts.');
+    $('spectrumCoordinate').textContent=t('Rechts zeichnen → inverse FFT links.');
+    $('dc').style.left=$('shift').checked?'50%':'0'; $('dc').style.top=$('shift').checked?'50%':'0';
+    $('brush').classList.toggle('active',tool==='brush'); $('eraser').classList.toggle('active',tool==='eraser');
+    $('brush').setAttribute('aria-pressed',tool==='brush'); $('eraser').setAttribute('aria-pressed',tool==='eraser');
+    const q = new URLSearchParams();
+    for (const [k,v] of Object.entries(config())) q.set(k,typeof v==='boolean'?(v?'1':'0'):v);
+    q.set('theme',document.documentElement.classList.contains('dark')?'dark':'light');
+    q.set('lang',lang);
+    try { history.replaceState(null,'','?'+q.toString()+location.hash); } catch (_) { /* Local sandbox may restrict history. */ }
+    renderedConfig = config();
+  }
+  function render() {
+    frame=0; flush(); syncUI();
+    let min=Infinity, max=-Infinity;
+    for (const v of spatial) { min=Math.min(min,v); max=Math.max(max,v); }
+    const auto=$('contrast').checked, span=max-min, flat=span<1e-12;
+    const pixels=contexts.image.createImageData(N,N), spectrumPixels=contexts.spectrum.createImageData(N,N);
+    const logScale=Math.log1p(COUNT), shift=$('shift').checked?HALF:0;
+    for (let i=0; i<COUNT; i++) {
+      const v=auto&&!flat?(spatial[i]-min)/span:spatial[i], gray=Math.round(Math.max(0,Math.min(1,v))*255), p=i*4;
+      pixels.data[p]=pixels.data[p+1]=pixels.data[p+2]=gray; pixels.data[p+3]=255;
+      const x=(i%N+shift)%N, y=((i/N|0)+shift)%N, j=y*N+x;
+      const showMask=masking()&&$('maskView').checked, value=showMask?mask[j]:Math.min(1,Math.log1p(Math.hypot(re[j],im[j]))/logScale);
+      spectrumPixels.data[p]=Math.round(255*value); spectrumPixels.data[p+1]=Math.round((showMask?255:193)*value); spectrumPixels.data[p+2]=Math.round((showMask?255:102)*value); spectrumPixels.data[p+3]=255;
+    }
+    contexts.image.putImageData(pixels,0,0); contexts.spectrum.putImageData(spectrumPixels,0,0);
+    $('imageRange').textContent=t('Werte: ','Values: ')+min.toFixed(3)+' … '+max.toFixed(3)+(auto?t(' · Auto-Kontrast',' · auto contrast'):t(' · Anzeige [0, 1]',' · display [0, 1]'));
+  }
+  function update() { if (!frame) frame=requestAnimationFrame(render); }
+  function cancelStroke() { if (stroke) { const c=$(stroke.domain); if (c.hasPointerCapture(stroke.id)) c.releasePointerCapture(stroke.id); stroke=null; } }
+  function restoreSource() { remember(); $('filter').value='none'; mask.fill(1);applyFilter(); status('Ungefiltertes Quellspektrum wiederhergestellt.'); update(); }
+  function newScene(name) {
+    source=makeScene(name); mask.fill(1);sourceFFT(); applyFilter(); status('Testbild geladen. Filterquelle neu gesetzt.'); update();
+  }
+  function point(e,domain) {
+    const rect=$(domain).getBoundingClientRect();
+    return {x:Math.max(0,Math.min(N-1,(e.clientX-rect.left)*N/rect.width)), y:Math.max(0,Math.min(N-1,(e.clientY-rect.top)*N/rect.height))};
+  }
+  function hover(e,domain) {
+    const p=point(e,domain), cursor=$(domain+'Cursor'); cursor.hidden=false;
+    cursor.style.left=p.x/N*100+'%'; cursor.style.top=p.y/N*100+'%';
+    cursor.style.width=cursor.style.height=(2*+$('brushSize').value/N*100)+'%';
+    const x=Math.floor(p.x), y=Math.floor(p.y);
+    if (domain==='image') $('imageCoordinate').textContent=`x = ${x}, y = ${y} · g = ${spatial[y*N+x].toFixed(3)}`;
+    else {
+      const shift=$('shift').checked?HALF:0, fx=(x+shift)%N, fy=(y+shift)%N, i=fy*N+fx;
+      $('spectrumCoordinate').textContent=`f = (${(signed(fx)/N).toFixed(3)}, ${(signed(fy)/N).toFixed(3)}) ${t('Zyklen/px','cycles/px')} · |G|/N² = ${(Math.hypot(re[i],im[i])/COUNT).toFixed(4)}`+(masking()?` · M = ${mask[i]}`:'');
+    }
+    return p;
+  }
+  function dab(p) {
+    const radius=stroke.radius, domain=stroke.domain, erase=stroke.erase;
+    const offset=$('shift').checked?HALF:0;
+    for (let y=Math.floor(p.y-radius); y<=Math.ceil(p.y+radius); y++) for (let x=Math.floor(p.x-radius); x<=Math.ceil(p.x+radius); x++) {
+      if ((x-p.x)**2+(y-p.y)**2>radius*radius) continue;
+      if (domain==='image') {
+        if (x>=0&&x<N&&y>=0&&y<N) spatial[y*N+x]=erase?0:stroke.brightness;
+      } else {
+        // Frequency space is periodic; painting over an edge wraps to the opposite side.
+        const i=wrap(y+offset)*N+wrap(x+offset), j=partner(i), old=Math.hypot(re[i],im[i]);
+        if(stroke.mask){mask[i]=mask[j]=erase?0:1;continue;}
+        const amplitude=erase?0:Math.max(old,stroke.amplitude*COUNT);
+        const phase=old>1e-10?Math.atan2(im[i],re[i]):0;
+        re[i]=amplitude*Math.cos(phase); im[i]=i===j?0:amplitude*Math.sin(phase);
+        re[j]=re[i]; im[j]=-im[i];
+      }
+    }
+    dirty=domain==='spectrum'&&stroke.mask?'mask':domain; revision++;
+  }
+  for (const domain of ['image','spectrum']) {
+    const canvas=$(domain);
+    canvas.addEventListener('contextmenu',e=>e.preventDefault());
+    canvas.addEventListener('pointerdown',e=>{
+      if (stroke || (e.button!==0&&e.button!==2)) return;
+      e.preventDefault(); remember();
+      if (domain==='image') { $('filter').value='none'; $('scene').value='custom'; status('Bild bearbeitet: Es ist jetzt die neue Filterquelle.'); }
+      else if(masking())status('Filtermaske bearbeitet: Pinsel = 1, Radierer = 0.');
+      else status('Spektrum frei bearbeitet. Neue Filtereinstellungen verwenden wieder die Filterquelle.');
+      stroke={id:e.pointerId,domain,mask:masking(),erase:tool==='eraser'||e.button===2,radius:+$('brushSize').value,brightness:+$('brightness').value,amplitude:+$('amplitude').value,last:hover(e,domain)};
+      canvas.setPointerCapture(e.pointerId); dab(stroke.last); update();
+    });
+    canvas.addEventListener('pointermove',e=>{
+      const p=hover(e,domain);
+      if (!stroke||stroke.domain!==domain||stroke.id!==e.pointerId) return;
+      const last=stroke.last, steps=Math.max(1,Math.ceil(Math.hypot(p.x-last.x,p.y-last.y)/Math.max(1,stroke.radius/2)));
+      for (let s=1;s<=steps;s++) dab({x:last.x+(p.x-last.x)*s/steps,y:last.y+(p.y-last.y)*s/steps});
+      stroke.last=p; update();
+    });
+    const finish=e=>{ if (stroke&&stroke.id===e.pointerId&&stroke.domain===domain) { flush(); stroke=null; update(); } };
+    canvas.addEventListener('pointerup',finish); canvas.addEventListener('pointercancel',finish); canvas.addEventListener('lostpointercapture',finish);
+    canvas.addEventListener('pointerleave',()=>$(domain+'Cursor').hidden=true);
+  }
+  $('brush').onclick=()=>{tool='brush';update();}; $('eraser').onclick=()=>{tool='eraser';update();};
+  $('scene').addEventListener('change',()=>{cancelStroke();remember();newScene($('scene').value);});
+  // Snapshot at focus/pointerdown so slider drags produce one undo step.
+  for (const id of ['filter','radius','width','length','angle']) {
+    let saved=false;
+    $(id).addEventListener('focus',()=>saved=false);
+    $(id).addEventListener('pointerdown',()=>{cancelStroke();remember();saved=true;});
+    $(id).addEventListener('input',()=>{cancelStroke();if(!saved){remember();saved=true;} applyFilter();status('Filter auf die Quelle angewendet.');update();});
+    $(id).addEventListener('change',()=>saved=false);
+  }
+  for (const id of ['brushSize','brightness','amplitude','shift','contrast']) $(id).addEventListener('input',()=>{cancelStroke();flush();update();});
+  $('restore').onclick=()=>{cancelStroke();restoreSource();};
+  $('clear').onclick=()=>{cancelStroke();remember();$('scene').value='blank';$('filter').value='none';newScene('blank');};
+  $('undo').onclick=()=>{
+    cancelStroke(); flush(); const state=undoStack.pop(); if(!state)return;
+    source=state.source; re=state.re; im=state.im; mask=state.mask;baseRe=state.baseRe;baseIm=state.baseIm;setConfig(state.config); sourceFFT(); inverse(); revision++;
+    $('undo').disabled=!undoStack.length; status('Letzten Schritt rückgängig gemacht.'); update();
+  };
+  $('reset').onclick=()=>{cancelStroke();remember();setConfig(defaults);tool='brush';newScene('target');};
+  $('theme').onclick=()=>{document.documentElement.classList.toggle('dark');update();};
+  $('language').onclick=()=>{lang=lang==='en'?'de':'en';statusKey='';update();};
+  $('paintMode').addEventListener('change',()=>{
+    cancelStroke();remember();
+    // Switching to mask mode captures the current complex spectrum as its base.
+    // Switching back bakes the mask into the directly editable spectrum.
+    baseRe=re.slice();baseIm=im.slice();mask.fill(1);revision++;update();
+  });
+  $('maskView').addEventListener('input',()=>{cancelStroke();flush();update();});
+  for(const [id,value] of [['maskOnes',1],['maskZeros',0]])$(id).onclick=()=>{
+    cancelStroke();remember();mask.fill(value);applyMask();inverse();revision++;update();
+  };
+  function download(blob,name) {
+    const url=URL.createObjectURL(blob), link=document.createElement('a'); link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  $('saveImage').onclick=()=>{render();$('image').toBlob(blob=>{if(blob)download(blob,'fft-malkasten.png');});};
+  $('upload').addEventListener('change',async e=>{
+    const file=e.target.files[0]; if(!file)return; const start=revision;
+    const url=URL.createObjectURL(file), image=new Image();
+    try {
+      image.src=url; await image.decode();
+      if(start!==revision){status('Bild während des Ladens geändert. Bitte Datei erneut auswählen.');return;}
+      const canvas=document.createElement('canvas');canvas.width=canvas.height=N;const ctx=canvas.getContext('2d');
+      ctx.fillStyle='#000';ctx.fillRect(0,0,N,N);const scale=Math.min(N/image.naturalWidth,N/image.naturalHeight), w=image.naturalWidth*scale,h=image.naturalHeight*scale;
+      ctx.drawImage(image,(N-w)/2,(N-h)/2,w,h);const pixels=ctx.getImageData(0,0,N,N).data;
+      cancelStroke();remember();source=new Float64Array(COUNT);
+      for(let i=0;i<COUNT;i++)source[i]=(.2126*pixels[i*4]+.7152*pixels[i*4+1]+.0722*pixels[i*4+2])/255;
+      $('scene').value='custom';mask.fill(1);sourceFFT();applyFilter();status('Eigenes Bild als Graustufen geladen; Seitenverhältnis beibehalten, Ränder schwarz aufgefüllt.');update();
+    } catch (_) {status('Das Bild konnte nicht geladen werden. Bitte eine gültige Bilddatei auswählen.');}
+    finally {URL.revokeObjectURL(url);e.target.value='';}
+  });
+  $('saveState').onclick=()=>{
+    flush();const state={version:2,size:N,config:config(),lang,theme:document.documentElement.classList.contains('dark')?'dark':'light',source:Array.from(source),real:Array.from(re),imag:Array.from(im),mask:Array.from(mask),baseReal:Array.from(baseRe),baseImag:Array.from(baseIm)};
+    download(new Blob([JSON.stringify(state)],{type:'application/json'}),'fft-malkasten-zustand.json');status('Vollständiger Zustand einschließlich Zeichnung gespeichert.');
+  };
+  $('loadState').addEventListener('change',async e=>{
+    const file=e.target.files[0];if(!file)return;const start=revision;
+    try {
+      const state=JSON.parse(await file.text());
+      const validArray=a=>Array.isArray(a)&&a.length===COUNT&&a.every(v=>typeof v==='number'&&Number.isFinite(v)&&Math.abs(v)<1e9);
+      if(![1,2].includes(state.version)||state.size!==N||!state.config||![state.source,state.real,state.imag].every(validArray))throw Error('format');
+      if(state.version===2&&(![state.baseReal,state.baseImag].every(validArray)||!Array.isArray(state.mask)||state.mask.length!==COUNT||!state.mask.every(v=>v===0||v===1)))throw Error('mask');
+      const real=Float64Array.from(state.real), imag=Float64Array.from(state.imag);
+      for(let i=0;i<COUNT;i++){const j=partner(i);if(Math.abs(real[i]-real[j])>1e-7*Math.max(1,Math.abs(real[i]))||Math.abs(imag[i]+imag[j])>1e-7*Math.max(1,Math.abs(imag[i])))throw Error('symmetry');}
+      if(state.version===2)for(let i=0;i<COUNT;i++){
+        const j=partner(i);
+        if(state.mask[i]!==state.mask[j]||Math.abs(state.baseReal[i]-state.baseReal[j])>1e-7*Math.max(1,Math.abs(state.baseReal[i]))||Math.abs(state.baseImag[i]+state.baseImag[j])>1e-7*Math.max(1,Math.abs(state.baseImag[i])))throw Error('symmetry');
+        if(state.config.paintMode==='mask'&&(Math.abs(real[i]-state.baseReal[i]*state.mask[i])>1e-7||Math.abs(imag[i]-state.baseImag[i]*state.mask[i])>1e-7))throw Error('mask mismatch');
+      }
+      if(start!==revision){status('Zustand während des Ladens geändert. Bitte Datei erneut auswählen.');return;}
+      cancelStroke();remember();setConfig({...defaults,...state.config});source=Float64Array.from(state.source);re=real;im=imag;
+      mask=state.version===2?Uint8Array.from(state.mask):new Uint8Array(COUNT).fill(1);
+      baseRe=state.version===2?Float64Array.from(state.baseReal):re.slice();baseIm=state.version===2?Float64Array.from(state.baseImag):im.slice();
+      if(state.lang==='de'||state.lang==='en')lang=state.lang;
+      sourceFFT();inverse();revision++;
+      document.documentElement.classList.toggle('dark',state.theme==='dark');status('Vollständigen Zustand geladen.');update();
+    } catch (_) {status('Ungültige Zustandsdatei. Erwartet wird ein gespeicherter 256 × 256 FFT-Malkasten mit reellem Bild.');}
+    finally {e.target.value='';}
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.target.closest('input,select,textarea,button')||e.altKey)return;
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();$('undo').click();return;}
+    if(e.ctrlKey||e.metaKey)return;
+    const key=e.key.toLowerCase();if(key==='b')$('brush').click();if(key==='e')$('eraser').click();if(key==='r')$('reset').click();
+    if(key==='s'){cancelStroke();$('shift').checked=!$('shift').checked;update();}
+  });
+  const params=new URLSearchParams(location.search);setConfig(Object.fromEntries(params));
+  lang=params.get('lang')==='de'?'de':'en';
+  if($('scene').value==='custom')$('scene').value='target';
+  document.documentElement.classList.toggle('dark',params.get('theme')==='dark');
+  source=makeScene($('scene').value);sourceFFT();applyFilter();render();
+})();
+</script>
+</body>
+</html>

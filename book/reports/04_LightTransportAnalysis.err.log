@@ -28,8 +28,16 @@ import scipy.signal as sig
 from scipy.integrate import simpson
 from IPython.display import SVG, display, IFrame, HTML
 import seaborn as sns
+import sys
+from pathlib import Path
+
+# Notebook-Ordner für lokale Python-Module verfügbar machen
+sys.path.insert(0, str(Path.cwd()))
+
+from widgets.stepper import display_stepper
 %matplotlib notebook
 book = False
+base = "" if book else "http://127.0.0.1:8000/"
 ------------------
 
 
@@ -39,8 +47,8 @@ Cell [1;32mIn[2], line 10[0m
 [0;32m      8[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mintegrate[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m simpson
 [0;32m      9[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdisplay[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m SVG, display, IFrame, HTML
 [1;32m---> 10[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mseaborn[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01msns[39;00m
-[0;32m     11[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mmatplotlib[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124mnotebook[39m[38;5;124m'[39m)
-[0;32m     12[0m book [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+[0;32m     11[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01msys[39;00m
+[0;32m     12[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mpathlib[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Path
 
 [1;31mModuleNotFoundError[0m: No module named 'seaborn'
 

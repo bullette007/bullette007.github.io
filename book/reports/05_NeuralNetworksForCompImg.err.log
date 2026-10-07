@@ -18,32 +18,24 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from __future__ import print_function
-from ipywidgets import interact, interactive, fixed, interact_manual
-import ipywidgets as widgets
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-import cv2
-import scipy.signal as sig
-from scipy.integrate import simpson
-from IPython.display import SVG, display, IFrame, HTML
-import seaborn as sns
-import torch
-from scipy import misc
-%matplotlib notebook
-book = False
+img = cv2.resize(a:=misc.face(gray=True), (int((f:=0.25) * a.shape[1]), int(f*a.shape[0])))
+noise = np.random.randn(img.shape[0], img.shape[1]) * 50
+plt.subplot(1,2,1,  title="Noisy input")
+plt.imshow(normalize(img+noise), cmap='gray')
+plt.subplot(1,2,2, title="Desired output")
+plt.imshow(normalize(img), cmap='gray')
+plt.imsave("noisy.png", img+noise, cmap='gray')
+plt.imsave("noise.png", noise, cmap='gray')
+plt.imsave("img.png", img, cmap='gray')
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [1;32mIn[2], line 11[0m
-[0;32m      9[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mintegrate[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m simpson
-[0;32m     10[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mIPython[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdisplay[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m SVG, display, IFrame, HTML
-[1;32m---> 11[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mseaborn[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01msns[39;00m
-[0;32m     12[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mtorch[39;00m
-[0;32m     13[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mscipy[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m misc
+[1;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [1;32mIn[46], line 1[0m
+[1;32m----> 1[0m img [38;5;241m=[39m cv2[38;5;241m.[39mresize(a[38;5;241m:=[39m[43mmisc[49m[38;5;241;43m.[39;49m[43mface[49m(gray[38;5;241m=[39m[38;5;28;01mTrue[39;00m), ([38;5;28mint[39m((f[38;5;241m:=[39m[38;5;241m0.25[39m) [38;5;241m*[39m a[38;5;241m.[39mshape[[38;5;241m1[39m]), [38;5;28mint[39m(f[38;5;241m*[39ma[38;5;241m.[39mshape[[38;5;241m0[39m])))
+[0;32m      2[0m noise [38;5;241m=[39m np[38;5;241m.[39mrandom[38;5;241m.[39mrandn(img[38;5;241m.[39mshape[[38;5;241m0[39m], img[38;5;241m.[39mshape[[38;5;241m1[39m]) [38;5;241m*[39m [38;5;241m50[39m
+[0;32m      3[0m plt[38;5;241m.[39msubplot([38;5;241m1[39m,[38;5;241m2[39m,[38;5;241m1[39m,  title[38;5;241m=[39m[38;5;124m"[39m[38;5;124mNoisy input[39m[38;5;124m"[39m)
 
-[1;31mModuleNotFoundError[0m: No module named 'seaborn'
+[1;31mAttributeError[0m: module 'scipy.misc' has no attribute 'face'
 

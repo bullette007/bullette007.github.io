@@ -31,8 +31,16 @@ import seaborn as sns
 import torch
 from scipy import ndimage
 from scipy import misc
+import sys
+from pathlib import Path
+
+# Notebook-Ordner für lokale Python-Module verfügbar machen
+sys.path.insert(0, str(Path.cwd()))
+
+from widgets.stepper import display_stepper
 %matplotlib notebook
 book = False
+base = "" if book else "http://127.0.0.1:8000/"
 ------------------
 
 

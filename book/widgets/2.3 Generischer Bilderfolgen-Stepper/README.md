@@ -34,7 +34,7 @@ index.html?prefix=../../figures/imaging_pinhole_lens_&start=0&end=5&ext=svg
 | `ui` | `minimal` = nur Bild, Zurück/Weiter, Schrittzähler und Schieberegler; `full` = vollständige Oberfläche | `full` |
 | `resize` | `auto` = Höhe aus Bildformat und verfügbarer Breite berechnen und an die Elternseite melden | feste iframe-Höhe |
 
-Werte mit Leerzeichen, `&`, `#` oder anderen URL-Sonderzeichen müssen URL-kodiert sein. Beispiel: `title=Linsenprinzip&step=3&fade=1&theme=dark`. Bis zu 10.000 nummerierte Bilder sind möglich; nur das ausgewählte Bild wird geladen.
+Werte mit Leerzeichen, `&`, `#` oder anderen URL-Sonderzeichen müssen URL-kodiert sein. Beispiel: `title=Linsenprinzip&step=3&fade=0&theme=dark`. Bis zu 10.000 nummerierte Bilder sind möglich; nur das ausgewählte Bild wird geladen.
 
 ### Reduzierte Oberfläche im Notebook
 
@@ -48,7 +48,7 @@ from IPython.display import IFrame, display
 display(IFrame(
     src="http://127.0.0.1:8000/widgets/"
         "2.3%20Generischer%20Bilderfolgen-Stepper/index.html"
-        "?ui=minimal&step=1&fade=1&theme=light"
+        "?ui=minimal&step=1&fade=0&theme=light"
         "&prefix=../../figures/4/desk_lightsources_example_"
         "&start=1&end=5&ext=svg",
     width="100%",
@@ -71,7 +71,7 @@ base = "" if book else "http://127.0.0.1:8000/"
 display_stepper(
     base + "widgets/2.3%20Generischer%20Bilderfolgen-Stepper/index.html",
     step=1,
-    fade=1,
+    fade=0,
     theme="light",
     prefix="../../figures/4/desk_lightsources_example_",
     start=1,
@@ -82,7 +82,7 @@ display_stepper(
 
 `ui=minimal` und `resize=auto` setzt die Hilfsfunktion automatisch. Der `book`-Schalter und die Veröffentlichung der Widget-/Bilddateien funktionieren wie bisher. Wenn beim Buch-Build das Notebook aus `mynewbook` ausgeführt wird, muss auch das Python-Modul dort importierbar sein: den Ordner `widgets` vor dem Build nach `mynewbook/widgets` kopieren oder den Projektordner zum Python-Suchpfad hinzufügen. Im klassischen Notebook muss die Ausgabe vertrauenswürdig sein, damit ihr JavaScript ausgeführt wird (File → Trust Notebook). Im HTML-Buch ist der Listener Bestandteil der gespeicherten HTML-Ausgabe.
 
-Im RISE-Präsentationsmodus begrenzt die Hilfsfunktion die Höhe zusätzlich anhand der Präsentationsfläche und berücksichtigt die Reveal-Skalierung sowie Inhalte oberhalb des Widgets auf derselben Folie. Das Bild wird bei Bedarf verkleinert, die Navigation bleibt sichtbar. Beim Verlassen des Präsentationsmodus gilt wieder die natürliche Inhaltshöhe. Für die Aktualisierung in einem bereits laufenden Notebook den Kernel neu starten oder das Modul mit `importlib.reload` neu laden und anschließend die Ausgabezelle erneut ausführen.
+Auch im Notebook und HTML-Buch begrenzt die Hilfsfunktion die Höhe auf 90 % des Browser-Viewports (im Buch abzüglich der Artikel-Kopfzeile). So bleiben Hochkantbilder einschließlich Navigation in einer Bildschirmansicht darstellbar; kleinere Bilder behalten ihre natürliche Höhe. Im RISE-Präsentationsmodus gilt stattdessen die speziell angepasste Begrenzung anhand der Präsentationsfläche, Reveal-Skalierung und Inhalte oberhalb des Widgets auf derselben Folie. Das Bild wird bei Bedarf proportional verkleinert, die Navigation bleibt sichtbar. Beim Verlassen des Präsentationsmodus gilt wieder die normale Viewport-Begrenzung. Für die Aktualisierung in einem bereits laufenden Notebook den Kernel neu starten oder das Modul mit `importlib.reload` neu laden und anschließend die Ausgabezelle erneut ausführen.
 
 Nur `resize=auto` an einem normalen `IPython.display.IFrame` reicht nicht: Das Eltern-Dokument benötigt ebenfalls den Listener. `display_stepper` liefert beide Seiten des Protokolls. Die Größenmeldungen funktionieren auch zwischen unterschiedlichen Ports über `postMessage`.
 

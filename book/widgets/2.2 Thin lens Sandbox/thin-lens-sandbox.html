@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="app.title">Optik-Simulation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="osim" data-optics-sim>
+
+  <header class="osim__header">
+    <h1 class="osim__title" data-i18n="app.title"></h1>
+    <div class="osim__header-tools">
+      <label class="osim__lang">
+        <span data-i18n="header.language"></span>
+        <select class="js-language" data-i18n-title="header.languageHint"></select>
+      </label>
+      <div class="config-menu">
+        <button class="config-menu__toggle js-config-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="osim-config-panel"></button>
+        <section class="config-menu__panel js-config-panel"
+                 id="osim-config-panel"
+                 hidden></section>
+      </div>
+    </div>
+  </header>
+
+  <main class="osim__grid">
+
+    <section class="panel panel--settings">
+      <h2 class="panel__title" data-i18n="panel.settings"></h2>
+      <p class="panel__desc" data-i18n="panel.settings.desc"></p>
+      <div class="controls js-controls"></div>
+      <h3 class="panel__subtitle" data-i18n="stats.title"></h3>
+      <dl class="stats js-stats"></dl>
+    </section>
+
+    <section class="panel panel--optics">
+      <h2 class="panel__title" data-i18n="panel.optics"></h2>
+      <p class="panel__desc" data-i18n="panel.optics.desc"></p>
+      <div class="canvas-wrap canvas-wrap--optics">
+        <canvas class="js-optics-canvas"></canvas>
+        <svg class="plot-navigation__overlay js-plot-navigation-overlay"
+             aria-hidden="true">
+          <g class="js-plot-navigation-brush"></g>
+        </svg>
+        <div class="plot-navigation js-plot-navigation" role="toolbar">
+          <button type="button" data-navigation-action="zoom-in">+</button>
+          <button type="button" data-navigation-action="zoom-out">−</button>
+          <button type="button" data-navigation-action="box-zoom"
+                  aria-pressed="false">□</button>
+          <button type="button" data-navigation-action="home">⌂</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel panel--object">
+      <h2 class="panel__title" data-i18n="panel.object"></h2>
+      <p class="panel__desc" data-i18n="panel.object.desc"></p>
+      <div class="canvas-wrap canvas-wrap--placeholder image-preview">
+        <img src="image.png" alt="Testmotiv in der Objektebene"
+             data-i18n-alt="panel.object.imageAlt">
+      </div>
+    </section>
+
+    <section class="panel panel--sensor">
+      <h2 class="panel__title" data-i18n="panel.sensor"></h2>
+      <p class="panel__desc" data-i18n="panel.sensor.desc"></p>
+      <div class="canvas-wrap canvas-wrap--placeholder image-preview image-preview--sensor">
+        <img class="js-sensor-image" src="image.png"
+             alt="Resultierendes Bild auf der Sensorebene"
+             data-i18n-alt="panel.sensor.imageAlt">
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"
+        integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i"
+        crossorigin="anonymous"></script>
+<script>
+  (() => {
+    'use strict';
+
+    /* ==========================================================================
+       1. CONFIG — visual and interaction settings.
+          Numerical tolerances live in MATH. Geometry is expressed in PERCENT
+          of the canvas, so it stays responsive at any panel width.
+       ========================================================================== */
+
+    function cloneConfig(value) {
+      if (Array.isArray(value)) return value.map(cloneConfig);
+      if (value && typeof value === 'object') {
+        return Object.fromEntries(
+                Object.entries(value).map(([key, child]) => [key, cloneConfig(child)])
+        );
+      }
+      return value;
+    }
+
+    const MATH = Object.freeze({
+      epsilon: 1e-9,
+      minObjectDistance: 1e-6,
+      minFocalLength: 1e-6
+    });
+
+    const CONFIG_DEFAULTS = Object.freeze({
+
+      dom: Object.freeze({
+        idPrefix: 'osim',
+        rootSelector: '[data-optics-sim]',
+        controlsSelector: '.js-controls',
+        statsSelector: '.js-stats',
+        languageSelector: '.js-language',
+        opticsCanvasSelector: '.js-optics-canvas',
+        navigationOverlaySelector: '.js-plot-navigation-overlay',
+        navigationBrushSelector: '.js-plot-navigation-brush',
+        navigationToolbarSelector: '.js-plot-navigation',
+        sensorImageSelector: '.js-sensor-image',
+        configToggleSelector: '.js-config-toggle',
+        configPanelSelector: '.js-config-panel'
+      }),
+
+      canvas: Object.freeze({
+        backgroundColor: '#0c1118',
+        minWidthPx: 1,
+        minHeightPx: 1
+      }),
+
+      navigation: Object.freeze({
+        minScale: 0.5,
+        maxScale: 20,
+        buttonScaleFactor: 1.5,
+        minBoxSizePx: 12
+      }),
+
+      /* --- positions, in percent of canvas width / height --------------------- */
+      layout: Object.freeze({
+        opticalAxisYPct: 50,        // % of canvas height, from top
+        apertureXPct: 62,          // % of canvas width, from left (fixed)
+        objectPlaneMinXPct: 5,     // object-plane position at the LARGEST g
+        objectPlaneRefXPct: 12     // object-plane position at referenceObjectDistance
+      }),
+
+      backgroundGrid: Object.freeze({
+        visible: true,
+        spacingPct: 5,            // % of width / height between grid lines
+        color: 'rgba(140, 165, 195, 0.08)',
+        lineWidth: 1,
+        dash: Object.freeze([])
+      }),
+
+      opticalAxis: Object.freeze({
+        visible: true,
+        color: 'rgba(200, 216, 236, 0.75)',
+        lineWidth: 1.25,
+        dash: Object.freeze([10, 6])
+      }),
+
+      objectPlane: Object.freeze({
+        visible: true,
+        halfHeightPct: 60,        // % of canvas HALF height, each side of the axis
+        color: 'rgba(126, 179, 255, 0.7)',
+        lineWidth: 1.5,
+        dash: Object.freeze([5, 5])
+      }),
+
+      objectHeight: Object.freeze({
+        visible: true,
+        value: 50,
+        color: 'rgba(126, 179, 255, 0.95)',
+        lineWidth: 4,
+        dash: Object.freeze([])
+      }),
+
+      objectImage: Object.freeze({
+        src: 'image_rotated.png',
+        opacity: 1
+      }),
+
+      aperture: Object.freeze({
+        outerHalfHeightPct: 38,   // % of canvas HALF height: outer end of the bars
+        color: '#e6edf3',
+        lineWidth: 5,
+        lineCap: 'butt',
+        dash: Object.freeze([]),
+        edgeRayPasses: true       // ray exactly at |y| = d/2 passes through
+      }),
+
+      planes: Object.freeze({
+        halfHeightPct: 60,          // % of canvas HALF height, each side of the axis
+        labelGapPx: 6,
+        labelRowGapPx: 14,          // extra vertical stagger per labelRow, so close planes' labels don't overlap
+        items: Object.freeze([
+          Object.freeze({
+            id: 'principal', anchor: 'principal', labelKey: 'canvas.principalPlane',
+            color: 'rgba(230, 237, 243, 0.55)', lineWidth: 1.25, dash: Object.freeze([]), labelRow: 1
+          }),
+          Object.freeze({
+            id: 'focal', anchor: 'focal', labelKey: 'canvas.focalPlane',
+            color: 'rgba(255, 154, 162, 0.75)', lineWidth: 1.25, dash: Object.freeze([2, 4]), labelRow: 2
+          }),
+          Object.freeze({
+            id: 'image', anchor: 'image', labelKey: 'canvas.imagePlane',
+            color: 'rgba(120, 231, 178, 0.75)', lineWidth: 1.5, dash: Object.freeze([6, 4]),
+            requiresRealImage: true, labelRow: 3
+          }),
+          Object.freeze({
+            id: 'sensor', anchor: 'sensor', labelKey: 'canvas.sensorPlane',
+            color: 'rgba(186, 148, 255, 0.85)', lineWidth: 1.5, dash: Object.freeze([3, 3]),
+            labelRow: 4
+          })
+        ])
+      }),
+
+      scale: Object.freeze({
+        mode: 'fitMaxObjectDistance',
+        referenceObjectDistance: 400,
+        transverseExaggeration: 6   // >1 stretches the y axis only (still linear)
+      }),
+
+      /* --- dimension lines  |<---- x ---->|  underneath the drawing ----------- */
+      /* --- dimension lines  |<---- g ---->|  underneath the drawing ----------- */
+      dimensions: Object.freeze({
+        visible: true,
+        baselineYPct: 80,
+        rowSpacingPct: 5,
+        color: 'rgba(210, 224, 242, 0.85)',
+        lineWidth: 1,
+        dash: Object.freeze([]),
+        tickHalfLengthPx: 5,
+        arrowHeadLengthPx: 8,
+        arrowHeadHalfWidthPx: 3.5,
+        extensionLine: Object.freeze({
+          visible: true,
+          color: 'rgba(210, 224, 242, 0.18)',
+          lineWidth: 1,
+          dash: Object.freeze([2, 4])
+        }),
+        font: '12px system-ui, sans-serif',
+        labelPaddingPx: 6,
+        labelOffsetPx: 4,
+        minSpanPx: 26,
+        rows: Object.freeze([
+          Object.freeze({ id: 'g', symbol: 'g', from: 'object',    to: 'principal', row: 0 }),
+          Object.freeze({ id: 'f', symbol: 'f', from: 'principal', to: 'focal',     row: 1 }),
+          Object.freeze({ id: 'b', symbol: 'b', from: 'principal', to: 'image',     row: 0,
+            requiresRealImage: true }),
+          Object.freeze({ id: 'c', symbol: 'c', from: 'principal', to: 'sensor',    row: 2 })
+        ])
+      }),
+
+      rays: Object.freeze({
+        gridPointCount: 41,       // rays generated per active point source
+        incoming: Object.freeze({
+          color: 'rgba(255, 214, 102, 0.85)',
+          lineWidth: 1,
+          dash: Object.freeze([])
+        }),
+        blocked: Object.freeze({
+          color: 'rgba(255, 214, 102, 0.85)',
+          // color: 'rgba(120, 134, 156, 0.45)',
+          lineWidth: 1,
+          dash: Object.freeze([])
+          // dash: Object.freeze([3, 4])
+        }),
+        refracted: Object.freeze({
+          color: 'rgba(120, 231, 178, 0.9)',
+          lineWidth: 1,
+          dash: Object.freeze([])
+        }),
+        principalRay: Object.freeze({
+          color: '#ff3b30',
+          lineWidth: 2,
+          dash: Object.freeze([])
+        }),
+        sensorBoundary: Object.freeze({
+          color: '#3b82f6',
+          lineWidth: 2,
+          dash: Object.freeze([]),
+          markerRadiusPx: 4
+        })
+      }),
+
+      /* list-ready: add further entries to get further point sources ---------- */
+      sources: Object.freeze([
+        Object.freeze({ id: 'source-1', direction: 1 }),
+        Object.freeze({ id: 'source-2', direction: -1, enabledParam: 'secondSource' })
+      ]),
+
+      sourceMarker: Object.freeze({
+        visible: true,
+        radiusPx: 4,
+        fillColor: '#ffd666',
+        strokeColor: 'rgba(12, 17, 24, 0.9)',
+        lineWidth: 1
+      }),
+
+      labels: Object.freeze({
+        visible: true,
+        font: '12px system-ui, sans-serif',
+        color: 'rgba(210, 224, 242, 0.85)',
+        offsetPx: 8,
+        showOpticalAxis: true,
+        showObjectPlane: true,
+        showAperture: false
+      }),
+
+      math: MATH,
+
+      keyFigures: Object.freeze({
+        blurCircle: Object.freeze({
+          epsilonMax: 5
+        })
+      }),
+
+      depthOfFocus: Object.freeze({
+        visible: true,
+        color: 'rgba(120, 231, 178, 0.28)',
+        labelColor: 'rgba(120, 231, 178, 0.65)',
+        labelKey: 'canvas.depthOfFocus',
+        labelOffsetPx: 6
+      }),
+
+      sensorHeight: Object.freeze({
+        visible: true,
+        lineWidth: 4,
+        dashGapRatio: 0.15
+      }),
+
+      imageEffects: Object.freeze({
+        blurPxPerEpsilonUnit: 1
+      }),
+
+      ui: Object.freeze({
+        configSymbol: '\u2699\ufe0e'
+      }),
+
+      i18n: Object.freeze({
+        defaultLanguage: 'de',
+        storageKey: 'osim.language',
+        locales: Object.freeze({ de: 'de-DE', en: 'en-US' })
+      })
+    });
+
+    const CONFIG = cloneConfig(CONFIG_DEFAULTS);
+
+    /* --- control schema: the only definition of the sliders ------------------ */
+    const PARAM_SCHEMA = Object.freeze([
+      Object.freeze({ id: 'f', type: 'range', labelKey: 'controls.focalLength',
+        labelMath: Object.freeze({ symbol: 'f' }),
+        min: 20, max: 200, step: 1, value: 150, decimals: 0 }),
+      Object.freeze({ id: 'g', type: 'range', labelKey: 'controls.objectDistance',
+        labelMath: Object.freeze({ symbol: 'g' }),
+        min: 100, max: 1200, step: 5, value: 700, decimals: 0 }),
+      Object.freeze({ id: 'd', type: 'range', labelKey: 'controls.apertureDiameter',
+        labelMath: Object.freeze({ symbol: 'd' }),
+        min: 2, max: 60, step: 0.5, value: 20, decimals: 1 }),
+      Object.freeze({ id: 'sourcePosition', type: 'range', labelKey: 'controls.sourcePosition',
+        min: 0, max: 100, step: 1, value: 100, decimals: 0 }),
+      Object.freeze({ id: 'sensorPosition', type: 'range', labelKey: 'controls.sensorPosition',
+        labelMath: Object.freeze({ symbol: 'c' }),
+        min: 20, max: 400, step: 1, value: 150, decimals: 0 }),
+      Object.freeze({
+        id: 'lockSensorToImagePlane',
+        type: 'checkbox',
+        labelKey: 'controls.lockSensorToImagePlane',
+        value: false
+      }),
+      Object.freeze({ id: 'principalRay', type: 'checkbox', labelKey: 'controls.principalRay',
+        value: false }),
+      Object.freeze({ id: 'fieldOfView', type: 'checkbox', labelKey: 'controls.fieldOfView',
+        value: false }),
+      Object.freeze({ id: 'secondSource', type: 'checkbox', labelKey: 'controls.secondSource',
+        value: false }),
+      Object.freeze({ id: 'displayImage', type: 'checkbox', labelKey: 'controls.displayImage',
+        value: false })
+    ]);
+
+    const STAT_SCHEMA = Object.freeze([
+      Object.freeze({
+        id: 'magnification', labelKey: 'stats.magnification',
+        labelMath: Object.freeze({ symbol: 'V' }), decimals: 3
+      }),
+      Object.freeze({
+        id: 'sensorMagnification', labelKey: 'stats.sensorMagnification',
+        labelMath: Object.freeze({ symbol: 'V', suffix: '(c)' }), decimals: 3
+      }),
+      Object.freeze({
+        id: 'blurCircle',
+        labelKey: 'stats.blurCircle',
+        labelMath: Object.freeze({ symbol: '\u03b5' }),
+        decimals: 2
+      }),
+      Object.freeze({
+        id: 'imageDistance',
+        labelKey: 'stats.imageDistance',
+        labelMath: Object.freeze({ symbol: 'b' }),
+        decimals: 2
+      }),
+      Object.freeze({
+        id: 'pixelLimit',
+        labelKey: 'stats.pixelLimit',
+        labelMath: Object.freeze({ symbol: '\u03b5', subscript: 'max' }),
+        decimals: 0
+      })
+    ]);
+
+    /* ==========================================================================
+       2. I18N — flat dot-keys, one dictionary per language
+       ========================================================================== */
+
+    const DICTIONARIES = Object.freeze({
+      de: Object.freeze({
+        'app.title': 'Optik-Simulation – Dünne Linse',
+        'header.language': 'Sprache',
+        'header.languageHint': 'Sprache der Oberfläche wählen',
+        'header.config': 'Konfiguration',
+        'header.configHint': 'Konfiguration bearbeiten',
+        'language.de': 'Deutsch',
+        'language.en': 'Englisch',
+        'panel.settings': 'Einstellungen',
+        'panel.settings.desc': 'Parameter der Abbildung',
+        'panel.optics': 'Strahlengang',
+        'panel.optics.desc': 'Punktlichtquelle, Blende und Strahlenverlauf',
+        'panel.object': 'Testmotiv im Objekt',
+        'panel.object.desc': 'Vorschau der Objektebene',
+        'panel.object.imageAlt': 'Testmotiv in der Objektebene',
+        'panel.sensor': 'Resultierendes Bild am Sensor',
+        'panel.sensor.desc': 'Simuliertes Sensorbild',
+        'panel.sensor.imageAlt': 'Resultierendes Bild auf der Sensorebene',
+        'controls.focalLength': 'Brennweite',
+        'controls.objectDistance': 'Objektabstand',
+        'controls.apertureDiameter': 'Blendendurchmesser',
+        'controls.sourcePosition': 'Position der Punktlichtquelle',
+        'controls.sensorPosition': 'Sensorposition',
+        'controls.displayOptions': 'Anzeigeoptionen',
+        'controls.lockSensorToImagePlane': 'Sensor auf Bildebene fixieren (c = b)',
+        'controls.principalRay': 'Hauptstrahl',
+        'controls.fieldOfView': 'Sichtfeld',
+        'controls.secondSource': 'Zweite Punktlichtquelle',
+        'controls.displayImage': 'Bild anzeigen',
+        'navigation.zoomIn': 'Vergrößern',
+        'navigation.zoomOut': 'Verkleinern',
+        'navigation.boxZoom': 'Bereich zum Vergrößern auswählen',
+        'navigation.home': 'Startansicht wiederherstellen',
+        'stats.title': 'Kennwerte',
+        'stats.magnification': 'Vergrößerung',
+        'stats.sensorMagnification': 'Vergrößerung',
+        'stats.blurCircle': 'Zerstreuungskreis',
+        'stats.imageDistance': 'Bildabstand',
+        'stats.pixelLimit': 'Pixelgrenze',
+        'stats.placeholder': '–',
+        'canvas.opticalAxis': 'Optische Achse',
+        'canvas.objectPlane': 'Objektebene',
+        'canvas.aperture': 'Blende',
+        'canvas.principalPlane': 'Hauptebene',
+        'canvas.focalPlane': 'Brennebene',
+        'canvas.imagePlane': 'Bildebene',
+        'canvas.sensorPlane': 'Sensorebene',
+        'canvas.depthOfFocus': 'Fokustiefe',
+      }),
+      en: Object.freeze({
+        'app.title': 'Optics Simulation – Thin Lens',
+        'header.language': 'Language',
+        'header.languageHint': 'Choose interface language',
+        'header.config': 'Configuration',
+        'header.configHint': 'Edit configuration',
+        'language.de': 'German',
+        'language.en': 'English',
+        'panel.settings': 'Settings',
+        'panel.settings.desc': 'Imaging parameters',
+        'panel.optics': 'Ray path',
+        'panel.optics.desc': 'Point light source, aperture and ray propagation',
+        'panel.object': 'Test pattern in object',
+        'panel.object.desc': 'Preview of the object plane',
+        'panel.object.imageAlt': 'Test pattern in the object plane',
+        'panel.sensor': 'Resulting image at sensor',
+        'panel.sensor.desc': 'Simulated sensor image',
+        'panel.sensor.imageAlt': 'Resulting image on the sensor plane',
+        'controls.focalLength': 'Focal length',
+        'controls.objectDistance': 'Object distance',
+        'controls.apertureDiameter': 'Aperture diameter',
+        'controls.sourcePosition': 'Point source position',
+        'controls.sensorPosition': 'Sensor position',
+        'controls.displayOptions': 'Display options',
+        'controls.lockSensorToImagePlane': 'Lock sensor to image plane (c = b)',
+        'controls.principalRay': 'Principal ray',
+        'controls.fieldOfView': 'Field of view',
+        'controls.secondSource': 'Second point source',
+        'controls.displayImage': 'Display image',
+        'navigation.zoomIn': 'Zoom in',
+        'navigation.zoomOut': 'Zoom out',
+        'navigation.boxZoom': 'Select an area to zoom',
+        'navigation.home': 'Restore home view',
+        'stats.title': 'Key figures',
+        'stats.magnification': 'Magnification',
+        'stats.sensorMagnification': 'Magnification',
+        'stats.blurCircle': 'Blur circle',
+        'stats.imageDistance': 'Image distance',
+        'stats.pixelLimit': 'Pixel limit',
+        'stats.placeholder': '–',
+        'canvas.opticalAxis': 'Optical axis',
+        'canvas.objectPlane': 'Object plane',
+        'canvas.aperture': 'Aperture',
+        'canvas.principalPlane': 'Principal plane',
+        'canvas.focalPlane': 'Focal plane',
+        'canvas.imagePlane': 'Image plane',
+        'canvas.sensorPlane': 'Sensor plane',
+        'canvas.depthOfFocus': 'Depth of focus',
+      })
+    });
+
+    function createI18n({ dictionaries, defaultLanguage, storageKey, locales }) {
+      const supported = Object.freeze(Object.keys(dictionaries));
+      const listeners = new Set();
+      let language = readStored() || defaultLanguage;
+
+      function readStored() {
+        try {
+          const stored = window.localStorage.getItem(storageKey);
+          return dictionaries[stored] ? stored : null;
+        } catch (_) { return null; }
+      }
+
+      function persist(lang) {
+        try { window.localStorage.setItem(storageKey, lang); } catch (_) { /* ignore */ }
+      }
+
+      function t(key) {
+        const table = dictionaries[language];
+        const fallback = dictionaries[defaultLanguage];
+        return (table && table[key]) || (fallback && fallback[key]) || key;
+      }
+
+      function formatNumber(value, decimals) {
+        return new Intl.NumberFormat(locales[language] || locales[defaultLanguage], {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals
+        }).format(value);
+      }
+
+      function apply(root) {
+        root.querySelectorAll('[data-i18n]').forEach((node) => {
+          node.textContent = t(node.dataset.i18n);
+        });
+        root.querySelectorAll('[data-i18n-title]').forEach((node) => {
+          node.title = t(node.dataset.i18nTitle);
+        });
+        root.querySelectorAll('[data-i18n-alt]').forEach((node) => {
+          node.alt = t(node.dataset.i18nAlt);
+        });
+      }
+
+      function setLanguage(lang) {
+        if (!dictionaries[lang] || lang === language) return;
+        language = lang;
+        persist(lang);
+        document.documentElement.lang = lang;
+        listeners.forEach((listener) => listener(lang));
+      }
+
+      document.documentElement.lang = language;
+
+      return Object.freeze({
+        t, apply, setLanguage, formatNumber, supported,
+        get language() { return language; },
+        subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); }
+      });
+    }
+
+    /* ==========================================================================
+       3. STATE — one source of truth
+       ========================================================================== */
+
+    function createStore(initialState) {
+      let state = Object.freeze({ ...initialState });
+      const listeners = new Set();
+      return Object.freeze({
+        getState: () => state,
+        patch(partial) {
+          state = Object.freeze({ ...state, ...partial });
+          listeners.forEach((listener) => listener(state));
+        },
+        subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); }
+      });
+    }
+
+    const initialState = Object.freeze(
+            PARAM_SCHEMA.reduce((acc, param) => ({ ...acc, [param.id]: param.value }), {})
+    );
+
+    /* ==========================================================================
+       4. CORE OPTICS — pure, DOM-free
+       ========================================================================== */
+
+    const Optics = Object.freeze({
+      slopeBetween(from, to) {
+        const dx = to.x - from.x;
+        return Math.abs(dx) < MATH.epsilon ? Number.NaN : (to.y - from.y) / dx;
+      },
+      /** paraxial thin lens: u' = u - y / f */
+      refractSlope(slopeIn, height, focalLength) {
+        if (Math.abs(focalLength) < MATH.minFocalLength) return Number.NaN;
+        return slopeIn - height / focalLength;
+      },
+      passesAperture(height, holeHalfHeight, edgeRayPasses) {
+        const magnitude = Math.abs(height);
+        return edgeRayPasses ? magnitude <= holeHalfHeight : magnitude < holeHalfHeight;
+      },
+      /** evenly spaced sample heights across [-half, +half], edges included */
+      sampleHeights(halfHeight, count) {
+        if (count < 2) return [0];
+        const span = 2 * halfHeight;
+        const stepSize = span / (count - 1);
+        return Array.from({ length: count }, (_, index) => -halfHeight + index * stepSize);
+      },
+      /** thin lens: 1/g + 1/b = 1/f  =>  b = g·f / (g − f) */
+      imageDistance(objectDistance, focalLength) {
+        const denominator = objectDistance - focalLength;
+        if (Math.abs(denominator) < MATH.epsilon) return Number.POSITIVE_INFINITY;
+        return (objectDistance * focalLength) / denominator;
+      },
+      magnification(objectDistance, imageDistance) {
+        if (Math.abs(objectDistance) < MATH.minObjectDistance) return Number.NaN;
+        return -imageDistance / objectDistance;
+      },
+      rayHeightAtPlane({ source, apertureX, apertureHeight, focalLength, planeX }) {
+        const slopeIn = Optics.slopeBetween(source, { x: apertureX, y: apertureHeight });
+        const slopeOut = Optics.refractSlope(slopeIn, apertureHeight, focalLength);
+        return apertureHeight + slopeOut * (planeX - apertureX);
+      },
+      blurCircleDiameter({ source, aperture, focalLength, sensorX }) {
+        if (!source || aperture.holeHalfHeight <= 0) return Number.NaN;
+        const intersections = [-aperture.holeHalfHeight, aperture.holeHalfHeight]
+                .map((apertureHeight) => Optics.rayHeightAtPlane({
+                  source,
+                  apertureX: aperture.x,
+                  apertureHeight,
+                  focalLength,
+                  planeX: sensorX
+                }));
+        return intersections.every(Number.isFinite)
+                ? Math.abs(intersections[1] - intersections[0])
+                : Number.NaN;
+      },
+      depthOfFocusInterval({ imageDistance, apertureDiameter, epsilonMax }) {
+        if (!Number.isFinite(imageDistance) || imageDistance <= 0
+                || !Number.isFinite(apertureDiameter) || apertureDiameter <= 0
+                || !Number.isFinite(epsilonMax) || epsilonMax < 0) {
+          return null;
+        }
+        const halfWidth = imageDistance * epsilonMax / apertureDiameter;
+        return Object.freeze({
+          xFrom: imageDistance - halfWidth,
+          xTo: imageDistance + halfWidth
+        });
+      }
+    });
+
+    /* ==========================================================================
+       5. GEOMETRY — ray clipping against the world box
+       ========================================================================== */
+
+    const Geometry = Object.freeze({
+      /** ray travels in +x with the given slope; returns exit point of the box */
+      clipRay({ origin, slope, box }) {
+        if (!Number.isFinite(slope)) return null;
+        const { epsilon } = MATH;
+        const candidates = [box.xMax - origin.x];
+        if (slope > epsilon) candidates.push((box.yMax - origin.y) / slope);
+        if (slope < -epsilon) candidates.push((box.yMin - origin.y) / slope);
+        const travel = Math.min(...candidates.filter((t) => Number.isFinite(t) && t >= 0));
+        if (!Number.isFinite(travel)) return null;
+        return { x: origin.x + travel, y: origin.y + slope * travel };
+      }
+    });
+
+    /* ==========================================================================
+       6. TRACER — pure ray tracing, list-ready for many sources
+       ========================================================================== */
+
+    const Tracer = Object.freeze({
+      traceSource({ source, aperture, focalLength, gridPointCount, edgeRayPasses, clipBox }) {
+        const heights = Optics.sampleHeights(aperture.outerHalfHeight, gridPointCount);
+
+        return heights.map((height) => {
+          const hitPoint = { x: aperture.x, y: height };
+          const slopeIn = Optics.slopeBetween(source, hitPoint);
+          const passes = Optics.passesAperture(height, aperture.holeHalfHeight, edgeRayPasses);
+          const segments = [{
+            styleKey: passes ? 'incoming' : 'blocked',
+            from: source,
+            to: hitPoint
+          }];
+
+          if (passes) {
+            const slopeOut = Optics.refractSlope(slopeIn, height, focalLength);
+            const exitPoint = Geometry.clipRay({ origin: hitPoint, slope: slopeOut, box: clipBox });
+            if (exitPoint) segments.push({ styleKey: 'refracted', from: hitPoint, to: exitPoint });
+          }
+
+          return Object.freeze({
+            sourceId: source.id,
+            apertureHeight: height,
+            status: passes ? 'transmitted' : 'blocked',
+            segments
+          });
+        });
+      },
+
+      tracePrincipalRay({ source, aperture, focalLength, clipBox }) {
+        const hitPoint = Object.freeze({
+          x: aperture.x,
+          y: 0
+        });
+        const slopeIn = Optics.slopeBetween(source, hitPoint);
+        const slopeOut = Optics.refractSlope(slopeIn, hitPoint.y, focalLength);
+        const exitPoint = Geometry.clipRay({ origin: hitPoint, slope: slopeOut, box: clipBox });
+        if (!Number.isFinite(slopeIn) || !exitPoint) return null;
+
+        return Object.freeze({
+          sourceId: source.id,
+          apertureHeight: hitPoint.y,
+          status: 'principalRay',
+          segments: Object.freeze([
+            Object.freeze({ styleKey: 'principalRay', from: source, to: hitPoint }),
+            Object.freeze({ styleKey: 'principalRay', from: hitPoint, to: exitPoint })
+          ])
+        });
+      },
+
+      traceSensorBoundaryRay({ sensorPoint, aperture, objectX }) {
+        const hitPoint = Object.freeze({ x: aperture.x, y: 0 });
+        const slope = Optics.slopeBetween(sensorPoint, hitPoint);
+        if (!Number.isFinite(slope)) return null;
+
+        const objectPoint = Object.freeze({
+          x: objectX,
+          y: hitPoint.y + slope * (objectX - hitPoint.x)
+        });
+
+        return Object.freeze({
+          sourceId: sensorPoint.id,
+          apertureHeight: hitPoint.y,
+          status: 'sensorBoundary',
+          segments: Object.freeze([
+            Object.freeze({ styleKey: 'sensorBoundary', from: objectPoint, to: hitPoint }),
+            Object.freeze({ styleKey: 'sensorBoundary', from: hitPoint, to: sensorPoint })
+          ])
+        });
+      },
+
+      traceScene({ sources, ...rest }) {
+        return sources.flatMap((source) => Tracer.traceSource({ source, ...rest }));
+      }
+    });
+
+    /* ==========================================================================
+   7. VIEWPORT — the only world <-> screen conversion
+      world origin = intersection of optical axis and APERTURE plane
+      world x to the right (image side positive), world y upwards
+      pxPerUnit is fixed => changing g translates the object plane
+   ========================================================================== */
+
+    const Viewport = Object.freeze({
+      create({ widthPx, heightPx, layout, scale, maxObjectDistance, navigationTransform }) {
+        const transform = navigationTransform || { x: 0, y: 0, k: 1 };
+        const baseAxisYPx = (heightPx * layout.opticalAxisYPct) / 100;
+        const baseApertureXPx = (widthPx * layout.apertureXPct) / 100;
+        const halfHeightPx = heightPx / 2;
+
+        const byReference = scale.mode === 'referenceDistance';
+        const spanPct = layout.apertureXPct
+                - (byReference ? layout.objectPlaneRefXPct : layout.objectPlaneMinXPct);
+        const spanDistance = Math.max(
+                byReference ? scale.referenceObjectDistance : maxObjectDistance,
+                MATH.minObjectDistance
+        );
+
+        const basePxPerUnit = ((widthPx * spanPct) / 100) / spanDistance;
+        const basePxPerUnitY = basePxPerUnit * scale.transverseExaggeration;
+        const pxPerUnit = basePxPerUnit * transform.k;
+        const pxPerUnitY = basePxPerUnitY * transform.k;
+        const usable = Number.isFinite(pxPerUnit) && pxPerUnit > MATH.epsilon;
+
+        const toPxX = (worldX) =>
+          (baseApertureXPx + worldX * basePxPerUnit) * transform.k + transform.x;
+        const toPxY = (worldY) =>
+          (baseAxisYPx - worldY * basePxPerUnitY) * transform.k + transform.y;
+
+        return Object.freeze({
+          widthPx, heightPx, halfHeightPx,
+          axisYPx: toPxY(0),
+          apertureXPx: toPxX(0),
+          pxPerUnit, pxPerUnitY, usable,
+          toPxX, toPxY, navigationTransform: transform,
+          worldBox: Object.freeze({
+            xMin: ((-transform.x / transform.k) - baseApertureXPx) / basePxPerUnit,
+            xMax: (((widthPx - transform.x) / transform.k) - baseApertureXPx)
+                    / basePxPerUnit,
+            yMax: (baseAxisYPx + transform.y / transform.k) / basePxPerUnitY,
+            yMin: (baseAxisYPx - (heightPx - transform.y) / transform.k)
+                    / basePxPerUnitY
+          }),
+          /** percent of canvas half height -> world length */
+          halfHeightPctToWorld: (percent) =>
+            ((halfHeightPx * percent) / 100) / basePxPerUnitY
+        });
+      }
+    });
+
+    /* ==========================================================================
+       8. SCENE — world-coordinate model, no pixels, no canvas
+       ========================================================================== */
+
+    const Scene = Object.freeze({
+      build({ params, viewport, config }) {
+        const objectDistance = Math.max(params.g, config.math.minObjectDistance);
+        const outerHalfHeight = viewport.halfHeightPctToWorld(config.aperture.outerHalfHeightPct);
+
+        const aperture = Object.freeze({
+          x: 0,                                    // fixed anchor of the world
+          outerHalfHeight,
+          holeHalfHeight: Math.min(params.d / 2, outerHalfHeight)
+        });
+
+        const objectHalfHeight = config.objectHeight.value / 2;
+        const sources = config.sources
+                .filter((source) => !source.enabledParam || params[source.enabledParam])
+                .map((source) => Object.freeze({
+                  id: source.id,
+                  x: -objectDistance,
+                  y: source.direction * objectHalfHeight * params.sourcePosition / 100
+                }));
+        const principalSources = Object.freeze([
+          Object.freeze({
+            id: 'object-top',
+            x: -objectDistance,
+            y: objectHalfHeight
+          }),
+          Object.freeze({
+            id: 'object-bottom',
+            x: -objectDistance,
+            y: -objectHalfHeight
+          })
+        ]);
+
+        const rays = Tracer.traceScene({
+          sources,
+          aperture,
+          focalLength: params.f,
+          gridPointCount: config.rays.gridPointCount,
+          edgeRayPasses: config.aperture.edgeRayPasses,
+          clipBox: viewport.worldBox
+        });
+        if (params.principalRay) {
+          principalSources
+                  .filter((source) => source.id === 'object-top' || params.secondSource)
+                  .forEach((source) => {
+            const principalRay = Tracer.tracePrincipalRay({
+              source,
+              aperture,
+              focalLength: params.f,
+              clipBox: viewport.worldBox
+            });
+            if (principalRay) rays.push(principalRay);
+          });
+        }
+
+        /* --- reference geometry ------------------------------------------------ */
+        const imageDistance = Optics.imageDistance(objectDistance, params.f);
+        const sensorPositionLocked = params.lockSensorToImagePlane
+                && Number.isFinite(imageDistance);
+        const sensorPosition = sensorPositionLocked
+                ? imageDistance
+                : params.sensorPosition;
+        const magnification = Optics.magnification(objectDistance, imageDistance);
+        const sensorMagnification = Optics.magnification(objectDistance, sensorPosition);
+        const principalRayHeightAtPlane = (planeX) => {
+          const heights = principalSources.map((source) =>
+            Optics.rayHeightAtPlane({
+              source,
+              apertureX: aperture.x,
+              apertureHeight: 0,
+              focalLength: params.f,
+              planeX
+            })
+          );
+          return Math.abs(heights[0] - heights[1]);
+        };
+        const principalRayImageHeight = principalRayHeightAtPlane(imageDistance);
+        const principalRaySensorHeight = principalRayHeightAtPlane(sensorPosition);
+        const absoluteMagnification = Math.abs(magnification);
+        const sensorHeightValue = Number.isFinite(principalRayImageHeight)
+                && Number.isFinite(absoluteMagnification)
+                && absoluteMagnification > config.math.epsilon
+                ? principalRayImageHeight / absoluteMagnification
+                : 2 * objectHalfHeight;
+        const hasRealImage = Number.isFinite(imageDistance) && imageDistance > 0;
+
+        const anchorX = Object.freeze({
+          object: -objectDistance,
+          principal: aperture.x,
+          focal: params.f,
+          image: imageDistance,
+          sensor: aperture.x + sensorPosition
+        });
+        const blurCircle = Optics.blurCircleDiameter({
+          source: sources[0],
+          aperture,
+          focalLength: params.f,
+          sensorX: anchorX.sensor
+        });
+        const sensorHeight = Object.freeze({
+          x: anchorX.sensor,
+          height: sensorHeightValue,
+          halfHeight: sensorHeightValue / 2
+        });
+        if (params.fieldOfView) {
+          [-1, 1].forEach((direction) => {
+            const sensorBoundaryRay = Tracer.traceSensorBoundaryRay({
+              sensorPoint: Object.freeze({
+                id: direction > 0 ? 'sensor-top' : 'sensor-bottom',
+                x: sensorHeight.x,
+                y: direction * sensorHeight.halfHeight
+              }),
+              aperture,
+              objectX: anchorX.object
+            });
+            if (sensorBoundaryRay) rays.push(sensorBoundaryRay);
+          });
+        }
+        const objectHeight = Object.freeze({
+          x: anchorX.object,
+          halfHeight: objectHalfHeight
+        });
+
+        const planeHalfHeight = viewport.halfHeightPctToWorld(config.planes.halfHeightPct);
+        const depthOfFocusInterval = Optics.depthOfFocusInterval({
+          imageDistance,
+          apertureDiameter: 2 * aperture.holeHalfHeight,
+          epsilonMax: config.keyFigures.blurCircle.epsilonMax
+        });
+        const depthOfFocus = depthOfFocusInterval
+                ? Object.freeze({ ...depthOfFocusInterval, halfHeight: planeHalfHeight })
+                : null;
+        const insideBox = (worldX) => Number.isFinite(worldX)
+                && worldX >= viewport.worldBox.xMin
+                && worldX <= viewport.worldBox.xMax;
+        const allowed = (item) => !item.requiresRealImage || hasRealImage;
+
+        const planes = config.planes.items
+                .filter((item) => allowed(item) && insideBox(anchorX[item.anchor]))
+                .map((item) => Object.freeze({
+                  ...item, x: anchorX[item.anchor], halfHeight: planeHalfHeight
+                }));
+
+        const dimensions = config.dimensions.rows
+                .filter((row) => allowed(row)
+                        && insideBox(anchorX[row.from]) && insideBox(anchorX[row.to])
+                        && Math.abs(anchorX[row.to] - anchorX[row.from]) > config.math.epsilon)
+                .map((row) => Object.freeze({
+                  ...row, xFrom: anchorX[row.from], xTo: anchorX[row.to]
+                }));
+
+        return Object.freeze({
+          opticalAxis: Object.freeze({
+            y: 0, xFrom: viewport.worldBox.xMin, xTo: viewport.worldBox.xMax
+          }),
+          objectPlane: Object.freeze({
+            x: -objectDistance,
+            halfHeight: viewport.halfHeightPctToWorld(config.objectPlane.halfHeightPct)
+          }),
+          aperture, sources, rays,
+          planes, dimensions, planeHalfHeight, imageDistance, magnification,
+          sensorPosition, sensorPositionLocked, sensorMagnification, principalRaySensorHeight,
+          blurCircle, depthOfFocus, sensorHeight, objectHeight,
+          displayObjectImage: params.displayImage,
+          displayFieldOfView: params.fieldOfView
+        });
+      }
+    });
+
+    /* ==========================================================================
+       9. RENDER — pure drawing, reads config for every visual property
+       ========================================================================== */
+
+    const Draw = Object.freeze({
+      applyStroke(ctx, style) {
+        ctx.strokeStyle = style.color;
+        ctx.lineWidth = style.lineWidth;
+        ctx.lineCap = style.lineCap || 'butt';
+        ctx.setLineDash(style.dash || []);
+      },
+      line(ctx, fromPx, toPx, style) {
+        Draw.applyStroke(ctx, style);
+        ctx.beginPath();
+        ctx.moveTo(fromPx.x, fromPx.y);
+        ctx.lineTo(toPx.x, toPx.y);
+        ctx.stroke();
+      },
+      dot(ctx, centerPx, style) {
+        ctx.beginPath();
+        ctx.arc(centerPx.x, centerPx.y, style.radiusPx, 0, Math.PI * 2);
+        ctx.fillStyle = style.fillColor;
+        ctx.fill();
+        ctx.lineWidth = style.lineWidth;
+        ctx.strokeStyle = style.strokeColor;
+        ctx.setLineDash([]);
+        ctx.stroke();
+      },
+      label(ctx, text, xPx, yPx, { align, baseline }, style) {
+        ctx.save();
+        ctx.font = style.font;
+        ctx.fillStyle = style.color;
+        ctx.textAlign = align;
+        ctx.textBaseline = baseline;
+        ctx.fillText(text, xPx, yPx);
+        ctx.restore();
+      },
+      /** filled triangle; directionSign = -1 points left, +1 points right */
+      arrowHead(ctx, tipPx, directionSign, style) {
+        const baseX = tipPx.x - directionSign * style.arrowHeadLengthPx;
+        ctx.save();
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(tipPx.x, tipPx.y);
+        ctx.lineTo(baseX, tipPx.y - style.arrowHeadHalfWidthPx);
+        ctx.lineTo(baseX, tipPx.y + style.arrowHeadHalfWidthPx);
+        ctx.closePath();
+        ctx.fillStyle = style.color;
+        ctx.fill();
+        ctx.restore();
+      },
+
+      tick(ctx, xPx, yPx, style) {
+        Draw.line(ctx,
+                { x: xPx, y: yPx - style.tickHalfLengthPx },
+                { x: xPx, y: yPx + style.tickHalfLengthPx },
+                style);
+      },
+
+      measure(ctx, text, font) {
+        ctx.save();
+        ctx.font = font;
+        const widthPx = ctx.measureText(text).width;
+        ctx.restore();
+        return widthPx;
+      }
+    });
+
+    const OpticsRenderer = Object.freeze({
+      draw({ ctx, scene, viewport, config, i18n, assets }) {
+        const { widthPx, heightPx } = viewport;
+
+        ctx.save();
+        ctx.setLineDash([]);
+        ctx.fillStyle = config.canvas.backgroundColor;
+        ctx.fillRect(0, 0, widthPx, heightPx);
+        ctx.restore();
+
+        if (config.backgroundGrid.visible) OpticsRenderer.drawBackgroundGrid(ctx, viewport, config);
+        if (!viewport.usable) return;
+
+        if (config.depthOfFocus.visible && scene.depthOfFocus) {
+          OpticsRenderer.drawDepthOfFocus(ctx, scene, viewport, config, i18n);
+        }
+        if (config.opticalAxis.visible) OpticsRenderer.drawOpticalAxis(ctx, scene, viewport, config);
+        OpticsRenderer.drawPlanes(ctx, scene, viewport, config, i18n);
+        if (config.objectPlane.visible) OpticsRenderer.drawObjectPlane(ctx, scene, viewport, config);
+        if (scene.displayObjectImage) {
+          OpticsRenderer.drawObjectImage(
+                  ctx, scene, viewport, config, assets.objectImage
+          );
+          OpticsRenderer.drawSensorImage(
+                  ctx, scene, viewport, config, assets.objectImage
+          );
+        }
+
+        OpticsRenderer.drawRays(ctx, scene, viewport, config);
+        if (config.objectHeight.visible && !scene.displayObjectImage) {
+          OpticsRenderer.drawObjectHeight(ctx, scene, viewport, config);
+        }
+        OpticsRenderer.drawAperture(ctx, scene, viewport, config);
+        if (config.sensorHeight.visible && scene.sensorHeight) {
+          OpticsRenderer.drawSensorHeight(ctx, scene, viewport, config);
+        }
+        if (scene.displayFieldOfView) {
+          OpticsRenderer.drawSensorBoundaryMarkers(ctx, scene, viewport, config);
+        }
+        if (config.sourceMarker.visible) OpticsRenderer.drawSources(ctx, scene, viewport, config);
+        if (config.labels.visible) OpticsRenderer.drawLabels(ctx, scene, viewport, config, i18n);
+        if (config.dimensions.visible) OpticsRenderer.drawDimensions(ctx, scene, viewport, config);
+      },
+
+      drawPlanes(ctx, scene, viewport, config, i18n) {
+        scene.planes.forEach((plane) => {
+          const xPx = viewport.toPxX(plane.x);
+          const topPx = viewport.toPxY(plane.halfHeight);
+          Draw.line(ctx, { x: xPx, y: topPx },
+                  { x: xPx, y: viewport.toPxY(-plane.halfHeight) }, plane);
+          if (config.labels.visible) {
+            const stackPx = plane.labelRow * config.planes.labelRowGapPx;
+            Draw.label(ctx, i18n.t(plane.labelKey),
+                    xPx, topPx - config.planes.labelGapPx - stackPx,
+                    { align: 'center', baseline: 'bottom' },
+                    { ...config.labels, color: plane.color });
+          }
+        });
+        ctx.setLineDash([]);
+      },
+
+      drawDepthOfFocus(ctx, scene, viewport, config, i18n) {
+        const { xFrom, xTo, halfHeight } = scene.depthOfFocus;
+        const leftPx = viewport.toPxX(Math.min(xFrom, xTo));
+        const rightPx = viewport.toPxX(Math.max(xFrom, xTo));
+        const topPx = viewport.toPxY(halfHeight);
+        const bottomPx = viewport.toPxY(-halfHeight);
+
+        ctx.save();
+        ctx.fillStyle = config.depthOfFocus.color;
+        ctx.fillRect(leftPx, topPx, rightPx - leftPx, bottomPx - topPx);
+        ctx.restore();
+
+        if (config.labels.visible) {
+          Draw.label(ctx, i18n.t(config.depthOfFocus.labelKey),
+                  (leftPx + rightPx) / 2,
+                  topPx - config.depthOfFocus.labelOffsetPx,
+                  { align: 'center', baseline: 'bottom' },
+                  { ...config.labels, color: config.depthOfFocus.labelColor });
+        }
+      },
+
+      drawObjectHeight(ctx, scene, viewport, config) {
+        const { x, halfHeight } = scene.objectHeight;
+        Draw.line(ctx,
+                { x: viewport.toPxX(x), y: viewport.toPxY(halfHeight) },
+                { x: viewport.toPxX(x), y: viewport.toPxY(-halfHeight) },
+                config.objectHeight);
+      },
+
+      drawObjectImage(ctx, scene, viewport, config, image) {
+        if (!image || !image.complete || image.naturalWidth <= 0 || image.naturalHeight <= 0) return;
+
+        const heightPx = 2 * scene.objectHeight.halfHeight * viewport.pxPerUnitY;
+        const widthPx = heightPx * image.naturalWidth / image.naturalHeight;
+        const leftPx = viewport.toPxX(scene.objectHeight.x);
+        const topPx = viewport.toPxY(scene.objectHeight.halfHeight);
+
+        ctx.save();
+        ctx.globalAlpha = config.objectImage.opacity;
+        ctx.drawImage(image, leftPx, topPx, widthPx, heightPx);
+        ctx.restore();
+      },
+
+      drawSensorImage(ctx, scene, viewport, config, image) {
+        if (!image || !image.complete || image.naturalWidth <= 0 || image.naturalHeight <= 0) return;
+
+        const heightPx = scene.principalRaySensorHeight * viewport.pxPerUnitY;
+        const widthPx = heightPx * image.naturalWidth / image.naturalHeight;
+        const rightPx = viewport.toPxX(scene.sensorHeight.x);
+        const bottomPx = viewport.toPxY(-scene.principalRaySensorHeight / 2);
+
+        ctx.save();
+        ctx.globalAlpha = config.objectImage.opacity;
+        ctx.translate(rightPx, bottomPx);
+        ctx.scale(-1, -1);
+        ctx.drawImage(image, 0, 0, widthPx, heightPx);
+        ctx.restore();
+      },
+
+      drawSensorHeight(ctx, scene, viewport, config) {
+        const sensorPlane = config.planes.items.find((plane) => plane.id === 'sensor');
+        const dashLengthPx = config.keyFigures.blurCircle.epsilonMax * viewport.pxPerUnitY;
+        const style = {
+          ...sensorPlane,
+          lineWidth: config.sensorHeight.lineWidth,
+          dash: [dashLengthPx, dashLengthPx * config.sensorHeight.dashGapRatio]
+        };
+        const { x, halfHeight } = scene.sensorHeight;
+        Draw.line(ctx,
+                { x: viewport.toPxX(x), y: viewport.toPxY(halfHeight) },
+                { x: viewport.toPxX(x), y: viewport.toPxY(-halfHeight) },
+                style);
+      },
+
+      drawSensorBoundaryMarkers(ctx, scene, viewport, config) {
+        const style = config.rays.sensorBoundary;
+        [-1, 1].forEach((direction) => {
+          Draw.dot(ctx, {
+            x: viewport.toPxX(scene.sensorHeight.x),
+            y: viewport.toPxY(direction * scene.sensorHeight.halfHeight)
+          }, {
+            radiusPx: style.markerRadiusPx,
+            fillColor: style.color,
+            strokeColor: style.color,
+            lineWidth: 1
+          });
+        });
+      },
+
+      drawDimensions(ctx, scene, viewport, config) {
+        const style = config.dimensions;
+        const planeBottomPx = viewport.toPxY(-scene.planeHalfHeight);
+
+        scene.dimensions.forEach((dimension) => {
+          const yPx = (viewport.heightPx
+                  * (style.baselineYPct + dimension.row * style.rowSpacingPct)) / 100;
+          const fromPx = viewport.toPxX(dimension.xFrom);
+          const toPx = viewport.toPxX(dimension.xTo);
+          const leftPx = Math.min(fromPx, toPx);
+          const rightPx = Math.max(fromPx, toPx);
+          const spanPx = rightPx - leftPx;
+
+          if (style.extensionLine.visible) {
+            [leftPx, rightPx].forEach((xPx) => Draw.line(ctx,
+                    { x: xPx, y: planeBottomPx }, { x: xPx, y: yPx }, style.extensionLine));
+          }
+
+          const text = dimension.symbol;
+          const textWidthPx = Draw.measure(ctx, text, style.font);
+          const gapPx = textWidthPx + 2 * style.labelPaddingPx;
+          const centerPx = (leftPx + rightPx) / 2;
+          const inlineLabel = spanPx >= gapPx + 2 * style.arrowHeadLengthPx;
+
+          if (inlineLabel) {
+            Draw.line(ctx, { x: leftPx, y: yPx }, { x: centerPx - gapPx / 2, y: yPx }, style);
+            Draw.line(ctx, { x: centerPx + gapPx / 2, y: yPx }, { x: rightPx, y: yPx }, style);
+          } else {
+            Draw.line(ctx, { x: leftPx, y: yPx }, { x: rightPx, y: yPx }, style);
+          }
+
+          Draw.tick(ctx, leftPx, yPx, style);
+          Draw.tick(ctx, rightPx, yPx, style);
+
+          if (spanPx >= style.minSpanPx) {
+            Draw.arrowHead(ctx, { x: leftPx, y: yPx }, -1, style);
+            Draw.arrowHead(ctx, { x: rightPx, y: yPx }, 1, style);
+          }
+
+          const labelStyle = { font: style.font, color: style.color };
+          if (inlineLabel) {
+            Draw.label(ctx, text, centerPx, yPx,
+                    { align: 'center', baseline: 'middle' }, labelStyle);
+          } else {
+            Draw.label(ctx, text, centerPx, yPx - style.tickHalfLengthPx - style.labelOffsetPx,
+                    { align: 'center', baseline: 'bottom' }, labelStyle);
+          }
+        });
+
+        ctx.setLineDash([]);
+      },
+
+      drawBackgroundGrid(ctx, viewport, config) {
+        const { spacingPct } = config.backgroundGrid;
+        const { x, y, k } = viewport.navigationTransform;
+        const stepX = (viewport.widthPx * spacingPct * k) / 100;
+        const stepY = (viewport.heightPx * spacingPct * k) / 100;
+        const startX = ((x % stepX) + stepX) % stepX;
+        const startY = ((y % stepY) + stepY) % stepY;
+        Draw.applyStroke(ctx, config.backgroundGrid);
+        ctx.beginPath();
+        for (let gridX = startX; gridX <= viewport.widthPx; gridX += stepX) {
+          ctx.moveTo(gridX, 0);
+          ctx.lineTo(gridX, viewport.heightPx);
+        }
+        for (let gridY = startY; gridY <= viewport.heightPx; gridY += stepY) {
+          ctx.moveTo(0, gridY);
+          ctx.lineTo(viewport.widthPx, gridY);
+        }
+        ctx.stroke();
+        ctx.setLineDash([]);
+      },
+
+      drawOpticalAxis(ctx, scene, viewport, config) {
+        const yPx = viewport.toPxY(scene.opticalAxis.y);
+        Draw.line(ctx,
+                { x: viewport.toPxX(scene.opticalAxis.xFrom), y: yPx },
+                { x: viewport.toPxX(scene.opticalAxis.xTo), y: yPx },
+                config.opticalAxis);
+      },
+
+      drawObjectPlane(ctx, scene, viewport, config) {
+        const xPx = viewport.toPxX(scene.objectPlane.x);
+        Draw.line(ctx,
+                { x: xPx, y: viewport.toPxY(scene.objectPlane.halfHeight) },
+                { x: xPx, y: viewport.toPxY(-scene.objectPlane.halfHeight) },
+                config.objectPlane);
+      },
+
+      drawRays(ctx, scene, viewport, config) {
+        const order = ['blocked', 'transmitted', 'sensorBoundary', 'principalRay'];
+        order.forEach((status) => {
+          scene.rays
+                  .filter((ray) => ray.status === status)
+                  .forEach((ray) => ray.segments.forEach((segment) => {
+                    Draw.line(ctx,
+                            { x: viewport.toPxX(segment.from.x), y: viewport.toPxY(segment.from.y) },
+                            { x: viewport.toPxX(segment.to.x), y: viewport.toPxY(segment.to.y) },
+                            config.rays[segment.styleKey]);
+                  }));
+        });
+        ctx.setLineDash([]);
+      },
+
+      drawAperture(ctx, scene, viewport, config) {
+        const { outerHalfHeight, holeHalfHeight } = scene.aperture;
+        if (holeHalfHeight >= outerHalfHeight) return;   // fully open: nothing to draw
+        const xPx = viewport.toPxX(scene.aperture.x);
+        [1, -1].forEach((sign) => {
+          Draw.line(ctx,
+                  { x: xPx, y: viewport.toPxY(sign * holeHalfHeight) },
+                  { x: xPx, y: viewport.toPxY(sign * outerHalfHeight) },
+                  config.aperture);
+        });
+        ctx.setLineDash([]);
+      },
+
+      drawSources(ctx, scene, viewport, config) {
+        scene.sources.forEach((source) => {
+          Draw.dot(ctx,
+                  { x: viewport.toPxX(source.x), y: viewport.toPxY(source.y) },
+                  config.sourceMarker);
+        });
+      },
+
+      drawLabels(ctx, scene, viewport, config, i18n) {
+        const style = config.labels;
+        const gap = style.offsetPx;
+
+        if (style.showOpticalAxis) {
+          Draw.label(ctx, i18n.t('canvas.opticalAxis'),
+                  viewport.widthPx - gap, viewport.toPxY(scene.opticalAxis.y) - gap,
+                  { align: 'right', baseline: 'bottom' }, style);
+        }
+        if (style.showObjectPlane) {
+          const objectLabelRow = 0;
+          Draw.label(ctx, i18n.t('canvas.objectPlane'),
+                  viewport.toPxX(scene.objectPlane.x),
+                  viewport.toPxY(scene.objectPlane.halfHeight) - gap
+                          - objectLabelRow * config.planes.labelRowGapPx,
+                  { align: 'center', baseline: 'bottom' },
+                  { ...style, color: config.objectPlane.color });
+        }
+        if (style.showAperture) {
+          Draw.label(ctx, i18n.t('canvas.aperture'),
+                  viewport.toPxX(scene.aperture.x),
+                  viewport.toPxY(scene.aperture.outerHalfHeight) - gap,
+                  { align: 'center', baseline: 'bottom' }, style);
+        }
+      }
+    });
+
+    /* ==========================================================================
+       10. UI ADAPTERS
+       ========================================================================== */
+
+    const Dom = Object.freeze({
+      uid: (name) => `${CONFIG.dom.idPrefix}-${name}`,
+      element(tag, className, parent) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (parent) parent.appendChild(node);
+        return node;
+      }
+    });
+
+    function appendMathLabel(parent, math, className) {
+      if (!math) return null;
+      const element = Dom.element('span', className, parent);
+      element.append(math.symbol);
+      if (math.subscript) {
+        Dom.element('sub', null, element).textContent = math.subscript;
+      }
+      if (math.suffix) element.append(math.suffix);
+      return element;
+    }
+
+    function collectConfigEntries(value, path = []) {
+      if (value === null || typeof value !== 'object') {
+        return [{ path, value }];
+      }
+      return Object.entries(value).flatMap(([key, child]) =>
+        collectConfigEntries(child, [...path, key])
+      );
+    }
+
+    function isVisibleConfigEntry({ path }) {
+      const pathString = path.join('.');
+      const key = path[path.length - 1];
+      const sharedKeys = new Set(['visible', 'lineWidth', 'color']);
+      const explicitPaths = new Set([
+        'backgroundGrid.lineWidth',
+        'keyFigures.blurCircle.epsilonMax',
+        'objectHeight.value',
+        'sourceMarker.radiusPx',
+        'rays.gridPointCount'
+      ]);
+      return sharedKeys.has(key) || explicitPaths.has(pathString);
+    }
+
+    function parseColor(value) {
+      const shortHex = /^#([\da-f])([\da-f])([\da-f])$/i.exec(value);
+      if (shortHex) {
+        return {
+          hex: `#${shortHex.slice(1).map((part) => part.repeat(2)).join('')}`,
+          alpha: 1
+        };
+      }
+
+      const hex = /^#([\da-f]{6})$/i.exec(value);
+      if (hex) return { hex: `#${hex[1]}`, alpha: 1 };
+
+      const rgba = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*([\d.]+))?\s*\)$/i
+              .exec(value);
+      if (!rgba) return null;
+      const toHex = (component) => Number(component).toString(16).padStart(2, '0');
+      return {
+        hex: `#${toHex(rgba[1])}${toHex(rgba[2])}${toHex(rgba[3])}`,
+        alpha: rgba[4] === undefined ? 1 : Number(rgba[4])
+      };
+    }
+
+    function applyColorAlpha(hex, alpha) {
+      if (alpha >= 1) return hex;
+      const channels = [1, 3, 5].map((start) => parseInt(hex.slice(start, start + 2), 16));
+      return `rgba(${channels.join(', ')}, ${alpha})`;
+    }
+
+    function setConfigValue(config, path, value) {
+      const parent = path.slice(0, -1).reduce((current, key) => current[key], config);
+      parent[path[path.length - 1]] = value;
+    }
+
+    function createConfigMenu({ toggle, panel, config, i18n, onChange }) {
+      const title = Dom.element('h2', 'config-menu__title', panel);
+      const fields = Dom.element('div', 'config-menu__fields', panel);
+      const entries = collectConfigEntries(config)
+              .filter(isVisibleConfigEntry);
+
+      entries.forEach((entry) => {
+        const row = Dom.element('label', 'config-menu__field', fields);
+        const key = Dom.element('code', 'config-menu__key', row);
+        key.textContent = entry.path.join('.');
+
+        const input = Dom.element('input', 'config-menu__input', row);
+        const currentValue = entry.value;
+        const color = entry.path[entry.path.length - 1] === 'color'
+                ? parseColor(currentValue)
+                : null;
+        if (typeof currentValue === 'boolean') {
+          input.type = 'checkbox';
+          input.checked = currentValue;
+        } else if (color) {
+          input.type = 'color';
+          input.value = color.hex;
+        } else {
+          input.type = typeof currentValue === 'number' ? 'number' : 'text';
+          if (input.type === 'number') input.step = 'any';
+          input.value = String(currentValue);
+        }
+
+        input.addEventListener('change', () => {
+          let nextValue;
+          let valid = true;
+          if (typeof currentValue === 'boolean') {
+            nextValue = input.checked;
+          } else if (color) {
+            nextValue = applyColorAlpha(input.value, color.alpha);
+          } else if (typeof currentValue === 'number') {
+            nextValue = Number(input.value);
+            valid = Number.isFinite(nextValue);
+          } else {
+            nextValue = input.value;
+          }
+
+          if (!valid) {
+            input.setCustomValidity('Invalid configuration value');
+            input.reportValidity();
+            return;
+          }
+
+          input.setCustomValidity('');
+          setConfigValue(config, entry.path, nextValue);
+          onChange();
+        });
+      });
+
+      function setOpen(open) {
+        panel.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+      }
+
+      function refreshTexts() {
+        title.textContent = i18n.t('header.config');
+        toggle.textContent = config.ui.configSymbol;
+        toggle.title = i18n.t('header.configHint');
+        toggle.setAttribute('aria-label', i18n.t('header.configHint'));
+      }
+
+      toggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setOpen(panel.hidden);
+      });
+      panel.addEventListener('click', (event) => event.stopPropagation());
+      document.addEventListener('click', () => setOpen(false));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setOpen(false);
+      });
+
+      return Object.freeze({ refreshTexts });
+    }
+
+    function createControls({ container, schema, store, i18n }) {
+      let checkboxHeading = null;
+      const entries = schema.map((param) => {
+        if (param.type === 'checkbox' && !checkboxHeading) {
+          checkboxHeading = Dom.element('h3', 'panel__subtitle', container);
+        }
+        const inputId = Dom.uid(`param-${param.id}`);
+        const row = Dom.element('div', 'control', container);
+        row.classList.toggle('control--checkbox', param.type === 'checkbox');
+        row.dataset.param = param.id;
+
+        const head = Dom.element('div', 'control__head', row);
+        const label = Dom.element('label', 'control__label', head);
+        label.htmlFor = inputId;
+
+        const output = param.type === 'range' ? Dom.element('output', 'control__value', head) : null;
+
+        const input = Dom.element('input', 'control__input', row);
+        input.id = inputId;
+        input.type = param.type;
+        if (param.type === 'range') {
+          input.min = String(param.min);
+          input.max = String(param.max);
+          input.step = String(param.step);
+          input.value = String(param.value);
+        } else {
+          input.checked = Boolean(param.value);
+          head.insertBefore(input, label);
+        }
+        if (output) output.htmlFor = inputId;
+
+        input.addEventListener('input', () => {
+          const value = param.type === 'range' ? Number(input.value) : input.checked;
+          store.patch({ [param.id]: value });
+          renderValue();
+        });
+
+        function renderValue(value = Number(input.value), decimals = param.decimals) {
+          if (!output) return;
+          output.textContent = i18n.formatNumber(value, decimals);
+        }
+
+        function refreshTexts() {
+          label.replaceChildren(i18n.t(param.labelKey));
+          if (param.labelMath) {
+            label.append(' ');
+            appendMathLabel(label, param.labelMath, 'control__label-symbol stats-info__math');
+          }
+          renderValue();
+        }
+
+        return { param, row, input, renderValue, refreshTexts };
+      });
+
+      return Object.freeze({
+        refreshTexts() {
+          if (checkboxHeading) {
+            checkboxHeading.textContent = i18n.t('controls.displayOptions');
+          }
+          entries.forEach((entry) => entry.refreshTexts());
+        },
+        render({ values = {}, disabled = [] }) {
+          const disabledIds = new Set(disabled);
+          entries.forEach(({ param, row, input, renderValue }) => {
+            const isDisabled = disabledIds.has(param.id);
+            input.disabled = isDisabled;
+            row.classList.toggle('control--disabled', isDisabled);
+
+            const value = values[param.id];
+            if (param.type !== 'range' || !Number.isFinite(value)) return;
+            input.min = String(Math.min(param.min, value));
+            input.max = String(Math.max(param.max, value));
+            input.value = String(value);
+            renderValue(value, isDisabled ? Math.max(param.decimals, 2) : param.decimals);
+          });
+        }
+      });
+    }
+
+    function createStats({ container, schema, i18n }) {
+      let currentValues = {};
+      const entries = schema.map((stat) => {
+        const term = Dom.element('dt', 'stats__label', container);
+        const label = Dom.element('span', 'stats__label-text', term);
+        appendMathLabel(
+                term,
+                stat.labelMath,
+                'stats__label-symbol stats-info__math'
+        );
+        const value = Dom.element('dd', 'stats__value', container);
+        value.dataset.stat = stat.id;
+        return { stat, label, value };
+      });
+
+      function renderValues() {
+        entries.forEach(({ stat, value }) => {
+          const currentValue = currentValues[stat.id];
+          if (!Number.isFinite(currentValue)) {
+            value.textContent = i18n.t('stats.placeholder');
+            return;
+          }
+          const formatted = i18n.formatNumber(currentValue, stat.decimals || 0);
+          value.textContent = stat.symbol ? `${stat.symbol} ${formatted}` : formatted;
+        });
+      }
+
+      return Object.freeze({
+        refreshTexts() {
+          entries.forEach(({ stat, label }) => {
+            label.textContent = i18n.t(stat.labelKey);
+          });
+          renderValues();
+        },
+        render(values) {
+          currentValues = values;
+          renderValues();
+        }
+      });
+    }
+
+    function createLanguageSelect({ select, i18n }) {
+      i18n.supported.forEach((lang) => {
+        const option = Dom.element('option', null, select);
+        option.value = lang;
+      });
+      select.value = i18n.language;
+      select.addEventListener('change', () => i18n.setLanguage(select.value));
+
+      return Object.freeze({
+        refreshTexts() {
+          Array.from(select.options).forEach((option) => {
+            option.textContent = i18n.t(`language.${option.value}`);
+          });
+          select.value = i18n.language;
+        }
+      });
+    }
+
+    function createPlotNavigation({
+      overlay, brushLayer, toolbar, config, i18n, onTransform
+    }) {
+      if (!window.d3) {
+        throw new Error('D3 failed to load; plot navigation is unavailable');
+      }
+
+      const d3 = window.d3;
+      const overlaySelection = d3.select(overlay);
+      const brushSelection = d3.select(brushLayer);
+      const buttons = Object.freeze({
+        zoomIn: queryRequired(toolbar, '[data-navigation-action="zoom-in"]'),
+        zoomOut: queryRequired(toolbar, '[data-navigation-action="zoom-out"]'),
+        boxZoom: queryRequired(toolbar, '[data-navigation-action="box-zoom"]'),
+        home: queryRequired(toolbar, '[data-navigation-action="home"]')
+      });
+      let widthPx = 1;
+      let heightPx = 1;
+      let boxZoomActive = false;
+
+      const zoom = d3.zoom()
+              .scaleExtent([config.minScale, config.maxScale])
+              .on('zoom', (event) => onTransform(event.transform));
+
+      const brush = d3.brush()
+              .on('end', (event) => {
+                if (!event.selection) return;
+                const [[xFrom, yFrom], [xTo, yTo]] = event.selection;
+                const selectionWidth = xTo - xFrom;
+                const selectionHeight = yTo - yFrom;
+                brushSelection.call(brush.move, null);
+                setBoxZoomActive(false);
+                if (selectionWidth < config.minBoxSizePx
+                        || selectionHeight < config.minBoxSizePx) {
+                  return;
+                }
+
+                const current = d3.zoomTransform(overlay);
+                const factor = Math.min(
+                        widthPx / selectionWidth,
+                        heightPx / selectionHeight
+                );
+                const nextScale = Math.min(config.maxScale, current.k * factor);
+                const appliedFactor = nextScale / current.k;
+                const selectionCenterX = (xFrom + xTo) / 2;
+                const selectionCenterY = (yFrom + yTo) / 2;
+                const next = d3.zoomIdentity
+                        .translate(
+                                widthPx / 2 + appliedFactor * (current.x - selectionCenterX),
+                                heightPx / 2 + appliedFactor * (current.y - selectionCenterY)
+                        )
+                        .scale(nextScale);
+                overlaySelection.call(zoom.transform, next);
+              });
+
+      function setBoxZoomActive(active) {
+        boxZoomActive = active;
+        overlay.classList.toggle('plot-navigation__overlay--selecting', active);
+        buttons.boxZoom.setAttribute('aria-pressed', String(active));
+        brushSelection.on('.brush', null);
+        overlaySelection.on('.zoom', null);
+        if (active) {
+          brushSelection.call(brush);
+        } else {
+          brushSelection.selectAll('*').remove();
+          overlaySelection.call(zoom);
+        }
+      }
+
+      buttons.zoomIn.addEventListener('click', () => {
+        setBoxZoomActive(false);
+        overlaySelection.call(zoom.scaleBy, config.buttonScaleFactor);
+      });
+      buttons.zoomOut.addEventListener('click', () => {
+        setBoxZoomActive(false);
+        overlaySelection.call(zoom.scaleBy, 1 / config.buttonScaleFactor);
+      });
+      buttons.boxZoom.addEventListener('click', () => {
+        setBoxZoomActive(!boxZoomActive);
+      });
+      buttons.home.addEventListener('click', () => {
+        setBoxZoomActive(false);
+        overlaySelection.call(zoom.transform, d3.zoomIdentity);
+      });
+
+      setBoxZoomActive(false);
+
+      return Object.freeze({
+        resize(nextWidthPx, nextHeightPx) {
+          widthPx = nextWidthPx;
+          heightPx = nextHeightPx;
+          zoom.extent([[0, 0], [widthPx, heightPx]]);
+          brush.extent([[0, 0], [widthPx, heightPx]]);
+          if (boxZoomActive) brushSelection.call(brush);
+        },
+        refreshTexts() {
+          const labels = {
+            zoomIn: i18n.t('navigation.zoomIn'),
+            zoomOut: i18n.t('navigation.zoomOut'),
+            boxZoom: i18n.t('navigation.boxZoom'),
+            home: i18n.t('navigation.home')
+          };
+          Object.entries(buttons).forEach(([key, button]) => {
+            button.title = labels[key];
+            button.setAttribute('aria-label', labels[key]);
+          });
+          toolbar.setAttribute('aria-label', i18n.t('panel.optics'));
+        }
+      });
+    }
+
+    /* ==========================================================================
+       11. APP SHELL — wiring, rAF coalescing, responsive canvas
+       ========================================================================== */
+
+    function syncCanvasSize(canvas, ctx) {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      const widthPx = Math.max(CONFIG.canvas.minWidthPx, Math.round(rect.width));
+      const heightPx = Math.max(CONFIG.canvas.minHeightPx, Math.round(rect.height));
+      const bufferWidth = Math.round(widthPx * ratio);
+      const bufferHeight = Math.round(heightPx * ratio);
+
+      if (canvas.width !== bufferWidth || canvas.height !== bufferHeight) {
+        canvas.width = bufferWidth;
+        canvas.height = bufferHeight;
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      return { widthPx, heightPx };
+    }
+
+    function queryRequired(parent, selector) {
+      const node = parent.querySelector(selector);
+      if (!node) {
+        throw new Error(`Required element not found: ${selector}`);
+      }
+      return node;
+    }
+
+    function init() {
+      const root = document.querySelector(CONFIG.dom.rootSelector);
+      if (!root) {
+        throw new Error(`Simulation root not found: ${CONFIG.dom.rootSelector}`);
+      }
+
+      const canvas = queryRequired(root, CONFIG.dom.opticsCanvasSelector);
+      const navigationOverlay = queryRequired(root, CONFIG.dom.navigationOverlaySelector);
+      const navigationBrush = queryRequired(root, CONFIG.dom.navigationBrushSelector);
+      const navigationToolbar = queryRequired(root, CONFIG.dom.navigationToolbarSelector);
+      const sensorImage = queryRequired(root, CONFIG.dom.sensorImageSelector);
+      if (!(canvas instanceof HTMLCanvasElement)) {
+        throw new TypeError(`${CONFIG.dom.opticsCanvasSelector} must be a canvas`);
+      }
+      if (!(sensorImage instanceof HTMLImageElement)) {
+        throw new TypeError(`${CONFIG.dom.sensorImageSelector} must be an image`);
+      }
+      const sensorPreview = sensorImage.parentElement;
+      if (!sensorPreview) {
+        throw new Error('Sensor image must have a preview container');
+      }
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        throw new Error('2D canvas rendering is not supported');
+      }
+      const store = createStore(initialState);
+      const i18n = createI18n({ dictionaries: DICTIONARIES, ...CONFIG.i18n });
+      const objectDistanceParam = PARAM_SCHEMA.find((param) => param.id === 'g');
+      let navigationTransform = window.d3 ? window.d3.zoomIdentity : null;
+
+      const controls = createControls({
+        container: queryRequired(root, CONFIG.dom.controlsSelector),
+        schema: PARAM_SCHEMA, store, i18n
+      });
+      const stats = createStats({
+        container: queryRequired(root, CONFIG.dom.statsSelector),
+        schema: STAT_SCHEMA, i18n
+      });
+      const languageSelect = createLanguageSelect({
+        select: queryRequired(root, CONFIG.dom.languageSelector), i18n
+      });
+      const configMenu = createConfigMenu({
+        toggle: queryRequired(root, CONFIG.dom.configToggleSelector),
+        panel: queryRequired(root, CONFIG.dom.configPanelSelector),
+        config: CONFIG,
+        i18n,
+        onChange: scheduleRender
+      });
+      const navigation = createPlotNavigation({
+        overlay: navigationOverlay,
+        brushLayer: navigationBrush,
+        toolbar: navigationToolbar,
+        config: CONFIG.navigation,
+        i18n,
+        onTransform(transform) {
+          navigationTransform = transform;
+          scheduleRender();
+        }
+      });
+
+      let frameRequest = null;
+      function scheduleRender() {
+        if (frameRequest !== null) return;
+        frameRequest = window.requestAnimationFrame(() => {
+          frameRequest = null;
+          render();
+        });
+      }
+
+      const objectImage = new Image();
+      objectImage.addEventListener('load', scheduleRender);
+      objectImage.addEventListener('error', () => {
+        console.error(`Unable to load object image: ${CONFIG.objectImage.src}`);
+      });
+      objectImage.src = CONFIG.objectImage.src;
+      const assets = Object.freeze({ objectImage });
+
+      function render() {
+        const params = store.getState();
+        const size = syncCanvasSize(canvas, ctx);
+        navigation.resize(size.widthPx, size.heightPx);
+        const viewport = Viewport.create({
+          widthPx: size.widthPx,
+          heightPx: size.heightPx,
+          layout: CONFIG.layout,
+          scale: CONFIG.scale,
+          maxObjectDistance: objectDistanceParam.max,
+          navigationTransform
+        });
+        const scene = Scene.build({ params, viewport, config: CONFIG });
+        controls.render({
+          values: { sensorPosition: scene.sensorPosition },
+          disabled: scene.sensorPositionLocked ? ['sensorPosition'] : []
+        });
+        OpticsRenderer.draw({ ctx, scene, viewport, config: CONFIG, i18n, assets });
+        stats.render({
+          magnification: scene.magnification,
+          sensorMagnification: scene.sensorMagnification,
+          blurCircle: scene.blurCircle,
+          imageDistance: scene.imageDistance,
+          pixelLimit: CONFIG.keyFigures.blurCircle.epsilonMax
+        });
+        const excessBlur = Math.max(
+                0,
+                scene.blurCircle - CONFIG.keyFigures.blurCircle.epsilonMax
+        );
+        const sensorHeight = Math.max(
+                scene.sensorHeight.height,
+                MATH.minObjectDistance
+        );
+        const sensorPixelsPerUnit = sensorPreview.clientHeight / sensorHeight;
+        const blurPx = excessBlur
+                * sensorPixelsPerUnit
+                * CONFIG.imageEffects.blurPxPerEpsilonUnit;
+        sensorPreview.style.setProperty('--sensor-blur-px', `${blurPx}px`);
+        sensorImage.style.setProperty(
+                '--sensor-magnification',
+                String(Math.abs(scene.sensorMagnification))
+        );
+      }
+
+      function refreshTexts() {
+        i18n.apply(root);
+        controls.refreshTexts();
+        stats.refreshTexts();
+        languageSelect.refreshTexts();
+        configMenu.refreshTexts();
+        navigation.refreshTexts();
+        scheduleRender();
+      }
+
+      store.subscribe(scheduleRender);
+      i18n.subscribe(refreshTexts);
+      new ResizeObserver(scheduleRender).observe(canvas);
+
+      refreshTexts();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+  })();
+</script>
+</body>
+</html>

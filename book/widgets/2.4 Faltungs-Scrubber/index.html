@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.4 · Convolution Scrubber</title>
+  <style>
+    :root { color-scheme:light; --bg:#eef3f8; --card:#fff; --line:#cbd6e2; --text:#172334; --muted:#526478; --f:#1769aa; --h:#7048c8; --g:#bc5d00; --neg:#c12b48; --plot:#f8fafc; }
+    :root.dark { color-scheme:dark; --bg:#08111f; --card:#101c2d; --line:#2a3b52; --text:#edf4ff; --muted:#a8bad0; --f:#58a6ff; --h:#b58cff; --g:#ffad57; --neg:#ff718c; --plot:#0b1524; }
+    * { box-sizing:border-box; }
+    body { margin:0; padding:clamp(12px,2vw,26px); background:var(--bg); color:var(--text); font:18px/1.45 system-ui,Segoe UI,sans-serif; }
+    .app { max-width:1500px; margin:auto; }
+    header { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:18px; }
+    h1 { font-size:clamp(27px,3vw,40px); letter-spacing:-.035em; margin:0; }
+    p { margin:8px 0; }
+    header p,.hint,.caption { color:var(--muted); }
+    button,select,input { font:inherit; }
+    button,select,input[type=number],input[type=text] { padding:9px 12px; border:1px solid var(--line); border-radius:9px; background:var(--card); color:var(--text); min-height:44px; }
+    button { cursor:pointer; }
+    button:hover { border-color:var(--h); }
+    button:focus-visible,select:focus-visible,input:focus-visible,canvas:focus-visible { outline:3px solid var(--h); outline-offset:3px; }
+    button.active { background:var(--h); border-color:var(--h); color:#fff; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; }
+    .layout { display:grid; grid-template-columns:290px minmax(0,1fr); gap:18px; }
+    aside,.panel,.formula { background:var(--card); border:1px solid var(--line); border-radius:14px; }
+    aside { padding:18px; align-self:start; }
+    .control { display:block; margin-bottom:18px; }
+    .control > span { display:flex; justify-content:space-between; gap:8px; font-weight:650; margin-bottom:7px; }
+    select,input[type=range] { width:100%; }
+    input[type=range] { min-height:38px; accent-color:var(--h); cursor:pointer; }
+    .check { display:flex; gap:9px; align-items:center; margin:14px 0; }
+    input[type=checkbox] { width:21px; height:21px; accent-color:var(--h); }
+    .hint { border-top:1px solid var(--line); padding-top:14px; margin-top:18px; }
+    .views { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .panel { min-width:0; overflow:hidden; }
+    .wide { grid-column:1/-1; }
+    .panel-head { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line); }
+    h2 { font-size:18px; margin:0; }
+    .panel-head button { padding:5px 9px; }
+    canvas { display:block; width:100%; height:auto; background:var(--plot); touch-action:none; }
+    .caption { padding:8px 16px 12px; margin:0; }
+    .formula { padding:14px 18px; margin-bottom:16px; text-align:center; font-size:22px; overflow-wrap:anywhere; }
+    .f { color:var(--f); } .h { color:var(--h); } .g { color:var(--g); }
+    .value { font-weight:750; font-variant-numeric:tabular-nums; }
+    .kernel { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; margin:10px 0; }
+    .kernel input { width:100%; padding:5px; text-align:center; }
+    .tiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; padding:16px; }
+    table { border-collapse:collapse; width:100%; table-layout:fixed; }
+    td { border:1px solid var(--line); text-align:center; padding:9px 2px; font-variant-numeric:tabular-nums; }
+    .tiles h3 { font-size:18px; margin:0 0 8px; }
+    #sum { padding:0 16px 16px; margin:0; text-align:center; }
+    #status { min-height:26px; color:var(--muted); margin-top:8px; }
+    [hidden] { display:none !important; }
+    @media(max-width:1000px) { .layout { grid-template-columns:1fr; } aside { display:grid; grid-template-columns:1fr 1fr; gap:0 20px; } aside > .actions,aside > .hint { grid-column:1/-1; } }
+    @media(max-width:650px) { header { align-items:flex-start; flex-direction:column; } aside,.views,.tiles { grid-template-columns:1fr; } .wide { grid-column:auto; } .formula { font-size:18px; } }
+    @media(prefers-reduced-motion:reduce) { * { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div><h1>2.4 · Faltungs-Scrubber</h1><p>Spiegeln. Verschieben. Multiplizieren. Integrieren.</p></div>
+    <div class="actions"><button id="mode1" class="active" aria-pressed="true">1D</button><button id="mode2" aria-pressed="false">2D</button><button id="language">Deutsch</button><button id="theme">Hell / Dunkel</button></div>
+  </header>
+  <div class="layout">
+    <aside>
+      <div id="controls1">
+        <label class="control"><span class="f">Eingang f(x)</span><select id="f"><option value="rect">Rechteck</option><option value="triangle">Dreieck</option><option value="gauss">Gauß</option><option value="exp">Einseitiger Exponentialpuls</option><option value="bipolar">Bipolarer Puls</option><option value="delta">Impuls δ(x)</option><option value="free">Eigene Zeichnung</option></select></label>
+        <label class="control"><span class="h">Kernel h(x)</span><select id="h"><option value="rect">Rechteck</option><option value="triangle">Dreieck</option><option value="gauss">Gauß</option><option value="exp" selected>Einseitiger Exponentialpuls</option><option value="bipolar">Bipolarer Puls</option><option value="delta">Impuls δ(x)</option><option value="free">Eigene Zeichnung</option></select></label>
+        <label class="control"><span>Breite f <output id="fwValue"></output></span><input id="fw" type="range" min="0.5" max="3" step="0.05" value="1"></label>
+        <label class="control"><span>Breite h <output id="hwValue"></output></span><input id="hw" type="range" min="0.5" max="3" step="0.05" value="1"></label>
+        <label class="control"><span>Ausgabeposition x <output id="xValue"></output></span><input id="x" type="range" min="-12" max="12" step="0.05" value="0.5"></label>
+        <div class="actions"><button id="identity">f ∗ δ = f</button><button id="response">δ ∗ h = h</button><button id="boxes">Rect ∗ Rect</button></div>
+      </div>
+      <div id="controls2" hidden>
+        <label class="control"><span class="f">Eingangsbild f[m,n]</span><select id="imageType"><option value="shapes">Kanten & Flächen</option><option value="impulse">Einzelner Impuls</option><option value="checker">Schachbrett</option></select></label>
+        <label class="control"><span class="h">3 × 3-Kernel h</span><select id="kernelType"><option value="gauss">Gauß (normiert)</option><option value="box">Mittelwert</option><option value="identity">Identität</option><option value="asymmetric">Asymmetrisch</option><option value="sobel">Sobel x</option><option value="custom">Eigene Werte</option></select></label>
+        <div id="kernelInputs" class="kernel" aria-label="Kernel-Koeffizienten"></div>
+        <label class="control"><span>Pixel im Raster <output id="pixelValue"></output></span><input id="pixel" type="range" min="0" max="143" step="1" value="65"></label>
+        <p class="hint">Im Bild oder Ergebnis eine Position wählen. Der violette Rahmen zeigt die 3 × 3-Nachbarschaft. Außerhalb des Bildes gilt f = 0 (Zero-Padding).</p>
+      </div>
+      <div>
+        <label class="check"><input id="full" type="checkbox">Vollständiges Ergebnis anzeigen</label>
+        <div class="actions"><button id="prev" aria-label="Vorheriger Schritt">←</button><button id="play">▶ Abspielen</button><button id="next" aria-label="Nächster Schritt">→</button></div>
+        <label class="control" style="margin-top:16px"><span>Tempo <output id="speedValue"></output></span><input id="speed" type="range" min="10" max="100" step="10" value="50"></label>
+        <div class="actions"><button id="reset">Reset (R)</button><button id="share">Link kopieren</button></div>
+        <div id="status" role="status" aria-live="polite"></div>
+        <p class="hint" id="hint"></p>
+        <p class="hint">← / →: ein Schritt · Pos1 / Ende: Anfang / Ende · Leertaste: Start / Pause · R: Reset. Zeichnen mit Maus oder Finger.</p>
+      </div>
+    </aside>
+    <main>
+      <div id="formula1" class="formula"><span class="g">g(x) = (f ∗ h)(x)</span> = ∫<sub>−∞</sub><sup>∞</sup> <span class="f">f(α)</span> <span class="h">h(x − α)</span> dα</div>
+      <div id="formula2" class="formula" hidden><span class="g">g[m,n]</span> = Σ<sub>i,j</sub> <span class="f">f[m − i,n − j]</span> <span class="h">h[i,j]</span></div>
+      <div id="view1" class="views">
+        <section class="panel"><div class="panel-head"><h2 class="f">1 · Eingang f(x)</h2><button id="clearF">f leeren</button></div><canvas id="sourceF" width="620" height="250" tabindex="0" aria-label="Eingangssignal f. Eigene Zeichnung mit Maus oder Finger."></canvas><p class="caption">Zum Zeichnen direkt in die Kurve klicken und ziehen.</p></section>
+        <section class="panel"><div class="panel-head"><h2 class="h">2 · Originalkernel h(x)</h2><button id="clearH">h leeren</button></div><canvas id="sourceH" width="620" height="250" tabindex="0" aria-label="Originalkernel h. Eigene Zeichnung mit Maus oder Finger."></canvas><p class="caption">Der einseitige Puls macht die Spiegelung sichtbar.</p></section>
+        <section class="panel wide"><div class="panel-head"><h2>3 · Überlagern: <span class="f">f(α)</span> und <span class="h">h(x − α)</span></h2><span id="shiftLabel" class="value h"></span></div><canvas id="overlap" width="1260" height="270" aria-label="Eingang und gespiegelter, verschobener Kernel über der Integrationsvariable alpha"></canvas><p class="caption">Erst h(α) → h(−α) spiegeln, dann um x verschieben. Die schraffierte Fläche im nächsten Panel ist das Produkt, nicht die geometrische Schnittfläche.</p></section>
+        <section class="panel"><div class="panel-head"><h2>4 · Produkt <span class="g">f(α) h(x − α)</span></h2></div><canvas id="product" width="620" height="260" aria-label="Schraffiertes Produkt mit positiven und negativen Beiträgen"></canvas><p class="caption">Orange: positiver Beitrag · Rot: negativer Beitrag. Das vorzeichenbehaftete Integral ergibt g(x).</p></section>
+        <section class="panel"><div class="panel-head"><h2 class="g">5 · Ergebnis g(x)</h2><output id="resultValue" class="value g"></output></div><canvas id="result" width="620" height="260" tabindex="0" aria-label="Schrittweise aufgebautes Faltungsergebnis. Position durch Klicken wählen."></canvas><p class="caption" id="progress1"></p></section>
+      </div>
+      <div id="view2" class="views" hidden>
+        <section class="panel"><div class="panel-head"><h2 class="f">1 · Eingangsbild f[m,n]</h2></div><canvas id="image" width="520" height="440" tabindex="0" aria-label="Eingangsbild. Pixel durch Klicken wählen."></canvas><p class="caption">12 × 12 Pixel · Koordinaten (m,n) = (Zeile, Spalte), nullbasiert.</p></section>
+        <section class="panel"><div class="panel-head"><h2 class="g">2 · Faltungsergebnis g[m,n]</h2><output id="result2Value" class="value g"></output></div><canvas id="imageResult" width="520" height="440" tabindex="0" aria-label="Schrittweise aufgebautes Ergebnisbild. Pixel durch Klicken wählen."></canvas><p class="caption" id="progress2"></p></section>
+        <section class="panel wide"><div class="panel-head"><h2>3 · Kachelvergrößerung am aktuellen Pixel</h2><span class="h">Kernel um 180° gedreht</span></div><div class="tiles"><div><h3 class="f">Nachbarschaft f</h3><table id="patch" aria-label="Eingangsnachbarschaft"></table></div><div><h3 class="h">Gespiegelter Kernel</h3><table id="flipped" aria-label="Um 180 Grad gedrehter Kernel"></table></div><div><h3 class="g">Punktweise Produkte</h3><table id="products" aria-label="Produkte von Nachbarschaft und gedrehtem Kernel"></table></div></div><p id="sum" class="value g"></p></section>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const DX = .05, N = 241, OUT = 481, SIDE = 12;
+  const clamp = (v,lo,hi) => Math.max(lo,Math.min(hi,v));
+  const fmt = (v,d=3) => (Math.abs(v)<.5*10**(-d)?0:v).toFixed(d);
+  const defaults = {mode:'1d',f:'rect',h:'exp',fw:1,hw:1,x:.5,pixel:65,imageType:'shapes',kernelType:'gauss',full:false,speed:50,theme:'light',lang:'en'};
+  let state = {...defaults}, freeF = new Float64Array(N), freeH = new Float64Array(N);
+  const english = {
+    '2.4 · Faltungs-Scrubber':'2.4 · Convolution Scrubber',
+    'Spiegeln. Verschieben. Multiplizieren. Integrieren.':'Flip. Shift. Multiply. Integrate.',
+    'Hell / Dunkel':'Light / Dark', 'Eingang f(x)':'Input f(x)',
+    'Rechteck':'Rectangle', 'Dreieck':'Triangle', 'Gauß':'Gaussian',
+    'Einseitiger Exponentialpuls':'One-sided exponential pulse', 'Bipolarer Puls':'Bipolar pulse',
+    'Impuls δ(x)':'Impulse δ(x)', 'Eigene Zeichnung':'Custom drawing',
+    'Breite f':'Width f', 'Breite h':'Width h', 'Ausgabeposition x':'Output position x',
+    'Eingangsbild f[m,n]':'Input image f[m,n]', 'Kanten & Flächen':'Edges & regions',
+    'Einzelner Impuls':'Single impulse', 'Schachbrett':'Checkerboard',
+    '3 × 3-Kernel h':'3 × 3 kernel h', 'Gauß (normiert)':'Gaussian (normalized)',
+    'Mittelwert':'Box average', 'Identität':'Identity', 'Asymmetrisch':'Asymmetric',
+    'Eigene Werte':'Custom values', 'Kernel-Koeffizienten':'Kernel coefficients',
+    'Pixel im Raster':'Raster pixel',
+    'Im Bild oder Ergebnis eine Position wählen. Der violette Rahmen zeigt die 3 × 3-Nachbarschaft. Außerhalb des Bildes gilt f = 0 (Zero-Padding).':'Select a position in the input or output image. The purple frame shows the 3 × 3 neighborhood. Outside the image, f = 0 (zero-padding).',
+    'Vollständiges Ergebnis anzeigen':'Show complete result',
+    'Vorheriger Schritt':'Previous step', 'Nächster Schritt':'Next step',
+    '▶ Abspielen':'▶ Play', 'Ⅱ Pause':'Ⅱ Pause', 'Tempo':'Speed', 'Link kopieren':'Copy link',
+    '← / →: ein Schritt · Pos1 / Ende: Anfang / Ende · Leertaste: Start / Pause · R: Reset. Zeichnen mit Maus oder Finger.':'← / →: one step · Home / End: first / last · Space: play / pause · R: reset. Draw with mouse or touch.',
+    '1 · Eingang f(x)':'1 · Input f(x)', 'f leeren':'Clear f', 'h leeren':'Clear h',
+    'Eingangssignal f. Eigene Zeichnung mit Maus oder Finger.':'Input signal f. Draw with mouse or touch.',
+    'Zum Zeichnen direkt in die Kurve klicken und ziehen.':'Click and drag in the plot to draw your own signal.',
+    '2 · Originalkernel h(x)':'2 · Original kernel h(x)',
+    'Originalkernel h. Eigene Zeichnung mit Maus oder Finger.':'Original kernel h. Draw with mouse or touch.',
+    'Der einseitige Puls macht die Spiegelung sichtbar.':'The one-sided pulse makes the flip visible.',
+    '3 · Überlagern:':'3 · Overlay:', 'und':'and',
+    'Eingang und gespiegelter, verschobener Kernel über der Integrationsvariable alpha':'Input and flipped, shifted kernel plotted over the integration variable alpha',
+    'Erst h(α) → h(−α) spiegeln, dann um x verschieben. Die schraffierte Fläche im nächsten Panel ist das Produkt, nicht die geometrische Schnittfläche.':'First flip h(α) → h(−α), then shift by x. The hatched area in the next panel is the product, not the geometric intersection.',
+    '4 · Produkt':'4 · Product',
+    'Schraffiertes Produkt mit positiven und negativen Beiträgen':'Hatched product with positive and negative contributions',
+    'Orange: positiver Beitrag · Rot: negativer Beitrag. Das vorzeichenbehaftete Integral ergibt g(x).':'Orange: positive contribution · Red: negative contribution. The signed integral gives g(x).',
+    '5 · Ergebnis g(x)':'5 · Output g(x)',
+    'Schrittweise aufgebautes Faltungsergebnis. Position durch Klicken wählen.':'Convolution output built step by step. Click to select a position.',
+    '1 · Eingangsbild f[m,n]':'1 · Input image f[m,n]',
+    'Eingangsbild. Pixel durch Klicken wählen.':'Input image. Click to select a pixel.',
+    '12 × 12 Pixel · Koordinaten (m,n) = (Zeile, Spalte), nullbasiert.':'12 × 12 pixels · Coordinates (m,n) = (row, column), zero-based.',
+    '2 · Faltungsergebnis g[m,n]':'2 · Convolution output g[m,n]',
+    'Schrittweise aufgebautes Ergebnisbild. Pixel durch Klicken wählen.':'Output image built step by step. Click to select a pixel.',
+    '3 · Kachelvergrößerung am aktuellen Pixel':'3 · Enlarged patch at the current pixel',
+    'Kernel um 180° gedreht':'Kernel rotated by 180°', 'Nachbarschaft f':'Neighborhood f',
+    'Eingangsnachbarschaft':'Input neighborhood', 'Gespiegelter Kernel':'Flipped kernel',
+    'Um 180 Grad gedrehter Kernel':'Kernel rotated by 180 degrees',
+    'Punktweise Produkte':'Pointwise products',
+    'Produkte von Nachbarschaft und gedrehtem Kernel':'Products of neighborhood and rotated kernel',
+    'δ · Fläche 1':'δ · area 1', 'Σ der 9 Produkte = ':'Sum of the 9 products = ',
+    ' Pixel/s':' pixels/s', ' Schritte/s':' steps/s',
+    'Link mit aktuellem Zustand kopiert.':'Link with current state copied.', 'Link zum Kopieren':'Link to copy',
+    'Faltung ≠ Kreuzkorrelation: Der Kernel wird in beiden Achsen gespiegelt. Probieren Sie den asymmetrischen Kernel oder Sobel und vergleichen Sie Original und Kachel.':'Convolution ≠ cross-correlation: the kernel is flipped along both axes. Try the asymmetric or Sobel kernel and compare the original with the patch.',
+    'δ ∗ δ = δ. Im Diagramm erscheint die diskrete Impulsrepräsentation mit Fläche 1.':'δ ∗ δ = δ. The plot shows the discrete impulse representation with area 1.',
+    'f ∗ δ = f: Der Impuls tastet den Eingang an x ab. Die gezeichnete Pfeilhöhe ist symbolisch; numerisch hat ein Impuls die Höhe 1/Δα und Fläche 1.':'f ∗ δ = f: the impulse samples the input at x. The arrow height is symbolic; numerically, an impulse has height 1/Δα and area 1.',
+    'δ ∗ h = h: Ein Einheitsimpuls am Eingang liefert die Impulsantwort des Systems. Die Pfeilhöhe ist symbolisch; die Fläche beträgt 1.':'δ ∗ h = h: a unit impulse at the input yields the system’s impulse response. The arrow height is symbolic; its area is 1.',
+    'α ist die Integrationsvariable, x die Ausgabeposition (Notation des Skripts). Gerechnet wird g(x) ≈ Σ f(αᵢ) h(x − αᵢ) Δα. Signale außerhalb [−6, 6] sind null.':'α is the integration variable, x the output position (course notation). We compute g(x) ≈ Σ f(αᵢ) h(x − αᵢ) Δα. Signals outside [−6, 6] are zero.'
+  };
+  const t = text => state.lang==='en'?(english[text]??text):text;
+  // Keep references to static text nodes so translations preserve markup and controls.
+  const staticText=[],staticLabels=[];
+  const walker=document.createTreeWalker(document.querySelector('.app'),NodeFilter.SHOW_TEXT);
+  while(walker.nextNode()) {
+    const node=walker.currentNode,key=node.textContent.trim();
+    if(Object.hasOwn(english,key))staticText.push({node,key,before:node.textContent.match(/^\s*/)[0],after:node.textContent.match(/\s*$/)[0]});
+  }
+  document.querySelectorAll('.app [aria-label]').forEach(node=>{const key=node.getAttribute('aria-label');if(Object.hasOwn(english,key))staticLabels.push({node,key});});
+  function localize() {
+    document.documentElement.lang=state.lang;document.title=t('2.4 · Faltungs-Scrubber');
+    for(const {node,key,before,after} of staticText)node.textContent=before+t(key)+after;
+    for(const {node,key} of staticLabels)node.setAttribute('aria-label',t(key));
+    $('language').textContent=state.lang==='en'?'Deutsch':'English';
+    $('language').setAttribute('aria-label',state.lang==='en'?'Switch to German':'Auf Englisch umschalten');
+  }
+  let f,h,g,image,kernel,result2,playing=false,lastTime=0,carry=0,frame=0;
+  const presets = {gauss:[1,2,1,2,4,2,1,2,1].map(v=>v/16),box:Array(9).fill(1/9),identity:[0,0,0,0,1,0,0,0,0],asymmetric:[0,0,0,0,.25,.75,0,0,0],sobel:[-1,0,1,-2,0,2,-1,0,1]};
+  const params = new URLSearchParams(location.search);
+  for (const key of ['f','h','imageType','kernelType']) {
+    if ([...$(key).options].some(o=>o.value===params.get(key))) state[key]=params.get(key);
+  }
+  for (const key of ['fw','hw','x','pixel','speed']) {
+    if(params.has(key) && Number.isFinite(+params.get(key))) {
+      const input=$(key),step=+input.step,lo=+input.min,hi=+input.max;
+      state[key]=+(lo+Math.round((clamp(+params.get(key),lo,hi)-lo)/step)*step).toFixed(2);
+    }
+  }
+  state.mode=params.get('mode')==='2d'?'2d':'1d'; state.full=params.get('full')==='1'; state.theme=params.get('theme')==='dark'?'dark':'light';
+  state.lang=params.get('lang')==='de'?'de':'en';
+  function decode(name,length,lo,hi) {
+    const text=params.get(name); if(!text)return null;
+    const values=text.split(',').map(Number);
+    return values.length===length && values.every(v=>Number.isFinite(v)&&v>=lo&&v<=hi)?values:null;
+  }
+  const a=decode('drawF',N,-1.5,1.5),b=decode('drawH',N,-1.5,1.5);
+  if(a)freeF.set(a); if(b)freeH.set(b);
+  kernel=decode('kernel',9,-20,20) || [...(presets[state.kernelType]||presets.gauss)];
+  function writeURL() {
+    const q=new URLSearchParams();
+    for(const key in defaults)q.set(key,typeof state[key]==='boolean'?(state[key]?'1':'0'):state[key]);
+    if(state.f==='free')q.set('drawF',Array.from(freeF,v=>fmt(v,2)).join(','));
+    if(state.h==='free')q.set('drawH',Array.from(freeH,v=>fmt(v,2)).join(','));
+    if(state.kernelType==='custom')q.set('kernel',kernel.join(','));
+    try { history.replaceState(null,'',location.pathname+'?'+q+location.hash); } catch { /* Some file:// hosts disallow history updates. */ }
+  }
+  function signal(type,width,free) {
+    const values=new Float64Array(N);
+    for(let i=0;i<N;i++) {
+      const x=(i-120)*DX,u=x/width;
+      if(type==='rect')values[i]=Math.abs(u)<1-1e-9?1:Math.abs(Math.abs(u)-1)<1e-9?.5:0;
+      if(type==='triangle')values[i]=Math.max(0,1-Math.abs(u));
+      if(type==='gauss')values[i]=Math.exp(-.5*u*u);
+      if(type==='exp')values[i]=x>=-1e-9?Math.exp(-Math.max(0,u)):0;
+      if(type==='bipolar')values[i]=Math.abs(u)<1? (x<0?-1:1):0;
+      if(type==='delta')values[i]=i===120?1/DX:0;
+      if(type==='free')values[i]=free[i];
+    }
+    return values;
+  }
+  function calculate1() {
+    f=signal(state.f,state.fw,freeF); h=signal(state.h,state.hw,freeH); g=new Float64Array(OUT);
+    for(let i=0;i<N;i++)for(let j=0;j<N;j++)g[i+j]+=f[i]*h[j]*DX;
+  }
+  function makeImage() {
+    image=new Float64Array(SIDE*SIDE);
+    for(let m=0;m<SIDE;m++)for(let n=0;n<SIDE;n++) {
+      let v=0;
+      if(state.imageType==='shapes')v=(m>=2&&m<=8&&n>=2&&n<=5)?1:(m>=5&&m<=9&&n>=7&&n<=9)?.6:0;
+      if(state.imageType==='checker')v=(Math.floor(m/2)+Math.floor(n/2))%2;
+      if(state.imageType==='impulse')v=m===6&&n===6?1:0;
+      image[m*SIDE+n]=v;
+    }
+  }
+  function neighborhood(pixel) {
+    const m=Math.floor(pixel/SIDE),n=pixel%SIDE,patch=[],flipped=[...kernel].reverse(),products=[];
+    for(let y=-1;y<=1;y++)for(let x=-1;x<=1;x++) {
+      const row=m+y,col=n+x,v=row>=0&&row<SIDE&&col>=0&&col<SIDE?image[row*SIDE+col]:0;
+      patch.push(v); products.push(v*flipped[products.length]);
+    }
+    return {patch,flipped,products,sum:products.reduce((sum,v)=>sum+v,0)};
+  }
+  function calculate2() { makeImage(); result2=Float64Array.from({length:SIDE*SIDE},(_,i)=>neighborhood(i).sum); }
+  function colors() { const css=getComputedStyle(document.documentElement); return Object.fromEntries(['plot','line','text','muted','f','h','g','neg'].map(k=>[k,css.getPropertyValue('--'+k).trim()])); }
+  // All plot coordinates are in intrinsic canvas pixels, independent of CSS size.
+  function axes(id,xmin,xmax,ymin,ymax,xlabel) {
+    const c=$(id),ctx=c.getContext('2d'),C=colors(),p={l:64,r:24,t:26,b:44};
+    const w=c.width-p.l-p.r,H=c.height-p.t-p.b,X=x=>p.l+(x-xmin)/(xmax-xmin)*w,Y=y=>p.t+(ymax-y)/(ymax-ymin)*H;
+    ctx.fillStyle=C.plot;ctx.fillRect(0,0,c.width,c.height);ctx.font='18px system-ui';ctx.lineWidth=1;
+    ctx.textBaseline='middle';ctx.textAlign='right';
+    for(let i=0;i<=4;i++) { const v=ymin+(ymax-ymin)*i/4;ctx.strokeStyle=C.line;ctx.beginPath();ctx.moveTo(p.l,Y(v));ctx.lineTo(c.width-p.r,Y(v));ctx.stroke();ctx.fillStyle=C.muted;ctx.fillText(fmt(v,1),p.l-9,Y(v)); }
+    ctx.textAlign='center';ctx.textBaseline='top';
+    for(let i=0;i<=6;i++) { const v=xmin+(xmax-xmin)*i/6;ctx.beginPath();ctx.moveTo(X(v),p.t);ctx.lineTo(X(v),c.height-p.b);ctx.stroke();ctx.fillText(fmt(v,0),X(v),c.height-p.b+7); }
+    ctx.fillStyle=C.text;ctx.textAlign='right';ctx.fillText(xlabel,c.width-8,c.height-25);
+    ctx.strokeStyle=C.muted;ctx.beginPath();ctx.moveTo(p.l,Y(0));ctx.lineTo(c.width-p.r,Y(0));ctx.stroke();
+    return {c,ctx,C,X,Y,p,xmin,xmax,ymin,ymax};
+  }
+  function curve(plot,values,start,step,color,limit=values.length-1,dashed=false) {
+    const {ctx,X,Y,p,c}=plot;ctx.save();ctx.beginPath();ctx.rect(p.l,p.t,c.width-p.l-p.r,c.height-p.t-p.b);ctx.clip();
+    ctx.strokeStyle=color;ctx.lineWidth=3;ctx.setLineDash(dashed?[7,7]:[]);ctx.beginPath();
+    for(let i=0;i<=limit;i++){const x=X(start+i*step),y=Y(values[i]);if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y);}ctx.stroke();ctx.restore();
+  }
+  function impulse(plot,position,color,label) {
+    const {ctx,X,Y,p}=plot;if(position<plot.xmin||position>plot.xmax)return;
+    const x=X(position),top=p.t+28;ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,Y(0));ctx.lineTo(x,top);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(x-6,top+10);ctx.lineTo(x,top);ctx.lineTo(x+6,top+10);ctx.stroke();ctx.font='18px system-ui';ctx.textAlign='left';ctx.textBaseline='bottom';ctx.fillText(label,clamp(x+10,p.l,plot.c.width-170),top-3);
+  }
+  function source(id,values,type,color) {
+    const plot=axes(id,-6,6,-1.5,1.5,'x');
+    if(type==='delta')impulse(plot,0,plot.C[color],t('δ · Fläche 1'));else curve(plot,values,-6,DX,plot.C[color]);
+  }
+  function marker(plot,x,y) {
+    const {ctx,X,Y,C,p,c}=plot;ctx.strokeStyle=C.g;ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.beginPath();ctx.moveTo(X(x),p.t);ctx.lineTo(X(x),c.height-p.b);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=C.g;ctx.beginPath();ctx.arc(X(x),Y(y),6,0,2*Math.PI);ctx.fill();
+  }
+  function hatch(plot,values) {
+    const {ctx,X,Y,C,p,c}=plot;ctx.save();ctx.beginPath();ctx.rect(p.l,p.t,c.width-p.l-p.r,c.height-p.t-p.b);ctx.clip();
+    for(const sign of [1,-1]) {
+      ctx.save();ctx.beginPath();ctx.moveTo(X(-6),Y(0));for(let i=0;i<N;i++)ctx.lineTo(X(-6+i*DX),Y(sign>0?Math.max(0,values[i]):Math.min(0,values[i])));ctx.lineTo(X(6),Y(0));ctx.closePath();
+      ctx.fillStyle=sign>0?C.g:C.neg;ctx.globalAlpha=.13;ctx.fill();ctx.globalAlpha=1;ctx.clip();ctx.strokeStyle=sign>0?C.g:C.neg;ctx.lineWidth=1;
+      for(let x=-c.height;x<c.width;x+=11){ctx.beginPath();ctx.moveTo(x,c.height);ctx.lineTo(x+c.height,0);ctx.stroke();}ctx.restore();
+    }
+    ctx.restore();curve(plot,values,-6,DX,C.g);
+  }
+  function render1() {
+    source('sourceF',f,state.f,'f');source('sourceH',h,state.h,'h');
+    const k=Math.round((state.x+12)/DX),shifted=Float64Array.from({length:OUT},(_,i)=>{const j=k-i+120;return j>=0&&j<N?h[j]:0;});
+    const overlap=axes('overlap',-12,12,-1.5,1.5,'α');
+    if(state.f==='delta')impulse(overlap,0,overlap.C.f,'δ(α)');else curve(overlap,f,-6,DX,overlap.C.f);
+    if(state.h==='delta')impulse(overlap,state.x,overlap.C.h,'δ(x − α)');else curve(overlap,shifted,-12,DX,overlap.C.h);
+    const products=Float64Array.from(f,(v,i)=>{const j=k-i;return j>=0&&j<N?v*h[j]:0;});
+    const ymax=Math.max(1.2,...products.map(Math.abs))*1.1;
+    const product=axes('product',-6,6,-ymax,ymax,'α');hatch(product,products);
+    const gmax=Math.max(.3,...g.map(Math.abs))*1.15,hasNegative=g.some(v=>v<-.00001);
+    const result=axes('result',-12,12,hasNegative?-gmax:-gmax*.12,gmax,'x');
+    curve(result,g,-12,DX,result.C.g,state.full?OUT-1:k);marker(result,state.x,g[k]);
+    $('shiftLabel').textContent='x = '+fmt(state.x,2);$('resultValue').textContent='g(x) = '+fmt(g[k]);
+    $('progress1').textContent=state.lang==='en'?`${state.full?OUT:k+1} / ${OUT} samples · Δα = ${DX} · Click to sample the output.`:`${state.full?OUT:k+1} / ${OUT} Stützstellen · Δα = ${DX} · Ergebnis durch Klicken abtasten.`;
+  }
+  function drawImage(id,values,color,isResult) {
+    const c=$(id),ctx=c.getContext('2d'),C=colors(),cell=30,ox=(c.width-SIDE*cell)/2,oy=38,max=Math.max(1,...values.map(Math.abs));
+    ctx.fillStyle=C.plot;ctx.fillRect(0,0,c.width,c.height);ctx.font='18px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';
+    for(let m=0;m<SIDE;m++)for(let n=0;n<SIDE;n++) {
+      const i=m*SIDE+n,x=ox+n*cell,y=oy+m*cell,visible=!isResult||state.full||i<=state.pixel;
+      ctx.fillStyle=C.plot;ctx.fillRect(x,y,cell,cell);
+      if(visible){ctx.fillStyle=values[i]<0?C.neg:C[color];ctx.globalAlpha=.08+.92*Math.abs(values[i])/max;ctx.fillRect(x,y,cell,cell);ctx.globalAlpha=1;}
+      ctx.strokeStyle=C.line;ctx.lineWidth=1;ctx.strokeRect(x,y,cell,cell);
+    }
+    const m=Math.floor(state.pixel/SIDE),n=state.pixel%SIDE;
+    ctx.strokeStyle=C.h;ctx.lineWidth=3;ctx.strokeRect(ox+(n-(isResult?0:1))*cell,oy+(m-(isResult?0:1))*cell,(isResult?1:3)*cell,(isResult?1:3)*cell);
+    ctx.strokeStyle=C.g;ctx.strokeRect(ox+n*cell+3,oy+m*cell+3,cell-6,cell-6);
+    ctx.fillStyle=C.muted;for(let i=0;i<SIDE;i++){ctx.fillText(i,ox+i*cell+cell/2,18);ctx.fillText(i,ox-20,oy+i*cell+cell/2);}
+    ctx.textAlign='right';ctx.fillText('n →',c.width-14,18);ctx.textAlign='left';ctx.fillText('m ↓',12,c.height-18);
+    c._grid={ox,oy,cell};
+  }
+  function table(id,values) {
+    const element=$(id);element.replaceChildren();
+    for(let m=0;m<3;m++){const row=document.createElement('tr');for(let n=0;n<3;n++){const cell=document.createElement('td');cell.textContent=fmt(values[m*3+n]);if(values[m*3+n]<0)cell.style.color='var(--neg)';row.append(cell);}element.append(row);}
+  }
+  function render2() {
+    drawImage('image',image,'f',false);drawImage('imageResult',result2,'g',true);
+    const detail=neighborhood(state.pixel);table('patch',detail.patch);table('flipped',detail.flipped);table('products',detail.products);
+    $('sum').textContent=t('Σ der 9 Produkte = ')+fmt(detail.sum);$('result2Value').textContent=fmt(detail.sum);
+    const scale=fmt(Math.max(1,...result2.map(Math.abs)),2);
+    $('progress2').textContent=state.lang==='en'?`${state.full?144:state.pixel+1} / 144 pixels · Color scale: 0 to ±${scale} · Negative values in red.`:`${state.full?144:state.pixel+1} / 144 Pixel · Farbskala: 0 bis ±${scale} · negative Werte rot.`;
+  }
+  function syncUI() {
+    localize();
+    document.documentElement.classList.toggle('dark',state.theme==='dark');
+    for(const key of ['f','h','fw','hw','x','pixel','imageType','kernelType','speed'])$(key).value=state[key];$('full').checked=state.full;
+    const two=state.mode==='2d';
+    for(const id of ['controls1','view1','formula1'])$(id).hidden=two;
+    for(const id of ['controls2','view2','formula2'])$(id).hidden=!two;
+    for(const [id,active] of [['mode1',!two],['mode2',two]]){$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',active);}
+    $('fwValue').textContent=fmt(state.fw,2);$('hwValue').textContent=fmt(state.hw,2);$('xValue').textContent=fmt(state.x,2);
+    $('fw').disabled=['free','delta'].includes(state.f);$('hw').disabled=['free','delta'].includes(state.h);
+    $('pixelValue').textContent=`(${Math.floor(state.pixel/SIDE)}, ${state.pixel%SIDE})`;
+    $('speedValue').textContent=state.speed+t(two?' Pixel/s':' Schritte/s');$('play').textContent=t(playing?'Ⅱ Pause':'▶ Abspielen');
+    $('hint').textContent=two?'Faltung ≠ Kreuzkorrelation: Der Kernel wird in beiden Achsen gespiegelt. Probieren Sie den asymmetrischen Kernel oder Sobel und vergleichen Sie Original und Kachel.':state.f==='delta'&&state.h==='delta'?'δ ∗ δ = δ. Im Diagramm erscheint die diskrete Impulsrepräsentation mit Fläche 1.':state.h==='delta'?'f ∗ δ = f: Der Impuls tastet den Eingang an x ab. Die gezeichnete Pfeilhöhe ist symbolisch; numerisch hat ein Impuls die Höhe 1/Δα und Fläche 1.':state.f==='delta'?'δ ∗ h = h: Ein Einheitsimpuls am Eingang liefert die Impulsantwort des Systems. Die Pfeilhöhe ist symbolisch; die Fläche beträgt 1.':'α ist die Integrationsvariable, x die Ausgabeposition (Notation des Skripts). Gerechnet wird g(x) ≈ Σ f(αᵢ) h(x − αᵢ) Δα. Signale außerhalb [−6, 6] sind null.';
+    $('hint').textContent=t($('hint').textContent);
+  }
+  function render() { frame=0;syncUI();if(state.mode==='1d')render1();else render2(); }
+  function update(recalculate=false) { if(recalculate){calculate1();calculate2();}if(!frame)frame=requestAnimationFrame(render); }
+  let urlTimer=0;
+  function save() { clearTimeout(urlTimer);urlTimer=setTimeout(writeURL,150); }
+  function setPosition(value) { if(state.mode==='1d')state.x=+(clamp(Math.round(value/DX)*DX,-12,12)).toFixed(2);else state.pixel=clamp(Math.round(value),0,143);update();save(); }
+  function stop() { playing=false;lastTime=0;carry=0;update(); }
+  function step(amount) { stop();setPosition(state.mode==='1d'?state.x+amount*DX:state.pixel+amount); }
+  function tick(time) {
+    if(!playing)return;
+    if(lastTime)carry+=Math.min(time-lastTime,100)*state.speed/1000;lastTime=time;
+    const steps=Math.floor(carry);carry-=steps;
+    if(steps){setPosition(state.mode==='1d'?state.x+steps*DX:state.pixel+steps);if(state.mode==='1d'?state.x>=12:state.pixel>=143)stop();}
+    if(playing)requestAnimationFrame(tick);
+  }
+  $('play').onclick=()=>{if(playing){stop();return;}if(state.mode==='1d'?state.x>=12:state.pixel>=143)setPosition(state.mode==='1d'?-12:0);playing=true;lastTime=0;carry=0;update();requestAnimationFrame(tick);};
+  $('prev').onclick=()=>step(-1);$('next').onclick=()=>step(1);
+  for(const key of ['f','h','fw','hw','imageType','speed','full'])$(key).addEventListener('input',()=>{stop();state[key]=key==='full'?$(key).checked:['fw','hw','speed'].includes(key)?+$(key).value:$(key).value;update(true);save();});
+  for(const key of ['x','pixel'])$(key).addEventListener('input',()=>{stop();setPosition(+$(key).value);});
+  $('theme').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';update();save();};
+  $('language').onclick=()=>{state.lang=state.lang==='en'?'de':'en';$('status').textContent='';update();save();};
+  $('mode1').onclick=()=>{stop();state.mode='1d';update();save();};$('mode2').onclick=()=>{stop();state.mode='2d';update();save();};
+  function preset(fType,hType) { stop();state.f=fType;state.h=hType;state.fw=1;state.hw=1;state.x=-4;state.full=false;update(true);save(); }
+  $('identity').onclick=()=>preset('bipolar','delta');$('response').onclick=()=>preset('delta','exp');$('boxes').onclick=()=>preset('rect','rect');
+  function fillKernelInputs() { $('kernelInputs').replaceChildren();kernel.forEach((value,i)=>{const input=document.createElement('input');input.type='number';input.min=-20;input.max=20;input.step='any';input.value=value;input.setAttribute('aria-label',`h[${Math.floor(i/3)-1},${i%3-1}]`);input.addEventListener('input',()=>{if(!Number.isFinite(input.valueAsNumber))return;stop();kernel[i]=clamp(input.valueAsNumber,-20,20);state.kernelType='custom';update(true);save();});input.addEventListener('change',()=>input.value=kernel[i]);$('kernelInputs').append(input);}); }
+  $('kernelType').onchange=()=>{stop();state.kernelType=$('kernelType').value;if(presets[state.kernelType])kernel=[...presets[state.kernelType]];fillKernelInputs();update(true);save();};
+  $('reset').onclick=()=>{stop();const mode=state.mode,theme=state.theme,lang=state.lang;state={...defaults,mode,theme,lang};freeF.fill(0);freeH.fill(0);kernel=[...presets.gauss];fillKernelInputs();$('status').textContent='';update(true);save();};
+  $('share').onclick=async()=>{clearTimeout(urlTimer);writeURL();try{await navigator.clipboard.writeText(location.href);$('status').textContent=t('Link mit aktuellem Zustand kopiert.');}catch{$('status').replaceChildren();const input=document.createElement('input');input.type='text';input.value=location.href;input.setAttribute('aria-label',t('Link zum Kopieren'));input.style.width='100%';$('status').append(input);input.focus();input.select();}};
+  for(const [id,key,free] of [['sourceF','f',freeF],['sourceH','h',freeH]]) {
+    let drawing=false,previous=null;const canvas=$(id);
+    function paint(e) {
+      const r=canvas.getBoundingClientRect(),px=(e.clientX-r.left)*canvas.width/r.width,py=(e.clientY-r.top)*canvas.height/r.height;
+      const index=clamp(Math.round((px-64)/(canvas.width-88)*(N-1)),0,N-1),value=clamp(1.5-(py-26)/(canvas.height-70)*3,-1.5,1.5);
+      if(previous){const lo=Math.min(previous.index,index),hi=Math.max(previous.index,index);for(let i=lo;i<=hi;i++)free[i]=previous.index===index?value:previous.value+(value-previous.value)*(i-previous.index)/(index-previous.index);}else free[index]=value;
+      previous={index,value};state[key]='free';update(true);save();
+    }
+    canvas.addEventListener('pointerdown',e=>{stop();if(state[key]!=='free')free.set((key==='f'?f:h).map(v=>clamp(v,-1.5,1.5)));drawing=true;previous=null;canvas.setPointerCapture(e.pointerId);paint(e);});
+    canvas.addEventListener('pointermove',e=>{if(drawing)paint(e);});
+    for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>{drawing=false;previous=null;});
+    $(key==='f'?'clearF':'clearH').onclick=()=>{stop();free.fill(0);state[key]='free';update(true);save();};
+  }
+  $('result').addEventListener('pointerdown',e=>{stop();const r=$('result').getBoundingClientRect();setPosition(-12+((e.clientX-r.left)*620/r.width-64)/(620-88)*24);});
+  for(const id of ['image','imageResult'])$(id).addEventListener('pointerdown',e=>{const c=$(id),r=c.getBoundingClientRect(),{ox,oy,cell}=c._grid,n=Math.floor(((e.clientX-r.left)*c.width/r.width-ox)/cell),m=Math.floor(((e.clientY-r.top)*c.height/r.height-oy)/cell);if(m>=0&&m<SIDE&&n>=0&&n<SIDE){stop();setPosition(m*SIDE+n);}});
+  document.addEventListener('keydown',e=>{
+    if(e.target.matches('input,select,textarea,button'))return;
+    if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();step(e.key==='ArrowLeft'?-1:1);}
+    if(e.key==='Home'||e.key==='End'){e.preventDefault();stop();setPosition(state.mode==='1d'?(e.key==='Home'?-12:12):(e.key==='Home'?0:143));}
+    if(e.code==='Space'){e.preventDefault();$('play').click();}
+    if(e.key.toLowerCase()==='r')$('reset').click();
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
+  // Expose numerical samples for reproducible browser verification.
+  window.__convolutionDiagnostics=()=>({dx:DX,f:Array.from(f),h:Array.from(h),g:Array.from(g),image:Array.from(image),kernel:[...kernel],result2:Array.from(result2),detail:neighborhood(state.pixel),state:{...state}});
+  fillKernelInputs();calculate1();calculate2();render();writeURL();
+})();
+</script>
+</body>
+</html>

@@ -605,6 +605,14 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 640x480 with 0 Axes&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "bd6a8fa989e14fa4bce5edb00cd4c609"}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(w, b)&gt;
+</pre></div>
+</div>
+</div>
 </div>
 <p>In batch processing, the result of a batch of data processed by a linear layer, i.e. <span class="math notranslate nohighlight">\(\mathbf{y} = \mathbf{Wx}\)</span>, is processed by the non-linearity in an element-wise fashion.</p>
 <section id="other-popular-non-linear-functions">
@@ -645,6 +653,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/c6bebac6f8954917c20688169ba99d0ba2703b0260b4fb82111291bd9ccca46d.png" src="_images/c6bebac6f8954917c20688169ba99d0ba2703b0260b4fb82111291bd9ccca46d.png" />
+</div>
 </div>
 </section>
 <section id="rectified-linear-unit-relu">
@@ -669,6 +680,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/da7917623430f1a228baf89b4e92f5f936448fce7a6d08eb3c94df75659ae2a5.png" src="_images/da7917623430f1a228baf89b4e92f5f936448fce7a6d08eb3c94df75659ae2a5.png" />
+</div>
 </div>
 </section>
 <section id="softplus">
@@ -688,6 +702,9 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/80d897327e130119e0649b67e98d8c9df9ee6062f157397142f274daf35a7f16.png" src="_images/80d897327e130119e0649b67e98d8c9df9ee6062f157397142f274daf35a7f16.png" />
 </div>
 </div>
 </section>
@@ -712,6 +729,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/151ccb5e367659eb86d7b41a0c2fb0da751980c67f9bcaaa799bc67d96a9640d.png" src="_images/151ccb5e367659eb86d7b41a0c2fb0da751980c67f9bcaaa799bc67d96a9640d.png" />
+</div>
 </div>
 </section>
 <section id="exponential-linear-unit-elu">
@@ -734,6 +754,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/b7517b1b93de66ed42551616411791cfbfeee5b630315a9a791c873bc14361c8.png" src="_images/b7517b1b93de66ed42551616411791cfbfeee5b630315a9a791c873bc14361c8.png" />
+</div>
 </div>
 </section>
 <section id="hyperbolic-tangent-tanh">
@@ -753,6 +776,9 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/5d772ec81809647d0abd17cf5f2f96467da5477cf5b6435ec8d31ef6b209a5b5.png" src="_images/5d772ec81809647d0abd17cf5f2f96467da5477cf5b6435ec8d31ef6b209a5b5.png" />
+</div>
 </div>
 </section>
 </section>
@@ -766,12 +792,9 @@
 <li><p>its stride <span class="math notranslate nohighlight">\(s\)</span>.</p></li>
 </ul>
 <p>The layer shifts a square-shaped window with edge length <span class="math notranslate nohighlight">\(h\)</span> over the input data and selects the highest value out of all values covered by the window and returns this value as one of its outputs. Then, the window is shifted by the stride value <span class="math notranslate nohighlight">\(s\)</span> and the procedure is repeated until the whole input data has been processed.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/5/pooling_layer_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">1</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">5</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe id="ci-stepper-48f0f68d57e9495b89763ffdef18d2bd" src="widgets/2.3%20Generischer%20Bilderfolgen-Stepper/index.html?ui=minimal&amp;step=1&amp;fade=0&amp;theme=light&amp;prefix=..%2F..%2Ffigures%2F5%2Fpooling_layer_&amp;start=1&amp;end=5&amp;ext=svg&amp;resize=auto" title="Interactive image sequence" style="display:block;width:100%;aspect-ratio:16/9;border:0" scrolling="no"></iframe><script>(function () {const frame = document.getElementById("ci-stepper-48f0f68d57e9495b89763ffdef18d2bd");let pending = false;function updateLimit() {pending = false;if (!frame.isConnected) return;const presenting = document.body.classList.contains("rise-enabled") || document.body.classList.contains("reveal-viewport");const slide = frame.closest(".reveal section.present") || frame.closest(".reveal section");const viewportHeightDefault = window.visualViewport?.height || window.innerHeight;const header = document.querySelector(".bd-header-article");const headerHeight = header ? header.getBoundingClientRect().height : 0;let height = Math.max(180, Math.floor(viewportHeightDefault * 0.9 - headerHeight));if (presenting && slide && frame.offsetWidth) {const rect = frame.getBoundingClientRect();const scale = rect.width / frame.offsetWidth;const viewport = document.querySelector(".reveal").getBoundingClientRect();const viewportHeight = Math.min(window.innerHeight, viewport.height || window.innerHeight);const before = Math.max(0, rect.top - slide.getBoundingClientRect().top);height = Math.max(180, Math.floor((viewportHeight * 0.9 - before) / (scale || 1)));}frame.contentWindow.postMessage({type:"ci-stepper-limit", height}, "*");}function scheduleLimit() {if (!pending) { pending = true; requestAnimationFrame(updateLimit); }}function resize(event) {if (!frame.isConnected) { window.removeEventListener("message", resize); return; }if (event.source !== frame.contentWindow || event.data?.type !== "ci-stepper-height") return;const height = event.data.height;if (typeof height !== "number" || !Number.isFinite(height) || height <= 0) return;frame.style.height = Math.ceil(height) + "px";frame.style.aspectRatio = "auto";}window.addEventListener("message", resize);frame.addEventListener("load", function () {frame.contentWindow.postMessage({type:"ci-stepper-measure"}, "*");scheduleLimit();});window.addEventListener("resize", scheduleLimit);let lastWidth = 0;new ResizeObserver(function () {if (frame.offsetWidth !== lastWidth) { lastWidth = frame.offsetWidth; scheduleLimit(); }}).observe(frame);new MutationObserver(function (records) {if (records.some(r => r.target === document.body || r.target.matches(".reveal, .reveal .slides, .reveal section"))) scheduleLimit();}).observe(document.body, {attributes:true, subtree:true, attributeFilter:["class", "style"]});scheduleLimit();})();</script></div></div>
 </div>
 <section id="example-max-pooling-with-pytorch">
 <h4>Example max pooling with PyTorch:<a class="headerlink" href="#example-max-pooling-with-pytorch" title="Link to this heading">#</a></h4>
@@ -789,10 +812,24 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[2., 1., 1., 1.],
+         [1., 2., 1., 1.],
+         [1., 1., 2., 1.],
+         [1., 1., 1., 2.]]])
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pooling</span><span class="p">(</span><span class="n">tens</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[2., 1.],
+         [1., 2.]]])
 </pre></div>
 </div>
 </div>
@@ -810,12 +847,9 @@
 <li><p>their stride <span class="math notranslate nohighlight">\(s\)</span> and</p></li>
 <li><p>the padding mode (i.e., how to deal with the situation at the borders of the input data when the kernel protrudes the input’s support).</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/5/convolutional_layer_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">5</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe id="ci-stepper-1bddbcc0cc6e4553bafadafe00760ec5" src="widgets/2.3%20Generischer%20Bilderfolgen-Stepper/index.html?ui=minimal&amp;step=1&amp;fade=0&amp;theme=light&amp;prefix=..%2F..%2Ffigures%2F5%2Fconvolutional_layer_&amp;start=0&amp;end=5&amp;ext=svg&amp;resize=auto" title="Interactive image sequence" style="display:block;width:100%;aspect-ratio:16/9;border:0" scrolling="no"></iframe><script>(function () {const frame = document.getElementById("ci-stepper-1bddbcc0cc6e4553bafadafe00760ec5");let pending = false;function updateLimit() {pending = false;if (!frame.isConnected) return;const presenting = document.body.classList.contains("rise-enabled") || document.body.classList.contains("reveal-viewport");const slide = frame.closest(".reveal section.present") || frame.closest(".reveal section");const viewportHeightDefault = window.visualViewport?.height || window.innerHeight;const header = document.querySelector(".bd-header-article");const headerHeight = header ? header.getBoundingClientRect().height : 0;let height = Math.max(180, Math.floor(viewportHeightDefault * 0.9 - headerHeight));if (presenting && slide && frame.offsetWidth) {const rect = frame.getBoundingClientRect();const scale = rect.width / frame.offsetWidth;const viewport = document.querySelector(".reveal").getBoundingClientRect();const viewportHeight = Math.min(window.innerHeight, viewport.height || window.innerHeight);const before = Math.max(0, rect.top - slide.getBoundingClientRect().top);height = Math.max(180, Math.floor((viewportHeight * 0.9 - before) / (scale || 1)));}frame.contentWindow.postMessage({type:"ci-stepper-limit", height}, "*");}function scheduleLimit() {if (!pending) { pending = true; requestAnimationFrame(updateLimit); }}function resize(event) {if (!frame.isConnected) { window.removeEventListener("message", resize); return; }if (event.source !== frame.contentWindow || event.data?.type !== "ci-stepper-height") return;const height = event.data.height;if (typeof height !== "number" || !Number.isFinite(height) || height <= 0) return;frame.style.height = Math.ceil(height) + "px";frame.style.aspectRatio = "auto";}window.addEventListener("message", resize);frame.addEventListener("load", function () {frame.contentWindow.postMessage({type:"ci-stepper-measure"}, "*");scheduleLimit();});window.addEventListener("resize", scheduleLimit);let lastWidth = 0;new ResizeObserver(function () {if (frame.offsetWidth !== lastWidth) { lastWidth = frame.offsetWidth; scheduleLimit(); }}).observe(frame);new MutationObserver(function (records) {if (records.some(r => r.target === document.body || r.target.matches(".reveal, .reveal .slides, .reveal section"))) scheduleLimit();}).observe(document.body, {attributes:true, subtree:true, attributeFilter:["class", "style"]});scheduleLimit();})();</script></div></div>
 </div>
 <p>Depending on the stride <span class="math notranslate nohighlight">\(s\)</span> and the padding mode, convolutional layers can yield outputs of lower spatial dimensions (e.g., smaller images).</p>
 <p>Depending on the number of kernels, the output can have a larger or lower number of channels.</p>
@@ -848,12 +882,9 @@
 <li><p>the padding mode.</p></li>
 </ul>
 <p>Every element of the input scales a kernel which yields the values of the output in the spatial region covered by the kernel. The kernel is then shifted by the stride <span class="math notranslate nohighlight">\(s\)</span> and the process is repeated with the next value of the input vector. Depending on the stride <span class="math notranslate nohighlight">\(s\)</span>, there might already be values present in the currently considered region of the output vector. In that case, the new values are additively superposed.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">interact</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">showFig</span><span class="p">(</span><span class="s1">&#39;figures/5/transposed_convolutional_layer_&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;.svg&#39;</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">50</span><span class="p">),</span> <span class="n">i</span><span class="o">=</span><span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="p">(</span><span class="n">min_i</span><span class="o">:=</span><span class="mi">0</span><span class="p">),</span><span class="nb">max</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span><span class="o">:=</span><span class="mi">3</span><span class="p">),</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="p">(</span><span class="n">max_i</span> <span class="k">if</span> <span class="n">book</span> <span class="k">else</span> <span class="n">min_i</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe id="ci-stepper-4351424998ab4d69b8164ba3e27602fb" src="widgets/2.3%20Generischer%20Bilderfolgen-Stepper/index.html?ui=minimal&amp;step=1&amp;fade=0&amp;theme=light&amp;prefix=..%2F..%2Ffigures%2F5%2Ftransposed_convolutional_layer_&amp;start=0&amp;end=3&amp;ext=svg&amp;resize=auto" title="Interactive image sequence" style="display:block;width:100%;aspect-ratio:16/9;border:0" scrolling="no"></iframe><script>(function () {const frame = document.getElementById("ci-stepper-4351424998ab4d69b8164ba3e27602fb");let pending = false;function updateLimit() {pending = false;if (!frame.isConnected) return;const presenting = document.body.classList.contains("rise-enabled") || document.body.classList.contains("reveal-viewport");const slide = frame.closest(".reveal section.present") || frame.closest(".reveal section");const viewportHeightDefault = window.visualViewport?.height || window.innerHeight;const header = document.querySelector(".bd-header-article");const headerHeight = header ? header.getBoundingClientRect().height : 0;let height = Math.max(180, Math.floor(viewportHeightDefault * 0.9 - headerHeight));if (presenting && slide && frame.offsetWidth) {const rect = frame.getBoundingClientRect();const scale = rect.width / frame.offsetWidth;const viewport = document.querySelector(".reveal").getBoundingClientRect();const viewportHeight = Math.min(window.innerHeight, viewport.height || window.innerHeight);const before = Math.max(0, rect.top - slide.getBoundingClientRect().top);height = Math.max(180, Math.floor((viewportHeight * 0.9 - before) / (scale || 1)));}frame.contentWindow.postMessage({type:"ci-stepper-limit", height}, "*");}function scheduleLimit() {if (!pending) { pending = true; requestAnimationFrame(updateLimit); }}function resize(event) {if (!frame.isConnected) { window.removeEventListener("message", resize); return; }if (event.source !== frame.contentWindow || event.data?.type !== "ci-stepper-height") return;const height = event.data.height;if (typeof height !== "number" || !Number.isFinite(height) || height <= 0) return;frame.style.height = Math.ceil(height) + "px";frame.style.aspectRatio = "auto";}window.addEventListener("message", resize);frame.addEventListener("load", function () {frame.contentWindow.postMessage({type:"ci-stepper-measure"}, "*");scheduleLimit();});window.addEventListener("resize", scheduleLimit);let lastWidth = 0;new ResizeObserver(function () {if (frame.offsetWidth !== lastWidth) { lastWidth = frame.offsetWidth; scheduleLimit(); }}).observe(frame);new MutationObserver(function (records) {if (records.some(r => r.target === document.body || r.target.matches(".reveal, .reveal .slides, .reveal section"))) scheduleLimit();}).observe(document.body, {attributes:true, subtree:true, attributeFilter:["class", "style"]});scheduleLimit();})();</script></div></div>
 </div>
 <section id="example-transposed-convolution-with-pytorch">
 <h4>Example transposed convolution with PyTorch:<a class="headerlink" href="#example-transposed-convolution-with-pytorch" title="Link to this heading">#</a></h4>
@@ -861,6 +892,14 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transposed_convolution</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
 <span class="n">transposed_convolution</span><span class="o">.</span><span class="n">weight</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parameter containing:
+tensor([[[[-0.1700, -0.2384, -0.1470],
+          [ 0.0080, -0.1382,  0.1755],
+          [-0.0921,  0.3058, -0.2062]]]], requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -872,10 +911,27 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[1., 0., 0.],
+         [0., 0., 0.],
+         [0., 0., 0.]]])
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transposed_convolution</span><span class="p">(</span><span class="n">only_one_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.1700, -0.2384, -0.1470,  0.0000,  0.0000],
+         [ 0.0080, -0.1382,  0.1755,  0.0000,  0.0000],
+         [-0.0921,  0.3058, -0.2062,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  0.0000,  0.0000],
+         [ 0.0000,  0.0000,  0.0000,  0.0000,  0.0000]]],
+       grad_fn=&lt;SqueezeBackward1&gt;)
 </pre></div>
 </div>
 </div>
@@ -887,10 +943,27 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[1., 0., 0.],
+         [0., 1., 0.],
+         [0., 0., 1.]]])
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transposed_convolution</span><span class="p">(</span><span class="n">eye_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[-0.1700, -0.2384, -0.1470,  0.0000,  0.0000],
+         [ 0.0080, -0.3082, -0.0629, -0.1470,  0.0000],
+         [-0.0921,  0.3138, -0.5145, -0.0629, -0.1470],
+         [ 0.0000, -0.0921,  0.3138, -0.3444,  0.1755],
+         [ 0.0000,  0.0000, -0.0921,  0.3058, -0.2062]]],
+       grad_fn=&lt;SqueezeBackward1&gt;)
 </pre></div>
 </div>
 </div>
@@ -912,6 +985,16 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">upsample_layer</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[[[1., 1., 0., 0., 0., 0.],
+          [1., 1., 0., 0., 0., 0.],
+          [0., 0., 1., 1., 0., 0.],
+          [0., 0., 1., 1., 0., 0.],
+          [0., 0., 0., 0., 1., 1.],
+          [0., 0., 0., 0., 1., 1.]]]])
 </pre></div>
 </div>
 </div>
@@ -978,6 +1061,14 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 640x480 with 0 Axes&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "ca189a20f0f048fbb59dd2dff6030fd4"}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(s1, s2, w1, w2)&gt;
+</pre></div>
+</div>
+</div>
 </div>
 <p>As can be seen, this addition yields to consecutive step functions what can be used, e.g., to approximate the <span class="math notranslate nohighlight">\(\mathrm{rect}\)</span>-function.</p>
 <p>Therefore, if <span class="math notranslate nohighlight">\(s_1 &lt; s_2\)</span>, it must hold <span class="math notranslate nohighlight">\(w_2 = -w_1\)</span> to get a <span class="math notranslate nohighlight">\(\mathrm{rect}\)</span>-function with height <span class="math notranslate nohighlight">\(h=\left| w_1 \right| = \left| w_2 \right|  \)</span>.</p>
@@ -1017,6 +1108,14 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 640x480 with 0 Axes&gt;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "00eb9e200c034ff9bb3407e644f1ff95"}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function __main__.&lt;lambda&gt;(s11, s12, s21, s22, h1, h2)&gt;
+</pre></div>
+</div>
+</div>
 </div>
 <p>The more of these modules we add, the more complicated the shape of the output can be. When the width of the single <span class="math notranslate nohighlight">\(\mathrm{rect}\)</span>-functions approaches zero and the number of <span class="math notranslate nohighlight">\(\mathrm{rect}\)</span>-functions approaches infinity, any continuous function can be approximated.</p>
 <p>This also holds for higher dimensions.</p>
@@ -1037,6 +1136,16 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\joh89642\AppData\Local\Temp\ipykernel_37680\3250303098.py:2: RuntimeWarning: overflow encountered in exp
+  return 1/(1+np.exp(-1*x))
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.lines.Line2D at 0x238807c1b10&gt;
+</pre></div>
+</div>
+<img alt="_images/18988ed4643c937de3088d388650b2477488f0ee6d5d55c0a2bf06df74d01949.png" src="_images/18988ed4643c937de3088d388650b2477488f0ee6d5d55c0a2bf06df74d01949.png" />
 </div>
 </div>
 <p>Although the theorem states that such a simple structure is enough to approximate any function, in practice network structures with more but thinner layers (i.e., with fewer building blocks) are employed as they can achieve similar results with notably fewer building blocks.</p>
@@ -1129,6 +1238,15 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\joh89642\AppData\Local\Temp\ipykernel_37680\499059021.py:5: DeprecationWarning: __array_wrap__ must accept context and return_scalar arguments (positionally) in the future. (Deprecated NumPy 2.0)
+  return np.log(inp)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(tensor(1.2069, dtype=torch.float64), tensor(0.7324, dtype=torch.float64))
+</pre></div>
+</div>
+</div>
 </div>
 <p>Note: We just used PyTorch here so that we can easily introduce the property <code class="docutils literal notranslate"><span class="pre">.g</span></code> for all our variables.</p>
 </section>
@@ -1171,6 +1289,11 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">grad</span>                   <span class="c1"># Access the gradient</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.7324)
 </pre></div>
 </div>
 </div>
