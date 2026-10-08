@@ -5,12 +5,17 @@ permalink: /recordings/
 ---
 
 
+Recordings of the current winter semester 2026 / 2027:
 
-Recordings of the current winter semester 2025 / 2026:
+| Date | Recording | Notes |
+|:----:|:---------:|:-----:|
+| 28.10.2026 | TBD | TBD |
+
+
+Recordings of the winter semester 2025 / 2026 (Please note that the covered topics might change from year to year).:
 
 **The individual links below are partially broken at the moment. Please use this link instead and then select the files you want to download:** 
 [Downloads](https://fraunhofer-my.sharepoint.com/:f:/g/personal/johannes_meyer_iosb_fraunhofer_de/IgBreCxXd2wMS472rs_kPAf2AZ5obDhwFwZ4iuj4P9fCUhQ?e=CGHwxE)
-
 
 | Date | Recording | Notes |
 |:----:|:---------:|:-----:|
