@@ -545,7 +545,7 @@
   const params=new URLSearchParams(location.search);setConfig(Object.fromEntries(params));
   lang=params.get('lang')==='de'?'de':'en';
   if($('scene').value==='custom')$('scene').value='target';
-  document.documentElement.classList.toggle('dark',params.get('theme')==='dark');
+  document.documentElement.classList.toggle('dark',params.has('theme')?params.get('theme')==='dark':true);
   source=makeScene($('scene').value);sourceFFT();applyFilter();render();
 })();
 </script>

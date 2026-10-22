@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2.8 · Dirac-Approximation &amp; Fourier-Reihe</title>
+  <style>
+    :root { color-scheme:light; --bg:#eef3f8; --card:#fff; --line:#cbd6e2; --text:#172334; --muted:#526579; --blue:#1769aa; --orange:#a95000; --green:#16704d; --purple:#7048c8; }
+    :root.dark { color-scheme:dark; --bg:#08111f; --card:#101c2d; --line:#2a3b52; --text:#edf4ff; --muted:#a8b9ce; --blue:#75baff; --orange:#ffad57; --green:#77deb1; --purple:#bb9aff; }
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+    body { margin:0; padding:clamp(12px,2vw,28px); background:var(--bg); color:var(--text); font:18px/1.45 system-ui,"Segoe UI",sans-serif; }
+    .app { max-width:1500px; margin:auto; }
+    header,.actions,.tabs,.legend { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+    header { justify-content:space-between; margin-bottom:20px; }
+    h1 { margin:0; font-size:clamp(1.6rem,3vw,2.3rem); letter-spacing:-.04em; }
+    header p { margin:5px 0 0; color:var(--muted); }
+    button,select,input { font:inherit; }
+    button,select { background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:9px; padding:9px 12px; min-height:44px; }
+    button { cursor:pointer; }
+    button:hover { border-color:var(--purple); }
+    button:disabled { opacity:.45; cursor:default; }
+    :focus-visible { outline:3px solid var(--purple); outline-offset:3px; }
+    .tabs { margin-bottom:18px; }
+    .tabs button[aria-selected=true] { background:var(--purple); color:var(--card); border-color:var(--purple); }
+    .layout { display:grid; grid-template-columns:290px minmax(0,1fr); gap:18px; }
+    aside,.panel,.info { background:var(--card); border:1px solid var(--line); border-radius:15px; }
+    aside { padding:18px; align-self:start; }
+    .control { display:block; margin-bottom:18px; }
+    .control > span { display:flex; justify-content:space-between; gap:8px; margin-bottom:7px; font-weight:650; }
+    select,input[type=range] { width:100%; }
+    input[type=range] { accent-color:var(--purple); min-height:30px; margin:0; }
+    input[type=checkbox] { width:22px; height:22px; vertical-align:middle; accent-color:var(--purple); margin:0 8px 0 0; }
+    .check { display:block; margin:14px 0; }
+    output { color:var(--purple); white-space:nowrap; }
+    hr { border:0; border-top:1px solid var(--line); margin:20px 0; }
+    main,.panel { min-width:0; }
+    .views { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:18px; }
+    .panel { overflow:hidden; }
+    .panel-head { padding:14px 16px; border-bottom:1px solid var(--line); }
+    h2 { font-size:1.12rem; margin:0; }
+    .panel-head p { color:var(--muted); margin:5px 0 0; }
+    canvas { display:block; width:100%; height:340px; }
+    #signal { touch-action:none; cursor:crosshair; }
+    #spectrum { cursor:ns-resize; touch-action:none; }
+    .panel-foot { padding:10px 16px 16px; }
+    .panel-foot p { margin:5px 0; }
+    .legend { gap:8px 20px; }
+    .legend span::before { content:""; display:inline-block; width:22px; border-top:3px solid currentColor; margin:0 7px 4px 0; }
+    .blue { color:var(--blue); } .green { color:var(--green); } .orange { color:var(--orange); } .purple { color:var(--purple); }
+    .muted,.hint { color:var(--muted); }
+    .hint { margin:14px 0 0; }
+    .info { padding:16px 18px; margin-top:18px; }
+    .info p { margin:8px 0; }
+    .formula { font-family:"Cambria Math",Cambria,serif; font-size:1.2rem; overflow-wrap:anywhere; }
+    .metrics { display:flex; flex-wrap:wrap; gap:12px 28px; margin:12px 0; }
+    .metrics strong { color:var(--green); }
+    .harmonics { display:flex; flex-wrap:wrap; gap:7px; max-height:230px; overflow:auto; padding:4px; margin:10px -4px 0; }
+    .harmonics button { min-width:48px; padding:6px 9px; }
+    .harmonics button[aria-pressed=true] { border-color:var(--purple); background:color-mix(in srgb,var(--purple) 12%,var(--card)); }
+    .harmonics button.selected { outline:2px solid var(--orange); outline-offset:1px; }
+    details { margin-top:12px; }
+    summary { cursor:pointer; font-weight:650; }
+    li { margin:7px 0; }
+    #status { min-height:1.45em; margin:14px 0 0; }
+    @media(max-width:1100px) { .views { grid-template-columns:1fr; } }
+    @media(max-width:760px) { .layout { grid-template-columns:1fr; } aside { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; } aside .wide { grid-column:1/-1; } canvas { height:300px; } }
+    @media(max-width:460px) { aside { display:block; } body { padding:10px; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div><h1 data-i18n="title">Dirac-Approximation &amp; Fourier-Reihe</h1><p data-i18n="subtitle">Impulse verstehen. Signale zeichnen. Harmonische entdecken.</p></div>
+    <div class="actions"><button id="language" type="button">English</button><button id="theme" type="button" data-i18n="theme">Hell / Dunkel</button><button id="reset" type="button" data-i18n="reset">Reset (R)</button></div>
+  </header>
+  <div class="tabs" role="tablist" aria-label="Experiment">
+    <button id="diracTab" type="button" role="tab" aria-selected="true" aria-controls="diracView" data-i18n="diracTab">Dirac-Approximation</button>
+    <button id="fourierTab" type="button" role="tab" aria-selected="false" aria-controls="fourierView" tabindex="-1" data-i18n="fourierTab">Fourier-Reihe</button>
+  </div>
+  <section id="diracView" role="tabpanel" aria-labelledby="diracTab">
+    <div class="layout">
+      <aside>
+        <label class="control"><span><span data-i18n="width">Impulsbreite ε</span><output id="epsilonValue"></output></span><input id="epsilon" type="range" min="0.01" max="2" step="0.01" value="1"></label>
+        <label class="check"><input id="fixedScale" type="checkbox"><span data-i18n="fixedScale">Feste Höhenskala (0 … 100)</span></label>
+        <p class="hint" data-i18n="scaleHint">Ohne feste Skala folgt die y-Achse der Impulshöhe. Die Breite bleibt auf derselben x-Skala sichtbar.</p>
+        <div class="actions wide"><button id="halve" type="button" data-i18n="halve">ε halbieren</button><button id="diracReset" type="button">ε = 1</button></div>
+      </aside>
+      <main>
+        <div class="views">
+          <section class="panel">
+            <div class="panel-head"><h2 class="purple">δ<sub>ε</sub>(x) = rect(x / ε) / ε</h2><p data-i18n="pulseSub">Schmaler und höher — die Fläche bleibt gleich.</p></div>
+            <canvas id="dirac" role="img" aria-label="Rechteckimpuls mit Breite epsilon und Fläche eins"></canvas>
+            <div class="panel-foot"><div class="metrics"><span><span data-i18n="height">Höhe</span>: <strong id="heightValue"></strong></span><span>∫ δ<sub>ε</sub>(x) dx = <strong>1</strong></span></div></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2 class="blue" data-i18n="sifting">Abtasteigenschaft</h2><p>φ(x) = 1 + 0.5 cos(x) + 0.2 sin(x)</p></div>
+            <canvas id="testFunction" role="img" aria-label="Testfunktion und Mittelwert innerhalb des Impulses"></canvas>
+            <div class="panel-foot"><div class="legend"><span class="blue">φ(x)</span><span class="green">∫ φ(x) δ<sub>ε</sub>(x) dx</span></div><p id="siftingValue"></p></div>
+          </section>
+        </div>
+        <section class="info">
+          <p class="formula">δ<sub>ε</sub>(x) = 1/ε <span data-i18n="inside">für |x| &lt; ε/2, sonst 0.</span> &nbsp; ε · (1/ε) = 1</p>
+          <p data-i18n="diracExplain">Für ε → 0 konzentriert sich die Fläche am Ursprung. δ ist keine gewöhnliche Funktion mit endlicher Höhe: Entscheidend ist ihre Wirkung im Integral.</p>
+          <p class="formula">lim<sub>ε→0</sub> ∫ φ(x) δ<sub>ε</sub>(x) dx = φ(0) = 1.5</p>
+          <p data-i18n="siftingExplain">Das Integral ist hier der Mittelwert von φ über [−ε/2, ε/2]. Je kleiner dieses Intervall, desto näher liegt der Mittelwert bei φ(0).</p>
+        </section>
+      </main>
+    </div>
+  </section>
+  <section id="fourierView" role="tabpanel" aria-labelledby="fourierTab" hidden>
+    <div class="layout">
+      <aside>
+        <label class="control"><span data-i18n="target">Zielsignal g(x)</span><select id="preset"><option value="saw" data-i18n="saw">Sägezahn (Skript)</option><option value="offset" data-i18n="offset">Sägezahn + 3 (Skript)</option><option value="square" data-i18n="square">Rechteck</option><option value="triangle" data-i18n="triangle">Dreieck</option><option value="sine" data-i18n="sine">Sinus</option><option value="blank" data-i18n="blank">Leere Zeichenfläche</option><option value="custom" data-i18n="custom">Eigene Zeichnung</option></select></label>
+        <label class="control"><span data-i18n="representation">Darstellung</span><select id="representation"><option value="trig" data-i18n="trig">Trigonometrisch: a_f, b_f</option><option value="exp" data-i18n="exp">Komplex: |c_f|</option></select></label>
+        <label class="control"><span><span data-i18n="cutoff">Höchste Harmonische H</span><output id="termsValue"></output></span><input id="terms" type="range" min="0" max="100" step="1" value="16"></label>
+        <label class="control"><span><span data-i18n="frequency">Perioden im Intervall L</span><output id="frequencyValue"></output></span><input id="frequency" type="range" min="1" max="8" step="1" value="4"></label>
+        <label class="control"><span data-i18n="inspect">Harmonische untersuchen</span><select id="inspect"></select></label>
+        <label class="check"><input id="showComponent" type="checkbox" checked><span data-i18n="showComponent">Einzelbeitrag anzeigen</span></label>
+        <label class="check"><input id="repeat" type="checkbox"><span data-i18n="repeat">Periodische Fortsetzung zeigen</span></label>
+        <div class="actions wide"><button id="clear" type="button" data-i18n="clear">Signal leeren</button><button id="undo" type="button" disabled data-i18n="undo">Rückgängig</button></div>
+        <p class="hint wide" data-i18n="drawHint">Direkt im Signalplot mit Maus, Stift oder Finger zeichnen. Eine Zeichnung definiert einen Funktionswert pro x; sie wird periodisch fortgesetzt.</p>
+      </aside>
+      <main>
+        <div class="views">
+          <section class="panel">
+            <div class="panel-head"><h2 class="blue" data-i18n="signalTitle">Zielsignal &amp; Rekonstruktion</h2><p data-i18n="signalSub">Hier zeichnen → Koeffizienten und Summe ändern sich live.</p></div>
+            <canvas id="signal" aria-label="Zielsignal zeichnen; blaue Kurve und grüne Fourier-Rekonstruktion"></canvas>
+            <div class="panel-foot"><div class="legend"><span class="blue">g(x)</span><span class="green">ĝ<sub>H</sub>(x)</span><span id="componentLegend" class="orange" data-i18n="component">Einzelbeitrag</span></div><p id="errorValue"></p></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2 class="purple" data-i18n="spectrumTitle">Koeffizientenspektrum</h2><p data-i18n="spectrumSub">Balken hoch/runter ziehen: Wert ändern. Kurz klicken: ein/aus.</p></div>
+            <canvas id="spectrum" role="img" aria-label="Koeffizienten als Balken, Harmonische per Klick schalten"></canvas>
+            <div class="panel-foot"><div id="spectrumLegend" class="legend"></div><p id="coefficientValue"></p><button id="restoreCoefficients" type="button" data-i18n="restoreCoefficients">Koeffizienten aus Zielsignal</button><p class="hint" data-i18n="editHint">Ziehen verändert die grüne Zeitkurve; das blaue Zielsignal bleibt erhalten. Bei |c_f| bleibt die Phase erhalten (bei null: Phase 0). ±f ändern sich gemeinsam.</p></div>
+          </section>
+        </div>
+        <section class="info">
+          <div class="actions"><strong data-i18n="activeTitle">Aktive Harmonische</strong><button id="allOn" type="button" data-i18n="allOn">Alle an</button><button id="allOff" type="button" data-i18n="allOff">Alle aus</button><button id="solo" type="button" data-i18n="solo">Nur untersuchte</button></div>
+          <div id="harmonics" class="harmonics" role="group" aria-label="Harmonische einzeln schalten"></div>
+          <p id="termCount" class="muted"></p>
+          <p id="synthesis" class="formula green"></p>
+          <p id="analysis" class="formula"></p>
+          <p class="formula">c<sub>0</sub> = a<sub>0</sub>, &nbsp; c<sub>f</sub> = (a<sub>f</sub> − j b<sub>f</sub>)/2, &nbsp; c<sub>−f</sub> = c<sub>f</sub>*</p>
+          <p data-i18n="pairHint">Bei komplexer Darstellung werden +f und −f gemeinsam geschaltet. Ihre imaginären Anteile heben sich auf; die Rekonstruktion bleibt reell. Beide Darstellungen ergeben dieselbe Kurve.</p>
+          <details><summary data-i18n="mathTitle">Notation, Numerik &amp; Gibbs-Effekt</summary><ul>
+            <li data-i18n="notationNote">Wie im Skript ist a₀ der Mittelwert, nicht der doppelte Mittelwert. L = 20. H bezeichnet eindeutig den höchsten Frequenzindex: f = 1 … H bzw. f = −H … H, jeweils einschließlich DC.</li>
+            <li data-i18n="numericsNote">Die Analyse verwendet 1024 äquidistante Intervallmittelpunkte und periodische Quadratur. Gezeichnete Werte werden auf [−1.5, 4.5] begrenzt. Der RMSE wird an diesen 1024 Punkten berechnet.</li>
+            <li data-i18n="gibbsNote">An Sprüngen bleiben Überschwinger (Gibbs-Effekt), auch bei vielen Harmonischen; sie werden räumlich schmaler. Am Sprung konvergiert die Reihe zum Mittelwert der beiden einseitigen Grenzwerte.</li>
+            <li data-i18n="spectrumNote">Die Spektralskala berücksichtigt alle sichtbaren Koeffizienten. Ausgeschaltete Balken sind blass; Frequenzen oberhalb H sind zusätzlich schraffiert. Die Schaltflächen darunter sind auch per Tastatur bedienbar.</li>
+          </ul></details>
+        </section>
+      </main>
+    </div>
+  </section>
+  <section class="info">
+    <div class="actions"><button id="copyLink" type="button" data-i18n="copyLink">Zustandslink kopieren</button><button id="save" type="button" data-i18n="save">Widget mit Zustand speichern</button></div>
+    <p class="muted" data-i18n="saveHint">Alle Einstellungen, ausgeschaltete Harmonische und eigene Zeichnungen stehen im Link. „Speichern“ erzeugt eine eigenständige HTML-Datei mit dem aktuellen Startzustand.</p>
+    <p id="status" class="muted" role="status" aria-live="polite"></p>
+  </section>
+</div>
+<script id="initialState" type="application/json">null</script>
+<script>
+(() => {
+  'use strict';
+  const N = 1024, MAX = 100, L = 20, TAU = 2 * Math.PI;
+  const $ = id => document.getElementById(id);
+  const defaults = {tab:'dirac', epsilon:1, fixedScale:false, preset:'saw', representation:'trig', terms:16, frequency:4, inspect:4, showComponent:true, repeat:false, lang:'en', dark:true};
+  let state = {...defaults}, samples = new Float64Array(N), a = new Float64Array(MAX + 1), b = new Float64Array(MAX + 1);
+  let enabled = Array(MAX + 1).fill(true), reconstruction = new Float64Array(N), component = new Float64Array(N);
+   let undo = null, stroke = null, coefficientDrag = null, edits = {}, frame = 0, dirty = true;
+  const plots = {}, cos = [], sin = [];
+  for (let f = 0; f <= MAX; f++) {
+    cos[f] = new Float64Array(N); sin[f] = new Float64Array(N);
+    for (let i = 0; i < N; i++) { const phase = TAU * f * (i + 0.5) / N; cos[f][i] = Math.cos(phase); sin[f][i] = Math.sin(phase); }
+  }
+  const english = {
+    title:'Dirac approximation & Fourier series', subtitle:'Understand impulses. Draw signals. Explore harmonics.', theme:'Light / Dark', reset:'Reset (R)', diracTab:'Dirac approximation', fourierTab:'Fourier series',
+    width:'Impulse width ε', fixedScale:'Fixed height scale (0 … 100)', scaleHint:'Without a fixed scale, the y-axis follows the impulse height. The x-scale remains unchanged.', halve:'Halve ε', height:'Height', pulseSub:'Narrower and taller — the area stays the same.', sifting:'Sifting property', inside:'for |x| < ε/2, otherwise 0.',
+    diracExplain:'As ε → 0, the area concentrates at the origin. δ is not an ordinary function with finite height: its action inside an integral is what matters.', siftingExplain:'This integral is the average of φ over [−ε/2, ε/2]. As this interval shrinks, the average approaches φ(0).',
+    target:'Target signal g(x)', saw:'Sawtooth (course notes)', offset:'Sawtooth + 3 (course notes)', square:'Square wave', triangle:'Triangle wave', sine:'Sine wave', blank:'Blank drawing area', custom:'Your drawing', representation:'Representation', trig:'Trigonometric: a_f, b_f', exp:'Complex: |c_f|', cutoff:'Highest harmonic H', frequency:'Periods within interval L', inspect:'Inspect harmonic', showComponent:'Show individual contribution', repeat:'Show periodic extension', clear:'Clear signal', undo:'Undo',
+    drawHint:'Draw directly in the signal plot with mouse, pen or touch. A drawing defines one value per x and is extended periodically.', signalTitle:'Target & reconstruction', signalSub:'Draw here → coefficients and sum update live.', component:'Individual contribution', spectrumTitle:'Coefficient spectrum', spectrumSub:'Drag bars up/down to change values. Click to toggle.', activeTitle:'Active harmonics', allOn:'All on', allOff:'All off', solo:'Inspected only',
+    restoreCoefficients:'Restore coefficients from target', editHint:'Dragging changes the green time signal; the blue target stays unchanged. For |c_f| the phase is preserved (at zero: phase 0). ±f change together.',
+    pairHint:'In complex form, +f and −f are switched together. Their imaginary parts cancel, so the reconstruction stays real. Both representations produce the same curve.', mathTitle:'Notation, numerics & Gibbs phenomenon',
+    notationNote:'As in the course notes, a₀ is the mean, not twice the mean. L = 20. H explicitly denotes the highest frequency index: f = 1 … H or f = −H … H, including DC.',
+    numericsNote:'Analysis uses 1024 equally spaced interval midpoints and periodic quadrature. Drawn values are limited to [−1.5, 4.5]. RMSE is evaluated at these 1024 points.',
+    gibbsNote:'Overshoot persists at jumps (Gibbs phenomenon), even with many harmonics; its spatial extent gets narrower. At a jump the series converges to the mean of the two one-sided limits.',
+    spectrumNote:'The spectrum scale includes all visible coefficients. Disabled bars are faded; frequencies above H are also hatched. The buttons below are keyboard accessible.',
+    copyLink:'Copy state link', save:'Save widget with state', saveHint:'The link contains all settings, disabled harmonics and custom drawings. Saving creates a standalone HTML file with the current initial state.'
+  };
+  const german = new Map([...document.querySelectorAll('[data-i18n]')].map(el => [el.dataset.i18n, el.textContent]));
+  const t = (de, en) => state.lang === 'de' ? de : en;
+  const number = (v, digits = 3) => (Math.abs(v) < 0.5 * 10 ** -digits ? 0 : v).toLocaleString(state.lang === 'de' ? 'de-DE' : 'en-US', {maximumFractionDigits:digits, minimumFractionDigits:digits});
+  const clamp = (x, min, max) => Math.max(min, Math.min(max, x));
+  function presetSignal() {
+    edits = {};
+    for (let i = 0; i < N; i++) {
+      const phase = ((i + 0.5) * state.frequency / N) % 1;
+      samples[i] = state.preset === 'square' ? (phase < 0.5 ? 1 : -1) : state.preset === 'triangle' ? 1 - 4 * Math.abs(phase - 0.5) : state.preset === 'sine' ? Math.sin(TAU * phase) : state.preset === 'blank' ? 0 : 2 * phase - 1 + (state.preset === 'offset' ? 3 : 0);
+    }
+    dirty = true;
+  }
+  function analyze() {
+    for (let f = 0; f <= MAX; f++) {
+      let re = 0, im = 0;
+      for (let i = 0; i < N; i++) { re += samples[i] * cos[f][i]; im += samples[i] * sin[f][i]; }
+      a[f] = re * (f ? 2 : 1) / N; b[f] = im * (f ? 2 : 0) / N;
+    }
+    for (const [f,values] of Object.entries(edits)) { a[f] = values[0]; b[f] = values[1]; }
+    dirty = false;
+  }
+  function synthesize() {
+    reconstruction.fill(enabled[0] ? a[0] : 0);
+    const selected = state.inspect;
+    for (let i = 0; i < N; i++) component[i] = selected ? a[selected] * cos[selected][i] + b[selected] * sin[selected][i] : a[0];
+    for (let f = 1; f <= state.terms; f++) if (enabled[f]) {
+      for (let i = 0; i < N; i++) reconstruction[i] += a[f] * cos[f][i] + b[f] * sin[f][i];
+    }
+  }
+  function prepare(id, xmin, xmax, ymin, ymax, xticks, yticks) {
+    const canvas = $(id), rect = canvas.getBoundingClientRect(), width = rect.width, height = rect.height;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
+    const ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const style = getComputedStyle(document.documentElement);
+    const colors = Object.fromEntries(['card','line','text','muted','blue','green','orange','purple'].map(k => [k, style.getPropertyValue('--' + k).trim()]));
+    const box = {left:64, top:24, right:width - 20, bottom:height - 46};
+    const x = value => box.left + (value - xmin) / (xmax - xmin) * (box.right - box.left);
+    const y = value => box.bottom - (value - ymin) / (ymax - ymin) * (box.bottom - box.top);
+    ctx.fillStyle = colors.card; ctx.fillRect(0, 0, width, height); ctx.font = '18px system-ui';
+    ctx.lineWidth = 1; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    for (const tick of xticks) {
+      ctx.strokeStyle = colors.line; ctx.beginPath(); ctx.moveTo(x(tick), box.top); ctx.lineTo(x(tick), box.bottom); ctx.stroke();
+      ctx.fillStyle = colors.muted; ctx.fillText(String(tick), x(tick), box.bottom + 10);
+    }
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (const tick of yticks) {
+      ctx.strokeStyle = colors.line; ctx.beginPath(); ctx.moveTo(box.left, y(tick)); ctx.lineTo(box.right, y(tick)); ctx.stroke();
+      ctx.fillStyle = colors.muted; ctx.fillText(number(tick, Math.abs(tick) < 1 && tick !== 0 ? 2 : 1), box.left - 8, y(tick));
+    }
+    ctx.strokeStyle = colors.muted; ctx.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top);
+    if (ymin < 0 && ymax > 0) { ctx.beginPath(); ctx.moveTo(box.left, y(0)); ctx.lineTo(box.right, y(0)); ctx.stroke(); }
+    ctx.textAlign = 'right'; ctx.textBaseline = 'bottom'; ctx.fillStyle = colors.muted; ctx.fillText(id === 'spectrum' ? 'f' : 'x', width - 5, height - 5);
+    const plot = {ctx, box, x, y, colors, xmin, xmax, ymin, ymax, width, height}; plots[id] = plot; return plot;
+  }
+  function line(plot, points, color, dash = []) {
+    const {ctx, box, x, y} = plot;
+    ctx.save(); ctx.beginPath(); ctx.rect(box.left, box.top, box.right - box.left, box.bottom - box.top); ctx.clip();
+    ctx.strokeStyle = plot.colors[color]; ctx.lineWidth = 2.5; ctx.setLineDash(dash); ctx.beginPath();
+    points.forEach(([px, py], i) => i ? ctx.lineTo(x(px), y(py)) : ctx.moveTo(x(px), y(py)));
+    ctx.stroke(); ctx.restore();
+  }
+  function drawDirac() {
+    const eps = state.epsilon, height = 1 / eps, ymax = state.fixedScale ? 105 : height * 1.2;
+    const p = prepare('dirac', -5, 5, 0, ymax, [-5,-2.5,0,2.5,5], state.fixedScale ? [0,25,50,75,100] : [0,height / 2,height]);
+    p.ctx.fillStyle = p.colors.purple; p.ctx.globalAlpha = 0.16;
+    p.ctx.fillRect(p.x(-eps / 2), p.y(height), Math.max(1, p.x(eps / 2) - p.x(-eps / 2)), p.y(0) - p.y(height)); p.ctx.globalAlpha = 1;
+    line(p, [[-5,0],[-eps / 2,0],[-eps / 2,height],[eps / 2,height],[eps / 2,0],[5,0]], 'purple');
+    p.ctx.fillStyle = p.colors.purple; p.ctx.textAlign = 'center'; p.ctx.fillText('ε = ' + number(eps, 2), p.x(0), p.box.top + 10);
+    const q = prepare('testFunction', -5, 5, 0.3, 1.8, [-5,-2.5,0,2.5,5], [0.5,1,1.5]);
+    q.ctx.globalAlpha = 0.12; q.ctx.fillStyle = q.colors.purple; q.ctx.fillRect(q.x(-eps / 2), q.box.top, Math.max(1,q.x(eps / 2) - q.x(-eps / 2)), q.box.bottom - q.box.top); q.ctx.globalAlpha = 1;
+    line(q, Array.from({length:501}, (_,i) => { const x = -5 + i / 50; return [x,1 + 0.5 * Math.cos(x) + 0.2 * Math.sin(x)]; }), 'blue');
+    const mean = 1 + 0.5 * Math.sin(eps / 2) / (eps / 2);
+    line(q, [[-5,mean],[5,mean]], 'green', [8,5]);
+    q.ctx.fillStyle = q.colors.blue; q.ctx.beginPath(); q.ctx.arc(q.x(0),q.y(1.5),5,0,TAU); q.ctx.fill();
+    $('epsilonValue').textContent = number(eps, 2); $('heightValue').textContent = number(height, 2);
+    $('siftingValue').textContent = `${t('Mittelwert','Average')} = ${number(mean, 5)} · φ(0) = 1.5 · ${t('Abweichung','Deviation')}: ${number(1.5 - mean, 5)}`;
+    $('halve').disabled = eps <= 0.01;
+  }
+  function drawFourier() {
+    if (dirty) analyze(); synthesize();
+    let ymin = -1.7, ymax = 4.7;
+    if (Object.keys(edits).length) for (let i = 0; i < N; i++) { ymin = Math.min(ymin,reconstruction[i] - 0.3,state.showComponent ? component[i] - 0.3 : ymin); ymax = Math.max(ymax,reconstruction[i] + 0.3,state.showComponent ? component[i] + 0.3 : ymax); }
+    const yticks = ymin === -1.7 && ymax === 4.7 ? [-1,0,1,2,3,4] : Array.from({length:5},(_,i) => ymin + (ymax-ymin) * i / 4);
+    const p = prepare('signal', state.repeat ? -L : 0, state.repeat ? 2 * L : L, ymin, ymax, state.repeat ? [-20,0,20,40] : [0,5,10,15,20], yticks);
+    const points = values => {
+      const result = [];
+      for (let period = state.repeat ? -1 : 0; period <= (state.repeat ? 1 : 0); period++) for (let i = 0; i < N; i++) result.push([L * (period + (i + 0.5) / N), values[i]]);
+      return result;
+    };
+    line(p, points(samples), 'blue');
+    if (state.showComponent) line(p, points(component), 'orange', [6,4]);
+    line(p, points(reconstruction), 'green');
+    $('componentLegend').hidden = !state.showComponent;
+    let error = 0, energy = 0, captured = enabled[0] ? a[0] ** 2 : 0;
+    for (let i = 0; i < N; i++) { error += (samples[i] - reconstruction[i]) ** 2 / N; energy += samples[i] ** 2 / N; }
+    for (let f = 1; f <= state.terms; f++) if (enabled[f]) captured += (a[f] ** 2 + b[f] ** 2) / 2;
+    const edited = Object.keys(edits).length > 0;
+    $('errorValue').textContent = `RMSE = ${number(Math.sqrt(error), 4)} · ${edited ? t('Energie der Synthese / Zielsignal','Synthesis / target energy') : t('Erfasste Signalenergie','Captured signal energy')}: ${energy > 1e-14 ? number(edited ? 100 * captured / energy : clamp(100 * captured / energy,0,100),1) + ' %' : '—'}`;
+    $('restoreCoefficients').disabled = !edited;
+    drawSpectrum(); updateFourierText();
+  }
+  function drawSpectrum() {
+    const complex = state.representation === 'exp', limit = Math.max(16, state.terms), indices = [];
+    for (let f = complex ? -limit : 0; f <= limit; f++) indices.push(f);
+    let peak = 0.05;
+    for (let f = 0; f <= limit; f++) peak = Math.max(peak, complex ? (f ? Math.hypot(a[f], b[f]) / 2 : Math.abs(a[0])) : Math.max(Math.abs(a[f]),Math.abs(b[f])));
+    const top = coefficientDrag && coefficientDrag.moved ? coefficientDrag.top : Math.ceil(peak * 1.15 * 10) / 10;
+    const ticks = complex ? [-limit, -Math.round(limit / 2),0,Math.round(limit / 2),limit] : [0,Math.round(limit / 4),Math.round(limit / 2),Math.round(3 * limit / 4),limit];
+    const p = prepare('spectrum', complex ? -limit - 0.5 : -0.5, limit + 0.5, complex ? 0 : -top, top, [...new Set(ticks)], complex ? [0,top / 2,top] : [-top,0,top]);
+    p.limit = limit; p.complex = complex;
+    const bar = (f, value, offset, width, color) => {
+      const index = Math.abs(f), left = p.x(f + offset), right = p.x(f + offset + width), y = p.y(value), base = p.y(0);
+      p.ctx.fillStyle = p.colors[color]; p.ctx.globalAlpha = index <= state.terms && enabled[index] ? 0.9 : 0.2;
+      const h = Math.max(1, Math.abs(base - y)); p.ctx.fillRect(left,Math.min(y,base),Math.max(1,right - left),h); p.ctx.globalAlpha = 1;
+      if (limit <= 32 || index === state.inspect) { p.ctx.beginPath(); p.ctx.arc((left+right)/2,y,3,0,TAU); p.ctx.fill(); }
+      if (index > state.terms && h > 3) {
+        p.ctx.save(); p.ctx.beginPath(); p.ctx.rect(left,Math.min(y,base),Math.max(1,right-left),h); p.ctx.clip(); p.ctx.strokeStyle = p.colors.muted; p.ctx.lineWidth = 1;
+        for (let d = -h; d < right-left; d += 6) { p.ctx.beginPath(); p.ctx.moveTo(left+d,Math.min(y,base)); p.ctx.lineTo(left+d+h,Math.min(y,base)+h); p.ctx.stroke(); } p.ctx.restore();
+      }
+      if (index === state.inspect) { p.ctx.strokeStyle = p.colors.orange; p.ctx.lineWidth = 2; p.ctx.strokeRect(left - 1,Math.min(y,base) - 1,Math.max(2,right-left + 2),h + 2); }
+    };
+    for (const f of indices) {
+      if (complex) bar(f, f ? Math.hypot(a[Math.abs(f)],b[Math.abs(f)]) / 2 : Math.abs(a[0]), -0.36, 0.72, 'purple');
+      else { bar(f,a[f],-0.38,0.36,'purple'); if (f) bar(f,b[f],0.02,0.36,'orange'); }
+    }
+    $('spectrumLegend').innerHTML = complex ? '<span class="purple">|c<sub>f</sub>|</span>' : '<span class="purple">a<sub>f</sub></span><span class="orange">b<sub>f</sub></span>';
+  }
+  function updateFourierText() {
+    const f = state.inspect, active = enabled.slice(0,state.terms + 1).filter(Boolean).length, pairs = enabled.slice(1,state.terms + 1).filter(Boolean).length;
+    const on = enabled[f] && f <= state.terms;
+    $('coefficientValue').textContent = state.representation === 'trig' ? `f = ${f}: a = ${number(a[f],4)}${f ? ', b = ' + number(b[f],4) : ''} · ${t(on ? 'aktiv' : 'nicht in der Summe', on ? 'active' : 'not in the sum')}` : `c${f ? '₊' + f : '₀'} = ${number(f ? a[f] / 2 : a[0],4)} ${b[f] > 0 ? '−' : '+'} j ${number(Math.abs(b[f]) / 2,4)} · |c| = ${number(f ? Math.hypot(a[f],b[f]) / 2 : Math.abs(a[0]),4)}`;
+    $('termCount').textContent = `${t('Aktiv bis H','Active up to H')} = ${state.terms}: ${active} ${t('Harmonik-Gruppen (inkl. DC)','harmonic groups (incl. DC)')} · ${2 * pairs + (enabled[0] ? 1 : 0)} ${t('komplexe Terme','complex terms')}. ${t('DC = Mittelwert. Orange markiert: untersuchte Harmonische.','DC = mean. Orange outline: inspected harmonic.')}`;
+    $('synthesis').innerHTML = state.representation === 'trig' ? 'ĝ<sub>H</sub>(x) = a<sub>0</sub> + Σ<sub>f=1…H</sub> [a<sub>f</sub> cos(2πfx/L) + b<sub>f</sub> sin(2πfx/L)]' : 'ĝ<sub>H</sub>(x) = Σ<sub>f=−H…H</sub> c<sub>f</sub> exp(j2πfx/L)';
+    $('analysis').innerHTML = state.representation === 'trig' ? 'a<sub>0</sub> = (1/L) ∫<sub>0</sub><sup>L</sup> g(x) dx; &nbsp; a<sub>f</sub> = (2/L) ∫<sub>0</sub><sup>L</sup> g(x) cos(2πfx/L) dx; &nbsp; b<sub>f</sub> = (2/L) ∫<sub>0</sub><sup>L</sup> g(x) sin(2πfx/L) dx' : 'c<sub>f</sub> = (1/L) ∫<sub>0</sub><sup>L</sup> g(x) exp(−j2πfx/L) dx';
+    // Show the actual selected subset in the formula, rather than implying every term is enabled.
+    if (active < state.terms + 1) $('synthesis').insertAdjacentText('beforeend', t('  (nur aktivierte Beiträge)', '  (enabled contributions only)'));
+    if (Object.keys(edits).length) $('analysis').insertAdjacentText('beforeend',t('  · Koeffizienten manuell verändert; Integrale beschreiben das blaue Zielsignal.','  · Coefficients manually edited; integrals describe the blue target.'));
+    for (const button of $('harmonics').children) { const f = Number(button.dataset.f); button.setAttribute('aria-pressed',String(enabled[f])); button.classList.toggle('selected',f === state.inspect); }
+  }
+  function controls() {
+    document.documentElement.lang = state.lang; document.documentElement.classList.toggle('dark',state.dark);
+    for (const el of document.querySelectorAll('[data-i18n]')) el.textContent = state.lang === 'en' ? english[el.dataset.i18n] : german.get(el.dataset.i18n);
+    $('language').textContent = state.lang === 'de' ? 'English' : 'Deutsch';
+    for (const key of ['epsilon','fixedScale','preset','representation','terms','frequency','showComponent','repeat']) {
+      if (typeof state[key] === 'boolean') $(key).checked = state[key]; else $(key).value = state[key];
+    }
+    $('frequency').disabled = state.preset === 'custom' || state.preset === 'blank';
+    $('termsValue').textContent = state.terms; $('frequencyValue').textContent = state.frequency;
+    $('undo').disabled = !undo;
+    const isDirac = state.tab === 'dirac'; $('diracView').hidden = !isDirac; $('fourierView').hidden = isDirac;
+    for (const name of ['dirac','fourier']) { $(name + 'Tab').setAttribute('aria-selected',String(state.tab === name)); $(name + 'Tab').tabIndex = state.tab === name ? 0 : -1; }
+    $('inspect').replaceChildren(); $('harmonics').replaceChildren();
+    for (let f = 0; f <= MAX; f++) {
+      const option = document.createElement('option'); option.value = f; option.textContent = f ? `f = ${f}` : t('DC (Mittelwert)','DC (mean)'); $('inspect').append(option);
+      if (f <= state.terms) {
+        const button = document.createElement('button'); button.type = 'button'; button.dataset.f = f; button.textContent = f ? String(f) : 'DC'; button.setAttribute('aria-label', t('Harmonische','Harmonic') + ' ' + f); button.setAttribute('aria-pressed',String(enabled[f])); $('harmonics').append(button);
+      }
+    }
+    $('inspect').value = state.inspect;
+    const labels = {dirac:t('Rechteckimpuls: Fläche eins','Rectangular impulse: unit area'), testFunction:t('Testfunktion und Mittelwert im Impulsintervall','Test function and average over the impulse interval'), signal:t('Hier Zielsignal zeichnen, blaue Kurve; Fourier-Rekonstruktion grün','Draw target signal here, blue curve; Fourier reconstruction in green'), spectrum:t('Koeffizienten hoch und runter ziehen; kurz klicken zum Schalten','Drag coefficients up and down; click to toggle')};
+    for (const [id,label] of Object.entries(labels)) $(id).setAttribute('aria-label',label);
+  }
+  function schedule() { if (!frame) frame = requestAnimationFrame(() => { frame = 0; if (state.tab === 'dirac') drawDirac(); else drawFourier(); }); }
+  function encodeDrawing() {
+    const bytes = new Uint8Array(N * 2), view = new DataView(bytes.buffer);
+    for (let i = 0; i < N; i++) view.setInt16(i * 2,Math.round(samples[i] * 6000),true);
+    return btoa(String.fromCharCode(...bytes));
+  }
+  function decodeDrawing(text) {
+    const raw = atob(text); if (raw.length !== N * 2) throw new Error('Drawing length');
+    const view = new DataView(Uint8Array.from(raw,c => c.charCodeAt(0)).buffer), values = new Float64Array(N);
+    for (let i = 0; i < N; i++) values[i] = clamp(view.getInt16(i * 2,true) / 6000,-1.5,4.5);
+    return values;
+  }
+  function snapshot() { return {...state, off:enabled.flatMap((on,f) => on ? [] : [f]), drawing:state.preset === 'custom' ? encodeDrawing() : undefined, edits:JSON.stringify(edits)}; }
+  function stateURL() {
+    const url = new URL(location.href); url.search = ''; const saved = snapshot();
+    for (const [key,value] of Object.entries(saved)) if (value !== undefined) url.searchParams.set(key,Array.isArray(value) ? value.join(',') : String(value));
+    return url;
+  }
+  function persist() { try { history.replaceState(null,'',stateURL()); } catch (_) { /* Sandboxed iframe or restricted file URL: saving still works. */ } }
+  function load(raw) {
+    state = {...defaults}; enabled.fill(true); undo = null; edits = {}; coefficientDrag = null;
+    for (const key of ['tab','preset','representation','lang']) {
+      const allowed = {tab:['dirac','fourier'],preset:['saw','offset','square','triangle','sine','blank','custom'],representation:['trig','exp'],lang:['de','en']}[key];
+      if (allowed.includes(raw[key])) state[key] = raw[key];
+    }
+    for (const [key,min,max] of [['epsilon',0.01,2],['terms',0,MAX],['frequency',1,8],['inspect',0,MAX]]) {
+      const value = Number(raw[key]); if (raw[key] !== undefined && Number.isFinite(value)) state[key] = key === 'epsilon' ? Math.round(clamp(value,min,max) * 100) / 100 : Math.round(clamp(value,min,max));
+    }
+    for (const key of ['fixedScale','showComponent','repeat','dark']) if (raw[key] !== undefined) state[key] = raw[key] === true || raw[key] === 'true';
+    const off = Array.isArray(raw.off) ? raw.off : typeof raw.off === 'string' && raw.off ? raw.off.split(',').map(Number) : [];
+    for (const f of off) if (Number.isInteger(f) && f >= 0 && f <= MAX) enabled[f] = false;
+    if (state.preset === 'custom') {
+      try { samples = decodeDrawing(raw.drawing); dirty = true; }
+      catch (_) { state.preset = 'blank'; presetSignal(); $('status').textContent = t('Ungültige Zeichnung; leere Zeichenfläche geladen.','Invalid drawing; loaded a blank drawing area.'); }
+    } else presetSignal();
+    try {
+      const saved = JSON.parse(raw.edits || '{}');
+      for (const [key,values] of Object.entries(saved)) {
+        const f = Number(key);
+        if (Number.isInteger(f) && f >= 0 && f <= MAX && Array.isArray(values) && values.length === 2 && values.every(v => typeof v === 'number' && Number.isFinite(v) && Math.abs(v) <= 100)) edits[f] = [values[0],f ? values[1] : 0];
+      }
+    } catch (_) { /* Ignore malformed coefficient overrides. */ }
+    controls(); schedule();
+  }
+  function checkpoint() { undo = {samples:samples.slice(), preset:state.preset, frequency:state.frequency, edits:JSON.parse(JSON.stringify(edits)), enabled:enabled.slice(), terms:state.terms}; }
+  function update(key, value) {
+    state[key] = value;
+    if (key === 'frequency' && state.preset !== 'custom' && state.preset !== 'blank') presetSignal();
+    controls(); schedule(); persist();
+  }
+  for (const key of ['epsilon','terms','frequency']) $(key).addEventListener('input',e => update(key, Number(e.target.value)));
+  for (const key of ['fixedScale','showComponent','repeat']) $(key).addEventListener('change',e => update(key,e.target.checked));
+  for (const key of ['preset','representation']) $(key).addEventListener('change',e => {
+    if (key === 'preset') { checkpoint(); state.preset = e.target.value; if (state.preset !== 'custom') presetSignal(); controls(); schedule(); persist(); }
+    else update(key,e.target.value);
+  });
+  $('inspect').addEventListener('change',e => update('inspect',Number(e.target.value)));
+  $('language').addEventListener('click',() => update('lang',state.lang === 'de' ? 'en' : 'de'));
+  $('theme').addEventListener('click',() => update('dark',!state.dark));
+  $('reset').addEventListener('click',() => { load({...defaults,tab:state.tab,lang:state.lang,dark:state.dark}); $('status').textContent = ''; persist(); });
+  $('halve').addEventListener('click',() => update('epsilon',Math.max(0.01,Math.round(state.epsilon * 50) / 100)));
+  $('diracReset').addEventListener('click',() => update('epsilon',1));
+  for (const name of ['dirac','fourier']) $(name + 'Tab').addEventListener('click',() => update('tab',name));
+  document.querySelector('.tabs').addEventListener('keydown',e => {
+    if (['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) { e.preventDefault(); update('tab',e.key === 'Home' ? 'dirac' : e.key === 'End' ? 'fourier' : state.tab === 'dirac' ? 'fourier' : 'dirac'); $(state.tab + 'Tab').focus(); }
+  });
+  $('clear').addEventListener('click',() => { checkpoint(); state.preset = 'blank'; presetSignal(); controls(); schedule(); persist(); });
+  $('undo').addEventListener('click',() => {
+    if (!undo) return; samples = undo.samples; state.preset = undo.preset; state.frequency = undo.frequency; edits = undo.edits; enabled = undo.enabled; state.terms = undo.terms; undo = null; dirty = true; controls(); schedule(); persist();
+  });
+  function toggle(f) { enabled[f] = !enabled[f]; state.inspect = f; $('inspect').value = f; schedule(); persist(); }
+  $('harmonics').addEventListener('click',e => { const button = e.target.closest('button'); if (button) toggle(Number(button.dataset.f)); });
+  for (const [id,on] of [['allOn',true],['allOff',false]]) $(id).addEventListener('click',() => { enabled.fill(on); schedule(); persist(); });
+  $('solo').addEventListener('click',() => { enabled.fill(false); enabled[state.inspect] = true; if (state.inspect > state.terms) { state.terms = state.inspect; controls(); } schedule(); persist(); });
+  $('restoreCoefficients').addEventListener('click',() => { checkpoint(); edits = {}; dirty = true; controls(); schedule(); persist(); });
+  $('spectrum').addEventListener('pointerdown',e => {
+    if (e.button !== 0 || coefficientDrag || stroke) return;
+    const p = plots.spectrum, rect = $('spectrum').getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+    if (!p || x < p.box.left || x > p.box.right || y < p.box.top || y > p.box.bottom) return;
+    const position = p.xmin + (x - p.box.left) / (p.box.right - p.box.left) * (p.xmax - p.xmin), signedF = Math.round(position), f = Math.abs(signedF);
+    if (f > p.limit) return;
+    if (dirty) analyze();
+    coefficientDrag = {pointerId:e.pointerId, f, kind:p.complex ? 'magnitude' : f && position > signedF ? 'b' : 'a', startY:e.clientY, scale:(p.ymax-p.ymin)/(p.box.bottom-p.box.top), top:p.ymax, initialA:a[f], initialB:b[f], moved:false};
+    $('spectrum').setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  $('spectrum').addEventListener('pointermove',e => {
+    const drag = coefficientDrag; if (!drag || drag.pointerId !== e.pointerId) return;
+    if (!drag.moved && Math.abs(e.clientY-drag.startY) < 4) return;
+    if (!drag.moved) { checkpoint(); drag.moved = true; state.inspect = drag.f; state.terms = Math.max(state.terms,drag.f); enabled[drag.f] = true; controls(); }
+    const delta = (drag.startY-e.clientY)*drag.scale, f = drag.f;
+    if (drag.kind === 'magnitude') {
+      const length = Math.hypot(drag.initialA,drag.initialB), initial = f ? length/2 : Math.abs(drag.initialA), magnitude = clamp(initial+delta,0,f ? 50 : 100);
+      a[f] = f ? (length > 1e-12 ? drag.initialA/length : 1)*2*magnitude : (drag.initialA < 0 ? -1 : 1)*magnitude;
+      b[f] = f ? (length > 1e-12 ? drag.initialB/length : 0)*2*magnitude : 0;
+    } else { a[f] = drag.kind === 'a' ? clamp(drag.initialA+delta,-100,100) : drag.initialA; b[f] = drag.kind === 'b' ? clamp(drag.initialB+delta,-100,100) : drag.initialB; }
+    edits[f] = [a[f],b[f]]; schedule();
+  });
+  for (const event of ['pointerup','pointercancel','lostpointercapture']) $('spectrum').addEventListener(event,e => {
+    const drag = coefficientDrag; if (!drag || drag.pointerId !== e.pointerId) return;
+    coefficientDrag = null;
+    if (!drag.moved && event === 'pointerup') { if (drag.f > state.terms) { state.terms = drag.f; enabled[drag.f] = false; controls(); } toggle(drag.f); }
+    schedule(); persist();
+  });
+  function drawPoint(e) {
+    const p = plots.signal, rect = $('signal').getBoundingClientRect(); if (!p) return null;
+    const x = clamp(e.clientX - rect.left,p.box.left,p.box.right), y = clamp(e.clientY - rect.top,p.box.top,p.box.bottom);
+    const position = (p.xmin + (x - p.box.left) / (p.box.right - p.box.left) * (p.xmax - p.xmin)) / L;
+    return {index:Math.round(position * N - 0.5), value:clamp(p.ymax - (y - p.box.top) / (p.box.bottom - p.box.top) * (p.ymax - p.ymin),-1.5,4.5)};
+  }
+  function paint(e) {
+    if (!stroke || e.pointerId !== stroke.pointerId) return;
+    const point = drawPoint(e), prev = stroke.point || point, min = Math.min(prev.index,point.index), max = Math.max(prev.index,point.index);
+    for (let i = min; i <= max; i++) { const weight = max === min ? 1 : (i - prev.index) / (point.index - prev.index); samples[((i % N) + N) % N] = prev.value + weight * (point.value - prev.value); }
+    stroke.point = point; edits = {}; state.preset = 'custom'; $('preset').value = 'custom'; $('frequency').disabled = true; $('undo').disabled = false; dirty = true; schedule();
+  }
+  $('signal').addEventListener('pointerdown',e => {
+    if (e.button !== 0 || stroke || coefficientDrag) return;
+    const p = plots.signal, rect = $('signal').getBoundingClientRect();
+    if (!p || e.clientX - rect.left < p.box.left || e.clientX - rect.left > p.box.right || e.clientY - rect.top < p.box.top || e.clientY - rect.top > p.box.bottom) return;
+    checkpoint(); stroke = {pointerId:e.pointerId,point:null}; $('signal').setPointerCapture(e.pointerId); paint(e);
+  });
+  $('signal').addEventListener('pointermove',paint);
+  for (const event of ['pointerup','pointercancel','lostpointercapture']) $('signal').addEventListener(event,e => { if (stroke && stroke.pointerId === e.pointerId) { stroke = null; persist(); } });
+  document.addEventListener('keydown',e => {
+    if (e.target.matches('input,select,textarea') || e.altKey) return;
+    if (e.key.toLowerCase() === 'r' && !e.ctrlKey && !e.metaKey) $('reset').click();
+    if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey) && state.tab === 'fourier') { e.preventDefault(); $('undo').click(); }
+  });
+  $('copyLink').addEventListener('click',async () => {
+    persist(); const link = stateURL().href;
+    try { await navigator.clipboard.writeText(link); $('status').textContent = t('Zustandslink kopiert.','State link copied.'); }
+    catch (_) { $('status').textContent = t('Link zum Kopieren: ','Link to copy: ') + link; $('status').style.overflowWrap = 'anywhere'; }
+  });
+  $('save').addEventListener('click',() => {
+    const doc = document.documentElement.cloneNode(true); doc.querySelector('#initialState').textContent = JSON.stringify(snapshot());
+    // Keep the source-language dictionary intact when exporting an English UI.
+    for (const el of doc.querySelectorAll('[data-i18n]')) el.textContent = german.get(el.dataset.i18n);
+    doc.querySelector('#status').textContent = ''; const url = URL.createObjectURL(new Blob(['<!doctype html>\n' + doc.outerHTML], {type:'text/html;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = 'dirac-fourier-widget.html'; link.click(); setTimeout(() => URL.revokeObjectURL(url),1000);
+    $('status').textContent = t('HTML-Widget mit aktuellem Startzustand gespeichert.','HTML widget saved with current initial state.');
+  });
+  const initial = JSON.parse($('initialState').textContent) || {};
+  load({...initial,...Object.fromEntries(new URLSearchParams(location.search))});
+  window.addEventListener('popstate',() => load({...initial,...Object.fromEntries(new URLSearchParams(location.search))}));
+  new ResizeObserver(schedule).observe(document.querySelector('.app'));
+})();
+</script>
+</body>
+</html>

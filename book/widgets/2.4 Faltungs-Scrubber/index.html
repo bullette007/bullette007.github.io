@@ -114,7 +114,7 @@
   const DX = .05, N = 241, OUT = 481, SIDE = 12;
   const clamp = (v,lo,hi) => Math.max(lo,Math.min(hi,v));
   const fmt = (v,d=3) => (Math.abs(v)<.5*10**(-d)?0:v).toFixed(d);
-  const defaults = {mode:'1d',f:'rect',h:'exp',fw:1,hw:1,x:.5,pixel:65,imageType:'shapes',kernelType:'gauss',full:false,speed:50,theme:'light',lang:'en'};
+  const defaults = {mode:'1d',f:'rect',h:'exp',fw:1,hw:1,x:.5,pixel:65,imageType:'shapes',kernelType:'gauss',full:false,speed:50,theme:'dark',lang:'en'};
   let state = {...defaults}, freeF = new Float64Array(N), freeH = new Float64Array(N);
   const english = {
     '2.4 · Faltungs-Scrubber':'2.4 · Convolution Scrubber',
@@ -197,7 +197,7 @@
       state[key]=+(lo+Math.round((clamp(+params.get(key),lo,hi)-lo)/step)*step).toFixed(2);
     }
   }
-  state.mode=params.get('mode')==='2d'?'2d':'1d'; state.full=params.get('full')==='1'; state.theme=params.get('theme')==='dark'?'dark':'light';
+  state.mode=params.get('mode')==='2d'?'2d':'1d'; state.full=params.get('full')==='1'; state.theme=params.has('theme')?(params.get('theme')==='dark'?'dark':'light'):defaults.theme;
   state.lang=params.get('lang')==='de'?'de':'en';
   function decode(name,length,lo,hi) {
     const text=params.get(name); if(!text)return null;

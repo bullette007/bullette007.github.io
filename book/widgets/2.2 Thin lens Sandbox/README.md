@@ -17,6 +17,7 @@ access unless that dependency is hosted locally.
   and translations.
 - `style.css` contains the page layout and component styling.
 - `image.png` and `image_rotated.png` are runtime test-pattern assets.
+- `image.jpg` is the source photograph used to generate the PNG test pattern. The rotated image is transformed to simulate the sensor's inverted image.
 
 ## Development
 
