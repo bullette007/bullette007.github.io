@@ -24,7 +24,7 @@ Organizational information:
 * <p style="color:red"> The first lecture will be double lengh (i.e., 2pm - 5:15pm) since there will be NO lecture on 4th of November 2027 </p>
 
 
-The lecutre notes (work in progress!) can be accessed [here](book/index.html)
+The lecture notes (work in progress!) can be accessed [here](book/index.html)
 
 <!-- <p style="color:red; font-size: 26px" > Lecture finished. <br> Today (18th of February) was our last meeting. <br> Thank you to everyone for attending and contributing!
 </p> -->
