@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fresnel lens · From curved lens to concentric rings</title>
+<style>
+:root{color-scheme:light;--bg:#eef3f8;--card:#fff;--line:#cbd6e2;--text:#172334;--muted:#526579;--blue:#1769aa;--purple:#7048c8;--orange:#a95000;--green:#16704d}
+:root.dark{color-scheme:dark;--bg:#08111f;--card:#101c2d;--line:#2a3b52;--text:#edf4ff;--muted:#a8b9ce;--blue:#75baff;--purple:#bb9aff;--orange:#ffad57;--green:#77deb1}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;padding:clamp(10px,2vw,28px);background:var(--bg);color:var(--text);font:18px/1.45 system-ui,"Segoe UI",sans-serif}.app{max-width:1500px;margin:auto}header,.actions,.legend,.metrics{display:flex;flex-wrap:wrap;align-items:center;gap:10px}header{justify-content:space-between;margin-bottom:20px}h1{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.04em;margin:0}header p{margin:5px 0;color:var(--muted)}h2{font-size:1.13rem;margin:0}button,input{font:inherit}button{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-height:44px;cursor:pointer}button:hover{border-color:var(--purple)}:focus-visible{outline:3px solid var(--purple);outline-offset:3px}input[type=range]{width:100%;accent-color:var(--purple);min-height:30px;margin:0}input[type=checkbox]{width:22px;height:22px;accent-color:var(--purple);vertical-align:middle;margin:0 8px 0 0}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}.steps button{text-align:left}.steps button[aria-pressed=true]{border:2px solid var(--purple);background:color-mix(in srgb,var(--purple) 12%,var(--card))}.steps small{display:block;color:var(--muted)}.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px}aside,.panel,.info{background:var(--card);border:1px solid var(--line);border-radius:15px}aside{padding:18px;align-self:start}.control{display:block;margin-bottom:20px}.control>span{display:flex;justify-content:space-between;gap:8px;font-weight:650;margin-bottom:7px}.check{display:block;margin:16px 0}output{color:var(--purple)}hr{border:0;border-top:1px solid var(--line);margin:20px 0}.hint,.muted{color:var(--muted)}.hint{font-size:.94rem}.views{display:grid;grid-template-columns:1fr 1fr;gap:18px}main,.panel{min-width:0}.panel{overflow:hidden}.panel-head{padding:14px 16px;border-bottom:1px solid var(--line);min-height:115px}.panel-head p{margin:5px 0 0;color:var(--muted)}canvas{display:block;width:100%;height:420px}.panel-foot{padding:10px 16px 16px}.legend{gap:7px 18px;font-size:.95rem}.legend span:before{content:"";display:inline-block;width:20px;border-top:3px solid currentColor;margin:0 7px 4px 0}.blue{color:var(--blue)}.purple{color:var(--purple)}.orange{color:var(--orange)}.green{color:var(--green)}.info{padding:16px 18px;margin-top:18px}.info p{margin:8px 0}.formula{font:1.22rem/1.6 "Cambria Math",Cambria,serif;overflow-wrap:anywhere}.key{border-left:5px solid var(--purple)}.metrics{gap:10px 28px;margin:12px 0}.metrics strong{color:var(--green)}summary{cursor:pointer;font-weight:650}li{margin:8px 0}#status{min-height:1.45em}#linkFallback{width:100%;font:inherit;padding:10px}#section{cursor:crosshair;touch-action:pan-y}.ring-number{font-variant-numeric:tabular-nums}
+@media(max-width:1150px){.views{grid-template-columns:1fr}.panel-head{min-height:0}}@media(max-width:760px){.layout{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.wide{grid-column:1/-1}canvas{height:350px}}@media(max-width:440px){aside{display:block}.steps small{display:none}body{font-size:17px}}
+.views{grid-template-columns:1fr}.steps button{border-width:2px}#stageBox{display:grid}#stageBox>div{grid-area:1/1;min-width:0}.stage-sizer{visibility:hidden;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1 data-de="Wie eine Fresnel-Linse entsteht" data-en="How a Fresnel lens takes shape"></h1><p data-de="In Ringe zerlegen. Ballast entfernen. Flach zusammensetzen." data-en="Divide into rings. Remove bulk. Bring the surfaces into one plane."></p></div><div class="actions"><button id="language">Deutsch</button><button id="theme" data-de="Hell / Dunkel" data-en="Light / Dark"></button><button id="reset">Reset (R)</button></div></header>
+<nav class="steps" aria-label="Construction stages">
+<button data-progress="0"><b data-de="1 · Konvexe Linse" data-en="1 · Convex lens"></b><small data-de="Ein durchgehender Körper" data-en="One continuous body"></small></button>
+<button data-progress="25"><b data-de="2 · Ringe schneiden" data-en="2 · Cut concentric rings"></b><small data-de="Flächenstücke behalten" data-en="Retain the surface segments"></small></button>
+<button data-progress="50"><b data-de="3 · Ballast entfernen" data-en="3 · Remove bulk"></b><small data-de="Nur die oberen Ringkappen" data-en="Keep the upper annular caps"></small></button>
+<button data-progress="100"><b data-de="4 · Flach stapeln" data-en="4 · Flatten the rings"></b><small data-de="Ringe axial verschieben" data-en="Translate rings along the axis"></small></button>
+</nav>
+<div class="layout">
+<aside>
+<label class="control"><span><span data-de="Konstruktion" data-en="Construction"></span><output id="progressValue"></output></span><input id="progress" type="range" min="0" max="100" step="0.1" value="0"></label>
+<div class="actions wide"><button id="play" data-de="▶ Abspielen" data-en="▶ Play"></button><button id="restart" data-de="↺ Von vorn" data-en="↺ Restart"></button></div>
+<hr class="wide">
+<label class="control"><span><span data-de="Konzentrische Zonen" data-en="Concentric zones"></span><output id="zonesValue"></output></span><input id="zones" type="range" min="3" max="16" step="1" value="7"></label>
+<label class="control"><span><span data-de="Wölbung / Radius" data-en="Sag / radius"></span><output id="sagValue"></output></span><input id="sag" type="range" min="0.2" max="0.7" step="0.01" value="0.5"></label>
+<label class="control"><span><span data-de="Animationsdauer" data-en="Animation duration"></span><output id="durationValue"></output></span><input id="duration" type="range" min="5" max="20" step="1" value="10"></label>
+<label class="control"><span><span data-de="Ring untersuchen" data-en="Inspect zone"></span><output id="inspectValue" class="ring-number"></output></span><input id="inspect" type="range" min="1" max="7" step="1" value="4"></label>
+<label class="check wide"><input id="ghost" type="checkbox" checked><span data-de="Ursprüngliche Kontur" data-en="Original outline"></span></label>
+<label class="check wide"><input id="normals" type="checkbox" checked><span data-de="Flächennormale vergleichen" data-en="Compare surface normals"></span></label>
+<p class="hint wide" data-de="Im Querschnitt auf einen Ring klicken, um ihn hervorzuheben. Die farbigen Flächenstücke werden nur verschoben, nicht gedreht." data-en="Click a ring in the cross-section to highlight it. The colored surface segments are translated, not rotated."></p>
+</aside>
+<main>
+<section id="stageBox" class="info key" style="margin-top:0;margin-bottom:18px"><div aria-live="polite"><h2 id="stageTitle"></h2><p id="stageText"></p></div></section>
+<div class="views">
+<section class="panel"><div class="panel-head"><h2 class="blue" data-de="Querschnitt durch die optische Achse" data-en="Cross-section through the optical axis"></h2><p data-de="Die beiden Streifen links/rechts gehören zum selben Ring." data-en="The strips on the left and right belong to the same ring."></p></div><canvas id="section" role="img" aria-label="Lens cross-section"></canvas><div class="panel-foot"><div class="legend"><span class="blue" data-de="Behaltene Ringkappen" data-en="Retained annular caps"></span><span class="orange" data-de="Untersuchter Ring" data-en="Inspected zone"></span><span class="muted" data-de="Entfernter Ballast / Original" data-en="Removed bulk / original"></span></div></div></section>
+</div>
+<section class="info"><div class="metrics" id="metrics"></div><p id="ringNote"></p><p class="formula green" id="normalNote"></p></section>
+<section class="info"><h2 data-de="Die Idee: gleiche Flächenneigung, weniger Material" data-en="The idea: same surface slope, less material"></h2><p data-de="Für die Brechung an einer Grenzfläche ist ihre lokale Normale entscheidend. Verschiebt man ein Flächenstück parallel zur optischen Achse, bleibt seine Neigung erhalten. Die Fresnel-Linse ordnet diese Stücke als konzentrische Zonen auf einem dünnen Träger an." data-en="Refraction at an interface depends on its local normal. Translating a surface segment parallel to the optical axis preserves its slope. A Fresnel lens arranges these segments as concentric zones on a thin support."></p><p data-de="Man schichtet also nicht vollständige Scheiben übereinander: Die Ringstücke bleiben radial nebeneinander und werden auf eine gemeinsame Höhe gebracht. Die Animation zeigt eine geometrische Konstruktion; hergestellt wird eine solche Linse meist durch Formen, Prägen oder spanende Bearbeitung." data-en="Whole disks are not piled on top of each other: annular segments stay side by side radially and are brought to a common height. This animation is a geometric construction; practical lenses are usually molded, embossed or machined."></p>
+<details><summary data-de="Modell & optische Einordnung" data-en="Model & optical interpretation"></summary><ul>
+<li data-de="Modell: rotationssymmetrische plankonvexe Linse mit paraboloidischer Oberfläche t(r) = b + s(1−r²), Radius R = 1 und Grundplattendicke b = 0,06 R. Die Zonen haben gleiche radiale Breite. Die gezeigten Zahlen sind geometrische Größen, keine optimierte optische Auslegung." data-en="Model: rotationally symmetric plano-convex lens with paraboloidal surface t(r) = b + s(1−r²), radius R = 1 and base thickness b = 0.06 R. Zones have equal radial width. The displayed values are geometric quantities, not an optimized optical design."></li>
+<li class="formula">t<sub>F</sub>(r) = b + s(r<sub>out</sub>² − r²), &nbsp; r<sub>in</sub> ≤ r ≤ r<sub>out</sub> &nbsp; ⇒ &nbsp; dt<sub>F</sub>/dr = dt/dr = −2sr</li>
+<li data-de="Erhalten werden die gekrümmten Flächenstücke, nicht nur gerade Prismen. Bei sehr schmalen Zonen können diese in einer optischen Auslegung durch geeignete Facetten angenähert werden. An den senkrechten Stufen entstehen zusätzliche Grenzflächen und Verluste." data-en="The curved surface segments are retained, rather than replaced by straight prisms. For narrow zones they may be approximated by suitable facets in an optical design. Vertical steps introduce additional interfaces and losses."></li>
+<li data-de="Gleiche lokale Neigung erklärt das Prinzip, garantiert bei endlicher Dicke aber nicht exakt denselben Fokus oder dieselbe optische Weglänge: Grenzflächenpositionen ändern sich. Die Animation ist keine Strahlverfolgung. Eine refraktive Fresnel-Linse ist auch keine Fresnel-Zonenplatte; letztere arbeitet mit Beugung." data-en="Equal local slope explains the principle, but finite thickness means neither identical focus nor identical optical path is guaranteed: interface positions change. This animation is not ray tracing. A refractive Fresnel lens is also distinct from a Fresnel zone plate, which relies on diffraction."></li>
+</ul></details></section>
+</main>
+</div>
+<section class="info"><div class="actions"><button id="copyLink" data-de="Zustandslink kopieren" data-en="Copy state link"></button><button id="save" data-de="Widget mit Zustand speichern" data-en="Save widget with state"></button></div><p class="hint" data-de="Leertaste: Abspielen/Pause · ←/→: Konstruktion bewegen · R: Reset. Bei fokussierten Reglern gilt die native Tastaturbedienung. Offline, ohne externe Bibliotheken." data-en="Space: play/pause · ←/→: scrub construction · R: reset. Focused controls retain their native keyboard behavior. Offline, no external libraries."></p><input id="linkFallback" hidden readonly aria-label="State link"><p id="status" role="status" aria-live="polite"></p></section>
+</div>
+<script id="initialState" type="application/json">null</script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id),TAU=2*Math.PI,BASE=.06;
+const defaults={progress:0,zones:7,sag:.5,duration:10,inspect:4,ghost:true,normals:true,lang:'en',dark:true};
+let state={...defaults},frame=null,last=0,queued=false,sectionPlot=null;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const t=(de,en)=>state.lang==='de'?de:en;
+const fmt=(v,d=2)=>v.toLocaleString(state.lang==='de'?'de-DE':'en-US',{maximumFractionDigits:d});
+const ease=x=>{x=clamp(x,0,1);return x*x*(3-2*x);};
+function sanitize(input){
+ const s={...defaults,...input};
+ for(const [key,min,max,step] of [['progress',0,100,.1],['zones',3,16,1],['sag',.2,.7,.01],['duration',5,20,1],['inspect',1,16,1]]){const n=Number(s[key]);s[key]=clamp(Math.round((Number.isFinite(n)?n:defaults[key])/step)*step,min,max);}
+ s.inspect=Math.min(s.inspect,s.zones);s.lang=s.lang==='de'?'de':'en';
+ for(const key of ['ghost','normals','dark'])s[key]=s[key]===true||s[key]==='true';return s;
+}
+try{state=sanitize({...JSON.parse($('initialState').textContent),...Object.fromEntries(new URLSearchParams(location.search))});}catch{state={...defaults};}
+function geometry(){
+ const cuts=ease(state.progress/25),remove=ease((state.progress-25)/25),move=ease((state.progress-50)/50),s=state.sag;
+ const rings=Array.from({length:state.zones},(_,i)=>{const a=i/state.zones,b=(i+1)/state.zones,offset=s*(1-b*b);return {a,b,offset,shift:offset*move,index:i};});
+ return {cuts,remove,move,rings};
+}
+const height=r=>BASE+state.sag*(1-r*r);
+function volumes(){
+ const g=geometry(),original=Math.PI*(BASE+state.sag/2);
+ const retained=Math.PI*BASE+g.rings.reduce((sum,z)=>sum+Math.PI*state.sag*(z.b*z.b-z.a*z.a)**2/2,0);
+ const thickness=BASE+Math.max(...g.rings.map(z=>state.sag*(z.b*z.b-z.a*z.a)));
+ return {original,retained,thickness,saved:1-retained/original};
+}
+function stop(){if(frame!==null)cancelAnimationFrame(frame);frame=null;last=0;}
+function writeURL(){try{const u=new URL(location.href);u.search=new URLSearchParams(Object.entries(state).map(([k,v])=>[k,String(v)]));history.replaceState(null,'',u);}catch{}}
+function update(url=true){
+ state=sanitize(state);document.documentElement.lang=state.lang;document.documentElement.classList.toggle('dark',state.dark);
+ document.querySelectorAll('[data-de]').forEach(el=>el.textContent=el.dataset[state.lang]);
+ document.title=t('Fresnel-Linse · Vom Linsenkörper zu Ringzonen','Fresnel lens · From curved lens to concentric rings');
+ $('language').textContent=state.lang==='de'?'English':'Deutsch';$('inspect').max=state.zones;
+ for(const key of ['progress','zones','sag','duration','inspect'])$(key).value=state[key];
+ for(const key of ['ghost','normals'])$(key).checked=state[key];
+ $('progressValue').textContent=fmt(state.progress,1)+' %';$('zonesValue').textContent=state.zones;$('sagValue').textContent=fmt(state.sag);$('durationValue').textContent=state.duration+' s';$('inspectValue').textContent=state.inspect+' / '+state.zones;
+ $('play').textContent=frame!==null?t('Ⅱ Pause','Ⅱ Pause'):t('▶ Abspielen','▶ Play');
+ const stage=state.progress<12.5?0:state.progress<37.5?1:state.progress<50?2:3;
+ document.querySelectorAll('[data-progress]').forEach((el,i)=>el.setAttribute('aria-pressed',i===stage));
+ const titles=[t('Eine massive plankonvexe Linse','A solid plano-convex lens'),t('Konzentrische Zonen schneiden','Cut concentric zones'),t('Material unter den Ringkappen entfernen','Remove material beneath the annular caps'),t('Die Ringkappen axial auf eine Ebene schieben','Translate the annular caps onto a common base')];
+ const texts=[t('Eine gekrümmte Oberfläche sitzt auf einem massiven transparenten Körper. Für das Fresnel-Prinzip interessieren uns vor allem die Neigungen dieser Oberfläche.','A curved surface sits on a solid transparent body. For the Fresnel principle, the slopes of this surface are what matter most.'),t('Zylindrische Schnitte teilen die Linse in eine zentrale Scheibe und konzentrische Ringe. In jeder Zone markieren wir eine obere Kappe; der graue Unterbau wird nicht gebraucht.','Cylindrical cuts divide the lens into a central disk and concentric rings. We identify an upper cap in each zone; the gray support beneath it will be removed.'),t('Der graue Unterbau verschwindet. Die gekrümmten Ringkappen schweben noch auf ihrer ursprünglichen Höhe. Die dünne gemeinsame Grundplatte bleibt erhalten.','The gray bulk disappears. The curved annular caps still float at their original heights. A thin common base remains.'),t('Jede Ringkappe sinkt um einen konstanten Betrag entlang der optischen Achse. Radius, Krümmung und lokale Neigung bleiben dabei unverändert. Am Ende liegen die Kappen auf einer gemeinsamen Grundplatte.','Each annular cap descends by a constant distance along the optical axis. Its radius, curvature and local slope remain unchanged. The caps end up on a common base.')];
+ $('stageTitle').textContent=titles[stage];$('stageText').textContent=texts[stage];
+ // Overlapping invisible copies reserve the tallest stage at every viewport width.
+ // Rebuild only on language changes; CSS handles wrapping and responsive resizing.
+ if($('stageBox').dataset.sizingLanguage!==state.lang){
+  $('stageBox').querySelectorAll('.stage-sizer').forEach(el=>el.remove());
+  titles.forEach((title,i)=>{const box=document.createElement('div'),heading=document.createElement('h2'),text=document.createElement('p');box.className='stage-sizer';box.setAttribute('aria-hidden','true');heading.textContent=title;text.textContent=texts[i];box.append(heading,text);$('stageBox').append(box);});
+  $('stageBox').dataset.sizingLanguage=state.lang;
+ }
+ const v=volumes(),g=geometry(),z=g.rings[state.inspect-1];
+ $('metrics').innerHTML=`<span>${t('Ursprüngliche Dicke','Original thickness')}: <strong>${fmt(BASE+state.sag)} R</strong></span><span>${t('Fresnel-Dicke (Endzustand)','Fresnel thickness (final)')}: <strong>${fmt(v.thickness,3)} R</strong></span><span>${t('Volumenersparnis (Endzustand)','Volume saved (final)')}: <strong>${fmt(100*v.saved,1)} %</strong></span>`;
+ $('ringNote').textContent=t(`Zone ${state.inspect}: Radius ${fmt(z.a)}…${fmt(z.b)} R · gesamte Absenkung ${fmt(z.offset,3)} R · aktuell ${fmt(z.shift,3)} R.`,`Zone ${state.inspect}: radius ${fmt(z.a)}…${fmt(z.b)} R · total descent ${fmt(z.offset,3)} R · current descent ${fmt(z.shift,3)} R.`);
+ $('normalNote').textContent=t('Gleiche Normale vor und nach dem Verschieben: dtF/dr = dt/dr = −2sr','Same normal before and after translation: dtF/dr = dt/dr = −2sr');
+ $('section').setAttribute('aria-label',$('stageTitle').textContent+'. '+$('ringNote').textContent);
+ if(url)writeURL();scheduleDraw();
+}
+function canvas(id){const el=$(id),rect=el.getBoundingClientRect(),dpr=devicePixelRatio||1;el.width=Math.round(rect.width*dpr);el.height=Math.round(rect.height*dpr);const c=el.getContext('2d');c.scale(dpr,dpr);const css=getComputedStyle(document.documentElement),col=name=>css.getPropertyValue('--'+name).trim();c.fillStyle=col('card');c.fillRect(0,0,rect.width,rect.height);return {c,w:rect.width,h:rect.height,col};}
+function arrow(c,x,y,dx,dy,color){c.save();c.strokeStyle=c.fillStyle=color;c.lineWidth=2;c.beginPath();c.moveTo(x,y);c.lineTo(x+dx,y+dy);c.stroke();const a=Math.atan2(dy,dx);c.beginPath();c.moveTo(x+dx,y+dy);c.lineTo(x+dx-8*Math.cos(a-.45),y+dy-8*Math.sin(a-.45));c.lineTo(x+dx-8*Math.cos(a+.45),y+dy-8*Math.sin(a+.45));c.closePath();c.fill();c.restore();}
+function drawSection(){
+ const p=canvas('section'),{c,w,h,col}=p,g=geometry(),scale=Math.min((w-65)/2.25,(h-100)/1.15),cx=w/2,baseline=h-65;
+ const X=x=>cx+x*scale,Y=y=>baseline-y*scale;sectionPlot={X,Y,cx,scale};
+ c.strokeStyle=col('line');c.lineWidth=1;c.setLineDash([5,5]);c.beginPath();c.moveTo(X(0),25);c.lineTo(X(0),baseline+24);c.stroke();c.setLineDash([]);
+ c.fillStyle=col('muted');c.font='14px system-ui';c.textAlign='center';c.fillText(t('optische Achse','optical axis'),X(0),h-12);c.fillText('−R',X(-1),baseline+24);c.fillText('+R',X(1),baseline+24);
+ c.fillStyle=col('blue');c.globalAlpha=.35;c.fillRect(X(-1),Y(BASE),2*scale,BASE*scale);c.globalAlpha=1;c.strokeStyle=col('blue');c.strokeRect(X(-1),Y(BASE),2*scale,BASE*scale);
+ for(const z of g.rings)for(const sign of [-1,1]){
+  const inner=sign*z.a,outer=sign*z.b;
+  // Gray bulk has a flat upper face beneath each retained annular cap.
+  if(z.offset>0&&g.remove<1){c.fillStyle=col('muted');c.globalAlpha=(1-g.remove)*.23;c.fillRect(Math.min(X(inner),X(outer)),Y(BASE+z.offset),Math.abs(X(outer)-X(inner)),z.offset*scale);c.globalAlpha=1;}
+  c.beginPath();c.moveTo(X(inner),Y(BASE+z.offset-z.shift));
+  c.lineTo(X(outer),Y(BASE+z.offset-z.shift));
+  for(let j=40;j>=0;j--){const r=z.a+(z.b-z.a)*j/40;c.lineTo(X(sign*r),Y(height(r)-z.shift));}c.closePath();
+  const selected=z.index===state.inspect-1;c.fillStyle=col(selected?'orange':'blue');c.globalAlpha=.48;c.fill();c.globalAlpha=1;
+  c.strokeStyle=col(selected?'orange':'blue');c.lineWidth=selected?2.5:1.5;
+  // At the start only the uncut continuous upper surface is visible.
+  c.beginPath();for(let j=0;j<=40;j++){const r=z.a+(z.b-z.a)*j/40;if(!j)c.moveTo(X(sign*r),Y(height(r)-z.shift));else c.lineTo(X(sign*r),Y(height(r)-z.shift));}c.stroke();
+  c.globalAlpha=g.cuts;c.strokeStyle=col(selected?'orange':'purple');c.lineWidth=1.5;c.beginPath();c.moveTo(X(inner),Y(BASE+z.offset-z.shift));c.lineTo(X(inner),Y(height(z.a)-z.shift));c.moveTo(X(outer),Y(height(z.b)-z.shift));c.lineTo(X(inner),Y(BASE+z.offset-z.shift));c.stroke();c.globalAlpha=1;
+  if(g.cuts>0&&g.remove<1){c.globalAlpha=g.cuts*(1-g.remove);c.strokeStyle=col('purple');c.setLineDash([3,4]);c.beginPath();c.moveTo(X(outer),Y(BASE));c.lineTo(X(outer),Y(height(z.b)));c.stroke();c.setLineDash([]);c.globalAlpha=1;}
+ }
+ if(state.ghost&&state.progress>0){c.strokeStyle=col('muted');c.globalAlpha=.65;c.setLineDash([5,5]);c.beginPath();for(let j=0;j<=180;j++){const x=-1+2*j/180;if(!j)c.moveTo(X(x),Y(height(Math.abs(x))));else c.lineTo(X(x),Y(height(Math.abs(x))));}c.stroke();c.setLineDash([]);c.globalAlpha=1;}
+ const z=g.rings[state.inspect-1],r=(z.a+z.b)/2;
+ if(g.move>0.02&&z.offset>0){const x=X(-r),y=Y(height(r));arrow(c,x,y+7,0,z.shift*scale-14,col('purple'));}
+ if(state.normals){const slope=2*state.sag*r,len=Math.hypot(slope,1),dx=32*slope/len,dy=-32/len;arrow(c,X(r),Y(height(r)-z.shift),dx,dy,col('orange'));if(z.shift>0.015)arrow(c,X(r),Y(height(r)),dx,dy,col('muted'));}
+ c.font='14px system-ui';c.textAlign='left';c.fillStyle=col('muted');c.fillText(t('Höhe und Radius: gleicher Maßstab','Height and radius: equal scale'),18,22);
+}
+function scheduleDraw(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;drawSection();});}
+function tick(now){if(last)state.progress=clamp(state.progress+(now-last)/(state.duration*10),0,100);last=now;if(state.progress<100)frame=requestAnimationFrame(tick);else{frame=null;last=0;}update(false);if(frame===null)writeURL();}
+$('play').onclick=()=>{if(frame!==null)stop();else{if(state.progress>=100)state.progress=0;last=0;frame=requestAnimationFrame(tick);}update();};
+$('restart').onclick=()=>{stop();state.progress=0;frame=requestAnimationFrame(tick);update();};
+for(const key of ['progress','zones','sag','duration','inspect'])$(key).addEventListener('input',()=>{if(key==='progress')stop();state[key]=Number($(key).value);update();});
+for(const key of ['ghost','normals'])$(key).onchange=()=>{state[key]=$(key).checked;update();};
+document.querySelectorAll('[data-progress]').forEach(el=>el.onclick=()=>{stop();state.progress=Number(el.dataset.progress);update();});
+$('section').onpointerdown=e=>{if(!sectionPlot)return;const rect=$('section').getBoundingClientRect(),r=Math.abs((e.clientX-rect.left-sectionPlot.cx)/sectionPlot.scale);if(r>1)return;state.inspect=Math.min(state.zones,Math.floor(r*state.zones)+1);update();};
+$('language').onclick=()=>{state.lang=state.lang==='de'?'en':'de';update();};$('theme').onclick=()=>{state.dark=!state.dark;update();};
+$('reset').onclick=()=>{stop();state={...defaults,lang:state.lang,dark:state.dark};$('status').textContent='';$('linkFallback').hidden=true;update();};
+document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.target.closest('input,button,summary'))return;if(e.code==='Space'){e.preventDefault();$('play').click();}if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();stop();state.progress=clamp(state.progress+(e.key==='ArrowRight'?2:-2),0,100);update();}if(e.key.toLowerCase()==='r')$('reset').click();});
+$('copyLink').onclick=async()=>{writeURL();try{await navigator.clipboard.writeText(location.href);$('status').textContent=t('Zustandslink kopiert.','State link copied.');}catch{$('linkFallback').hidden=false;$('linkFallback').value=location.href;$('linkFallback').focus();$('linkFallback').select();$('status').textContent=t('Link auswählen und kopieren.','Select and copy the link.');}};
+$('save').onclick=()=>{const doc=document.documentElement.cloneNode(true);doc.querySelector('#initialState').textContent=JSON.stringify(state);doc.querySelector('#status').textContent='';doc.querySelector('#linkFallback').hidden=true;const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+doc.outerHTML],{type:'text/html;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='fresnel-lens.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);$('status').textContent=t('HTML-Datei mit aktuellem Zustand gespeichert.','HTML file saved with the current state.');};
+new ResizeObserver(scheduleDraw).observe(document.querySelector('main'));
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();update();}});
+update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central pixel detection</title>
+<style>
+:root{color-scheme:light;--bg:#eef3f8;--card:#fff;--line:#cbd6e2;--text:#172334;--muted:#526579;--blue:#1769aa;--purple:#7048c8;--orange:#a95000;--green:#16704d;--off:#dce4ee}
+:root.dark{color-scheme:dark;--bg:#08111f;--card:#101c2d;--line:#2a3b52;--text:#edf4ff;--muted:#a8b9ce;--blue:#75baff;--purple:#bb9aff;--orange:#ffad57;--green:#77deb1;--off:#1b2b40}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;padding:clamp(10px,2vw,28px);background:var(--bg);color:var(--text);font:18px/1.45 system-ui,"Segoe UI",sans-serif}.app{max-width:1640px;margin:auto}header,.actions,.legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px}header{justify-content:space-between;margin-bottom:18px}h1{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.04em;margin:0}header p,p.hint{color:var(--muted);margin:6px 0}h2{font-size:1.13rem;margin:0}button,input{font:inherit}button{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-height:44px;cursor:pointer}button:hover{border-color:var(--purple)}button:disabled{opacity:.4;cursor:default}:focus-visible{outline:3px solid var(--purple);outline-offset:3px}input[type=range]{width:100%;accent-color:var(--purple);min-height:30px}input[type=checkbox]{width:22px;height:22px;accent-color:var(--purple);vertical-align:middle;margin:0 8px 0 0}.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px}aside,.panel,.info{background:var(--card);border:1px solid var(--line);border-radius:15px}aside{padding:18px;align-self:start}main{min-width:0}.control{display:block;margin:20px 0}.control>span{display:flex;justify-content:space-between;gap:8px;font-weight:650}output,.purple{color:var(--purple)}.green{color:var(--green)}.orange{color:var(--orange)}.blue{color:var(--blue)}.hint,small{font-size:.94rem;color:var(--muted)}.check{display:block;margin:16px 0}.panel{overflow:hidden;margin-bottom:16px}.panel-head{padding:14px 18px;border-bottom:1px solid var(--line)}.panel-head p{margin:5px 0 0;color:var(--muted)}.info{padding:16px 18px;margin-bottom:16px}.info p{margin:7px 0}.stage{border-left:5px solid var(--purple);min-height:145px}.stage p{max-width:100ch}.steps{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:18px}.steps button{padding:8px 6px;font-size:1rem}.steps button[aria-pressed=true]{border:2px solid var(--purple);background:color-mix(in srgb,var(--purple) 12%,var(--card))}.steps small{display:block}.transport{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.transport #play{grid-column:1/-1}.legend{padding:12px 18px;font-size:.95rem;border-top:1px solid var(--line)}svg{display:block;width:100%;height:auto;max-height:650px}svg text{font:17px system-ui,sans-serif;fill:var(--muted)}svg .label{fill:var(--text);font-weight:650}svg .pixel-number{font-size:16px}svg .selected{stroke:var(--purple);stroke-width:3}.table-wrap{overflow-x:auto;padding:12px 16px}table{width:100%;border-collapse:collapse;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:center;font-size:1rem}th,td{padding:8px 6px;border:1px solid var(--line)}th{font-weight:600}th:first-child,td:first-child{text-align:left;min-width:115px}th button{padding:2px 6px;min-width:38px;font-size:.95rem}.selected-col{background:color-mix(in srgb,var(--purple) 12%,var(--card))}.current-bit td{border-top:2px solid var(--purple);border-bottom:2px solid var(--purple)}.one{color:var(--green);font-weight:750}.zero{color:var(--muted)}.unknown{color:var(--muted)}.result{color:var(--blue);font-weight:700}.trace{font:1rem/1.8 ui-monospace,Consolas,monospace;overflow-x:auto}.trace div{padding:2px 10px;white-space:nowrap}.trace .active{background:color-mix(in srgb,var(--purple) 14%,var(--card));border-left:3px solid var(--purple)}.formula{font:1.05rem/1.7 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}#linkFallback{width:100%;margin-top:12px}summary{cursor:pointer}li{margin:8px 0}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}.wide{grid-column:1/-1}.stage{min-height:0}}
+@media(max-width:600px){body{font-size:16px}.steps{grid-template-columns:repeat(4,1fr)}aside{display:block}svg{min-width:680px}.diagram-wrap{overflow-x:auto}.steps small{display:none}.panel-head{padding:12px}.table-wrap{padding:8px}.stage{padding:12px}header .actions{gap:6px}button{font-size:1rem}}
+svg{max-height:none}svg .binary-digit{font:14px ui-monospace,Consolas,monospace}svg .active-digit{fill:var(--purple);font-weight:750}svg .code-note{font-size:14px}svg .one{fill:var(--green)}svg .zero,svg .unknown{fill:var(--muted)}svg .result{fill:var(--blue)}#memory [data-pixel]{cursor:pointer}#memory [data-pixel]:focus{outline:none}#memory [data-pixel]:focus rect{stroke:var(--purple);stroke-width:2}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1 data-de="Zentrale Pixel detektieren" data-en="Detecting central pixels"></h1><p data-de="Binäre Displaymuster → telezentrische Aufnahme → gespeicherte Koordinate" data-en="Binary display patterns → telecentric capture → stored coordinate"></p></div><div class="actions"><button id="language">Deutsch</button><button id="theme" data-de="Hell / Dunkel" data-en="Light / Dark"></button><button id="reset">Reset (R)</button></div></header>
+<nav class="steps" id="stages" aria-label="Calibration stages"></nav>
+<div class="layout">
+<aside>
+<div class="wide"><h2 data-de="Kalibrierung Schritt für Schritt" data-en="Calibration step by step"></h2><p class="hint" data-de="3 Mikrolinsen · je 5 Displaypixel · je 4 Kamerapixel. Insgesamt 15 Display- und 12 Kamerapixel." data-en="3 microlenses · 5 display pixels each · 4 camera pixels each. A total of 15 display and 12 camera pixels."></p></div>
+<div><label class="control"><span><span data-de="Schritt" data-en="Step"></span><output id="stepValue"></output></span><input id="step" type="range" min="0" max="14" step="1" value="0"></label><div class="transport"><button id="previous" data-de="← Zurück" data-en="← Back"></button><button id="next" data-de="Weiter →" data-en="Next →"></button><button id="play"></button></div></div>
+<div><label class="control"><span><span data-de="Kamerapixel m" data-en="Camera pixel m"></span><output id="pixelValue"></output></span><input id="pixel" type="range" min="1" max="12" step="1" value="6"></label><p class="hint" id="selection"></p></div>
+<div class="wide"><label class="check"><input id="rejected" type="checkbox" checked><span data-de="Verworfene Richtung zeigen" data-en="Show rejected direction"></span></label><label class="check"><input id="reveal" type="checkbox"><span data-de="Zentrale Pixel markieren" data-en="Mark central pixels"></span></label><p class="hint" data-de="← / →: Einzelschritt · Leertaste: Abspielen / Pause · R: Reset. Zurückgehen setzt auch den Speicher auf diesen Schritt zurück." data-en="← / →: single step · Space: play / pause · R: reset. Going back also restores memory to that step."></p></div>
+</aside>
+<main>
+<section class="info stage" aria-live="polite"><h2 id="stageTitle"></h2><p id="stageText"></p></section>
+<section class="panel"><div class="panel-head"><h2 data-de="Vom Display zur telezentrischen Kamera" data-en="From the display to the telecentric camera"></h2><p id="patternNote"></p></div><div class="diagram-wrap"><svg id="optics" viewBox="0 -170 1000 780" role="group" aria-label="Light field generator, telecentric camera and bit memory"></svg></div><div class="legend"><span class="green" data-de="● AN / Licht / Bit 1" data-en="● ON / light / bit 1"></span><span data-de="○ AUS / dunkel / Bit 0" data-en="○ OFF / dark / bit 0"></span><span data-de="· Noch nicht gespeichert" data-en="· Not stored yet"></span><span class="orange" data-de="↗ Schräges Bündel verworfen" data-en="↗ Oblique bundle rejected"></span><span class="purple" data-de="▣ Gewähltes Kamerapixel / aktives Bit" data-en="▣ Selected camera pixel / active bit"></span></div></section>
+<section class="info"><h2 id="readoutTitle"></h2><p id="readout"></p><div class="formula" id="decode"></div></section>
+<section class="panel"><div class="panel-head"><h2 data-de="Algorithmus · horizontaler Durchlauf" data-en="Algorithm · horizontal pass"></h2></div><div class="trace" id="algorithm"></div></section>
+<section class="info"><details><summary data-de="Modell & Bezug zu Kapitel 3" data-en="Model & relation to Chapter 3"></summary><ul>
+<li data-de="Eindimensionaler horizontaler Schnitt: globale Displaykoordinaten u = 1 … 15, vier Bits, beginnend beim niederwertigsten Bit (Gewichte 1, 2, 4, 8). Die Muster laufen über das gesamte Display und beginnen nicht an jeder Mikrolinse neu." data-en="One-dimensional horizontal section: global display coordinates u = 1 … 15, four bits, starting with the least significant bit (weights 1, 2, 4, 8). Patterns span the entire display and do not restart at each microlens."></li>
+<li data-de="Die zentralen Displaypixel liegen bei u = 3, 8 und 13 in der Brennebene der Mikrolinsen. Ihr Licht wird parallel zur optischen Achse kollimiert. Je vier Kamerapixel lösen die beleuchtete Apertur einer Mikrolinse auf und erhalten denselben Code. Vier Kamerapixel bedeuten nicht vier zentrale Displaypixel." data-en="Central display pixels are at u = 3, 8 and 13 in the microlens focal plane. Their light is collimated parallel to the optical axis. Four camera pixels resolve each illuminated microlens aperture and receive the same code. Four camera pixels do not imply four central display pixels."></li>
+<li data-de="Die telezentrische Kamera ist als idealer Richtungsfilter mit schematischer, aufrechter Abbildung dargestellt: Nur achsparallele Bündel passieren. Pro Linse ist höchstens eine verworfene Richtung exemplarisch eingezeichnet. Objektiv, Blende und Sensorabstände sind nicht maßstäblich; Beugung, Rauschen und Übersprechen sind nicht modelliert." data-en="The telecentric camera is shown as an ideal directional filter with schematic upright imaging: only axis-parallel bundles pass. At most one rejected direction per lens is drawn as an example. Lens, stop and sensor distances are not to scale; diffraction, noise and crosstalk are not modeled."></li>
+<li data-de="Normierte Intensitäten: Dunkelbild g₀ = 0,1, Nutzsignal 0 oder 1, Schwellwert t = 0,5. Gespeichert wird 1 genau dann, wenn Aufnahme − Dunkelbild > t. Ein Nullbit ist eine gültige Messung, kein fehlender Wert." data-en="Normalized intensities: dark reference g₀ = 0.1, signal 0 or 1, threshold t = 0.5. Store 1 exactly when capture − dark reference > t. A zero bit is a valid measurement, not a missing value."></li>
+<li data-de="Für die vollständige 2D-Kalibrierung folgt die zweite Beleuchtungsserie mit zeilenweisen v-Bitmustern. Jedes Kamerapixel liefert dann (g_hor(m), g_ver(m)); die Zuordnung aller Kamerapixel ergibt die Menge ℒ. Hier wird ausschließlich g_hor gezeigt." data-en="Full 2D calibration adds a second illumination series with row-wise v-bit patterns. Each camera pixel then yields (g_hor(m), g_ver(m)); mappings from all camera pixels form the set ℒ. This widget shows g_hor only."></li>
+</ul></details></section>
+</main>
+</div>
+<section class="info"><div class="actions"><button id="copyLink" data-de="Zustandslink kopieren" data-en="Copy state link"></button><button id="save" data-de="Widget mit Zustand speichern" data-en="Save widget with state"></button></div><p class="hint" data-de="Offline nutzbar · keine externen Bibliotheken" data-en="Works offline · no external libraries"></p><input id="linkFallback" hidden readonly aria-label="State link"><p id="status" role="status"></p></section>
+</div>
+<script id="initialState" type="application/json">null</script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id),centers=[3,8,13];
+const defaults={step:0,pixel:6,rejected:true,reveal:false,lang:'en',dark:true};
+let state={...defaults},timer=null;
+const t=(de,en)=>state.lang==='de'?de:en;
+function sanitize(input){
+ const s={...defaults};
+ for(const [key,min,max] of [['step',0,14],['pixel',1,12]]){const n=Number(input[key]??s[key]);s[key]=Number.isFinite(n)?Math.max(min,Math.min(max,Math.round(n))):s[key];}
+ for(const key of ['dark','rejected','reveal'])s[key]=input[key]===undefined?s[key]:input[key]===true||input[key]==='true';
+ s.lang=input.lang==='de'?'de':'en';return s;
+}
+try{state=sanitize({...JSON.parse($('initialState').textContent),...Object.fromEntries(new URLSearchParams(location.search))});}catch{}
+function model(){
+ const bit=state.step>=2&&state.step<=13?Math.floor((state.step-2)/3):null;
+ const phase=bit===null?null:(state.step-2)%3;
+ const stored=Array.from({length:4},(_,i)=>state.step>=4+3*i);
+ const on=u=>bit!==null&&Boolean(u&(1<<bit));
+ return {bit,phase,stored,on,captured:phase!==null&&phase>=1,decoded:state.step===14};
+}
+function writeURL(){try{const u=new URL(location.href);u.search=new URLSearchParams(Object.entries(state));history.replaceState(null,'',u);}catch{}}
+function stop(){if(timer!==null)clearInterval(timer);timer=null;}
+function move(delta){stop();state.step=Math.max(0,Math.min(14,state.step+delta));update();}
+function stageText(m){
+ if(state.step===0)return [t('0 · Dunkelbild vorbereiten','0 · Prepare dark reference'),t('Alle Displaypixel sind aus. Zuerst wird die Hintergrundhelligkeit gemessen, damit später nur das Licht des LFG ausgewertet wird. Der Bit-Speicher ist noch leer.','All display pixels are off. First measure background intensity so that subsequent evaluation uses only light from the LFG. Bit memory is still empty.')];
+  if(state.step===1)return [t('1 · Dunkelbild aufnehmen und Speicher initialisieren','1 · Capture dark reference and initialize memory'),t('Die Kamera speichert g₀(m) = 0,1 für alle 12 Pixel. g_hor wird mit 0 initialisiert; Punkte im Speicher über der Kamera kennzeichnen noch nicht gemessene Bits.','The camera stores g₀(m) = 0.1 for all 12 pixels. g_hor is initialized to 0; dots in memory above the camera mark bits that have not yet been measured.')];
+ if(m.decoded)return [t('14 · Binärcodes dekodieren','14 · Decode binary codes'),t('Alle vier Bits sind gespeichert. Die Kamerapixel 1–4 liefern 0011₂ = 3, Pixel 5–8 liefern 1000₂ = 8 und Pixel 9–12 liefern 1101₂ = 13. Damit sind die drei zentralen Displaypixel identifiziert.','All four bits have been stored. Camera pixels 1–4 yield 0011₂ = 3, pixels 5–8 yield 1000₂ = 8, and pixels 9–12 yield 1101₂ = 13. The three central display pixels are now identified.')];
+ const names=[t('Pattern anzeigen','Display pattern'),t('Kamera aufnehmen','Capture camera image'),t('Bit speichern','Store bit')];
+ const descriptions=[t(`Alle Displaypixel, deren Koordinate u das Bit b${m.bit} = 1 hat, leuchten. Nur eingeschaltete zentrale Pixel senden achsparalleles Licht zur Kamera. Noch wird nichts in den Bit-Speicher geschrieben.`,`All display pixels whose coordinate u has bit b${m.bit} = 1 are on. Only active central pixels send axis-parallel light to the camera. Nothing has been written to bit memory yet.`),t('Die Kamera nimmt das Muster auf und zieht das Dunkelbild ab: g(m) = Aufnahme(m) − g₀(m). Rechts unten wird das Signal des ausgewählten Kamerapixels mit t = 0,5 verglichen.','The camera captures the pattern and subtracts the dark reference: g(m) = capture(m) − g₀(m). Below, the selected camera pixel’s signal is compared with t = 0.5.'),t(`Für jedes Kamerapixel wird b${m.bit} gespeichert: 1 bei g(m) > t, sonst 0. Bereits gemessene Bits bleiben erhalten. Erst der nächste Schritt ändert das Displaymuster.`,`For each camera pixel, store b${m.bit}: 1 if g(m) > t, otherwise 0. Previously measured bits are retained. The next step changes the display pattern.`)];
+ return [`${state.step} · b${m.bit} (${t('Gewicht','weight')} ${1<<m.bit}) · ${names[m.phase]}`,descriptions[m.phase]];
+}
+const NS='http://www.w3.org/2000/svg';
+function el(root,tag,attrs={},value){const node=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,v);if(value!==undefined)node.textContent=value;root.append(node);return node;}
+function line(root,x1,y1,x2,y2,color='line',width=1.5,dash=''){return el(root,'line',{x1,y1,x2,y2,stroke:`var(--${color})`,'stroke-width':width,'stroke-dasharray':dash});}
+function text(root,x,y,value,cls='',anchor='middle'){return el(root,'text',{x,y,class:cls,'text-anchor':anchor},value);}
+const xPixel=u=>213+(u-1)*46,xCamera=m=>190+Math.floor((m-1)/4)*230+((m-1)%4+.5)*57.5;
+function draw(m){
+  const svg=$('optics');svg.replaceChildren();
+  memory(m,svg);
+ text(svg,24,34,t('Kamera','Camera'),'label','start');text(svg,190,34,t('12 Kamerapixel m · je 4 pro Mikrolinse','12 camera pixels m · 4 per microlens'),'','start');
+ for(let lens=0;lens<3;lens++){
+  const c=xPixel(centers[lens]),left=190+lens*230,lit=m.on(centers[lens]);
+  line(svg,c,130,c,486,'line',1.5,'5 7');
+  // Four spatial samples of the SAME collimated central-pixel bundle.
+  for(let j=0;j<4;j++){
+   const cam=lens*4+j+1,x=xCamera(cam);
+   if(lit){line(svg,c,491,x,385,'green',2);line(svg,x,385,x,107,'green',2);el(svg,'path',{d:`M ${x-4} 160 L ${x} 151 L ${x+4} 160`,fill:'none',stroke:'var(--green)','stroke-width':2});}
+  }
+  if(state.rejected){
+   const off=Array.from({length:5},(_,j)=>lens*5+j+1).find(u=>u!==centers[lens]&&m.on(u));
+   if(off!==undefined){const source=xPixel(off),end=c+(c-source)*1.25;line(svg,source,491,c,385,'orange',2,'6 4');line(svg,c,385,end,252,'orange',2,'6 4');line(svg,end-5,247,end+5,257,'orange',2);line(svg,end-5,257,end+5,247,'orange',2);}
+  }
+  el(svg,'ellipse',{cx:c,cy:385,rx:109,ry:14,fill:'var(--blue)','fill-opacity':'.12',stroke:'var(--blue)','stroke-width':2});
+  text(svg,c,428,`${t('Mikrolinse','Microlens')} ${lens+1}`,'label');
+  for(let j=0;j<4;j++){
+   const cam=lens*4+j+1,x=xCamera(cam),g=el(svg,'g',{'data-camera':cam});
+   el(g,'rect',{x:x-27,y:68,width:54,height:39,rx:5,fill:lit?'var(--green)':'var(--off)',class:cam===state.pixel?'selected':'',stroke:'var(--line)'});
+   text(g,x,57,cam,'pixel-number');text(g,x,94,lit?'1':'0','label');
+   el(g,'title',{},t(`Kamerapixel ${cam}: ${lit?'Licht':'dunkel'}`,`Camera pixel ${cam}: ${lit?'light':'dark'}`));
+  }
+  // Lens boundaries match five display pixels and four camera samples.
+  line(svg,left,451,left+230,451,'line',2);
+ }
+ el(svg,'rect',{x:174,y:203,width:724,height:37,rx:8,fill:'var(--card)',stroke:'var(--blue)','stroke-width':1.5});
+ text(svg,536,228,t('Telezentrische Kamera: nur achsparallele Bündel passieren','Telecentric camera: only axis-parallel bundles pass'),'label');
+ text(svg,24,389,t('Linsen','Lenses'),'label','start');
+ text(svg,24,504,t('Display','Display'),'label','start');
+ for(let u=1;u<=15;u++){
+  const x=xPixel(u),central=centers.includes(u)&&(state.reveal||m.decoded),on=m.on(u);
+  el(svg,'rect',{x:x-20,y:482,width:40,height:35,rx:4,fill:on?'var(--green)':'var(--off)',stroke:central?'var(--blue)':'var(--line)','stroke-width':central?3:1,'data-display':u,'data-on':on});
+   text(svg,x,506,on?'1':'0','label');text(svg,x,541,u,'pixel-number');
+   const code=el(svg,'g',{'data-code':u});
+   for(let bit=3;bit>=0;bit--){
+    const bx=x+(1.5-bit)*9;
+    if(m.bit===bit)el(code,'rect',{x:bx-4.5,y:556,width:9,height:22,rx:2,fill:'var(--purple)','fill-opacity':'.22'});
+    const digit=text(code,bx,572,(u>>bit)&1,'binary-digit');
+    digit.setAttribute('data-code-bit',bit);
+    if(m.bit===bit)digit.setAttribute('class','binary-digit active-digit');
+   }
+   if(central)text(svg,x,474,'★','label');
+ }
+  text(svg,24,542,'u →','label','start');
+  text(svg,24,572,'bin(u)','label','start');
+  text(svg,190,598,t('Bitreihenfolge: b3 b2 b1 b0 · Violett: aktuell projiziertes Bit','Bit order: b3 b2 b1 b0 · Purple: currently projected bit'),'code-note','start');
+ svg.setAttribute('aria-label',t(`15 Displaypixel, drei Mikrolinsen und zwölf Kamerapixel. ${m.bit===null?'Display aus.':`Bitmuster b${m.bit}.`}`,`15 display pixels, three microlenses and twelve camera pixels. ${m.bit===null?'Display off.':`Bit pattern b${m.bit}.`}`));
+}
+function memory(m,svg){
+ const root=el(svg,'g',{id:'memory'});
+ text(root,24,-139,t('Bit-Speicher','Bit memory'),'label','start');
+ text(root,190,-139,t('· noch offen · spaltengleich mit Kamerapixel m','· pending · aligned with camera pixel m'),'code-note','start');
+ for(let bit=3;bit>=0;bit--){
+  const y=-111+(3-bit)*23;
+  if(m.bit===bit)el(root,'rect',{x:185,y:y-17,width:700,height:23,rx:4,fill:'var(--purple)','fill-opacity':'.1'});
+  text(root,24,y,`b${bit} · ×${1<<bit}`,m.bit===bit?'active-digit':'','start');
+ }
+ text(root,24,-8,'u','label','start');
+ for(let cam=1;cam<=12;cam++){
+  const x=xCamera(cam),c=centers[Math.floor((cam-1)/4)],column=el(root,'g',{'data-pixel':cam,role:'button',tabindex:0,'aria-pressed':cam===state.pixel,'aria-label':t(`Kamerapixel ${cam} auswählen`,`Select camera pixel ${cam}`)});
+  el(column,'rect',{x:x-27,y:-129,width:54,height:130,rx:5,fill:cam===state.pixel?'var(--purple)':'transparent','fill-opacity':'.12'});
+  for(let bit=3;bit>=0;bit--){const known=m.stored[bit],v=(c>>bit)&1;text(column,x,-111+(3-bit)*23,known?v:'·',known?(v?'one':'zero'):'unknown').setAttribute('data-bit',bit);}
+  text(column,x,-8,m.decoded?c:'—','result');
+ }
+ line(root,190,13,880,13,'line');
+}
+function readout(m){
+ const c=centers[Math.floor((state.pixel-1)/4)],signal=Number(m.on(c));
+ $('readoutTitle').textContent=t(`Im Detail · Kamerapixel m = ${state.pixel}`,`In detail · camera pixel m = ${state.pixel}`);
+ let message;
+ if(state.step===0)message=t('Noch kein Dunkelbild und keine Bitmessung vorhanden.','No dark reference or bit measurement yet.');
+ else if(state.step===1)message=t('Dunkelbild gespeichert: g₀(m) = 0,1. Als Nächstes wird das erste Bitmuster angezeigt.','Dark reference stored: g₀(m) = 0.1. Next, display the first bit pattern.');
+ else if(m.decoded)message=t(`Der vollständige Code ${c.toString(2).padStart(4,'0')}₂ ergibt u = ${c}. Dieses Kamerapixel sieht das zentrale Displaypixel ${c}.`,`The complete code ${c.toString(2).padStart(4,'0')}₂ yields u = ${c}. This camera pixel sees central display pixel ${c}.`);
+ else if(!m.captured)message=t(`Das Pixel ist ${signal?'beleuchtet':'dunkel'}. Die Aufnahme für b${m.bit} steht noch aus; der Speicher bleibt unverändert.`,`The pixel is ${signal?'illuminated':'dark'}. Capture for b${m.bit} is pending; memory is unchanged.`);
+ else message=t(`Aufnahme = ${signal?'1,1':'0,1'}; g = ${signal?'1,1':'0,1'} − 0,1 = ${signal}. ${signal?'1 > 0,5 → Bit 1':'0 ≤ 0,5 → Bit 0'}. ${m.phase===2?'Gespeichert.':'Noch nicht gespeichert.'}`,`Capture = ${signal?'1.1':'0.1'}; g = ${signal?'1.1':'0.1'} − 0.1 = ${signal}. ${signal?'1 > 0.5 → bit 1':'0 ≤ 0.5 → bit 0'}. ${m.phase===2?'Stored.':'Not stored yet.'}`);
+ $('readout').textContent=message;
+ const bits=[3,2,1,0].map(bit=>m.stored[bit]?String((c>>bit)&1):'·').join('');
+ $('decode').textContent=`[b3 b2 b1 b0] = [${bits.split('').join(' ')}]${m.decoded?` → u = ${[3,2,1,0].map(bit=>`${(c>>bit)&1}×${1<<bit}`).join(' + ')} = ${c}`:''}`;
+}
+function algorithm(m){
+ const rows=[['dark','g₀(m) ← camera.acquireImage()'],['init','g_hor(m) ← 0'],['loop','for i = 0, 1, 2, 3:  // b0 → b3'],['pattern','  LFG.turnOnPixels({u : (u >> i) & 1 = 1})'],['capture','  g(m) ← camera.acquireImage() − g₀(m)'],['store','  bit_i(g_hor(m)) ← 1 if g(m) > t else 0'],['decode','return g_hor(m)  // horizontal coordinate u']];
+ const active=state.step<=1?(state.step===0?'dark':'init'):m.decoded?'decode':['pattern','capture','store'][m.phase];
+ $('algorithm').innerHTML=rows.map(([key,value])=>`<div class="${key===active?'active':''}">${value.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')}</div>`).join('');
+}
+function update(){
+ state=sanitize(state);const m=model();
+ document.documentElement.lang=state.lang;document.documentElement.classList.toggle('dark',state.dark);
+ document.querySelectorAll('[data-de]').forEach(node=>node.textContent=node.dataset[state.lang]);
+ $('language').textContent=state.lang==='de'?'English':'Deutsch';document.title=t('Zentrale Pixel detektieren','Detecting central pixels');
+ $('step').value=state.step;$('stepValue').textContent=`${state.step} / 14`;$('pixel').value=state.pixel;$('pixelValue').textContent=state.pixel;
+ for(const key of ['rejected','reveal'])$(key).checked=state[key];
+ $('selection').textContent=t(`Mikrolinse ${Math.ceil(state.pixel/4)} · Kamerapixel ${(state.pixel-1)%4+1} von 4.`,`Microlens ${Math.ceil(state.pixel/4)} · camera pixel ${(state.pixel-1)%4+1} of 4.`);
+ $('previous').disabled=state.step===0;$('next').disabled=state.step===14;$('play').textContent=timer!==null?t('Ⅱ Pause','Ⅱ Pause'):t('▶ Abspielen','▶ Play');
+ const [title,description]=stageText(m);$('stageTitle').textContent=title;$('stageText').textContent=description;
+ $('patternNote').textContent=m.bit===null?t('Display aus. Die Zahlen in den Kamerafeldern zeigen den aktuellen Lichtzustand, nicht den Bit-Speicher.','Display off. Numbers in camera cells show the current light state, not bit memory.'):t(`Pattern b${m.bit}, Gewicht ${1<<m.bit}: AN bei u ∈ {${Array.from({length:15},(_,j)=>j+1).filter(m.on).join(', ')}}.`,`Pattern b${m.bit}, weight ${1<<m.bit}: ON at u ∈ {${Array.from({length:15},(_,j)=>j+1).filter(m.on).join(', ')}}.`);
+ const stages=[[0,t('Dunkel','Dark')],[1,t('Referenz','Reference')],[2,'b0 · ×1'],[5,'b1 · ×2'],[8,'b2 · ×4'],[11,'b3 · ×8'],[14,t('Ergebnis','Result')]];
+ $('stages').innerHTML=stages.map(([step,label],i)=>`<button data-step="${step}" aria-pressed="${i<2?state.step===step:i===6?m.decoded:m.bit===i-2}">${label}</button>`).join('');
+  draw(m);readout(m);algorithm(m);writeURL();
+}
+$('previous').onclick=()=>move(-1);$('next').onclick=()=>move(1);
+$('step').oninput=()=>{stop();state.step=Number($('step').value);update();};
+$('pixel').oninput=()=>{state.pixel=Number($('pixel').value);update();};
+for(const key of ['rejected','reveal'])$(key).onchange=()=>{state[key]=$(key).checked;update();};
+$('stages').onclick=e=>{const target=e.target.closest('[data-step]');if(target){stop();state.step=Number(target.dataset.step);update();}};
+$('optics').onclick=e=>{const target=e.target.closest('[data-pixel],[data-camera]');if(target){state.pixel=Number(target.dataset.pixel??target.dataset.camera);update();}};
+$('optics').onkeydown=e=>{const target=e.target.closest('[data-pixel]');if(target&&['Enter',' '].includes(e.key)){e.preventDefault();e.stopPropagation();state.pixel=Number(target.dataset.pixel);update();$('memory').querySelector(`[data-pixel="${state.pixel}"]`).focus();}};
+$('play').onclick=()=>{if(timer!==null)stop();else{if(state.step===14)state.step=0;timer=setInterval(()=>{state.step++;if(state.step>=14){state.step=14;stop();}update();},1500);}update();};
+$('language').onclick=()=>{state.lang=state.lang==='de'?'en':'de';update();};$('theme').onclick=()=>{state.dark=!state.dark;update();};
+$('reset').onclick=()=>{stop();state={...defaults,lang:state.lang,dark:state.dark};$('status').textContent='';$('linkFallback').hidden=true;update();};
+document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.target.closest('input,button,summary'))return;if(['ArrowLeft','ArrowRight',' '].includes(e.key)){e.preventDefault();if(e.key===' ')$('play').click();else move(e.key==='ArrowRight'?1:-1);}if(e.key.toLowerCase()==='r')$('reset').click();});
+$('copyLink').onclick=async()=>{writeURL();try{await navigator.clipboard.writeText(location.href);$('status').textContent=t('Zustandslink kopiert.','State link copied.');}catch{$('linkFallback').hidden=false;$('linkFallback').value=location.href;$('linkFallback').focus();$('linkFallback').select();$('status').textContent=t('Link auswählen und kopieren.','Select and copy the link.');}};
+$('save').onclick=()=>{const doc=document.documentElement.cloneNode(true);doc.querySelector('#initialState').textContent=JSON.stringify(state);doc.querySelector('#status').textContent='';doc.querySelector('#linkFallback').hidden=true;const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+doc.outerHTML],{type:'text/html;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='central-pixel-detection.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);$('status').textContent=t('HTML-Datei mit aktuellem Zustand gespeichert.','HTML file saved with the current state.');};
+update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schlieren · Angular filtering</title>
+<style>
+:root{color-scheme:light;--bg:#eef3f8;--card:#fff;--line:#cbd6e2;--text:#172334;--muted:#526579;--blue:#1769aa;--purple:#7048c8;--orange:#a95000;--green:#16704d}
+:root.dark{color-scheme:dark;--bg:#08111f;--card:#101c2d;--line:#2a3b52;--text:#edf4ff;--muted:#a8b9ce;--blue:#75baff;--purple:#bb9aff;--orange:#ffad57;--green:#77deb1}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;padding:clamp(10px,2vw,28px);background:var(--bg);color:var(--text);font:18px/1.45 system-ui,"Segoe UI",sans-serif}.app{max-width:1600px;margin:auto}header,.actions,.presets{display:flex;flex-wrap:wrap;gap:10px;align-items:center}header{justify-content:space-between;margin-bottom:20px}h1{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.04em;margin:0}h2{font-size:1.13rem;margin:0}p{margin:8px 0}.hint,header p{color:var(--muted)}.hint{font-size:.95rem}button,input{font:inherit}button{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-height:44px;cursor:pointer}button:hover{border-color:var(--purple)}:focus-visible{outline:3px solid var(--purple);outline-offset:3px}input[type=range]{width:100%;min-height:32px;accent-color:var(--purple)}input[type=checkbox]{width:22px;height:22px;vertical-align:middle;accent-color:var(--purple);margin-right:8px}.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px}aside,.panel,.info{background:var(--card);border:1px solid var(--line);border-radius:15px}aside{align-self:start;padding:18px}main{min-width:0}.control{display:block;margin:18px 0}.control>span{display:flex;justify-content:space-between;gap:8px;font-weight:650}output{color:var(--purple);white-space:nowrap}.check{display:block;margin:15px 0}.panel{margin-bottom:16px;overflow:hidden}.panel-head{padding:14px 18px;border-bottom:1px solid var(--line)}.panel-head p{color:var(--muted);font-size:.95rem}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}.info{padding:16px 18px;margin-bottom:16px}.formula{font:1.05rem/1.8 ui-monospace,Consolas,monospace;overflow-wrap:anywhere;color:var(--purple)}svg{display:block;width:100%;height:auto}svg text{fill:var(--text);font:17px system-ui,sans-serif}svg .small{font-size:14px}svg .muted{fill:var(--muted)}canvas{display:block;width:100%;height:auto;background:#000}.image-wrap{position:relative;margin:16px;max-width:440px;margin-inline:auto;width:calc(100% - 32px)}#image{cursor:crosshair;touch-action:manipulation}.image-labels{display:flex;justify-content:space-between;padding:0 18px 12px;color:var(--muted);font-size:.9rem}.readout{border-left:5px solid var(--orange)}.legend{padding:0 18px 14px;font-size:.95rem;color:var(--muted)}.blue{color:var(--blue)}.orange{color:var(--orange)}.green{color:var(--green)}#linkFallback{width:100%}details li{margin:10px 0}.presets{margin-bottom:18px}.presets button{font-size:1rem}
+@media(max-width:1100px){.layout{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}.wide{grid-column:1/-1}}
+@media(max-width:650px){body{font-size:16px}.pair{grid-template-columns:1fr}aside{display:block}.diagram-wrap{overflow-x:auto}#optics{min-width:780px}button{font-size:1rem}}
+</style>
+</head>
+<body><div class="app">
+<header><div><h1 data-de="Schlieren · Winkel werden Helligkeit" data-en="Schlieren · Angles become brightness"></h1><p data-de="Brechendes Objekt → Richtung in der Brennebene → Messerschneide → Bildkontrast" data-en="Refractive object → direction in the focal plane → knife edge → image contrast"></p></div><div class="actions"><button id="language">Deutsch</button><button id="theme" data-de="Hell / Dunkel" data-en="Light / Dark"></button><button id="reset">Reset (R)</button></div></header>
+<nav class="presets" aria-label="Experiments"><button data-preset="half" data-de="1 · Halbe Quelle" data-en="1 · Half source"></button><button data-preset="rotate" data-de="2 · Schneide drehen" data-en="2 · Rotate edge"></button><button data-preset="reverse" data-de="3 · Kontrast umkehren" data-en="3 · Reverse contrast"></button><button data-preset="open" data-de="4 · Ohne Schneide" data-en="4 · No knife edge"></button></nav>
+<div class="layout"><aside>
+<div class="wide"><h2 data-de="Winkelfilter einstellen" data-en="Adjust the angular filter"></h2><p class="hint" data-de="Verschiebe die Schneide in der Brennebene. Sie filtert Richtungen, keine Objektpositionen." data-en="Move the edge in the focal plane. It filters directions, not object positions."></p></div>
+<label class="control"><span><span data-de="Schneidenposition k" data-en="Edge position k"></span><output id="edgeValue"></output></span><input id="edge" type="range" min="-0.8" max="0.8" step="0.01" value="0"></label>
+<label class="control"><span><span data-de="Filternormale φ" data-en="Filter normal φ"></span><output id="angleValue"></output></span><input id="angle" type="range" min="0" max="180" step="5" value="0"></label>
+<div class="wide"><label class="check"><input id="flip" type="checkbox"><span data-de="Offene Seite umkehren" data-en="Reverse open side"></span></label><label class="check"><input id="removed" type="checkbox"><span data-de="Messerschneide entfernen" data-en="Remove knife edge"></span></label></div>
+<label class="control"><span><span data-de="Ablenkungsstärke A" data-en="Deflection strength A"></span><output id="strengthValue"></output></span><input id="strength" type="range" min="-2" max="2" step="0.05" value="1"></label>
+<label class="control"><span><span data-de="Quellbild-Durchmesser ε" data-en="Source image diameter ε"></span><output id="sourceValue"></output></span><input id="source" type="range" min="0.04" max="0.8" step="0.02" value="0.3"></label>
+<label class="control"><span><span data-de="Brennweite f" data-en="Focal length f"></span><output id="focalValue"></output></span><input id="focal" type="range" min="100" max="300" step="10" value="200"></label>
+<div class="wide"><h2 data-de="Objektpunkt auswählen" data-en="Select an object point"></h2><p class="hint" data-de="Ins Bild klicken oder Koordinaten einstellen. Orange markiert denselben Punkt in allen Ansichten." data-en="Click the image or adjust coordinates. Orange marks the same point in all views."></p></div>
+<label class="control"><span><span>x / σ</span><output id="xValue"></output></span><input id="x" type="range" min="-2.5" max="2.5" step="0.05" value="1"></label>
+<label class="control"><span><span>y / σ</span><output id="yValue"></output></span><input id="y" type="range" min="-2.5" max="2.5" step="0.05" value="0"></label>
+</aside><main>
+<section class="panel"><div class="panel-head"><h2 data-de="1 · Strahlengang des gewählten Objektpunkts" data-en="1 · Rays from the selected object point"></h2><p data-de="Paraxialer 2f–2f-Aufbau · Schnitt entlang der Filternormalen · Brennebenenverschiebung rechts vergrößert" data-en="Paraxial 2f–2f setup · section along the filter normal · focal displacement enlarged below"></p></div><div class="diagram-wrap"><svg id="optics" viewBox="0 0 980 420" role="img"></svg></div><div class="legend"><span class="blue" data-de="Blau: ungestörter Verlauf" data-en="Blue: undeflected path"></span> · <span class="orange" data-de="Orange: abgelenkt" data-en="Orange: deflected"></span> · <span data-de="Gestrichelt: blockiert" data-en="Dashed: blocked"></span></div></section>
+<div class="pair"><section class="panel"><div class="panel-head"><h2 data-de="2 · Brennebene / Winkelfilter" data-en="2 · Focal plane / angular filter"></h2><p data-de="Quellbild: blau ohne Objekt, orange mit Ablenkung. Die dunkle Halbebene ist undurchlässig." data-en="Source image: blue without the object, orange with deflection. The dark half-plane is opaque."></p></div><svg id="focalPlane" viewBox="0 0 480 430" role="img"></svg></section>
+<section class="panel"><div class="panel-head"><h2 data-de="3 · Schlierenbild" data-en="3 · Schlieren image"></h2><p data-de="Feste Skala: Schwarz = 0 %, Weiß = 100 %. Objektkoordinaten, aufrechte Darstellung." data-en="Fixed scale: black = 0%, white = 100%. Object coordinates, upright display."></p></div><div class="image-wrap"><canvas id="image" width="300" height="300" role="img" aria-label="Schlieren image"></canvas></div><div class="image-labels"><span>−2.5σ ← x → +2.5σ</span><span data-de="y nach oben" data-en="y upwards"></span></div></section></div>
+<section class="info readout" aria-live="polite"><h2 data-de="Vom Winkel zum Messwert" data-en="From angle to measurement"></h2><div class="formula" id="mapping"></div><p id="measurement"></p><p id="interpretation"></p></section>
+<section class="info"><h2 data-de="Ausprobieren & beobachten" data-en="Try & observe"></h2><ol><li data-de="Setze A = 0: Warum ändert die Schneide dann nur eine gleichmäßige Hintergrundhelligkeit?" data-en="Set A = 0: why does the edge now change only uniform background brightness?"></li><li data-de="Drehe φ von 0° auf 90°. Welche Komponente des Brechungsindexgradienten wird sichtbar?" data-en="Rotate φ from 0° to 90°. Which component of the refractive-index gradient becomes visible?"></li><li data-de="Verkleinere ε. Warum steigt die Empfindlichkeit, während der nicht gesättigte Messbereich schrumpft?" data-en="Reduce ε. Why does sensitivity increase while the unsaturated measurement range shrinks?"></li><li data-de="Entferne die Schneide. Weshalb verschwindet der Kontrast trotz abgelenkter Strahlen?" data-en="Remove the edge. Why does contrast disappear despite deflected rays?"></li></ol></section>
+<section class="info"><details><summary data-de="Modell & Bezug zu Kapitel 3" data-en="Model & relation to Chapter 3"></summary><ul>
+<li data-de="Dünnes, verlustfreies Phasenobjekt mit gaußförmiger optischer Weglänge. Die paraxiale Ablenkung ist proportional zum transversalen Gradienten der optischen Weglänge: α = ∇⊥ ∫(n−n₀) dz / n₀. Positives A lenkt zur Mitte. σ = 5 mm; die größte radiale Ablenkung ist |A| mrad bei r = σ." data-en="Thin, lossless phase object with Gaussian optical path length. Paraxial deflection is proportional to the transverse optical-path gradient: α = ∇⊥ ∫(n−n₀) dz / n₀. Positive A deflects towards the centre. σ = 5 mm; peak radial deflection is |A| mrad at r = σ."></li>
+<li data-de="Eine ideale dünne Linse bildet Richtung auf Position ab: q = f α (α in rad). Die Schneide lässt n·q ≥ k passieren, mit n = (cos φ, sin φ); Umkehren vertauscht die offene Seite. φ = 0° bedeutet eine vertikale Schneide und Empfindlichkeit für αx." data-en="An ideal thin lens maps direction to position: q = f α (α in rad). The edge transmits n·q ≥ k, with n = (cos φ, sin φ); reversing swaps the open side. φ = 0° means a vertical edge sensitive to αx."></li>
+<li data-de="ε ist der Durchmesser eines gleichmäßig hellen kreisförmigen Quellbilds ohne Ablenkung, direkt in der Brennebene vorgegeben. Der Messwert ist dessen geometrischer Flächenanteil auf der offenen Seite; die Ablenkung verschiebt diese Kreisscheibe. Ohne Schneide ist I/I₀ = 1. Keine automatische Kontrastspreizung." data-en="ε is the diameter of a uniformly bright circular source image without deflection, specified directly in the focal plane. The measurement is its geometric area fraction on the open side; deflection translates this disk. Without the edge, I/I₀ = 1. No automatic contrast stretching."></li>
+<li data-de="Ideale Abbildung mit Vergrößerung −1, im Bildpanel aufrecht zurückgeordnet. Die Strahlenskizze zeigt drei exemplarische Quellrichtungen, keine Intensitätsgewichte. Die Linse und der Sensor werden bei Änderung von f im Abstand 2f gehalten. Keine Beugung, Absorption, Aberrationen, Vignettierung oder Kaustiken. Die endliche Beleuchtungsdivergenz ist klein; die Phasenablenkung wird als unabhängig von der Quellrichtung angenommen." data-en="Ideal imaging at magnification −1, remapped upright in the image panel. The ray sketch shows three example source directions, not intensity weights. Lens and sensor remain at 2f distances as f changes. No diffraction, absorption, aberrations, vignetting or caustics. Illumination divergence is small; phase deflection is assumed independent of source direction."></li>
+</ul></details></section>
+</main></div>
+<section class="info"><div class="actions"><button id="copyLink" data-de="Zustandslink kopieren" data-en="Copy state link"></button><button id="save" data-de="Widget mit Zustand speichern" data-en="Save widget with state"></button></div><p class="hint" data-de="Offline nutzbar · keine externen Bibliotheken · R: Reset" data-en="Works offline · no external libraries · R: reset"></p><input id="linkFallback" hidden readonly aria-label="State link"><p id="status" role="status"></p></section>
+</div>
+<script id="initialState" type="application/json">null</script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id);
+const defaults={edge:0,angle:0,flip:false,removed:false,strength:1,source:.3,focal:200,x:1,y:0,lang:'en',dark:true};
+const ranges={edge:[-.8,.8,.01],angle:[0,180,5],strength:[-2,2,.05],source:[.04,.8,.02],focal:[100,300,10],x:[-2.5,2.5,.05],y:[-2.5,2.5,.05]};
+function sanitize(input){const s={...defaults};for(const [key,[lo,hi,step]] of Object.entries(ranges)){const n=Number(input[key]??s[key]);if(Number.isFinite(n))s[key]=Number((lo+Math.round((Math.max(lo,Math.min(hi,n))-lo)/step)*step).toFixed(4));}for(const key of ['flip','removed','dark'])s[key]=input[key]===undefined?s[key]:input[key]===true||input[key]==='true';s.lang=input.lang==='de'?'de':'en';return s;}
+let state={...defaults};try{state=sanitize({...JSON.parse($('initialState').textContent),...Object.fromEntries(new URLSearchParams(location.search))});}catch{}
+const t=(de,en)=>state.lang==='de'?de:en;
+function deflection(x,y){const a=-state.strength*Math.exp((1-x*x-y*y)/2);return [a*x,a*y];}
+function transmission(q){if(state.removed)return 1;const z=Math.max(-1,Math.min(1,(q-state.edge)/(state.source/2)));const fraction=.5+(Math.asin(z)+z*Math.sqrt(Math.max(0,1-z*z)))/Math.PI;return state.flip?1-fraction:fraction;}
+function model(x=state.x,y=state.y){const [ax,ay]=deflection(x,y),phi=state.angle*Math.PI/180,nx=Math.cos(phi),ny=Math.sin(phi),qx=state.focal*ax/1000,qy=state.focal*ay/1000,q=qx*nx+qy*ny;return {ax,ay,qx,qy,q,nx,ny,intensity:transmission(q),reference:transmission(0)};}
+const NS='http://www.w3.org/2000/svg';
+function el(root,tag,attrs={},value){const node=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))node.setAttribute(k,v);if(value!==undefined)node.textContent=value;root.append(node);return node;}
+function line(root,x1,y1,x2,y2,color='line',width=1.5,dash=''){return el(root,'line',{x1,y1,x2,y2,stroke:`var(--${color})`,'stroke-width':width,'stroke-dasharray':dash});}
+function text(root,x,y,value,cls='',anchor='middle'){return el(root,'text',{x,y,class:cls,'text-anchor':anchor},value);}
+function drawOptics(m){
+ const svg=$('optics');svg.replaceChildren();const cy=212,scale=9,h=5*(state.x*m.nx+state.y*m.ny),a=m.q/state.focal;
+ line(svg,40,cy,940,cy,'line',1,'5 6');
+ for(const [x,title] of [[90,t('Phasenobjekt','Phase object')],[470,t('Linse','Lens')],[660,t('Brennebene','Focal plane')],[850,t('Sensor','Sensor')]]){text(svg,x,35,title);line(svg,x,55,x,360,'line',1,'3 6');}
+ el(svg,'ellipse',{cx:470,cy,rx:11,ry:143,fill:'var(--blue)','fill-opacity':'.12',stroke:'var(--blue)','stroke-width':2});
+ el(svg,'path',{d:'M 83 90 Q 118 210 83 335 L 99 335 Q 133 210 99 90 Z',fill:'var(--purple)','fill-opacity':'.16',stroke:'var(--purple)'});
+ const objY=cy-scale*h,imgY=cy+scale*h;
+ // The object is at 2f before the lens; the sensor at 2f after it.
+ // At f behind the lens, ray height is f * incoming direction.
+ for(const offset of [-.8,0,.8]){
+  const theta=offset*state.source/(2*state.focal),incomingY=cy-scale*(h-70/380*2*state.focal*theta);
+  const lensY=cy-scale*(h+2*state.focal*(theta+a)),focusQ=state.focal*(theta+a),focusY=cy-scale*focusQ;
+  const pass=state.removed||(state.flip?focusQ<=state.edge:focusQ>=state.edge);
+  line(svg,20,incomingY,90,objY,'blue',1.8);
+  line(svg,90,objY,470,lensY,'orange',offset===0?2.8:1.4);
+  line(svg,470,lensY,660,focusY,'orange',offset===0?2.8:1.4);
+  line(svg,660,focusY,850,imgY,pass?'orange':'muted',pass?1.8:1,pass?'':'5 5');
+  if(!pass){line(svg,655,focusY-5,665,focusY+5,'muted',2);line(svg,655,focusY+5,665,focusY-5,'muted',2);}
+ }
+ const baselineLens=cy-scale*h;line(svg,90,objY,470,baselineLens,'blue',1,'6 5');line(svg,470,baselineLens,660,cy,'blue',1,'6 5');
+ if(!state.removed){const edgeY=cy-scale*state.edge;line(svg,660,state.flip?68:edgeY,660,state.flip?edgeY:355,'text',5);}
+ line(svg,850,68,850,355,'green',4);
+ el(svg,'circle',{cx:90,cy:objY,r:6,fill:'var(--orange)'});el(svg,'circle',{cx:850,cy:imgY,r:6,fill:'var(--orange)'});
+ for(const [x,label] of [[280,'2f'],[565,'f'],[755,'f']])text(svg,x,388,`${label} = ${label==='2f'?2*state.focal:state.focal} mm`,'small');
+ text(svg,660,412,'q∥ = f α∥','small');svg.setAttribute('aria-label',t('Strahlen vom Objektpunkt über die Linse und die Messerschneide zum invertierten Bildpunkt.','Rays from the object point through the lens and knife edge to the inverted image point.'));
+}
+function drawFocal(m){
+ const svg=$('focalPlane');svg.replaceChildren();const c=240,cy=210,s=200,r=state.source*s/2;
+ const defs=el(svg,'defs');const clip=el(defs,'clipPath',{id:'focalClip'});el(clip,'rect',{x:40,y:10,width:400,height:400});
+ const g=el(svg,'g',{'clip-path':'url(#focalClip)'});
+ el(g,'rect',{x:40,y:10,width:400,height:400,fill:'var(--bg)'});
+ for(const v of [-1,-.5,0,.5,1]){line(g,c+v*s,10,c+v*s,410,'line',1,v===0?'':'3 5');line(g,40,cy-v*s,440,cy-v*s,'line',1,v===0?'':'3 5');}
+ el(g,'circle',{cx:c,cy,r,fill:'var(--blue)','fill-opacity':'.2',stroke:'var(--blue)','stroke-width':2,'stroke-dasharray':'5 4'});
+ const spot=el(g,'g',{id:'sourceSpot'});el(spot,'circle',{cx:c+s*m.qx,cy:cy-s*m.qy,r,fill:'var(--orange)','fill-opacity':'.65',stroke:'var(--orange)','stroke-width':2});
+ if(!state.removed){const mask=el(g,'g',{transform:`translate(${c} ${cy}) rotate(${-state.angle})`});const k=state.edge*s;
+  el(mask,'rect',{x:state.flip?k:-900,y:-900,width:state.flip?900:900+k,height:1800,fill:'#030712','fill-opacity':'.4'});
+  line(mask,k,-900,k,900,'text',2);
+ }
+ line(g,c,cy,c+s*m.qx,cy-s*m.qy,'orange',2);el(g,'circle',{cx:c+s*m.qx,cy:cy-s*m.qy,r:4,fill:'var(--orange)'});
+ line(svg,240,210,240+65*m.nx,210-65*m.ny,'purple',3);text(svg,240+82*m.nx,216-82*m.ny,'n','');
+ text(svg,437,428,'qx / mm','small','end');text(svg,42,27,'qy / mm','small','start');
+ for(const v of [-1,0,1])text(svg,c+s*v,cy+18,String(v),'small');
+ svg.setAttribute('aria-label',t(`Brennebene: Quellbild um (${m.qx.toFixed(3)}, ${m.qy.toFixed(3)}) mm verschoben; ${(m.intensity*100).toFixed(1)} Prozent passieren.`,`Focal plane: source image shifted by (${m.qx.toFixed(3)}, ${m.qy.toFixed(3)}) mm; ${(m.intensity*100).toFixed(1)} percent transmitted.`));
+}
+function drawImage(){const canvas=$('image'),ctx=canvas.getContext('2d'),size=canvas.width,img=ctx.createImageData(size,size);for(let j=0;j<size;j++)for(let i=0;i<size;i++){const x=5*(i+.5)/size-2.5,y=2.5-5*(j+.5)/size,v=Math.round(255*model(x,y).intensity),k=4*(j*size+i);img.data[k]=img.data[k+1]=img.data[k+2]=v;img.data[k+3]=255;}ctx.putImageData(img,0,0);
+ const x=(state.x+2.5)/5*size,y=(2.5-state.y)/5*size;ctx.strokeStyle='#000';ctx.lineWidth=5;ctx.beginPath();ctx.arc(x,y,7,0,2*Math.PI);ctx.stroke();ctx.strokeStyle='#ffad57';ctx.lineWidth=2;ctx.stroke();canvas.setAttribute('aria-label',t('Schlierenbild in Objektkoordinaten. Gewählten Objektpunkt mit den x- und y-Reglern ändern.','Schlieren image in object coordinates. Change the selected object point using the x and y sliders.'));}
+function writeURL(){try{const u=new URL(location.href);u.search=new URLSearchParams(Object.entries(state));history.replaceState(null,'',u);}catch{}}
+function update(){state=sanitize(state);document.documentElement.lang=state.lang;document.documentElement.classList.toggle('dark',state.dark);document.querySelectorAll('[data-de]').forEach(node=>node.textContent=node.dataset[state.lang]);$('language').textContent=state.lang==='de'?'English':'Deutsch';document.title=t('Schlieren · Winkelfilter','Schlieren · Angular filtering');
+ for(const key of Object.keys(ranges)){$(key).value=state[key];$(key+'Value').textContent=state[key].toFixed(['angle','focal'].includes(key)?0:2)+({edge:' mm',angle:'°',strength:' mrad',source:' mm',focal:' mm'}[key]||'');}
+ for(const key of ['flip','removed'])$(key).checked=state[key];for(const key of ['edge','angle','flip'])$(key).disabled=state.removed;
+ const m=model();drawOptics(m);drawFocal(m);drawImage();
+ $('mapping').textContent=`α = (${m.ax.toFixed(3)}, ${m.ay.toFixed(3)}) mrad → q = (${m.qx.toFixed(3)}, ${m.qy.toFixed(3)}) mm → q∥ = ${m.q.toFixed(3)} mm`;
+ $('measurement').textContent=t(`Gewählter Punkt: I/I₀ = ${(100*m.intensity).toFixed(1)} % · Hintergrund ohne Ablenkung: ${(100*m.reference).toFixed(1)} % · Differenz: ${(100*(m.intensity-m.reference)).toFixed(1)} Prozentpunkte.`,`Selected point: I/I₀ = ${(100*m.intensity).toFixed(1)}% · Undeflected background: ${(100*m.reference).toFixed(1)}% · Difference: ${(100*(m.intensity-m.reference)).toFixed(1)} percentage points.`);
+ const unsaturated=Math.abs(m.q-state.edge)<state.source/2;
+ $('interpretation').textContent=state.removed?t('Ohne Winkelfilter passieren alle Richtungen: Das reine Phasenobjekt erzeugt in diesem idealen fokussierten Bild keinen Intensitätskontrast.','Without an angular filter, all directions pass: the pure phase object produces no intensity contrast in this ideal focused image.'):unsaturated?t('Teilweise Abschattung: Kleine Winkeländerungen verändern den durchgelassenen Flächenanteil des Quellbilds.','Partial cutoff: small angle changes alter the transmitted area fraction of the source image.'):t('Sättigung: Das Quellbild dieses Punkts liegt vollständig auf einer Seite der Schneide. Weitere kleine Ablenkungen ändern die Helligkeit nicht.','Saturation: this point’s source image lies entirely on one side of the edge. Further small deflections do not change brightness.');writeURL();
+}
+for(const key of Object.keys(ranges))$(key).addEventListener('input',()=>{state[key]=Number($(key).value);update();});
+for(const key of ['flip','removed'])$(key).addEventListener('change',()=>{state[key]=$(key).checked;update();});
+$('image').addEventListener('click',event=>{const r=$('image').getBoundingClientRect();state.x=5*(event.clientX-r.left)/r.width-2.5;state.y=2.5-5*(event.clientY-r.top)/r.height;update();});
+$('language').addEventListener('click',()=>{state.lang=state.lang==='de'?'en':'de';update();});$('theme').addEventListener('click',()=>{state.dark=!state.dark;update();});
+function reset(){state={...defaults,lang:state.lang,dark:state.dark};update();}$('reset').addEventListener('click',reset);
+document.addEventListener('keydown',event=>{if(event.key.toLowerCase()==='r'&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){event.preventDefault();reset();}});
+document.querySelectorAll('[data-preset]').forEach(button=>button.addEventListener('click',()=>{state={...defaults,lang:state.lang,dark:state.dark};if(button.dataset.preset==='rotate')state.angle=90;if(button.dataset.preset==='reverse')state.flip=true;if(button.dataset.preset==='open')state.removed=true;update();}));
+$('copyLink').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);$('status').textContent=t('Link kopiert.','Link copied.');}catch{$('linkFallback').hidden=false;$('linkFallback').value=location.href;$('linkFallback').select();$('status').textContent=t('Link zum Kopieren auswählen.','Select the link to copy it.');}});
+$('save').addEventListener('click',()=>{const doc=document.documentElement.cloneNode(true);doc.querySelector('#initialState').textContent=JSON.stringify(state);doc.querySelector('#status').textContent='';doc.querySelector('#linkFallback').hidden=true;const blob=new Blob(['<!doctype html>\n'+doc.outerHTML],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='schlieren-widget.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+update();
+})();
+</script>
+</body></html>

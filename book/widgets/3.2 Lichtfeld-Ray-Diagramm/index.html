@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Camera light field · Ray diagram</title>
+<style>
+:root{color-scheme:light;--bg:#eef3f8;--card:#fff;--line:#cbd6e2;--text:#172334;--muted:#526579;--blue:#1769aa;--purple:#7048c8;--orange:#a95000;--green:#16704d}
+:root.dark{color-scheme:dark;--bg:#08111f;--card:#101c2d;--line:#2a3b52;--text:#edf4ff;--muted:#a8b9ce;--blue:#75baff;--purple:#bb9aff;--orange:#ffad57;--green:#77deb1}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;padding:clamp(10px,2vw,28px);background:var(--bg);color:var(--text);font:18px/1.45 system-ui,"Segoe UI",sans-serif}.app{max-width:1640px;margin:auto}header,.actions,.legend,.metrics{display:flex;flex-wrap:wrap;align-items:center;gap:10px}header{justify-content:space-between;margin-bottom:20px}h1{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.04em;margin:0}header p{margin:5px 0;color:var(--muted)}h2{font-size:1.13rem;margin:0}button,input{font:inherit}button{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-height:44px;cursor:pointer}button:hover{border-color:var(--purple)}:focus-visible{outline:3px solid var(--purple);outline-offset:3px}input[type=range]{width:100%;accent-color:var(--purple);min-height:30px;margin:0}input[type=checkbox]{width:22px;height:22px;accent-color:var(--purple);vertical-align:middle;margin:0 8px 0 0}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}.steps button{text-align:left;border-width:2px}.steps button[aria-pressed=true]{border-color:var(--purple);background:color-mix(in srgb,var(--purple) 12%,var(--card))}.steps small{display:block;color:var(--muted)}.layout{display:grid;grid-template-columns:280px minmax(0,1fr);gap:18px}aside,.panel,.info{background:var(--card);border:1px solid var(--line);border-radius:15px}aside{padding:18px;align-self:start}.control{display:block;margin-bottom:19px}.control>span{display:flex;justify-content:space-between;gap:8px;font-weight:650;margin-bottom:5px}output{color:var(--purple);white-space:nowrap}hr{border:0;border-top:1px solid var(--line);margin:20px 0}.hint,.muted{color:var(--muted)}.hint{font-size:.94rem}.views{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}main,.panel{min-width:0}.panel{overflow:hidden}.panel-head{padding:14px 16px;border-bottom:1px solid var(--line);min-height:112px}.panel-head p{margin:5px 0 0;color:var(--muted);font-size:.95rem}svg{display:block;width:100%;height:auto;touch-action:pan-y}svg text{font:18px system-ui;fill:var(--muted)}svg .math{font:italic 21px Georgia,serif;fill:var(--text)}svg .drag{cursor:grab;touch-action:none}svg .drag:active{cursor:grabbing}.panel-foot{border-top:1px solid var(--line);padding:12px 16px;min-height:75px;font-size:.92rem}.legend{gap:7px 18px;font-size:.94rem}.blue{color:var(--blue)}.purple{color:var(--purple)}.orange{color:var(--orange)}.green{color:var(--green)}.info{padding:18px;margin-top:18px}.metrics{gap:12px 25px}.metrics strong{color:var(--purple)}.info p:last-child{margin-bottom:0}.formula{font:1.12rem/1.7 Georgia,"Times New Roman",serif;overflow-wrap:anywhere}.formula-box{background:var(--bg);padding:12px 16px;border-radius:10px;margin-top:12px}.key{border-left:4px solid var(--purple)}#stageBox{display:grid;margin-top:0;margin-bottom:18px}#stageBox>div{grid-area:1/1;min-width:0}.stage-sizer{visibility:hidden;pointer-events:none}.presets{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 17px}.presets button{font-size:.94rem;padding:7px 9px}#linkFallback{width:100%;margin-top:12px}summary{cursor:pointer}li{margin:8px 0}#status{min-height:1.45em;margin-bottom:0}.check{display:block;margin:14px 0}
+@media(max-width:1250px){.views{grid-template-columns:1fr}.panel-head{min-height:0}#camera{max-height:460px}#rayDiagram{max-height:420px}.panel-foot{min-height:0}}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.steps small{display:none}aside{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.wide{grid-column:1/-1}.steps button{font-size:1rem}body{font-size:17px}}
+@media(max-width:440px){aside{display:block}.steps{gap:5px}.steps button{padding:8px 6px}svg text{font-size:20px}}
+</style>
+<style>#camera{cursor:grab;aspect-ratio:760/440}#camera.panning{cursor:grabbing}.camera-tools{padding:10px 16px;border-bottom:1px solid var(--line);font-size:.9rem}.camera-tools .hint{flex:1;margin:0}</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1 data-de="Lichtfeld in der Kamera" data-en="Light field inside a camera"></h1><p data-de="Ein Strahl wird ein Punkt. Ein Bild entsteht durch Integration." data-en="A ray becomes a point. Integration forms an image."></p></div><div class="actions"><button id="language">Deutsch</button><button id="theme" data-de="Hell / Dunkel" data-en="Light / Dark"></button><button id="reset">Reset (R)</button></div></header>
+<nav class="steps" aria-label="Light field stages">
+<button data-mode="single"><b data-de="1 · Einzelner Strahl" data-en="1 · Single ray"></b><small data-de="Zwei Ebenen, ein Koordinatenpaar" data-en="Two planes, one coordinate pair"></small></button>
+<button data-mode="integrate"><b data-de="2 · Sensorintegration" data-en="2 · Sensor integration"></b><small data-de="Alle Richtungen für ein Pixel" data-en="All directions for one pixel"></small></button>
+<button data-mode="refocus"><b data-de="3 · Virtueller Sensor" data-en="3 · Virtual sensor"></b><small data-de="Integration entlang gekippter Geraden" data-en="Integrate along tilted lines"></small></button>
+</nav>
+<div class="layout">
+<aside>
+<div class="wide"><h2 data-de="Szenenpunkt" data-en="Scene point"></h2><div class="presets"><button id="near" data-de="Zu nah" data-en="Too near"></button><button id="focused" data-de="Im Fokus" data-en="In focus"></button><button id="far" data-de="Zu weit" data-en="Too far"></button></div></div>
+<label class="control"><span><span data-de="Objektweite g" data-en="Object distance g"></span><output id="depthValue"></output></span><input id="depth" type="range" min="125" max="700" step="1" value="300"></label>
+<label class="control"><span><span data-de="Objekthöhe Y" data-en="Object height Y"></span><output id="heightValue"></output></span><input id="height" type="range" min="-30" max="30" step="0.5" value="-20"></label>
+<label class="control"><span><span data-de="Blendendurchmesser D" data-en="Aperture diameter D"></span><output id="apertureValue"></output></span><input id="aperture" type="range" min="8" max="48" step="1" value="32"></label>
+<label class="control"><span><span data-de="Strahlposition v" data-en="Ray position v"></span><output id="sampleValue"></output></span><input id="sample" type="range" min="-1" max="1" step="0.01" value="0.65"></label>
+<label class="control"><span><span data-de="Gezeigte Strahlen" data-en="Displayed rays"></span><output id="raysValue"></output></span><input id="rays" type="range" min="5" max="25" step="2" value="11"></label>
+<hr class="wide">
+<div class="wide"><h2 data-de="Integration" data-en="Integration"></h2><p class="hint" id="integrationHint"></p></div>
+<label class="control"><span><span>α = b′ / b</span><output id="alphaValue"></output></span><input id="alpha" type="range" min="0.8" max="1.8" step="0.001" value="1"></label>
+<label class="control"><span><span id="pixelLabel"></span><output id="pixelValue"></output></span><input id="pixel" type="range" min="-40" max="40" step="0.1" value="6"></label>
+<div class="actions wide"><button id="focus" data-de="Auf Szenenpunkt refokussieren" data-en="Refocus on scene point"></button></div>
+<label class="check wide"><input id="family" type="checkbox" checked><span data-de="Integrations-Linienschar" data-en="Integration line family"></span></label>
+<p class="hint wide" data-de="Szenenpunkt links ziehen. Auf Linse oder Lichtfeldgerade klicken, um einen Strahl auszuwählen. Alle Positionen auch per Regler bedienbar." data-en="Drag the scene point on the left. Click the lens or light-field line to select a ray. All positions are also available as sliders."></p>
+</aside>
+<main>
+<section id="stageBox" class="info key"><div aria-live="polite"><h2 id="stageTitle"></h2><p id="stageText"></p></div></section>
+<div class="views">
+<section class="panel"><div class="panel-head"><h2 data-de="Strahlengang in der Kamera" data-en="Light field in camera"></h2><p data-de="Bildseite links · Objektseite rechts · Licht läuft zum Sensor." data-en="Image side on the left · object side on the right · light travels to the sensor."></p></div><svg id="camera" viewBox="0 0 760 440" role="img" aria-label="Camera ray geometry"></svg><div class="panel-foot legend"><span class="blue" data-de="Szenenpunkt / Strahlen" data-en="Scene point / rays"></span><span class="orange" data-de="Ausgewählter Strahl" data-en="Selected ray"></span><span class="purple" data-de="Gewähltes Integrationspixel" data-en="Selected integration pixel"></span><span class="green" data-de="Randstrahlen" data-en="Marginal rays"></span></div></section>
+<section class="panel"><div class="panel-head"><h2 data-de="Ray-Diagramm · (y, v)" data-en="Ray diagram · (y, v)"></h2><p data-de="Jeder Punkt kodiert einen Strahl am ursprünglichen Sensor b." data-en="Each point encodes a ray at the original sensor b."></p></div><svg id="rayDiagram" viewBox="0 0 500 440" role="img" aria-label="Light field and integration lines"></svg><div class="panel-foot" id="diagramNote"></div></section>
+</div>
+<section class="info"><div class="metrics" id="metrics"></div><p id="focusNote" aria-live="polite"></p></section>
+<section class="info"><h2 data-de="Vom Strahl zum Integral" data-en="From a ray to the integral"></h2><p id="coordinateNote"></p><div class="formula-box"><div class="formula">y(v) = (1 − b / b<sub>★</sub>) v − bY / g</div><div class="formula" id="integral"></div><div class="formula" id="mapping"></div></div><p id="formulaNote"></p><details><summary data-de="Modell, Notation & Vorzeichen" data-en="Model, notation & signs"></summary><ul>
+<li data-de="Paraxiale dünne Linse: f ≈ 69,23 mm, ursprünglicher Sensorabstand b = 90 mm. Damit liegt die ursprüngliche Fokusebene bei g₀ = 300 mm. b★ = fg/(g−f) ist die ideale Bildweite des gewählten Szenenpunkts." data-en="Paraxial thin lens: f ≈ 69.23 mm, original sensor distance b = 90 mm. The original focus plane is therefore g₀ = 300 mm. b★ = fg/(g−f) is the ideal image distance of the selected scene point."></li>
+<li data-de="Gezeigt wird der (y,v)-Schnitt des 4D-Lichtfelds L_b(x,y,u,v); x und u bleiben fest. Die Integrale im Widget sind entsprechend eindimensional. Im vollständigen Kameramodell wird zusätzlich über u integriert." data-en="The widget shows the (y,v) slice of the 4D light field L_b(x,y,u,v), with x and u fixed. Its integrals are therefore one-dimensional. The full camera model also integrates over u."></li>
+<li data-de="Horizontal steht y, vertikal v. Angegeben wird die Scherung dy/dv, nicht dv/dy: Im Fokus ist dy/dv = 0 und die Lichtfeldgerade steht senkrecht. Ein naher Punkt hat positive, ein ferner Punkt negative Scherung." data-en="The horizontal axis is y and the vertical axis is v. We report the shear dy/dv, not dv/dy: in focus, dy/dv = 0 and the light-field line is vertical. A near point has positive shear, a far point negative shear."></li>
+<li data-de="Der Strahlengang ist schematisch: Objekt- und Bildseite verwenden unterschiedliche axiale Maßstäbe, damit die kurze Bildweite sichtbar bleibt. Das Ray-Diagramm hat feste Achsen in mm. Strahlen und Linien sind Stichproben kontinuierlicher Bündel; Beugung, Aberrationen und radiometrische Faktoren sind nicht modelliert." data-en="The ray geometry is schematic: object and image sides use different axial scales to keep the short image distance visible. The ray diagram has fixed axes in mm. Rays and lines sample continuous bundles; diffraction, aberrations and radiometric factors are not modeled."></li>
+</ul></details></section>
+</main>
+</div>
+<section class="info"><div class="actions"><button id="copyLink" data-de="Zustandslink kopieren" data-en="Copy state link"></button><button id="save" data-de="Widget mit Zustand speichern" data-en="Save widget with state"></button></div><p class="hint" data-de="1 / 2 / 3: Ansichten · ← / →: Szenentiefe · R: Reset. Fokussierte Bedienelemente behalten ihre Tastaturbedienung. Offline, ohne externe Bibliotheken." data-en="1 / 2 / 3: stages · ← / →: scene depth · R: reset. Focused controls retain their keyboard behavior. Offline, no external libraries."></p><input id="linkFallback" hidden readonly aria-label="State link"><p id="status" role="status" aria-live="polite"></p></section>
+</div>
+<script id="initialState" type="application/json">null</script>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id),B=90,G0=300,F=B*G0/(B+G0);
+const defaults={mode:'single',depth:300,height:-20,aperture:32,sample:.65,rays:11,alpha:1,pixel:6,family:true,lang:'en',dark:true,zoom:1,viewX:380,viewY:220};
+const ranges={depth:[125,700],height:[-30,30],aperture:[8,48],sample:[-1,1],rays:[5,25],alpha:[.8,1.8],pixel:[-40,40]};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+let state={...defaults};
+const t=(de,en)=>state.lang==='de'?de:en;
+const fmt=(v,d=2)=>Number(v).toLocaleString(state.lang==='de'?'de-DE':'en-US',{maximumFractionDigits:d,minimumFractionDigits:0});
+function sanitize(input){
+ const s={...defaults};
+ for(const [k,[a,b]] of Object.entries(ranges)){const n=Number(input[k]??defaults[k]);s[k]=clamp(Number.isFinite(n)?n:defaults[k],a,b);}
+ for(const [k,a,b] of [['zoom',1,12],['viewX',0,760],['viewY',0,440]]){const n=Number(input[k]??defaults[k]);s[k]=clamp(Number.isFinite(n)?n:defaults[k],a,b);}
+ if(s.zoom===1){s.viewX=380;s.viewY=220;}
+ s.rays=clamp(2*Math.round((s.rays-1)/2)+1,5,25);
+ s.mode=['single','integrate','refocus'].includes(input.mode)?input.mode:defaults.mode;
+ s.lang=input.lang==='de'?'de':'en';
+ for(const k of ['family','dark'])s[k]=input[k]===undefined?defaults[k]:input[k]===true||input[k]==='true';
+ return s;
+}
+try{state=sanitize({...JSON.parse($('initialState').textContent),...Object.fromEntries(new URLSearchParams(location.search))});}catch{state={...defaults};}
+// Optical model: the lens is at z=0, object at z=g, sensor at z=-b.
+function model(s=state){
+ const ideal=F*s.depth/(s.depth-F),a=s.mode==='refocus'?s.alpha:1,bp=a*B,r=s.aperture/2;
+ const slope=1-B/ideal,center=-B*s.height/s.depth,virtualSlope=1-bp/ideal,virtualCenter=-bp*s.height/s.depth;
+ const y=v=>slope*v+center,yp=v=>virtualSlope*v+virtualCenter;
+ return {ideal,a,bp,r,slope,center,virtualSlope,virtualCenter,y,yp,blur:2*r*Math.abs(slope),virtualBlur:2*r*Math.abs(virtualSlope),integrationSlope:1-1/a,integrationY:v=>(1-1/a)*v+s.pixel/a};
+}
+function writeURL(){try{const u=new URL(location.href);u.search=new URLSearchParams(Object.entries(state).map(([k,v])=>[k,String(v)]));history.replaceState(null,'',u);}catch{}}
+const stages=()=>[
+ [t('Ein Strahl ↔ ein Punkt im Lichtfeld','One ray ↔ one point in the light field'),t('Der orange Strahl trifft die Linse bei v und den Sensor bei y. Rechts wird genau dieser Strahl zum Punkt (y, v). Verändere v: Der Punkt wandert auf der blauen Lichtfeldgeraden.','The orange ray intersects the lens at v and the sensor at y. On the right, this exact ray becomes the point (y, v). Change v: the point moves along the blue light-field line.')],
+ [t('Ein Sensorpixel summiert über die Blende','A sensor pixel sums over the aperture'),t('Die violetten Geraden stehen für feste Sensorpositionen y. Die ausgewählte Gerade gehört zum violetten Pixel links. Nur im Fokus liegen alle Strahlen des Szenenpunkts auf derselben Integrationsgeraden.','The purple vertical lines represent fixed sensor positions y. The selected line belongs to the purple pixel on the left. Only in focus do all rays from the scene point lie on the same integration line.')],
+ [t('Sensor virtuell verschieben = anders integrieren','Moving the sensor virtually = changing the integration'),t('Mit α verschiebst Du den virtuellen Sensor. Im ursprünglichen Lichtfeld werden die Integrationsgeraden dabei geschert. Wenn violette und blaue Gerade zusammenfallen, sammelt das gewählte virtuelle Pixel das gesamte Bündel.','Use α to move the virtual sensor. This shears the integration lines in the original light field. When the purple and blue lines coincide, the selected virtual pixel collects the entire bundle.')]
+];
+function update(url=true){
+ state=sanitize(state);const m=model(),index=['single','integrate','refocus'].indexOf(state.mode);
+ document.documentElement.lang=state.lang;document.documentElement.classList.toggle('dark',state.dark);
+ document.querySelectorAll('[data-de]').forEach(el=>el.textContent=el.dataset[state.lang]);
+ document.title=t('Kamera-Lichtfeld · Ray-Diagramm','Camera light field · Ray diagram');$('language').textContent=state.lang==='de'?'English':'Deutsch';
+ for(const key of Object.keys(ranges))$(key).value=state[key];$('family').checked=state.family;
+ for(const key of ['depth','height','aperture'])$(key+'Value').textContent=fmt(state[key])+' mm';
+ $('sampleValue').textContent=fmt(state.sample*m.r)+' mm';$('raysValue').textContent=state.rays;$('alphaValue').textContent=fmt(state.alpha,3);$('pixelValue').textContent=fmt(state.pixel)+' mm';
+ $('alpha').disabled=state.mode!=='refocus';$('pixel').disabled=state.mode==='single';$('family').disabled=state.mode==='single';
+ $('pixelLabel').textContent=state.mode==='refocus'?t('Virtuelles Pixel y′','Virtual pixel y′'):t('Sensorpixel y','Sensor pixel y');
+ $('integrationHint').textContent=state.mode==='refocus'?t('b′ = αb. Die Koordinaten rechts bleiben auf den Sensor bei b bezogen.','b′ = αb. Coordinates on the right remain relative to the sensor at b.'):t('Am realen Sensor gilt α = 1. Für andere Integrationsrichtungen Ansicht 3 wählen.','At the physical sensor α = 1. Choose stage 3 for other integration directions.');
+ document.querySelectorAll('[data-mode]').forEach(el=>el.setAttribute('aria-pressed',el.dataset.mode===state.mode));
+ const texts=stages();$('stageTitle').textContent=texts[index][0];$('stageText').textContent=texts[index][1];
+ if($('stageBox').dataset.lang!==state.lang){$('stageBox').querySelectorAll('.stage-sizer').forEach(el=>el.remove());for(const [title,text] of texts){const div=document.createElement('div'),h=document.createElement('h2'),p=document.createElement('p');div.className='stage-sizer';div.setAttribute('aria-hidden','true');h.textContent=title;p.textContent=text;div.append(h,p);$('stageBox').append(div);}$('stageBox').dataset.lang=state.lang;}
+ $('diagramNote').textContent=state.mode==='single'?t('Blau: alle Strahlen dieses Szenenpunkts. Orange: genau ein Strahl.','Blue: all rays from this scene point. Orange: exactly one ray.'):t('Blau: Lichtfeld des Szenenpunkts · Violett: Integrationspfade für feste Pixelpositionen.','Blue: scene point light field · Purple: integration paths for fixed pixel positions.');
+ $('metrics').innerHTML=`<span>b = <strong>${B} mm</strong></span><span>b★ = <strong>${fmt(m.ideal)} mm</strong></span><span>b′ = <strong>${fmt(m.bp)} mm</strong></span><span>dy/dv = <strong>${fmt(m.slope,3)}</strong></span><span>${t('Bündelbreite bei b','Bundle width at b')}: <strong>${fmt(m.blur,3)} mm</strong></span><span>${t('bei b′','at b′')}: <strong>${fmt(m.virtualBlur,3)} mm</strong></span>`;
+ const focused=m.virtualBlur<1e-6,aligned=Math.abs(state.pixel-m.virtualCenter)<1e-5;
+ $('focusNote').textContent=(Math.abs(m.slope)<1e-8?t('Der Szenenpunkt liegt in der ursprünglichen Fokusebene.','The scene point is in the original focus plane.'):m.slope>0?t('Der Szenenpunkt liegt vor der ursprünglichen Fokusebene: positive Scherung.','The scene point is nearer than the original focus plane: positive shear.'):t('Der Szenenpunkt liegt hinter der ursprünglichen Fokusebene: negative Scherung.','The scene point is beyond the original focus plane: negative shear.'))+' '+(state.mode==='refocus'?(focused?(aligned?t('Virtuell scharf: Das gewählte Pixel sammelt das gesamte Bündel.','Virtually focused: the selected pixel collects the entire bundle.'):t('Virtuell scharf; wähle y′ = ','Virtually focused; select y′ = ')+fmt(m.virtualCenter,3)+' mm.') :t('Der virtuelle Sensor schneidet noch ein Bündel endlicher Breite.','The virtual sensor still intersects a bundle of finite width.')):'');
+ const v=state.sample*m.r;$('coordinateNote').textContent=t(`Ausgewählter Strahl: v = ${fmt(v)} mm → y = ${fmt(m.y(v))} mm${state.mode==='refocus'?` → y′ = ${fmt(m.yp(v))} mm`:''}.`, `Selected ray: v = ${fmt(v)} mm → y = ${fmt(m.y(v))} mm${state.mode==='refocus'?` → y′ = ${fmt(m.yp(v))} mm`:''}.`);
+ $('integral').innerHTML=state.mode==='refocus'?'g<sub>b′</sub>(y′) = ∫<sub>−D/2</sub><sup>D/2</sup> L<sub>b</sub>((1 − 1/α)v + y′/α, v) dv':'g<sub>b</sub>(y) = ∫<sub>−D/2</sub><sup>D/2</sup> L<sub>b</sub>(y, v) dv';
+ $('mapping').innerHTML='y′ = αy + (1 − α)v &nbsp; ⇔ &nbsp; y = (1 − 1/α)v + y′/α';
+ $('formulaNote').textContent=t(`Lichtfeld-Scherung: ${fmt(m.slope,3)} · Integrations-Scherung: ${fmt(m.integrationSlope,3)}. Scharfe Abbildung bei b′ = b★, also α★ = ${fmt(m.ideal/B,4)}.`,`Light-field shear: ${fmt(m.slope,3)} · integration shear: ${fmt(m.integrationSlope,3)}. Focus occurs at b′ = b★, i.e. α★ = ${fmt(m.ideal/B,4)}.`);
+ drawCamera(m);applyCameraView();drawDiagram(m);if(url)writeURL();
+}
+const NS='http://www.w3.org/2000/svg';
+function element(root,tag,attrs={},text){const el=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);if(text!==undefined)el.textContent=text;root.append(el);return el;}
+function line(root,x1,y1,x2,y2,color='muted',width=1.5,dash=''){return element(root,'line',{x1,y1,x2,y2,stroke:`var(--${color})`,'stroke-width':width,...(dash?{'stroke-dasharray':dash}:{})});}
+function text(root,x,y,value,cls='',anchor='middle'){return element(root,'text',{x,y,'text-anchor':anchor,class:cls},value);}
+function dot(root,x,y,color,r=4){return element(root,'circle',{cx:x,cy:y,r,fill:`var(--${color})`});}
+function path(root,points,color,width=1.6,opacity=1){return element(root,'polyline',{points:points.map(p=>p.join(',')).join(' '),fill:'none',stroke:`var(--${color})`,'stroke-width':width,opacity});}
+function arrow(root,x1,y1,x2,y2,color='muted',both=false){line(root,x1,y1,x2,y2,color);const a=Math.atan2(y2-y1,x2-x1);for(const [x,y,angle] of [[x2,y2,a],...(both?[[x1,y1,a+Math.PI]]:[])]){path(root,[[x-7*Math.cos(angle-.5),y-7*Math.sin(angle-.5)],[x,y],[x-7*Math.cos(angle+.5),y-7*Math.sin(angle+.5)]],color);}}
+const cameraX=z=>z<=0?300+z*1.6:350+z*.46,cameraY=y=>222-y*4.5;
+function drawCamera(m){
+ const svg=$('camera');svg.replaceChildren();const X=cameraX,Y=cameraY,virtual=state.mode==='refocus',lens=300,obj=X(state.depth);
+ line(svg,35,Y(0),725,Y(0),'line',1.5,'6 6');line(svg,X(G0),73,X(G0),348,'muted',1.5,'5 5');
+ text(svg,155,28,t('Bildseite','Image side'));text(svg,520,28,t('Objektseite','Object side'));
+ text(svg,X(G0),53,t('Fokusebene g₀','Focus plane g₀'));
+ arrow(svg,X(-B),343,X(-B),72,'text');text(svg,X(-B)-12,66,'y','math');
+ if(virtual&&Math.abs(m.bp-B)>.01){line(svg,X(-m.bp),75,X(-m.bp),346,'purple',2,'6 4');text(svg,X(-m.bp)-12,66,'y′','math');}
+ // All rays come from the same scene point. The selected ray is continuous in v.
+ const vs=Array.from({length:state.rays},(_,i)=>-m.r+2*m.r*i/(state.rays-1));
+ function ray(v,color,width,opacity=1){const end=virtual?Math.max(B,m.bp):B,yend=v+end*((v-state.height)/state.depth-v/F);path(svg,[[obj,Y(state.height)],[lens,Y(v)],[X(-end),Y(yend)]],color,width,opacity);}
+ if(state.mode==='single'){ray(-m.r,'green',1.5,.75);ray(m.r,'green',1.5,.75);}else for(const v of vs)ray(v,Math.abs(v)===m.r?'green':'blue',1.5,.75);
+ // A chosen pixel traces a family of camera-side rays, independent of the scene.
+ if(state.mode!=='single')for(const v of [-m.r,0,m.r]){const yp=state.pixel,y=m.integrationY(v);path(svg,[[X(-m.bp),Y(yp)],[lens,Y(v)]],'purple',1.4,.48);if(m.bp<B)path(svg,[[X(-B),Y(y)],[X(-m.bp),Y(yp)]],'purple',1.4,.48);}
+ ray(state.sample*m.r,'orange',3);
+ element(svg,'ellipse',{cx:lens,cy:Y(0),rx:13,ry:m.r*4.5,fill:'var(--blue)','fill-opacity':'.09',stroke:'var(--text)','stroke-width':1.7});
+ arrow(svg,lens,346,lens,72,'muted');text(svg,lens+20,66,'v','math');
+ for(const [b,width,color] of [[B,m.blur,'blue'],...(virtual?[[m.bp,m.virtualBlur,'green']]:[])]){const c=-b*state.height/state.depth,x=X(-b);if(width>.00001)line(svg,x,Y(c-width/2),x,Y(c+width/2),color,7);else dot(svg,x,Y(c),color,5);}
+ const sv=state.sample*m.r;dot(svg,lens,Y(sv),'orange',5);dot(svg,X(-B),Y(m.y(sv)),'orange',5);if(virtual)dot(svg,X(-m.bp),Y(m.yp(sv)),'orange',5);
+ if(state.mode!=='single'){dot(svg,X(-m.bp),Y(state.pixel),'purple',7);text(svg,X(-m.bp)-13,Y(state.pixel)-12,virtual?'pˢ′':'pˢ','math');}
+ const handle=element(svg,'g',{class:'drag','data-drag':'scene'});dot(handle,obj,Y(state.height),'blue',7);element(handle,'circle',{cx:obj,cy:Y(state.height),r:21,fill:'transparent'});text(svg,obj+12,Y(state.height)-15,'P','math','start');
+ const lensHit=element(svg,'rect',{x:lens-18,y:Y(m.r)-8,width:36,height:2*m.r*4.5+16,fill:'transparent',class:'drag','data-drag':'lens'});element(lensHit,'title',{},t('Strahlposition v wählen','Select ray position v'));
+ text(svg,X(-B),373,t('Sensor','Sensor'));text(svg,lens,373,t('Linse','Lens'));text(svg,obj,373,t('Szene','Scene'));
+ arrow(svg,X(-B),397,lens,397,'muted',true);text(svg,(X(-B)+lens)/2,420,`b = ${B} mm`,'math');
+ if(virtual){arrow(svg,X(-m.bp),355,lens,355,'purple',true);text(svg,(X(-m.bp)+lens)/2,337,'b′','math');}
+ arrow(svg,obj-15,397,lens+18,397,'muted',true);text(svg,(obj+lens)/2,420,'g = '+fmt(state.depth)+' mm','math');
+ text(svg,17,56,t('schematisch','schematic'),'','start');
+ svg.setAttribute('aria-label',t(`Strahlengang: Objektweite ${fmt(state.depth)} mm, Sensor ${B} mm, ideale Bildweite ${fmt(m.ideal)} mm.`,`Ray geometry: object distance ${fmt(state.depth)} mm, sensor ${B} mm, ideal image distance ${fmt(m.ideal)} mm.`));
+}
+const plot={left:54,right:468,top:42,bottom:364,minY:-40,maxY:40,minV:-28,maxV:28};
+const plotX=y=>plot.left+(y-plot.minY)/(plot.maxY-plot.minY)*(plot.right-plot.left),plotY=v=>plot.bottom-(v-plot.minV)/(plot.maxV-plot.minV)*(plot.bottom-plot.top);
+function drawDiagram(m){
+ const svg=$('rayDiagram');svg.replaceChildren();
+ const defs=element(svg,'defs'),clip=element(defs,'clipPath',{id:'plotClip'});element(clip,'rect',{x:plot.left,y:plot.top,width:plot.right-plot.left,height:plot.bottom-plot.top});
+ for(const y of [-40,-20,0,20,40]){line(svg,plotX(y),plot.top,plotX(y),plot.bottom,'line',1);text(svg,plotX(y),390,fmt(y));}
+ for(const v of [-24,-12,0,12,24]){line(svg,plot.left,plotY(v),plot.right,plotY(v),'line',1);text(svg,plot.left-10,plotY(v)+6,fmt(v),'','end');}
+ const g=element(svg,'g',{'clip-path':'url(#plotClip)'});
+ element(g,'rect',{x:plot.left,y:plotY(m.r),width:plot.right-plot.left,height:plotY(-m.r)-plotY(m.r),fill:'var(--blue)','fill-opacity':'.045'});
+ for(const v of [-m.r,m.r])line(g,plot.left,plotY(v),plot.right,plotY(v),'green',1.3,'4 4');
+ const integration=(pixel,width,opacity)=>path(g,[[plotX(m.integrationSlope*-m.r+pixel/m.a),plotY(-m.r)],[plotX(m.integrationSlope*m.r+pixel/m.a),plotY(m.r)]],'purple',width,opacity);
+ if(state.mode!=='single'){if(state.family)for(let p=-60;p<=60;p+=5)if(Math.abs(p-state.pixel)>.02)integration(p,1.4,.35);integration(state.pixel,4,.9);}
+ path(g,[[plotX(m.y(-m.r)),plotY(-m.r)],[plotX(m.y(m.r)),plotY(m.r)]],'blue',2.4);
+ for(let i=0;i<state.rays;i++){const v=-m.r+2*m.r*i/(state.rays-1);dot(g,plotX(m.y(v)),plotY(v),'blue',state.mode==='single'?2.2:3.5);}
+ const v=state.sample*m.r;dot(g,plotX(m.y(v)),plotY(v),'orange',6.5);
+ // A generous transparent target supports ray selection on touch screens.
+ const hit=path(g,[[plotX(m.y(-m.r)),plotY(-m.r)],[plotX(m.y(m.r)),plotY(m.r)]],'blue',28,0);hit.setAttribute('class','drag');hit.setAttribute('data-drag','ray');hit.style.pointerEvents='stroke';
+ arrow(svg,plot.left-8,plotY(0),plot.right+8,plotY(0),'text');arrow(svg,plotX(0),plot.bottom+8,plotX(0),plot.top-12,'text');
+ text(svg,plot.right+8,plotY(0)-12,'y','math');text(svg,plotX(0)+15,plot.top-10,'v','math');
+ text(svg,260,426,t('Sensorposition y [mm]','Sensor position y [mm]'));
+ text(svg,61,24,t('Blendenposition v [mm]','Aperture position v [mm]'),'','start');
+ svg.setAttribute('aria-label',t(`Lichtfeldgerade mit Scherung dy/dv = ${fmt(m.slope,3)}. Ausgewählter Strahl bei y = ${fmt(m.y(v))} mm und v = ${fmt(v)} mm.`,`Light-field line with shear dy/dv = ${fmt(m.slope,3)}. Selected ray at y = ${fmt(m.y(v))} mm and v = ${fmt(v)} mm.`));
+}
+for(const key of Object.keys(ranges))$(key).addEventListener('input',()=>{state[key]=Number($(key).value);update();});
+$('family').onchange=()=>{state.family=$('family').checked;update();};
+document.querySelectorAll('[data-mode]').forEach(el=>el.onclick=()=>{state.mode=el.dataset.mode;update();});
+for(const [id,depth] of [['near',125],['focused',300],['far',700]])$(id).onclick=()=>{state.depth=depth;state.alpha=1;state.pixel=-B*state.height/state.depth;update();};
+$('focus').onclick=()=>{state.mode='refocus';state.alpha=model().ideal/B;state.pixel=-state.alpha*B*state.height/state.depth;update();};
+$('language').onclick=()=>{state.lang=state.lang==='de'?'en':'de';update();};$('theme').onclick=()=>{state.dark=!state.dark;update();};
+$('reset').onclick=()=>{state={...defaults,lang:state.lang,dark:state.dark};$('status').textContent='';$('linkFallback').hidden=true;update();};
+// ViewBox zoom preserves native SVG hit testing and scene dragging coordinates.
+const cameraTools=document.querySelector('.camera-tools')||document.createElement('div');cameraTools.className='camera-tools actions';
+cameraTools.innerHTML='<p class="hint" data-de="Mausrad: Zoom · Hintergrund ziehen: Ausschnitt verschieben" data-en="Mouse wheel: zoom · drag background: pan"></p><button id="resetView" data-de="Ansicht zurücksetzen" data-en="Reset view"></button>';
+$('camera').before(cameraTools);
+function applyCameraView(){
+ const width=760/state.zoom,height=440/state.zoom;
+ state.viewX=clamp(state.viewX,width/2,760-width/2);state.viewY=clamp(state.viewY,height/2,440-height/2);
+ $('camera').setAttribute('viewBox',`${state.viewX-width/2} ${state.viewY-height/2} ${width} ${height}`);
+}
+$('resetView').onclick=()=>{state.zoom=1;state.viewX=380;state.viewY=220;applyCameraView();writeURL();};
+$('camera').addEventListener('wheel',e=>{
+ e.preventDefault();const svg=$('camera'),p=new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse());
+ const delta=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?440:1),next=clamp(state.zoom*Math.exp(-clamp(delta,-500,500)*.002),1,12),ratio=state.zoom/next;
+ state.viewX=p.x+(state.viewX-p.x)*ratio;state.viewY=p.y+(state.viewY-p.y)*ratio;state.zoom=next;applyCameraView();writeURL();
+},{passive:false});
+// Capture on the SVG itself: individual elements are replaced on every redraw.
+for(const id of ['camera','rayDiagram']){
+ const svg=$(id);let drag=null,pan=null;
+ const move=e=>{if(!drag)return;
+  if(drag==='pan'){const p=new DOMPoint(e.clientX,e.clientY).matrixTransform(pan.matrix);state.viewX=pan.x+pan.start.x-p.x;state.viewY=pan.y+pan.start.y-p.y;applyCameraView();return;}
+  const p=new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse());
+  if(drag==='scene'){state.depth=clamp(Math.round((p.x-350)/.46),125,700);state.height=clamp(Math.round((222-p.y)/4.5*2)/2,-30,30);}
+  else{const v=id==='camera'?(222-p.y)/4.5:plot.maxV-(p.y-plot.top)/(plot.bottom-plot.top)*(plot.maxV-plot.minV);state.sample=clamp(v/model().r,-1,1);}
+  update(false);
+ };
+ svg.addEventListener('pointerdown',e=>{if(e.button!==0)return;const target=e.target.closest('[data-drag]');if(!target&&id!=='camera')return;e.preventDefault();drag=target?target.dataset.drag:'pan';if(drag==='pan'){const matrix=svg.getScreenCTM().inverse();pan={matrix,start:new DOMPoint(e.clientX,e.clientY).matrixTransform(matrix),x:state.viewX,y:state.viewY};svg.classList.add('panning');}svg.setPointerCapture(e.pointerId);move(e);});
+ svg.addEventListener('pointermove',move);
+ const end=()=>{if(drag){drag=null;pan=null;svg.classList.remove('panning');writeURL();}};svg.addEventListener('pointerup',end);svg.addEventListener('pointercancel',end);svg.addEventListener('lostpointercapture',end);
+}
+document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.target.closest('input,button,summary'))return;if(['1','2','3'].includes(e.key)){state.mode=['single','integrate','refocus'][Number(e.key)-1];update();}if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();state.depth+=e.key==='ArrowRight'?5:-5;update();}if(e.key.toLowerCase()==='r')$('reset').click();});
+$('copyLink').onclick=async()=>{writeURL();try{await navigator.clipboard.writeText(location.href);$('status').textContent=t('Zustandslink kopiert.','State link copied.');}catch{$('linkFallback').hidden=false;$('linkFallback').value=location.href;$('linkFallback').focus();$('linkFallback').select();$('status').textContent=t('Link auswählen und kopieren.','Select and copy the link.');}};
+$('save').onclick=()=>{const doc=document.documentElement.cloneNode(true);doc.querySelector('#initialState').textContent=JSON.stringify(state);doc.querySelector('#status').textContent='';doc.querySelector('#linkFallback').hidden=true;const url=URL.createObjectURL(new Blob(['<!doctype html>\n'+doc.outerHTML],{type:'text/html;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='camera-light-field.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);$('status').textContent=t('HTML-Datei mit aktuellem Zustand gespeichert.','HTML file saved with the current state.');};
+update();
+})();
+</script>
+</body>
+</html>

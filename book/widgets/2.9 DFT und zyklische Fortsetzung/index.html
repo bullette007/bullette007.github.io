@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DFT · Cyclic boundary conditions</title>
+<style>
+:root{color-scheme:light;--bg:#eef3f8;--card:#fff;--line:#cbd6e2;--text:#172334;--muted:#526579;--blue:#1769aa;--orange:#a95000;--green:#16704d;--purple:#7048c8;--red:#bd3449}
+:root.dark{color-scheme:dark;--bg:#08111f;--card:#101c2d;--line:#2a3b52;--text:#edf4ff;--muted:#a8b9ce;--blue:#75baff;--orange:#ffad57;--green:#77deb1;--purple:#bb9aff;--red:#ff8293}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;padding:clamp(10px,2vw,28px);background:var(--bg);color:var(--text);font:18px/1.45 system-ui,"Segoe UI",sans-serif}.app{max-width:1540px;margin:auto}header,.actions,.legend,.metrics{display:flex;flex-wrap:wrap;align-items:center;gap:10px}header{justify-content:space-between;margin-bottom:20px}h1{font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.04em;margin:0}header p{margin:5px 0;color:var(--muted)}h2{font-size:1.12rem;margin:0}h3{font-size:1.03rem;margin:0 0 8px}button,select,input{font:inherit}button,select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 12px;min-height:44px}button{cursor:pointer}button:hover{border-color:var(--purple)}button:disabled{opacity:.45;cursor:default}:focus-visible{outline:3px solid var(--purple);outline-offset:3px}input[type=range]{width:100%;accent-color:var(--purple);min-height:30px;margin:0}input[type=checkbox]{width:22px;height:22px;accent-color:var(--purple);vertical-align:middle;margin:0 8px 0 0}select{width:100%}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}.steps button{text-align:left}.steps button[aria-pressed=true]{border:2px solid var(--purple);background:color-mix(in srgb,var(--purple) 12%,var(--card))}.steps small{display:block;color:var(--muted)}.layout{display:grid;grid-template-columns:285px minmax(0,1fr);gap:18px}aside,.panel,.info{background:var(--card);border:1px solid var(--line);border-radius:15px}aside{padding:18px;align-self:start}.control{display:block;margin-bottom:18px}.control>span{display:flex;justify-content:space-between;gap:8px;font-weight:650;margin-bottom:7px}.check{display:block;margin:14px 0}output{color:var(--purple)}hr{border:0;border-top:1px solid var(--line);margin:18px 0}.hint,.muted{color:var(--muted)}.hint{font-size:.94rem}.views{display:grid;grid-template-columns:1fr 1fr;gap:18px}main,.panel{min-width:0}.panel{overflow:hidden}.panel-head{padding:14px 16px;border-bottom:1px solid var(--line);min-height:108px}.panel-head p{margin:5px 0 0;color:var(--muted)}canvas{display:block;width:100%;height:330px}.panel-foot{padding:10px 16px 16px}.panel-foot p{margin:6px 0}.legend{gap:7px 18px;font-size:.95rem}.legend span:before{content:"";display:inline-block;width:20px;border-top:3px solid currentColor;margin:0 7px 4px 0}.blue{color:var(--blue)}.purple{color:var(--purple)}.orange{color:var(--orange)}.green{color:var(--green)}.red{color:var(--red)}.info{padding:16px 18px;margin-top:18px}.info p{margin:8px 0}.formula{font:1.22rem/1.6 "Cambria Math",Cambria,serif;overflow-wrap:anywhere}.key{border-left:5px solid var(--purple)}.metrics{gap:10px 25px;margin:12px 0}.metrics strong{color:var(--green)}.basis-grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:center}#basis{height:250px}#space{touch-action:pan-y;cursor:crosshair}details{margin-top:14px}summary{cursor:pointer;font-weight:650}li{margin:8px 0}#status{min-height:1.45em}#linkFallback{width:100%;padding:10px}a{color:var(--blue)}.pill{font-size:.85rem;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--muted)}
+@media(max-width:1150px){.views{grid-template-columns:1fr}.panel-head{min-height:0}}@media(max-width:760px){.layout{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}aside{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.wide{grid-column:1/-1}.basis-grid{grid-template-columns:1fr}canvas{height:300px}}@media(max-width:450px){aside{display:block}.steps small{display:none}body{font-size:17px}}
+.modes{display:flex;gap:10px;margin-bottom:18px}.modes button[aria-pressed=true]{background:var(--purple);color:var(--card)}.image-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.image-results canvas{height:240px}.image-results .panel-head{min-height:0}#tiles2d{height:520px;cursor:crosshair;touch-action:pan-y}#kernel2d{height:190px}.badge-ok{color:var(--green)}.badge-error{color:var(--red)}@media(max-width:1100px){.image-results{grid-template-columns:1fr}.image-results canvas{height:280px}}@media(max-width:760px){#tiles2d{height:380px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1 data-de="DFT & zyklische Fortsetzung" data-en="DFT & cyclic extension"></h1><p data-de="Warum nach dem letzten Sample wieder das erste kommt." data-en="Why the last sample is followed by the first."></p></div><div class="actions"><button id="language">English</button><button id="theme" data-de="Hell / Dunkel" data-en="Light / Dark"></button><button id="reset">Reset (R)</button></div></header>
+<nav class="modes" aria-label="Dimension"><button id="mode1d" data-de="1D · DFT verstehen" data-en="1D · Understand the DFT"></button><button id="mode2d" data-de="2D · Bild, Faltung & Padding" data-en="2D · Image, convolution & padding"></button></nav>
+<section id="oneD">
+<nav class="steps" aria-label="DFT steps">
+<button data-step="1"><b data-de="1 · Kontinuierlich" data-en="1 · Continuous"></b><small>g(x) ↔ G(f)</small></button>
+<button data-step="2"><b data-de="2 · Im Ort abtasten" data-en="2 · Sample in space"></b><small>Δx ↔ f<sub>A</sub> = 1/Δx</small></button>
+<button data-step="3"><b data-de="3 · Fenster auswählen" data-en="3 · Select a window"></b><small>N · Δx = L₀</small></button>
+<button data-step="4"><b data-de="4 · Frequenzen abtasten" data-en="4 · Sample frequencies"></b><small>Δf = 1/L ↔ L = M · Δx</small></button>
+</nav>
+<div class="layout">
+<aside>
+<label class="control"><span data-de="Ausgangssignal" data-en="Source signal"></span><select id="preset"><option value="decay" data-de="Abklingendes Signal" data-en="Exponential decay"></option><option value="sine" data-de="Sinus" data-en="Sine wave"></option></select></label>
+<label class="control" id="cyclesControl"><span><span data-de="Perioden im Datenblock" data-en="Cycles in data block"></span><output id="cyclesValue"></output></span><input id="cycles" type="range" min="0.5" max="12" step="0.1"></label>
+<label class="control"><span><span data-de="Datenwerte N" data-en="Data samples N"></span><output id="countValue"></output></span><input id="count" type="range" min="8" max="64" step="1"></label>
+<label class="control"><span><span data-de="Abtastabstand Δx" data-en="Sample spacing Δx"></span><output id="dxValue"></output></span><input id="dx" type="range" min="0.1" max="1" step="0.05"></label>
+<p class="hint wide" id="sourceNote"></p>
+<div class="wide" id="finalControls">
+<hr><label class="control"><span><span data-de="Frequenzabtastung einblenden" data-en="Reveal frequency sampling"></span><output id="revealValue"></output></span><input id="reveal" type="range" min="0" max="100" step="1"></label>
+<button id="animate" data-de="▶ Kopien entstehen lassen" data-en="▶ Reveal signal copies"></button>
+<hr><h3 data-de="Über die Grenze wandern" data-en="Walk across the boundary"></h3>
+<label class="control"><span><span data-de="Abtastcursor n" data-en="Sample cursor n"></span><output id="cursorValue"></output></span><input id="cursor" type="range" min="-1" max="33" step="1"></label>
+<div class="actions"><button id="previous" aria-label="Previous sample">−1</button><button id="next" aria-label="Next sample">+1</button><button id="walk" data-de="▶ Cursor" data-en="▶ Cursor"></button></div>
+</div>
+<details class="wide" id="experiments"><summary data-de="Experimente" data-en="Experiments"></summary>
+<p class="hint" data-de="Wirken ab Schritt 3; Zero-Padding ab Schritt 4." data-en="Active from step 3; zero-padding from step 4."></p>
+<label class="control"><span data-de="Fenster" data-en="Window"></span><select id="window"><option value="rect" data-de="Rechteck" data-en="Rectangular"></option><option value="hann">Hann</option></select></label>
+<label class="control"><span data-de="Zero-Padding" data-en="Zero-padding"></span><select id="padding"><option value="1">×1</option><option value="2">×2</option><option value="4">×4</option></select></label>
+<div class="actions"><button id="integer" data-de="Sinus: 3 Perioden" data-en="Sine: 3 cycles"></button><button id="leakage" data-de="Sinus: 3,6 Perioden" data-en="Sine: 3.6 cycles"></button><button id="alias" data-de="Aliasing-Beispiel" data-en="Aliasing example"></button></div>
+</details>
+</aside>
+<main>
+<section class="info key" style="margin-top:0;margin-bottom:18px" aria-live="polite"><h2 id="stepTitle"></h2><p id="stepText"></p><p class="formula purple" id="stepFormula"></p></section>
+<div class="views">
+<section class="panel"><div class="panel-head"><h2 class="blue" data-de="Ortsraum" data-en="Spatial domain"></h2><p id="spaceSubtitle"></p></div><canvas id="space" role="img" aria-label="Spatial signal"></canvas><div class="panel-foot"><div class="legend"><span class="blue" data-de="Signal / Datenblock" data-en="Signal / data block"></span><span class="purple" data-de="Zyklische Kopien" data-en="Cyclic copies"></span><span class="orange" data-de="Cursor / Fensterrand" data-en="Cursor / window boundary"></span></div><p id="spaceNote"></p></div></section>
+<section class="panel"><div class="panel-head"><h2 class="purple" data-de="Frequenzraum · Betrag" data-en="Frequency domain · magnitude"></h2><p id="frequencySubtitle"></p></div><canvas id="frequency" role="img" aria-label="Magnitude spectrum"></canvas><div class="panel-foot"><div class="legend"><span class="blue" data-de="Kontinuierliche Frequenzvariable" data-en="Continuous frequency variable"></span><span class="purple" data-de="DFT-Abtastwerte" data-en="DFT samples"></span></div><p id="frequencyNote"></p></div></section>
+</div>
+<section class="info"><div class="metrics" id="metrics"></div><p id="boundary" class="formula"></p><p id="experimentNote"></p></section>
+<section class="info" id="basisSection"><label class="check"><input id="showBasis" type="checkbox"><b data-de="Synthese-Lupe: Alle DFT-Bausteine schließen sich" data-en="Synthesis lens: every DFT building block repeats"></b></label>
+<div id="basisContent"><div class="basis-grid"><div><canvas id="basis" role="img" aria-label="DFT basis and synthesis"></canvas></div><div><label class="control"><span><span data-de="Basisindex k" data-en="Basis index k"></span><output id="harmonicValue"></output></span><input id="harmonic" type="range" min="0" max="31" step="1"></label><p class="hint" id="basisNote"></p></div></div><div class="legend"><span class="green" data-de="Vollständige Synthese (Realteil)" data-en="Complete synthesis (real part)"></span><span class="orange">Re{exp(i2πkn/M)} = cos(2πkn/M)</span></div><p class="formula">g̃[n] = (1/M) ∑<sub>k=0</sub><sup>M−1</sup> X[k] exp(i2πkn/M) &nbsp; ⇒ &nbsp; g̃[n+M] = g̃[n]</p><p class="hint" data-de="Die Formel ist die exakte IDFT an ganzzahligen n. Die grüne Verbindung dazwischen verwendet vorzeichenbehaftete Frequenzindizes (Nyquist als Cosinus); sie ist eine mögliche periodische Interpolation, kein wiedergewonnenes kontinuierliches Originalsignal." data-en="The formula is the exact IDFT at integer n. Between samples, the green curve uses signed frequency indices (Nyquist as a cosine); this is one possible periodic interpolation, not a recovered continuous original signal."></p></div></section>
+<section class="info"><h2 data-de="Die entscheidende Unterscheidung" data-en="The crucial distinction"></h2><p data-de="Ortsabtastung → periodisches Spektrum. Frequenzabtastung → periodische Ortsfolge. Das reale Ausgangssignal muss dafür nicht periodisch sein." data-en="Spatial sampling → periodic spectrum. Frequency sampling → periodic spatial sequence. The real source signal does not have to be periodic."></p><p><strong data-de="Zyklisch heißt g̃[N] = g̃[0], nicht g[N−1] = g[0]." data-en="Cyclic means g̃[N] = g̃[0], not g[N−1] = g[0]."></strong> <span data-de="Mit Zero-Padding ist die Periode M statt N." data-en="With zero-padding, the period is M rather than N."></span></p>
+<details><summary data-de="Mathematik & Darstellung" data-en="Mathematics & display conventions"></summary><ul>
+<li data-de="Fourier-Konvention: exp(−i2πfx). Der Abtastkamm im Ort ist mit Δx gewichtet. Für die endliche Folge gilt S(f) = Δx ∑ g[n]w[n] exp(−i2πfnΔx). Das Diagramm zeigt |S(f)|; an den DFT-Stellen ist S(k/L) = Δx X[k]." data-en="Fourier convention: exp(−i2πfx). The spatial sampling comb is weighted by Δx. For the finite sequence, S(f) = Δx ∑ g[n]w[n] exp(−i2πfnΔx). The plot shows |S(f)|; at DFT frequencies S(k/L) = Δx X[k]."></li>
+<li data-de="Exponentialsignal: exp(−x/2) für x ≥ 0, sonst 0; g[0] = 1. Schritt 1 zeigt den Betrag 2/√(1+(4πf)²), Schritt 2 die exakte unendliche geometrische Summe. Die Wahl des Wertes am Sprung beeinflusst die kontinuierliche FT nicht, die abgetastete Folge aber schon." data-en="Exponential signal: exp(−x/2) for x ≥ 0, otherwise 0; g[0] = 1. Step 1 shows magnitude 2/√(1+(4πf)²), step 2 the exact infinite geometric sum. The value assigned at the jump does not affect the continuous FT, but does affect the sampled sequence."></li>
+<li data-de="Der unendlich ausgedehnte Sinus hat Dirac-Linien bei ±f₀. Deren Pfeilhöhen sind symbolische Gewichte, keine endlichen Funktionswerte. Bei zusammenfallenden Linien ist die komplexe Phase entscheidend; das Beispiel vermeidet solche Entartungen." data-en="The infinite sine has Dirac lines at ±f₀. Arrow heights represent symbolic weights, not finite function values. Coincident lines require their complex phases; the example avoids such degeneracies."></li>
+<li data-de="Das Rechteckfenster umfasst N Abtastzellen von −Δx/2 bis (N−1/2)Δx. Hann: w[n] = (1−cos(2πn/(N−1)))/2. Zero-Padding hängt Nullen an, verändert die endliche Spektralkurve nicht und erhöht nicht die Auflösung naher Frequenzen." data-en="The rectangular window covers N sampling cells from −Δx/2 to (N−1/2)Δx. Hann: w[n] = (1−cos(2πn/(N−1)))/2. Zero-padding appends zeros, leaves the finite-sequence spectrum unchanged, and does not improve the resolution of nearby frequencies."></li>
+<li data-de="Die gestrichelten Ortsverbindungen dienen nur als Lesehilfe für diskrete Werte. Die Frequenzansicht zeigt mehrere Perioden; der schattierte Bereich ist ein Nyquist-Intervall. Ein-/Ausblenden interpoliert nur die Deckkraft, nicht die Mathematik." data-en="Dashed spatial connections are guides between discrete values. The frequency view shows multiple periods; the shaded region is one Nyquist interval. Revealing changes only opacity, not the mathematics."></li>
+</ul></details></section>
+</main>
+</div>
+</section>
+<section id="twoD" hidden>
+<div class="layout">
+<aside>
+<label class="control"><span data-de="Kleines Bild · 16 × 16" data-en="Small image · 16 × 16"></span><select id="image2d"><option value="house" data-de="Häuschen am Rand" data-en="House at the edge"></option><option value="blocks" data-de="Helle Randmarken" data-en="Bright edge markers"></option><option value="impulse" data-de="Impuls in der Ecke" data-en="Impulse in the corner"></option></select></label>
+<label class="control"><span data-de="Faltungskernel" data-en="Convolution kernel"></span><select id="filter2d"><option value="box" data-de="Mittelwert" data-en="Box average"></option><option value="gauss" data-de="Gauß (endlich)" data-en="Gaussian (finite)"></option><option value="motion" data-de="Horizontale Bewegung" data-en="Horizontal motion"></option></select></label>
+<label class="control"><span><span data-de="Kernel-Kantenlänge K" data-en="Kernel side length K"></span><output id="size2dValue"></output></span><input id="size2d" type="range" min="3" max="11" step="2"></label>
+<canvas id="kernel2d" role="img" aria-label="Kernel"></canvas>
+<label class="control"><span><span data-de="Nullrand p · pro Seite" data-en="Zero border p · per side"></span><output id="pad2dValue"></output></span><input id="pad2d" type="range" min="0" max="6" step="1"></label>
+<div class="actions wide"><button id="noPad" data-de="Ohne Padding" data-en="No padding"></button><button id="safePad" data-de="Genügend Padding" data-en="Enough padding"></button></div>
+<hr class="wide"><label class="control"><span><span data-de="Ausgabepixel · Spalte x" data-en="Output pixel · column x"></span><output id="pixelXValue"></output></span><input id="pixelX" type="range" min="0" max="15" step="1"></label>
+<label class="control"><span><span data-de="Ausgabepixel · Zeile y" data-en="Output pixel · row y"></span><output id="pixelYValue"></output></span><input id="pixelY" type="range" min="0" max="15" step="1"></label>
+<p class="hint wide" data-de="Im gekachelten Bild oder einem Ergebnisbild klicken, um den Kernel zu verschieben. Orange: Kernel-Fußabdruck. Rot: aktive Zugriffe auf eine fremde Periode." data-en="Click the tiled image or a result image to move the kernel. Orange: kernel footprint. Red: active reads from another period."></p>
+</aside>
+<main>
+<section class="info key" style="margin-top:0;margin-bottom:18px"><h2 data-de="DFT-Faltung sieht ein gekacheltes Bild" data-en="DFT convolution sees a tiled image"></h2><p data-de="Ohne Nullrand liegt am rechten Rand bereits die nächste Bildkopie. Der Kernel mischt sie in das Ergebnis hinein. Padding schiebt die Kopien auseinander; anschließend behalten wir nur das ursprüngliche Bildfenster." data-en="Without a zero border, the next image copy starts at the right edge. The kernel mixes it into the result. Padding moves copies apart; afterwards we keep only the original image window."></p><p class="formula purple">c = IDFT₂{DFT₂(g<sub>pad</sub>) · DFT₂(h<sub>0</sub>)} &nbsp; · &nbsp; M = 16 + 2p</p></section>
+<section class="panel"><div class="panel-head"><h2 data-de="Periodische Eingabe & wandernder Kernel" data-en="Periodic input & travelling kernel"></h2><p data-de="Blau: ursprüngliches Bildfenster · Violett: DFT-Periode einschließlich Nullrand · Schwarz: Nullwerte" data-en="Blue: original image window · Purple: DFT period including zero border · Black: zero values"></p></div><canvas id="tiles2d" role="img" aria-label="Periodic image tiles and kernel"></canvas><div class="panel-foot"><p id="probe2d"></p></div></section>
+<section class="info" aria-live="polite"><h2 id="paddingVerdict"></h2><p id="paddingExplanation"></p><div class="metrics" id="metrics2d"></div></section>
+<div class="image-results" style="margin-top:18px">
+<section class="panel"><div class="panel-head"><h2 class="purple" data-de="Zyklische DFT-Faltung" data-en="Cyclic DFT convolution"></h2><p data-de="Auf 16 × 16 beschnitten" data-en="Cropped to 16 × 16"></p></div><canvas id="cyclic2d" role="img" aria-label="Cyclic convolution crop"></canvas></section>
+<section class="panel"><div class="panel-head"><h2 class="green" data-de="Lineare Referenz" data-en="Linear reference"></h2><p data-de="Außerhalb des Bildes überall null" data-en="Zero everywhere outside the image"></p></div><canvas id="linear2d" role="img" aria-label="Linear convolution crop"></canvas></section>
+<section class="panel"><div class="panel-head"><h2 class="red" data-de="Wrap-around-Fehler" data-en="Wrap-around error"></h2><p data-de="|zyklisch − linear| · Rot ×4" data-en="|cyclic − linear| · red ×4"></p></div><canvas id="error2d" role="img" aria-label="Absolute wrap-around error"></canvas></section>
+</div>
+<section class="info"><h2 data-de="Warum eine halbe Kernelbreite pro Seite genügt" data-en="Why half a kernel width per side is enough"></h2><p class="formula">r = (K−1)/2 &nbsp; · &nbsp; p ≥ r &nbsp; ⇒ &nbsp; M = 16 + 2p ≥ 16 + K−1</p><p data-de="Für einen zentrierten Kernel mit ungerader Kantenlänge K ist r seine Reichweite. Ein Nullrand p ≥ r pro Seite hält jeden Kernelzugriff eines Originalpixels innerhalb der gepaddeten Periode. Die zyklische Faltung stimmt dann im gesamten ursprünglichen Bildfenster mit der linearen Faltung bei Nullfortsetzung überein." data-en="For a centered kernel of odd side length K, r is its reach. A zero border p ≥ r per side keeps every kernel read for an original pixel within the padded period. Cyclic convolution then matches zero-extended linear convolution throughout the original image window."></p><p class="hint" data-de="Gemeint ist der Same-Ausschnitt des Originalbildes. Die DFT-Periode bleibt zyklisch; sie ist jetzt groß genug, um die vollständige lineare Faltung ohne Überlagerung aufzunehmen. Der Kernel wird mit seinem Zentrum auf DFT-Index (0,0) gelegt; alle Rechnungen verwenden echte Faltung, keine Kreuzkorrelation. Die Bildhelligkeit ist in allen Ansichten fest auf [0,1] skaliert." data-en="This refers to the same-sized crop of the original image. The DFT period remains cyclic; it is now large enough to hold the full linear convolution without overlap. The kernel center is placed at DFT index (0,0); all calculations use true convolution, not cross-correlation. Image brightness uses a fixed [0,1] scale in every view."></p></section>
+</main>
+</div>
+</section>
+<section class="info"><div class="actions"><button id="copyLink" data-de="Zustandslink kopieren" data-en="Copy state link"></button><button id="save" data-de="Widget mit Zustand speichern" data-en="Save widget with state"></button><span class="pill" data-de="Offline · ohne Bibliotheken" data-en="Offline · no libraries"></span></div><p class="hint" data-de="← / →: 1D-Schritt wechseln · R: Reset · Regler mit Pfeiltasten bedienen. Im Bild oder Ortsplot klicken: Position setzen. Lokale Links gelten auf diesem Gerät; die gespeicherte HTML-Datei lässt sich weitergeben." data-en="← / →: change 1D step · R: reset · arrow keys operate sliders. Click an image or spatial plot to set the position. Local links work on this device; a saved HTML file can be shared."></p><input id="linkFallback" readonly hidden aria-label="State link"><p id="status" role="status" aria-live="polite"></p></section>
+</div>
+<script id="initialState" type="application/json">null</script>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id), TAU = 2*Math.PI;
+const defaults = {mode:'1d',image2d:'house',filter2d:'box',size2d:7,pad2d:0,pixelX:15,pixelY:8,step:1,preset:'decay',count:24,dx:0.25,cycles:3.6,window:'rect',padding:1,reveal:100,cursor:0,harmonic:1,showBasis:false,lang:'en',dark:true};
+let state = {...defaults}, data, imageData, animation = null, walkTimer = null, queued = false;
+const plots = {};
+const clamp = (v,a,b) => Math.min(b,Math.max(a,v));
+const mod = (n,m) => ((n%m)+m)%m;
+const t = (de,en) => state.lang==='de'?de:en;
+const fmt = (v,d=2) => (Math.abs(v)<1e-10?0:v).toLocaleString(state.lang==='de'?'de-DE':'en-US',{maximumFractionDigits:d});
+function sanitize(input) {
+ const s={...defaults,...input};
+ for(const [key,min,max,step] of [['size2d',3,11,1],['pad2d',0,6,1],['pixelX',0,15,1],['pixelY',0,15,1],['step',1,4,1],['count',8,64,1],['dx',.1,1,.05],['cycles',.5,12,.1],['padding',1,4,1],['reveal',0,100,1],['cursor',-256,512,1],['harmonic',0,255,1]]){
+  const v=Number(s[key]);s[key]=clamp(Math.round((Number.isFinite(v)?v:defaults[key])/step)*step,min,max);
+ }
+ s.mode=s.mode==='2d'?'2d':'1d';s.size2d=Math.min(11,s.size2d|1);
+ s.image2d=['house','blocks','impulse'].includes(s.image2d)?s.image2d:'house';s.filter2d=['box','gauss','motion'].includes(s.filter2d)?s.filter2d:'box';
+ if(![1,2,4].includes(s.padding))s.padding=1;
+ s.preset=s.preset==='sine'?'sine':'decay';s.window=s.window==='hann'?'hann':'rect';s.lang=s.lang==='de'?'de':'en';
+ for(const key of ['dark','showBasis'])s[key]=s[key]===true||s[key]==='true';
+ const m=s.count*s.padding;s.cursor=clamp(s.cursor,-m,2*m);s.harmonic=clamp(s.harmonic,0,m-1);return s;
+}
+try { const embedded=JSON.parse($('initialState').textContent);state=sanitize({...embedded,...Object.fromEntries(new URLSearchParams(location.search))}); } catch { state={...defaults}; }
+function source(x) { return state.preset==='decay'?(x<0?0:Math.exp(-x/2)):Math.sin(TAU*state.cycles*x/(state.count*state.dx)+.35); }
+function compute() {
+ const N=state.count,M=N*state.padding,dx=state.dx;
+ const raw=Array.from({length:N},(_,n)=>source(n*dx));
+ const y=Array.from({length:M},(_,n)=>n<N?raw[n]*(state.window==='hann'?.5*(1-Math.cos(TAU*n/(N-1))):1):0);
+ const X=Array.from({length:M},(_,k)=>{
+  let re=0,im=0;for(let n=0;n<N;n++){const a=TAU*k*n/M;re+=y[n]*Math.cos(a);im-=y[n]*Math.sin(a);}return {re,im};
+ });
+ data={N,M,dx,L:M*dx,L0:N*dx,raw,y,X};compute2D();
+}
+// Separable, arbitrary-size 2D DFT: avoids hidden power-of-two padding.
+function transform2D(re,im,m,inverse=false){
+ const cos=Array.from({length:m},(_,k)=>Array.from({length:m},(_,n)=>Math.cos(TAU*k*n/m)));
+ const sin=cos.map((row,k)=>row.map((_,n)=>(inverse?1:-1)*Math.sin(TAU*k*n/m)));
+ let a=Float64Array.from(re),b=Float64Array.from(im),outR=new Float64Array(m*m),outI=new Float64Array(m*m);
+ for(let axis=0;axis<2;axis++){
+  for(let line=0;line<m;line++)for(let k=0;k<m;k++){
+   let r=0,i=0;for(let n=0;n<m;n++){const j=axis===0?line*m+n:n*m+line;r+=a[j]*cos[k][n]-b[j]*sin[k][n];i+=a[j]*sin[k][n]+b[j]*cos[k][n];}
+   const j=axis===0?line*m+k:k*m+line;outR[j]=r/(inverse?m:1);outI[j]=i/(inverse?m:1);
+  }
+  a=outR;b=outI;outR=new Float64Array(m*m);outI=new Float64Array(m*m);
+ }
+ return {re:a,im:b};
+}
+function compute2D(){
+ const key=[state.image2d,state.filter2d,state.size2d,state.pad2d].join(':');if(imageData?.key===key)return;
+ const N=16,p=state.pad2d,K=state.size2d,r=(K-1)/2,M=N+2*p,image=new Float64Array(N*N);
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+  let v=0;
+  if(state.image2d==='house'){
+   if(y>=7&&y<=14&&x>=0&&x<=9)v=.65;
+   if(y>=2&&y<=7&&Math.abs(x-4)<=y-2)v=1;
+   if(y>=10&&y<=14&&x>=4&&x<=6)v=.12;
+   if(y>=8&&y<=10&&x>=1&&x<=2)v=1;
+   if((x-13)**2+(y-2)**2<=3)v=.85;
+  }else if(state.image2d==='blocks')v=(x<3&&y>=4&&y<=12)?1:(y>=13&&x>=9)?.7:0;
+  else v=x===0&&y===0?1:0;
+  image[y*N+x]=v;
+ }
+ const kernel=Array.from({length:K*K},(_,j)=>{const x=j%K-r,y=Math.floor(j/K)-r;return state.filter2d==='motion'?(y===0?1:0):state.filter2d==='gauss'?Math.exp(-(x*x+y*y)/(2*(K/5)**2)):1;});
+ const sum=kernel.reduce((a,b)=>a+b,0);for(let i=0;i<kernel.length;i++)kernel[i]/=sum;
+ const padded=new Float64Array(M*M),h=new Float64Array(M*M),zero=new Float64Array(M*M);
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++)padded[(y+p)*M+x+p]=image[y*N+x];
+ for(let y=-r;y<=r;y++)for(let x=-r;x<=r;x++)h[mod(y,M)*M+mod(x,M)]+=kernel[(y+r)*K+x+r];
+ const G=transform2D(padded,zero,M),H=transform2D(h,zero,M),pr=new Float64Array(M*M),pi=new Float64Array(M*M);
+ for(let j=0;j<pr.length;j++){pr[j]=G.re[j]*H.re[j]-G.im[j]*H.im[j];pi[j]=G.re[j]*H.im[j]+G.im[j]*H.re[j];}
+ const result=transform2D(pr,pi,M,true),cyclic=new Float64Array(N*N),linear=new Float64Array(N*N),error=new Float64Array(N*N);
+ let maxError=0,affected=0;
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+  let v=0;for(let ky=-r;ky<=r;ky++)for(let kx=-r;kx<=r;kx++){const sx=x-kx,sy=y-ky;if(sx>=0&&sx<N&&sy>=0&&sy<N)v+=image[sy*N+sx]*kernel[(ky+r)*K+kx+r];}
+  const j=y*N+x;linear[j]=v;cyclic[j]=result.re[(y+p)*M+x+p];error[j]=Math.abs(cyclic[j]-v);maxError=Math.max(maxError,error[j]);if(error[j]>1e-10)affected++;
+ }
+ imageData={key,N,M,p,K,r,image,kernel,padded,cyclic,linear,error,maxError,affected};
+}
+function update2D(){
+ if(!imageData)return;const d=imageData;
+ for(const key of ['image2d','filter2d','size2d','pad2d','pixelX','pixelY']){ $(key).value=state[key];if($(key+'Value'))$(key+'Value').textContent=state[key]; }
+ const safe=d.p>=d.r;
+ $('paddingVerdict').className=safe?'badge-ok':'badge-error';
+ $('paddingVerdict').textContent=safe?t('✓ Genügend Nullrand: kein Wrap-around im Originalfenster','✓ Enough zero border: no wrap-around in the original window'):t('Nullrand kleiner als Kernelradius: Wrap-around möglich','Zero border smaller than kernel radius: wrap-around is possible');
+ $('paddingExplanation').textContent=t(`p = ${d.p} Pixel pro Seite, Kernelradius r = ${d.r}. Benötigt: p ≥ ${d.r}. DFT-Periode: ${d.M} × ${d.M}; behalten wird das blaue 16 × 16-Fenster.`,`p = ${d.p} pixels per side, kernel radius r = ${d.r}. Required: p ≥ ${d.r}. DFT period: ${d.M} × ${d.M}; retain the blue 16 × 16 window.`);
+ $('metrics2d').textContent=t(`Abweichende Pixel: ${d.affected} / 256 · Maximaler Fehler: ${fmt(d.maxError,6)} · Helligkeitsskala: 0 … 1`,`Different pixels: ${d.affected} / 256 · Maximum error: ${fmt(d.maxError,6)} · Brightness scale: 0 … 1`);
+ const j=state.pixelY*16+state.pixelX;
+ let foreign=0,nonzero=0;for(let ky=-d.r;ky<=d.r;ky++)for(let kx=-d.r;kx<=d.r;kx++){
+  if(!d.kernel[(ky+d.r)*d.K+kx+d.r])continue;
+  const x=state.pixelX+d.p-kx,y=state.pixelY+d.p-ky;
+  if(x<0||x>=d.M||y<0||y>=d.M){foreign++;if(d.padded[mod(y,d.M)*d.M+mod(x,d.M)]>0)nonzero++;}
+ }
+ $('probe2d').textContent=t(`Pixel (x=${state.pixelX}, y=${state.pixelY}): zyklisch ${fmt(d.cyclic[j],5)}, linear ${fmt(d.linear[j],5)}. Zugriffe auf andere Perioden: ${foreign}, davon auf helle Bildwerte: ${nonzero}.`,`Pixel (x=${state.pixelX}, y=${state.pixelY}): cyclic ${fmt(d.cyclic[j],5)}, linear ${fmt(d.linear[j],5)}. Reads from other periods: ${foreign}, including nonzero image values: ${nonzero}.`);
+}
+function imageCanvas(id){
+ const canvas=$(id),rect=canvas.getBoundingClientRect(),dpr=devicePixelRatio||1;canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);
+ const c=canvas.getContext('2d');c.scale(dpr,dpr);const style=getComputedStyle(document.documentElement),col=name=>style.getPropertyValue('--'+name).trim();c.fillStyle=col('card');c.fillRect(0,0,rect.width,rect.height);return {c,w:rect.width,h:rect.height,col};
+}
+function heatPixel(c,x,y,size,v,error=false){const b=Math.round(clamp(v*(error?4:1),0,1)*255);c.fillStyle=error?`rgb(${b},${Math.round(b*.17)},${Math.round(b*.23)})`:`rgb(${b},${b},${b})`;c.fillRect(x,y,size+.3,size+.3);}
+function draw2D(){
+ const d=imageData,{N,M,p,K,r}=d;
+ const tile=imageCanvas('tiles2d'),size=Math.min((tile.w-24)/(3*M),(tile.h-24)/(3*M)),ox=(tile.w-3*M*size)/2,oy=(tile.h-3*M*size)/2,c=tile.c;
+ plots.tiles2d={ox,oy,size,M,p};
+ for(let ty=-1;ty<=1;ty++)for(let tx=-1;tx<=1;tx++){
+  const bx=ox+(tx+1)*M*size,by=oy+(ty+1)*M*size;
+  for(let y=0;y<M;y++)for(let x=0;x<M;x++)heatPixel(c,bx+x*size,by+y*size,size,d.padded[y*M+x]);
+  c.strokeStyle=tile.col('purple');c.lineWidth=tx===0&&ty===0?3:1;c.strokeRect(bx,by,M*size,M*size);
+  c.strokeStyle=tile.col('blue');c.lineWidth=tx===0&&ty===0?3:1;c.strokeRect(bx+p*size,by+p*size,N*size,N*size);
+ }
+ const cx=ox+(M+p+state.pixelX)*size,cy=oy+(M+p+state.pixelY)*size;
+ for(let ky=-r;ky<=r;ky++)for(let kx=-r;kx<=r;kx++){
+  const weight=d.kernel[(ky+r)*K+kx+r];if(!weight)continue;
+  const x=p+state.pixelX-kx,y=p+state.pixelY-ky,foreign=x<0||y<0||x>=M||y>=M;
+  c.fillStyle=tile.col(foreign?'red':'orange');c.globalAlpha=.3;c.fillRect(cx-kx*size,cy-ky*size,size,size);c.globalAlpha=1;
+  if(foreign){c.strokeStyle=tile.col('red');c.lineWidth=1.5;c.strokeRect(cx-kx*size,cy-ky*size,size,size);}
+ }
+ c.strokeStyle=tile.col('orange');c.lineWidth=2;c.strokeRect(cx-r*size,cy-r*size,K*size,K*size);c.fillStyle=tile.col('orange');c.beginPath();c.arc(cx+size/2,cy+size/2,Math.max(3,size/4),0,TAU);c.fill();
+ for(const [id,values,isError] of [['cyclic2d',d.cyclic,false],['linear2d',d.linear,false],['error2d',d.error,true]]){
+  const q=imageCanvas(id),s=Math.min((q.w-24)/N,(q.h-24)/N),x0=(q.w-N*s)/2,y0=(q.h-N*s)/2;
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)heatPixel(q.c,x0+x*s,y0+y*s,s,values[y*N+x],isError);
+  q.c.strokeStyle=q.col('orange');q.c.lineWidth=2;q.c.strokeRect(x0+state.pixelX*s,y0+state.pixelY*s,s,s);plots[id]={ox:x0,oy:y0,size:s};
+ }
+ const q=imageCanvas('kernel2d'),s=Math.min((q.w-12)/K,(q.h-12)/K),x0=(q.w-K*s)/2,y0=(q.h-K*s)/2,max=Math.max(...d.kernel);
+ for(let y=0;y<K;y++)for(let x=0;x<K;x++)heatPixel(q.c,x0+x*s,y0+y*s,s,d.kernel[y*K+x]/max);
+ q.c.strokeStyle=q.col('orange');q.c.lineWidth=2;q.c.strokeRect(x0+r*s,y0+r*s,s,s);
+}
+for(const mode of ['1d','2d'])$('mode'+mode).onclick=()=>{stopAnimations();state.mode=mode;update(false);};
+for(const key of ['image2d','filter2d','size2d','pad2d','pixelX','pixelY'])$(key).addEventListener('input',()=>{state[key]=['image2d','filter2d'].includes(key)?$(key).value:Number($(key).value);compute2D();update(false);});
+$('noPad').onclick=()=>{state.pad2d=0;compute2D();update(false);};
+$('safePad').onclick=()=>{state.pad2d=(state.size2d-1)/2;compute2D();update(false);};
+for(const id of ['tiles2d','cyclic2d','linear2d','error2d'])$(id).addEventListener('pointerdown',e=>{
+ const q=plots[id],rect=$(id).getBoundingClientRect();if(!q)return;
+ let x=Math.floor((e.clientX-rect.left-q.ox)/q.size),y=Math.floor((e.clientY-rect.top-q.oy)/q.size);
+ if(id==='tiles2d'){x=mod(x,q.M)-q.p;y=mod(y,q.M)-q.p;}
+ if(x<0||x>=16||y<0||y>=16)return;state.pixelX=x;state.pixelY=y;update(false);
+});
+function dtft(f) {let re=0,im=0;for(let n=0;n<data.N;n++){const a=TAU*f*n*data.dx;re+=data.y[n]*Math.cos(a);im-=data.y[n]*Math.sin(a);}return data.dx*Math.hypot(re,im);}
+function synth(n) {let v=0;for(let k=0;k<data.M;k++){const signed=k<=data.M/2?k:k-data.M,a=TAU*signed*n/data.M;v+=data.X[k].re*Math.cos(a)-data.X[k].im*Math.sin(a);}return v/data.M;}
+function spectrum(f) {
+ if(state.step>=3)return dtft(f);
+ if(state.step===1)return 2/Math.hypot(1,4*Math.PI*f);
+ const q=Math.exp(-data.dx/2),a=TAU*f*data.dx;return data.dx/Math.hypot(1-q*Math.cos(a),q*Math.sin(a));
+}
+function stopAnimations(){if(animation!==null)cancelAnimationFrame(animation);animation=null;if(walkTimer!==null)clearInterval(walkTimer);walkTimer=null;}
+function writeURL(){try{const u=new URL(location.href);u.search=new URLSearchParams(Object.entries(state).map(([k,v])=>[k,String(v)])).toString();history.replaceState(null,'',u);}catch{/* Sandboxed/file contexts may disallow history updates. */}}
+function update(recalculate=true) {
+ state=sanitize(state);if(recalculate)compute();
+ document.documentElement.lang=state.lang;document.documentElement.classList.toggle('dark',state.dark);
+ document.title=t('DFT · Zyklische Fortsetzung','DFT · Cyclic extension');
+ document.querySelectorAll('[data-de]').forEach(el=>{el.textContent=el.dataset[state.lang];});
+  $('language').textContent=state.lang==='de'?'English':'Deutsch';
+ $('oneD').hidden=state.mode!=='1d';$('twoD').hidden=state.mode!=='2d';
+ $('mode1d').setAttribute('aria-pressed',state.mode==='1d');$('mode2d').setAttribute('aria-pressed',state.mode==='2d');
+ update2D();
+ for(const key of ['preset','count','dx','cycles','window','padding','reveal','cursor','harmonic'])$(key).value=state[key];
+ $('showBasis').checked=state.showBasis;
+ document.querySelectorAll('[data-step]').forEach(el=>{el.setAttribute('aria-pressed',Number(el.dataset.step)===state.step);});
+ $('cyclesControl').hidden=state.preset!=='sine';$('finalControls').hidden=state.step!==4;$('basisSection').hidden=state.step!==4;$('basisContent').hidden=!state.showBasis;
+ $('window').disabled=state.step<3;$('padding').disabled=state.step<4;
+ $('cursor').min=-data.M;$('cursor').max=2*data.M;$('harmonic').max=data.M-1;
+ for(const key of ['count','dx','cycles','cursor','harmonic'])$(key+'Value').textContent=fmt(state[key]);
+ $('revealValue').textContent=state.reveal+' %';
+ $('animate').textContent=animation!==null?t('■ Animation stoppen','■ Stop animation'):t('▶ Kopien entstehen lassen','▶ Reveal signal copies');
+ $('walk').textContent=walkTimer!==null?t('■ Cursor','■ Cursor'):t('▶ Cursor','▶ Cursor');
+ $('sourceNote').textContent=state.preset==='decay'?t('g(x) = exp(−x/2) für x ≥ 0. Die Zerfallslänge bleibt bei Änderung von Δx fest.','g(x) = exp(−x/2) for x ≥ 0. The decay length remains fixed when Δx changes.'):t('f₀ = Perioden / (NΔx). Mehr als N/2 Perioden liegen oberhalb der Nyquist-Grenze.','f₀ = cycles / (NΔx). More than N/2 cycles exceed the Nyquist limit.');
+ const titles=[t('Ein Signal, noch keine diskreten Daten','A signal, before discrete data'),t('Ortsabtastung macht das Spektrum periodisch','Spatial sampling makes the spectrum periodic'),t('Endlich viele Ortswerte, weiterhin kontinuierliche Frequenzen','Finite spatial data, still continuous frequencies'),t('Frequenzabtastung macht die Ortsfolge periodisch','Frequency sampling makes the spatial sequence periodic')];
+ const texts=[t('Links das kontinuierliche Ausgangssignal, rechts seine Fourier-Transformierte. Weder ein Datenfenster noch ein Frequenzraster wurde gewählt.','Left: the continuous source signal. Right: its Fourier transform. Neither a data window nor a frequency grid has been selected.'),t('Der Abtastkamm mit Abstand Δx erzeugt Spektralkopien im Abstand fA. Das ist die erste Periodizität: im Frequenzraum.','The sampling comb with spacing Δx creates spectral copies separated by fA. This is the first periodicity: in the frequency domain.'),t('Ein Fenster behält N Werte. Die Fourier-Transformierte dieser endlichen Folge lässt sich trotzdem für jede reelle Frequenz f auswerten: Das ist noch kein DFT-Raster.','A window retains N samples. The Fourier transform of this finite sequence can still be evaluated at every real frequency f: this is not yet a DFT grid.'),t('Jetzt behalten wir nur Frequenzen k/L. Dieselben Koeffizienten beschreiben eine räumliche Folge, die sich nach M Samples wiederholt. Regler bewegen: Frequenzpunkte und Ortskopien erscheinen gemeinsam.','Now we retain only frequencies k/L. These coefficients describe a spatial sequence repeating every M samples. Move the reveal slider: frequency samples and spatial copies appear together.')];
+ $('stepTitle').textContent=titles[state.step-1];$('stepText').textContent=texts[state.step-1];
+ $('stepFormula').textContent=[ 'g(x) ↔ G(f)', 'Δx ↔ fA = 1/Δx', 'S(f) = Δx ∑ₙ₌₀ᴺ⁻¹ g[n]w[n] exp(−i2πfnΔx)', 'Δf = 1/L ⇔ L = MΔx   ·   g̃[n+M] = g̃[n]' ][state.step-1];
+ const period=state.step===4?data.L:data.L0;
+ $('spaceSubtitle').textContent=state.step===4?t('Ein Datenblock, zyklische Kopien und ein wandernder Cursor.','One data block, cyclic copies, and a travelling cursor.'):state.step===3?t('Das Fenster behält nur die blau markierten Werte.','The window retains only the blue samples.'):t('x-Achse in Einheiten der angezeigten Blocklänge.','x-axis in units of the displayed block length.');
+ $('frequencySubtitle').textContent=state.preset==='sine'&&state.step<3?t('Dirac-Linien: Pfeilhöhe ist ein symbolisches Gewicht.','Dirac lines: arrow height is a symbolic weight.'):state.step===4?t('Kurve: S(f) · Stäbe: Δx X[k] = S(k/L).','Curve: S(f) · stems: Δx X[k] = S(k/L).'):t('Auch die endliche Folge hat eine kontinuierliche Frequenzvariable.','Even the finite sequence has a continuous frequency variable.');
+ $('spaceNote').textContent=state.step===4?t('Gestrichelt: Lesehilfe zwischen Samples; keine Annahme eines glatten Originals.','Dashed: guides between samples, not an assumed smooth original.'):state.step===3?t('Orange: Fenstergrenzen um N Abtastzellen; blass: verworfene Originalwerte.','Orange: window boundaries around N sampling cells; faded: discarded source values.'):t('Die spätere Blocklänge dient hier nur als Maßstab.','The eventual block length serves only as an axis scale here.');
+ $('frequencyNote').textContent=state.step===1?t('Noch keine durch Abtastung erzeugten Spektralkopien.','No spectral copies caused by sampling yet.'):t('Schattiert: −fA/2 … fA/2. Das Spektrum wiederholt sich mit fA.','Shaded: −fA/2 … fA/2. The spectrum repeats with fA.');
+ $('metrics').innerHTML=`<span>N = <strong>${data.N}</strong></span><span>${t('DFT-Länge','DFT length')} M = <strong>${state.step===4?data.M:'—'}</strong></span><span>${state.step===4?'L':'L₀'} = <strong>${fmt(period)}</strong></span><span>fA = <strong>${fmt(1/data.dx)}</strong></span><span>Δf = <strong>${state.step===4?fmt(1/data.L,4):'—'}</strong></span>`;
+ const n=state.cursor,r=mod(n,data.M);
+ $('boundary').textContent=state.step===4?`g̃[${n}] = g̃[${r}] = ${fmt(data.y[r],4)}   ·   ${n} mod ${data.M} = ${r}`:t('Noch keine Frequenzabtastung → noch keine zyklischen Ortskopien.','No frequency sampling yet → no cyclic spatial copies yet.');
+ let note=state.step===4?t(`Nach n = ${data.M-1} folgt n = ${data.M}, also wieder Sample 0. Der letzte Wert muss dem ersten nicht gleichen.`,`After n = ${data.M-1} comes n = ${data.M}, which is sample 0 again. The last value need not equal the first.`):'';
+ if(state.step>=3&&state.window==='hann')note+=' '+t('Hann dämpft die Randwerte und Nebenkeulen, verbreitert aber die Hauptkeule.','Hann tapers edge values and sidelobes, but broadens the main lobe.');
+ if(state.step===4&&state.padding>1)note+=' '+t('Zero-Padding: gleiche Spektralkurve, dichteres Raster und größere räumliche Wiederholungsperiode; keine zusätzliche Information.','Zero-padding: same spectral curve, denser grid and larger spatial repetition period; no additional information.');
+ if(state.preset==='sine'&&state.cycles>data.N/2)note+=' '+t('Aliasing: Die Originalfrequenz liegt außerhalb des Nyquist-Intervalls.','Aliasing: the original frequency lies outside the Nyquist interval.');
+ $('experimentNote').textContent=note;
+ const k=state.harmonic,signed=k<=data.M/2?k:k-data.M;
+ $('basisNote').textContent=t(`k = ${k} (vorzeichenbehaftet: ${signed}). Jeder Baustein hat nach M = ${data.M} Samples wieder denselben Wert. Die orange Basis ist normiert, nicht mit X[k] gewichtet.`,`k = ${k} (signed: ${signed}). Every building block repeats after M = ${data.M} samples. The orange basis is unit amplitude, not weighted by X[k].`);
+ $('space').setAttribute('aria-label',t('Ortsfolge, Datenblock und zyklische Kopien. '+$('boundary').textContent,'Spatial sequence, data block and cyclic copies. '+$('boundary').textContent));
+ $('frequency').setAttribute('aria-label',$('frequencySubtitle').textContent);
+ writeURL();scheduleDraw();
+}
+function plot(id,xmin,xmax,ymin,ymax,xlabel,ylabel){
+ const canvas=$(id),rect=canvas.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;
+ canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);const c=canvas.getContext('2d');c.scale(dpr,dpr);
+ const style=getComputedStyle(document.documentElement),col=name=>style.getPropertyValue('--'+name).trim();
+ const p={c,w,h,l:55,r:w-20,top:25,b:h-44,xmin,xmax,ymin,ymax,col};p.x=x=>p.l+(x-xmin)/(xmax-xmin)*(p.r-p.l);p.y=y=>p.b-(y-ymin)/(ymax-ymin)*(p.b-p.top);
+ c.fillStyle=col('card');c.fillRect(0,0,w,h);c.font='14px system-ui';c.fillStyle=col('muted');
+ for(let i=0;i<=4;i++){const y=ymin+(ymax-ymin)*i/4;c.strokeStyle=col('line');c.beginPath();c.moveTo(p.l,p.y(y));c.lineTo(p.r,p.y(y));c.stroke();c.textAlign='right';c.fillText(fmt(y,2),p.l-8,p.y(y)+5);}
+ c.strokeStyle=col('muted');c.beginPath();c.moveTo(p.l,p.y(0));c.lineTo(p.r,p.y(0));c.stroke();c.textAlign='left';c.fillText(ylabel,p.l,17);c.textAlign='right';c.fillText(xlabel,p.r,h-8);plots[id]=p;return p;
+}
+function line(p,fn,color,alpha=1,dash=[]){const {c}=p;c.save();c.beginPath();c.rect(p.l,p.top,p.r-p.l,p.b-p.top);c.clip();c.strokeStyle=p.col(color);c.globalAlpha=alpha;c.lineWidth=2;c.setLineDash(dash);c.beginPath();const steps=Math.max(300,Math.round(p.r-p.l));for(let i=0;i<=steps;i++){const x=p.xmin+(p.xmax-p.xmin)*i/steps,y=fn(x);if(i===0)c.moveTo(p.x(x),p.y(y));else c.lineTo(p.x(x),p.y(y));}c.stroke();c.restore();}
+function stem(p,x,y,color,alpha=1,r=3){if(x<p.xmin||x>p.xmax)return;const {c}=p;c.save();c.strokeStyle=c.fillStyle=p.col(color);c.globalAlpha=alpha;c.lineWidth=1.5;c.beginPath();c.moveTo(p.x(x),p.y(0));c.lineTo(p.x(x),p.y(y));c.stroke();c.beginPath();c.arc(p.x(x),p.y(y),r,0,TAU);c.fill();c.restore();}
+function vertical(p,x,color,label,dash=[5,4],labelOffset=0){const {c}=p;c.save();c.strokeStyle=p.col(color);c.setLineDash(dash);c.beginPath();c.moveTo(p.x(x),p.top);c.lineTo(p.x(x),p.b);c.stroke();c.fillStyle=p.col(color);c.font='14px system-ui';c.textAlign='center';if(label)c.fillText(label,clamp(p.x(x),p.l+15,p.r-15),p.top+15+labelOffset);c.restore();}
+function ticks(p,values){const {c}=p;c.fillStyle=p.col('muted');c.font='14px system-ui';c.textAlign='center';for(const [x,label] of values)c.fillText(label,p.x(x),p.h-25);}
+function shade(p,a,b,color,alpha=.07){p.c.save();p.c.globalAlpha=alpha;p.c.fillStyle=p.col(color);p.c.fillRect(p.x(a),p.top,p.x(b)-p.x(a),p.b-p.top);p.c.restore();}
+function drawSpace(){
+ const final=state.step===4,period=final?data.L:data.L0,m=final?data.M:data.N;
+ const p=plot('space',-1.08,2.08,-1.3,1.4,final?'x / L':'x / L₀','g');
+ ticks(p,[[-1,'−1'],[0,'0'],[1,'1'],[2,'2']]);shade(p,-.5/m,1-.5/m,'blue');
+ if(state.step===1)line(p,u=>source(u*period),'blue');
+ if(state.step===2){line(p,u=>source(u*period),'blue',.35,[5,4]);for(let n=Math.ceil(p.xmin*m);n<=p.xmax*m;n++)if(state.preset==='sine'||n>=0)stem(p,n/m,source(n*data.dx),'blue');}
+ if(state.step===3){line(p,u=>source(u*period),'blue',.18,[5,4]);for(let n=Math.ceil(p.xmin*m);n<=p.xmax*m;n++){if(n>=0&&n<data.N)stem(p,n/m,data.y[n],'blue');else if(state.preset==='sine'||n>=0)stem(p,n/m,source(n*data.dx),'blue',.14);}vertical(p,-.5/m,'orange','');vertical(p,(data.N-.5)/m,'orange','N');}
+ if(final){
+  const a=state.reveal/100;
+  for(let block=-1;block<=2;block++){
+   const alpha=block===0?1:a;if(!alpha)continue;
+   const color=block===0?'blue':'purple';
+   p.c.save();p.c.beginPath();p.c.rect(p.l,p.top,p.r-p.l,p.b-p.top);p.c.clip();p.c.globalAlpha=alpha*.55;p.c.strokeStyle=p.col(color);p.c.setLineDash([4,4]);p.c.beginPath();
+   for(let j=0;j<=m;j++){const u=block+j/m;if(j===0)p.c.moveTo(p.x(u),p.y(data.y[0]));else p.c.lineTo(p.x(u),p.y(data.y[j%m]));}p.c.stroke();p.c.restore();
+   for(let j=0;j<m;j++)stem(p,block+j/m,data.y[j],color,alpha,m>100?1.7:2.7);
+  }
+  vertical(p,0,'orange','0');vertical(p,1,'orange',`M = ${m}`);
+  if(state.padding>1){shade(p,data.N/m-.5/m,1-.5/m,'muted',.12);vertical(p,(data.N-.5)/m,'muted',t('Nullen','zeros'));}
+  const n=state.cursor,r=mod(n,m);vertical(p,n/m,'orange',`n=${n}`,[],22);stem(p,n/m,data.y[r],'orange',1,6);
+  if(n!==r)stem(p,r/m,data.y[r],'orange',1,6);
+ }
+}
+function drawFrequency(){
+ const impulses=state.preset==='sine'&&state.step<3;
+ const vals=Array.from({length:1001},(_,i)=>impulses?0:spectrum((-1.55+3.1*i/1000)/data.dx));
+ const max=impulses?1.15:Math.max(...vals)*1.15;
+ const p=plot('frequency',-1.55,1.55,0,max,'f / fA',impulses?t('Gewicht (symbolisch)','weight (symbolic)'):'|S|');
+ if(state.step>=2)shade(p,-.5,.5,'purple',.08);
+ ticks(p,[[-1,'−1'],[-.5,'−½'],[0,'0'],[.5,'½'],[1,'1']]);
+ if(impulses){
+  const u=state.cycles/data.N,lines=new Map();
+  for(let j=state.step===1?0:-4;j<=(state.step===1?0:4);j++)for(const sign of [-1,1]){
+   const x=j+sign*u;if(Math.abs(x)>1.55)continue;
+   const key=x.toFixed(9),v=lines.get(key)||{x,re:0,im:0,original:false};
+   v.re+=.5*Math.sin(.35);v.im-=sign*.5*Math.cos(.35);v.original ||= j===0;lines.set(key,v);
+  }
+  for(const v of lines.values()){
+   const weight=Math.hypot(v.re,v.im),color=v.original?'blue':'purple';stem(p,v.x,weight,color,1,0);
+   const c=p.c;c.fillStyle=p.col(color);c.beginPath();c.moveTo(p.x(v.x),p.y(weight)-5);c.lineTo(p.x(v.x)-5,p.y(weight)+7);c.lineTo(p.x(v.x)+5,p.y(weight)+7);c.fill();
+  }
+ }else{
+  line(p,u=>spectrum(u/data.dx),'blue',state.step===4?.5:1,state.step===4?[5,4]:[]);
+  if(state.step===4){const a=state.reveal/100;for(let k=Math.ceil(-1.55*data.M);k<=1.55*data.M;k++){const X=data.X[mod(k,data.M)];stem(p,k/data.M,data.dx*Math.hypot(X.re,X.im),'purple',a,data.M>100?1.5:2.7);}}
+ }
+ if(state.step>=2){vertical(p,-.5,'muted','');vertical(p,.5,'muted','');}
+ if(state.step===4){p.c.fillStyle=p.col('purple');p.c.textAlign='left';p.c.fillText(`Δf / fA = 1/${data.M}`,p.l+8,p.top+18);}
+}
+function drawBasis(){if(state.step!==4||!state.showBasis)return;const max=Math.max(1.25,...data.y.map(Math.abs))*1.15,p=plot('basis',-.1,2.1,-max,max,'n / M','g̃, Re{basis}');ticks(p,[[0,'0'],[1,'1'],[2,'2']]);line(p,u=>synth(u*data.M),'green');line(p,u=>Math.cos(TAU*state.harmonic*u),'orange',.85,[5,4]);vertical(p,0,'purple','');vertical(p,1,'purple','');vertical(p,2,'purple','');for(let j=0;j<data.M;j++)stem(p,j/data.M,data.y[j],'blue',.5,2);}
+function scheduleDraw(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;if(state.mode==='2d')draw2D();else{drawSpace();drawFrequency();drawBasis();}});}
+function changeStep(step){stopAnimations();state.step=clamp(step,1,4);update(false);}
+document.querySelectorAll('[data-step]').forEach(el=>el.addEventListener('click',()=>changeStep(Number(el.dataset.step))));
+for(const key of ['preset','count','dx','cycles','window','padding','reveal','cursor','harmonic'])$(key).addEventListener('input',()=>{stopAnimations();state[key]=['preset','window'].includes(key)?$(key).value:Number($(key).value);update(!['reveal','cursor','harmonic'].includes(key));});
+$('showBasis').addEventListener('change',()=>{state.showBasis=$('showBasis').checked;update(false);});
+$('language').onclick=()=>{state.lang=state.lang==='de'?'en':'de';update(false);};
+$('theme').onclick=()=>{state.dark=!state.dark;update(false);};
+$('reset').onclick=()=>{stopAnimations();state={...defaults,mode:state.mode,lang:state.lang,dark:state.dark};$('status').textContent='';$('linkFallback').hidden=true;update();};
+for(const [id,delta] of [['previous',-1],['next',1]])$(id).onclick=()=>{stopAnimations();state.cursor=clamp(state.cursor+delta,-data.M,2*data.M);update(false);};
+$('walk').onclick=()=>{if(walkTimer!==null){stopAnimations();update(false);return;}stopAnimations();state.reveal=100;walkTimer=setInterval(()=>{state.cursor=state.cursor>=2*data.M?-data.M:state.cursor+1;update(false);},240);update(false);};
+$('animate').onclick=()=>{
+ if(animation!==null){stopAnimations();update(false);return;}stopAnimations();state.reveal=0;const start=performance.now();
+ const tick=now=>{state.reveal=Math.round(clamp((now-start)/2800,0,1)*100);animation=state.reveal<100?requestAnimationFrame(tick):null;update(false);};animation=requestAnimationFrame(tick);update(false);
+};
+function experiment(kind){stopAnimations();state={...state,step:4,preset:'sine',count:24,cycles:kind==='integer'?3:3.6,window:'rect',padding:1,reveal:100,cursor:23};if(kind==='alias'){state.step=2;state.count=8;state.cycles=6.3;}update();}
+for(const id of ['integer','leakage','alias'])$(id).onclick=()=>experiment(id);
+$('space').addEventListener('pointerdown',e=>{if(state.step!==4)return;const p=plots.space,r=$('space').getBoundingClientRect(),u=p.xmin+(e.clientX-r.left-p.l)/(p.r-p.l)*(p.xmax-p.xmin);stopAnimations();state.cursor=clamp(Math.round(u*data.M),-data.M,2*data.M);update(false);});
+document.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.target.closest('input,select,button,summary'))return;if(e.key.toLowerCase()==='r')$('reset').click();if(state.mode==='1d'&&(e.key==='ArrowRight'||e.key==='ArrowLeft')){e.preventDefault();changeStep(state.step+(e.key==='ArrowRight'?1:-1));}});
+$('copyLink').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);$('status').textContent=t('Zustandslink kopiert.','State link copied.');}catch{$('linkFallback').hidden=false;$('linkFallback').value=location.href;$('linkFallback').focus();$('linkFallback').select();$('status').textContent=t('Link auswählen und kopieren.','Select and copy the link.');}};
+$('save').onclick=()=>{const doc=document.documentElement.cloneNode(true);doc.querySelector('#initialState').textContent=JSON.stringify(state);doc.querySelector('#status').textContent='';doc.querySelector('#linkFallback').hidden=true;const blob=new Blob(['<!doctype html>\n'+doc.outerHTML],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dft-cyclic-extension.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);$('status').textContent=t('HTML-Datei mit aktuellem Startzustand gespeichert.','HTML file saved with the current initial state.');};
+document.querySelectorAll('main').forEach(el=>new ResizeObserver(scheduleDraw).observe(el));
+document.addEventListener('visibilitychange',()=>{if(document.hidden){stopAnimations();update(false);}});
+update();
+})();
+</script>
+</body>
+</html>
