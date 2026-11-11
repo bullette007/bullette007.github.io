@@ -860,9 +860,7 @@
           clipBox: viewport.worldBox
         });
         if (params.principalRay) {
-          principalSources
-                  .filter((source) => source.id === 'object-top' || params.secondSource)
-                  .forEach((source) => {
+          sources.forEach((source) => {
             const principalRay = Tracer.tracePrincipalRay({
               source,
               aperture,
