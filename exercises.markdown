@@ -5,11 +5,12 @@ permalink: /exercises/
 ---
 
 Here you can find the exercises and their solutions (after discussion in the exercises session).
+Each exercise contains coding and theory assignments. For the coding assignments, you need a local Python / Jupyter instance. If you only want to work on the theory assignments, open the markdown files in the archives and scroll down to the theory part.
 <!-- If you have an KIT affiliation, you can also access the exercise via [Jupyter Hub](https://hub.bwjupyter.de/services/profilemanagement/add?profile=a1a49a6d-ffcc-4f8e-8d1b-e8a56901c85a). -->
 
 | Exercise | Solution |
 |:-----:|:----------:|
-| TBA   | TBA |
+| [Exercise 1](Ex1-unsolved.zip)   | TBD |
 
 
 <!-- | Exercise | Solution |

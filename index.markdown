@@ -19,9 +19,10 @@ Organizational information:
 * Lecture start: 28th of October 2026.
 * Times: Every wednesday 2pm - 3:30pm, every other week 2pm - 5:15pm (with exercise)
 * Location: Building 50.34 room -119
+* The current schedule can be found [here](/schedule/)
 * **Again this year:** we will also [stream live via Discord](https://discord.gg/XC4xnsPUj3), so that if you cannot come to the lecture in person, you can stream AND participate from anywhere. On the Discord, you can also ask questions and discuss with us and your peers.
 * Examination: **oral**, please arrange an appointment with me.
-* <p style="color:red"> The first lecture will be double lengh (i.e., 2pm - 5:15pm) since there will be NO lecture on 4th of November 2027 </p>
+
 
 
 The lecture notes (work in progress!) can be accessed [here](book/index.html)
