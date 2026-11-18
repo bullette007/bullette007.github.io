@@ -19,3 +19,4 @@ This page provides an overview of the interactive widgets currently available wi
 - <a href="widgets/3.2%20Lichtfeld-Ray-Diagramm/index.html" target="_blank" rel="noopener noreferrer">Camera light field and ray diagram</a> — Connect camera rays to light-field integration and virtual refocusing.
 - <a href="widgets/3.3%20Zentralpixel-Detektion/index.html" target="_blank" rel="noopener noreferrer">Central display pixel detection</a> — Simulate coded measurements and recover central display-pixel positions.
 - <a href="widgets/3.4%20Schlieren-Winkelfilter/index.html" target="_blank" rel="noopener noreferrer">Schlieren and angular filter</a> — Explore how an angular filter converts ray deflections into image brightness.
+- <a href="widgets/3.5%20LCD-CMD-Sandkasten/index.html" target="_blank" rel="noopener noreferrer">LCD/CMD sandbox</a> — Compare local cumulative distributions and the Cramér–von Mises distance across scales.
