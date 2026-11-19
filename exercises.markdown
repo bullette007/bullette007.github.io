@@ -10,7 +10,7 @@ Each exercise contains coding and theory assignments. For the coding assignments
 
 | Exercise | Solution |
 |:-----:|:----------:|
-| [Exercise 1](Ex1-unsolved.zip)   | TBD |
+| [Exercise 1](Ex1-unsolved.zip)   | [Solution 1](Ex1.zip) |
 
 
 <!-- | Exercise | Solution |

@@ -7,15 +7,14 @@ exclude: true
 
 This is the current course schedule (subject to change depending on progress):
 
-
 | Nr. | Date       | Lecture (14:00 - 15:30)                                                                  | Exercise (15:45 - 17:15)                                  |
 | ---:|:---------- |:---------------------------------------------------------------------------------------- |:--------------------------------------------------------- |
 | 1   | 28.10.2026 | Introduction <br> Basics                                                                 | **Lecture:**<br>Basics                                    |
 | 2   | 04.11.2026 | **No lecture**                                                                           |                                                           |
 | 3   | 11.11.2026 | Basics <br> Light field methods                                                          |                                                           |
-| 4   | 18.11.2026 | Light field methods                                                                      | Fourier transforms <br> Mitsuba renderer                  |
+| 4   | 18.11.2026 | Light field methods                                                                      | Fourier transforms <br> Optics <br> System theory         |
 | 5   | 25.11.2026 | Light field methods                                                                      |                                                           |
-| 6   | 02.12.2026 | Light field methods <br> Light transport analysis                                        | Light field calculations <br> Mitsuba for light fields    |
+| 6   | 02.12.2026 | Light field methods <br> Light transport analysis                                        | Light field calculations                                  |
 | 7   | 09.12.2026 | Light transport analysis                                                                 |                                                           |
 | 8   | 16.12.2026 | Neural networks for computational imaging                                                | Light transport calculations                              |
 | 9   | 23.12.2026 | **No lecture**                                                                           |                                                           |
