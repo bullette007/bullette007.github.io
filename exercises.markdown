@@ -11,6 +11,7 @@ Each exercise contains coding and theory assignments. For the coding assignments
 | Exercise | Solution |
 |:-----:|:----------:|
 | [Exercise 1](Ex1-unsolved.zip)   | [Solution 1](Ex1.zip) |
+| [Exercise 2](Ex2_Unsolved.zip)   | TBD |
 
 
 <!-- | Exercise | Solution |

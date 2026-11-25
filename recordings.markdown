@@ -13,6 +13,7 @@ Recordings of the current winter semester 2026 / 2027:
 | 11.11.2026 | [Lecture 2](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=CompImg_2026_VL02.mp4) | No notes |
 | 18.11.2026 | [Lecture 3](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=CompImg_2026_VL03.mp4) | [Notes](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=Notes_2026_VL_03.pdf) |
 | 18.11.2026 | [Exercise 1](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=CompImg_2026_EX01.mp4) | [Notes](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=Notes_2026_EX_01.pdf) |
+| 25.11.2026 | [Lecture 4](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=CompImg_2026_VL04.mp4) | [Notes](https://owncloud.fraunhofer.de/s/oZCrdbUURVfKnYB/download?path=%2F&files=Notes_2026_VL_04.pdf) |
 
 
 Recordings of the winter semester 2025 / 2026 (Please note that the covered topics might change from year to year).:
